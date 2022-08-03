@@ -4,6 +4,23 @@
 format: jb-book
 root: intro
 chapters:
-- file: lessons/lesson1/lesson1
-- file: markdown
-- file: notebooks
+- file: lessons/lesson1/lesson1 # introduction
+- file: lessons/lesson2/lesson2 # overview, ML workflow
+- file: lessons/lesson3/lesson3 # prediction engines
+- file: lessons/lesson4/lesson4 # classification engines
+- file: lessons/lesson5/lesson5 # supervised learning
+- file: lessons/lesson6/lesson6 # unsupervised learning
+- file: lessons/lesson7/lesson7 # reinforcement learning
+- file: lessons/lesson8/lesson8 # exploratory data analysis
+- file: lessons/lesson9/lesson9 # probability distributions
+- file: lessons/lesson10/optimization # optimization
+  sections:
+  - file: lessons/lesson10/1topic
+  - file: lessons/lesson10/2topic
+  - file: lessons/lesson10/3topic
+    
+- file: lessons/lesson11/lesson11
+- file: lessons/lesson12/lesson12
+- file: lessons/lesson13/lesson13
+- file: lessons/lesson14/lesson14
+- file: lessons/lesson15/lesson15

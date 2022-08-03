@@ -1,16 +1,8 @@
-# Welcome to your Jupyter Book
+# Machine Learning for Civil Engineers
 
-This is a small sample book to give you a feel for how book content is
-structured.
+## Instructor Notes
 
-:::{note}
-Here is a note!
-:::
+## Course Syllabus
 
-And here is a code block:
+## Textbook(s)
 
-```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.

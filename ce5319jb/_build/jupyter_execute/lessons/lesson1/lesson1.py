@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # CE 5319 Machine Learning for Civil Engineers
+# # Introduction
 
 # ## Why study machine learning?
 # 
