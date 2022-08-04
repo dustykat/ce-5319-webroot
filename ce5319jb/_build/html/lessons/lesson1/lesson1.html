@@ -306,6 +306,28 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jupyter-notebooks">
+     Jupyter Notebooks
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#anaconda">
+       1. Anaconda
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#google-colaboratory">
+       2. Google Colaboratory
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#build-from-repositories">
+       3. Build from Repositories
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#why-python">
      Why Python?
     </a>
@@ -341,11 +363,47 @@ applications in Civil Engineering.</p>
 <p class="admonition-title">Note</p>
 <p>In fact this on-line document is a collection of Jupyter Notebooks rendered using a program called Sphinx that converts the notebooks into a website (which you are now accessing).  For me the author its cool because I just make notebooks and bind them at my leisure (there are some nuances to get figures into the books and embedding code - but its not too hard to do so.  Jupyter as a literate programming environment is quite useful even outside of the University.</p>
 </div>
+<div class="section" id="jupyter-notebooks">
+<h3>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h3>
+<p>To follow along with the examples in these notes, you need to have access to Jupyter Notebook. Jupyter Notebook is an open-source interactive computational environment that is based on a server-client structure. It includes a web server and a web application that works like an integrated development environment (IDE). This web application allows us to create Jupyter Notebook documents (commonly referred to simply as notebooks or IPYNB files) that consist of code, text, and images. To use Jupyter notebook, we have several options:</p>
+<div class="section" id="anaconda">
+<h4>1. Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h4>
+<p>The first option is to install an instance on your own system. The easiest way to do that is to install a software distribution known as <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>. Anaconda comes with over 250 packages pre-installed, including NumPy, pandas, Matplotlib, and Scikit-Learn, all of which we’ll be using in this book. In addition, it includes many useful applications and IDEs,such as the Jupyter Notebook application mentioned above. <font color="magenta"><em>This is probably the easiest approach if you already have a laptop and want to work offline.</em></font></p>
+</div>
+<div class="section" id="google-colaboratory">
+<h4>2. Google Colaboratory<a class="headerlink" href="#google-colaboratory" title="Permalink to this headline">¶</a></h4>
+<p>The second option to access Jupyter Notebook is to use Google Colab (short for Google Colaboratory).
+Google Colab is a free cloud-based Jupyter Notebook environment hosted by Google that requires no installation and offers free access to online computing resources.
+However, <strong>you need to be connected</strong> to the internet when you use Google Colab.
+This connection is mainly used to run the code and does not consume much data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most of the scripts in this book can be cut-and-pasted into a Colab instance and seem to run as expected.  The only realistic limitation is likely bandwidth (and possibly storage for big-data).  Otherwise this is a good compromise and training environment for this course. Files need to be uploaded each connection and are destroyed when you disconnect, so you may need to write code to get files every time.  Anyway it is a useable option.</p>
+</div>
+</div>
+<div class="section" id="build-from-repositories">
+<h4>3. Build from Repositories<a class="headerlink" href="#build-from-repositories" title="Permalink to this headline">¶</a></h4>
+<p>A third option is to build a JupyterLab Server on a machine you own (such as AWS Virtual Private Server; Raspberry Pi runing on a home network, or similar set-up) and essentially replicate a Colab-type environment.  This option is not for the faint of heart; it it the structure I used for this document.  If your host machine is running Linux a good starting place is <a class="reference external" href="https://docs.jupyter.org/en/latest/install.html">Installing Jupyter</a>.  This method is most definitely not point-and-click but can build a fully capable system on hardware you can control and scale.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The hardware requirements are modest.  This JupyterBook is developed on my home machine which is a Raspberry Pi 4B 8GB SBC using a 256GB MicroSD card to house the OS and data files.  At current prices the hardware cost is about $240 so hardware is not a limiting issue.</p>
+</div>
+<!-- 2022-0804
+|Item|Price|
+|---|---:|
+|[Raspberry Pi 4B 8GB](https://www.amazon.com/Raspberry-Pi-Model-8GB-Quad-core/dp/B08Q8L3B9D/ref=sr_1_4?crid=71YF8SDQEJR&keywords=raspberry+pi+4+8gb&qid=1659640159&sprefix=raspberry+%2Caps%2C124&sr=8-4)|\$184.99|
+|[Power Supply](https://www.amazon.com/CanaKit-Raspberry-Power-Supply-PiSwitch/dp/B07TSFYXBC/ref=pd_day0fbt_img_sccl_1/143-0240484-2623030?pd_rd_w=VvEoF&content-id=amzn1.sym.0a3d352f-2699-4ba2-810c-59dcb4abfa1b&pf_rd_p=0a3d352f-2699-4ba2-810c-59dcb4abfa1b&pf_rd_r=56GMWHGEPH151FJRAHWX&pd_rd_wg=FZHQw&pd_rd_r=30356ac1-7999-4e1e-a242-2a3b3f7f94ee&pd_rd_i=B07TSFYXBC&psc=1)|\$10.99|
+|[Micro SD Card Class 10 or faster](https://www.amazon.com/SanDisk-256GB-Extreme-microSD-Adapter/dp/B07FCR3316/ref=sr_1_2?crid=3KZ2LHC3OMR8U&keywords=micro+sd+card&nav_sdd=aps&qid=1659640639&refinements=p_n_feature_two_browse-bin%3A13203835011&rnid=6518301011&s=pc&sprefix=micro&sr=1-2)|\$34.99|
+|Total|\$230.97|
+
+If you can find the Raspberry Pi at the MSRP (\$75) you will fare even better.
+-->
+</div>
+</div>
 <div class="section" id="why-python">
 <h3>Why Python?<a class="headerlink" href="#why-python" title="Permalink to this headline">¶</a></h3>
-<p>A skilled user can install an R kernel into Jupyter and run R scripts.  I tend to use python because I also teach undergraduate programming in python and don’t want to confuse myself.  I am literate in R, but prefer python slightly.  So we will default to python unless something is way easier in R (and will probably still do a mixed language call in that instance!).</p>
-<p>No prior experience with Python or R are required, but familiarity with programming concepts covered in ENGR 1330: Computational Thinking with Data Science and in CE 5315: Probabilistic Methods for Engineers is expected. Students are strongly encouraged to take CE 5310 Numerical Methods in Engineering prior to this
-course.</p>
+<p>A skilled user can install an R kernel into Jupyter and run R scripts, or just run R directly.  I tend to use python because I also teach undergraduate programming in python and don’t want to confuse myself.  I am literate in R, but prefer python slightly.  So we will default to python unless something is way easier in R (and will probably still do a mixed language call in that instance!).</p>
+<p>While no prior experience with Python or R are required, familiarity with programming concepts as covered in ENGR 1330: Computational Thinking with Data Science and statistical concepts in CE 5315: Probabilistic Methods for Engineers is useful, as are the concepts and applications in CE 5310 Numerical Methods in Engineering.</p>
 <p>The two computational environments can be downloaded and installed from</p>
 <table class="colwidths-auto table">
 <thead>

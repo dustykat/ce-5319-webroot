@@ -69,14 +69,14 @@
 # In[1]:
 
 
-input1=[0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
-        0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
-        0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,]
-input2=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
-        2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,
-        6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
-output=[0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,
-       100.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,0.0, 
+input1=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,]
+input2=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+        2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,
+        6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
+output=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0, 
        1.6666833333333333, 3.3333666666666666, 5.00005, 6.666733333333333, 8.333416666666666, 10.0001, 11.666783333333331, 13.333466666666666, 15.00015, 16.666833333333333]
 
 import matplotlib.pyplot as plt # the python plotting library
@@ -230,6 +230,136 @@ plt.show()
 
 
 print('predicted response is',response(beta1,beta2,beta3,beta4,121,2))
+
+
+# ### Automating the Process
+# 
+# To complete this example, instead of us (humans) doing the trial and error, lets let the machine do the work.  For that we need a way to assess the 'quality' of our prediction model, a way to make new guesses, and a way to rank findings.  
+# 
+# A terribly inefficient way, but easy to script is a grid search.  We will take our 4 parameters and try combinations for values ranging between -1 and 1 and declare the best combination the model.  
+
+# In[8]:
+
+
+# identify, collect, load data
+
+input1=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,]
+input2=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+        2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,
+        6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
+output=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0, 
+       1.6666833333333333, 3.3333666666666666, 5.00005, 6.666733333333333, 8.333416666666666, 10.0001, 11.666783333333331, 13.333466666666666, 15.00015, 16.666833333333333]
+
+# a prediction engine structure (notice some logic to handle zeros)
+def response(beta1,beta2,beta3,beta4,predictor1,predictor2):
+    if predictor1 == 0.0 and predictor2 ==0.0:
+        response = (beta1*predictor1**abs(beta2))*(beta3*predictor2**abs(beta4))
+    if predictor1 == 0.0 and predictor2 !=0.0:
+        response = (beta1*predictor1**abs(beta2))*(beta3*predictor2**(beta4))
+    if predictor1 != 0.0 and predictor2 ==0.0:
+        response = (beta1*predictor1**(beta2))*(beta3*predictor2**abs(beta4))
+    if predictor1 != 0.0 and predictor2 !=0.0:
+        response = (beta1*predictor1**(beta2))*(beta3*predictor2**(beta4))
+    else:
+        response = 1e9
+    return(response)
+# a measure of model quality
+def quality(observed_list,model_list): 
+    if len(observed_list) != len(model_list):
+        raise Exception("List lengths incompatable")
+    sse = 0.0
+    howmany=len(observed_list)
+    for i in range(howmany):
+        sse=sse + (observed_list[i]-model_list[i])**2
+    return(sse)
+# define search region 
+index_list = [i/10 for i in range(-20,21,2)] # index list is -1.0,-0.9,-0.8,....,0.9,1.0
+
+howmany = 0 # keep count of how many combinations
+error   = 1e99          # a big value, we are trying to drive this to zero
+xbest   = [-1,-1,-1,-1] # variables to store our best solution parameters
+modeloutput = [0 for i in range(len(output))] # space to store model responses
+
+
+# perform a search - here we use nested repetition
+for i1 in index_list:
+    for i2 in index_list:
+        for i3 in index_list:
+            for i4 in index_list:
+                howmany=howmany+1 # keep count of how many times we learn
+                beta1 = i1
+                beta2 = i2
+                beta3 = i3
+                beta4 = i4
+
+                for irow in range(len(output)): 
+                    modeloutput[irow]=response(beta1,beta2,beta3,beta4,input1[irow],input2[irow])
+                guess = quality(output,modeloutput) # current model quality
+ #               print(guess)
+                if guess <= error:
+                    error = guess
+                    xbest[0]= beta1
+                    xbest[1]= beta2
+                    xbest[2]= beta3
+                    xbest[3]= beta4
+print("Search Complete - Error Value ",round(error,8))
+print("Combinations Examined : ",howmany)
+print("Beta 1 ",xbest[0])
+print("Beta 2 ",xbest[1])
+print("Beta 3 ",xbest[2])
+print("Beta 4 ",xbest[3])
+for irow in range(len(output)): 
+    modeloutput[irow]=response(xbest[0],xbest[1],xbest[2],xbest[3],input1[irow],input2[irow])
+
+# now the plot
+import matplotlib.pyplot as plt # the python plotting library
+plottitle ='Simple Prediction Engine - Automated Learning \n'
+plottitle = plottitle + 'Model Error =' + repr(round(error,8)) + '\n'
+plottitle = plottitle + 'Beta =' + repr(xbest)
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(modeloutput, output, c='red',linewidth=1,marker='o') 
+#plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Model Value')
+plt.ylabel('Observed Value')
+#plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# ### Interpreting our results
+# Suppose we are happy with the results, lets examine what the machine is telling us.
+# 
+# First if we examine the engine structure using the values fitted we have
+# 
+# - Our original structure before our engine got learned
+# 
+# $$r=\beta_1 p_1^{\beta_2} \cdot \beta_3 p_2^{\beta_4}$$
+# 
+# - After its all learned up!
+# 
+# $$r=1.0 p_1^{1.0} \cdot 1.0 p_2^{-1.0}$$
+# 
+# - Lets do a little algebra
+# 
+# $$r=\frac{p_1 }{p_2}$$
+# 
+# A little soul searchng and we realize that $\beta_1 \cdot \beta_3$ is really a single parameter and not really two different ones.  If we knew that ahead of time, our seacrh region could be reduced.  At this point all we really wanted here is an example of ML to produce a prediction engine (exclusive of the symbolic representation).  We have done it the model is 
+# 
+# $$r=\frac{p_1 }{p_2}$$
+# 
+# If we were to use it for future response prediction, then a user interface is in order.  Something as simple as:
+
+# In[9]:
+
+
+newp1 = 119
+newp2 = 2.1
+newot = response(xbest[0],xbest[1],xbest[2],xbest[3],newp1,newp2)
+print('predicted response to predictor1 =',newp1,'and predictor2 =',newp2,' is :',round(newot,3))
 
 
 # ## Machine Learning Workflow
