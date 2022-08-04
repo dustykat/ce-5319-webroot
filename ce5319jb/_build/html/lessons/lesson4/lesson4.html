@@ -296,12 +296,12 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#topic">
-   topic
+  <a class="reference internal nav-link" href="#a-simple-classification-machine">
+   A Simple Classification Machine
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#topic">
    topic
   </a>
   <ul class="nav section-nav flex-column">
@@ -330,13 +330,119 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="classification-engines">
 <h1>Classification Engines<a class="headerlink" href="#classification-engines" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="topic">
-<h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>
+<p>In contrast to prediction engines the other category of great interest in machine learning is classification.</p>
+<p>Computers are mostly calculators; They are very very fast at doing arithmetic. This feature is great for doing tasks that match what a calculator does: summing numbers to work out sales, applying percentages to work out tax, plotting graphs of existing data, solving <a class="reference external" href="https://mathworld.wolfram.com/Tractrix.html">tractrix</a> equations to create smoking holes in the ocean where there used be an aircraft carrier.  Even watching TV or streaming music through your computer doesn’t involve much more than the computer executing simple arithmetic instructions repeatedly.
+Reconstructing a video frame from the ones and zeros that are piped across the internet to your computer is done using arithmetic not much more complex than the sums we did in grade school.<br />
+Adding up numbers really quickly  thousands, or even millions of times a second  may be impressive  but it isn’t intelligence.</p>
+<p>A human may find it hard to do large sums very quickly but the  process of doing it doesn’t require much intelligence at all (the size of the federal government, and number of elected officials is a testament to this fact). It simply requires an ability to follow  very basic instructions, and this is what the electronics inside a computer does.  Now let’s flips things and turn the tables on computers!  Look at the following images and see if you can recognise what they contain:</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/pictures.png" /></p>
+<p>You can immediately recognize people, a cat, and a tree – you are able to classify the pictures very fast.
+We can process the quite large amount of information that the images contain, and very  successfully process it to recognise what’s in the image. This kind of task isn’t easy for computers  in fact it’s incredibly difficult.</p>
+<p>Consider what happens when we reduce the information into a 27X27 pixel map to see one reason why classification is hard for a machine – a resolution issue, also we will see how at reduce resolution the pictures look alike.  First some image processing libraries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>              <span class="c1"># useful numerical routines</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>      <span class="c1"># special functions library</span>
+<span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
+<span class="kn">import</span> <span class="nn">imageio</span>            <span class="c1"># image processing library</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the files containing the images if you want to try this at home</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/people784.png">people784.png</a><br>
+<a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/cat784.png">cat784.png</a><br>
+<a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/tree784.png">tree784.png</a><br></p>
+<p>Now we read and render the people image in reduced resolution about 1/2 of the original – still barely recognizable for us humans.  The image is converted to an array of floating point values from 0 to 255 (256 different values), each representing a different shade of grey.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">########### suppress warnings ######</span>
+<span class="kn">import</span> <span class="nn">warnings</span>                   <span class="c1">##</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="c1">##</span>
+<span class="c1">####################################</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;people784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="c1"># read file ignore rgb, only gray scale</span>
+<span class="n">img_data0</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span> 
+<span class="n">img_data0</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data0</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_3_0.png" src="../../_images/lesson4_3_0.png" />
+</div>
+</div>
+<p>Now render the cat image in reduced resolution about 1/2 of the original – still  recognizable for us humans</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;cat784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data1</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_5_0.png" src="../../_images/lesson4_5_0.png" />
+</div>
+</div>
+<p>Now render the tree image in reduced resolution about 1/3 of the original – still  recognizable for us humans</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;tree784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">img_data2</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data2</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data2</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_7_0.png" src="../../_images/lesson4_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;people784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data0</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data0</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data1</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tree784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data2</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data2</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>people784 statistics :  0.48325375 0.06275265
+cat784 statistics :  0.60355407 0.023282547
+tree784 statistics :  0.484061 0.049499817
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the image statistics, which is just the gray-scale value of each pixel (0-255), we see that the images are different with this simple metric but not by much</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Image       Mean           Variance
+People    0.48325375     0.06275265
+Cat       0.60355407     0.023282547
+Tree      0.484061       0.049499817
+</pre></div>
+</div>
+<p>If we used just a statistical description, in the mean people and tree are the same, whereas a cat is different. But not all cats will have the same mean (or variance).  So simplistic numerical descriptors are useless, we need more that a couple of metrics for the image perhaps higher moments, or a way to consider all pixels at once – sort of like a regression model.</p>
+<p>We humans naturally fill in missing information and can classify very fast  – cognative scientists think (now thats a pun!) that our mind performs “regressions” on the whole image and reduces it to a set of classifiers then these are compared in our brain to historical results and the classification that throw off the most dopamine (our brain’s drug of choice) is selected.  It happens fast because the chemical reactions involved can be processed in parallel, the message is sent evreywhere at once and the molecules themselves don’t even have to arrive for the classification to occur.</p>
+<p>Anyway the whole process of taking inputs and determining which category or class it belongs is called classification.</p>
+<p>First render the people image in reduced resolution about 1/2 of the original – still barely recognizable for us humans</p>
+<div class="section" id="a-simple-classification-machine">
+<h2>A Simple Classification Machine<a class="headerlink" href="#a-simple-classification-machine" title="Permalink to this headline">¶</a></h2>
+<p>Consider the three images below</p>
+<p>But what’s a computer to do?  We can have it convert those images to arrays of numbers and try to see if some statistical measures are different for each image then declare all future images with the same statistics as our one cat to be cats.</p>
+<p>Lets see how that goes</p>
 <p>lorem ipsum</p>
 <p>lorem ipsum</p>
 </div>
-<div class="section" id="id1">
-<h2>topic<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="topic">
+<h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="subtopic">
 <h3>Subtopic<a class="headerlink" href="#subtopic" title="Permalink to this headline">¶</a></h3>
 <p>lorem ipsum</p>
