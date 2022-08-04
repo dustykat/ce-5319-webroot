@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -75,7 +77,7 @@
         
       
       
-      <img src="../../_static/logo.png" class="logo" alt="logo">
+      <img src="../../_static/borgcube.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
@@ -131,27 +133,64 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson8/lesson8.html">
-   Probability Distributions
+   Exploratory Data Analysis
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson9/lesson9.html">
-   Optimization Concepts
+   Probability Distributions
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lesson10/lesson10.html">
-   Ordinary Regression
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson10/optimization.html">
+   Optimization Modeling
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/1topic.html">
+     Scheduling Example
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/2topic.html">
+     Grid Search Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/3topic.html">
+     Gradient Descent Methods
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson11/lesson11.html">
-   Non-Linear Regression
+   Linear Regression
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson12/lesson12.html">
+   Non-Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson13/lesson13.html">
    Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson14/lesson14.html">
+   K Nearest Neigbor Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson15/lesson15.html">
+   Decision Tree Classification
   </a>
  </li>
 </ul>
@@ -259,12 +298,12 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#topic">
-   topic
+  <a class="reference internal nav-link" href="#a-simple-prediction-machine">
+   A Simple Prediction Machine
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#topic">
    topic
   </a>
   <ul class="nav section-nav flex-column">
@@ -293,13 +332,286 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="prediction-engines">
 <h1>Prediction Engines<a class="headerlink" href="#prediction-engines" title="Permalink to this headline">¶</a></h1>
+<p>This section examines the process of prediction, or forecasting if you will.  In prediction we are attempting to build an excitation-response model so that when new (future) excitations are supplied to the model, the new (future) responses are predicted.</p>
+<p>As an example, suppose a 1 Newton force is applied to a 1 kilogram object, we expect an acceleration of 1 meter per second per second.  The inputs are mass and force, the response is acceleration.  Now if we triple the mass, and leave the force unchanged then the acceleration is predicted to be 1/3 meter per second per second.  The prediction machine structure in this example could be something like</p>
+<div class="math notranslate nohighlight">
+\[a=\beta_1 F^{\beta_2} \cdot \beta_3 m^{\beta_4}\]</div>
+<p>After training the fitted (learned) model would determine that <span class="math notranslate nohighlight">\(\beta_1=\beta_2=\beta_3=1\)</span> and <span class="math notranslate nohighlight">\(\beta_4=-1\)</span> is the best performing model and that would be our prediction engine.</p>
+<p>Or we could just trust Newton that the prediction model is</p>
+<div class="math notranslate nohighlight">
+\[a=\frac{F}{m}\]</div>
+<div class="section" id="a-simple-prediction-machine">
+<h2>A Simple Prediction Machine<a class="headerlink" href="#a-simple-prediction-machine" title="Permalink to this headline">¶</a></h2>
+<p>Imagine a basic machine that takes a question, does some “thinking” and pushes out an answer.
+Here’s a diagram of the process:</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/eat-sleep-poop1.png" /></p>
+<p>Computers don’t really think, they’re just fast calculators (actually difference engines, but that’s for another time), so let’s use more appropriate words to describe what’s going on:</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/eat-sleep-poop2.png" /></p>
+<p>A computer takes some input, does some calculation and poops out an output. The following illustrates this. An input of “3 x 4” is processed, perhaps by turning multiplication into an easier set of additions, and the output answer “12” poops out.</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/three-by-four.png" /></p>
+<p>Not particularly impressive - we could even write a function!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">threeByfour</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">b</span><span class="o">=</span><span class="mi">4</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a times b =&#39;</span><span class="p">,</span><span class="n">threeByfour</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a times b = 12
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, Imagine a machine that converts kilometres to miles, like the following:</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/km-2-miles.png" /></p>
+<p>But imagine we don’t know the formula for converting between kilometres and miles. All we know is the the relationship between the two is <strong>linear</strong>. That means if we double the number in miles, the same distance in kilometres is also doubled.</p>
+<p>This linear relationship between kilometres and miles gives us a clue about that mysterious calculation ­ it needs to be of the form “miles = kilometres x <strong>c</strong>”, where <strong>c</strong> is a constant. We don’t know what this constant <strong>c</strong> is yet. The only other clues we have are some examples pairing kilometres with the correct value for miles. These are like real world observations used to test scientific theories - they’re examples of real world truth.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Truth Example</p></th>
+<th class="text-align:right head"><p>Kilometres</p></th>
+<th class="text-align:right head"><p>Miles</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>1</p></td>
+<td class="text-align:right"><p>0</p></td>
+<td class="text-align:right"><p>0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
+<td class="text-align:right"><p>100</p></td>
+<td class="text-align:right"><p>62.137</p></td>
+</tr>
+</tbody>
+</table>
+<p>To work out that missing constant <strong>c</strong> just pluck a value at random and give it a try! Let’s try <strong>c</strong> = 0.5 and see what happens.</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/first-shot.png" /></p>
+<p>Here we have miles = kilometres x <strong>c</strong>, where kilometres is 100 and <strong>c</strong> is our current guess at 0.5. That gives 50 miles. Okay. That’s not bad at all given we chose <strong>c</strong> = 0.5 at random! But we know it’s not exactly right because our truth example number 2 tells us the answer should be 62.137. We’re wrong by 12.137. That’s the <strong>error</strong>, the difference between our calculated answer and the actual truth from our list of examples. That is,</p>
+<p>error = truth - calculated = 62.137 - 50 = 12.137</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  50.0  miles
+Estimation error is  12.137 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/first-error.png" /></p>
+<p>So what next? We know we’re wrong, and by how much. Instead of being a reason to despair, we use this error to guide a second, better, guess at <strong>c</strong>. Look at that error again. We were short by 12.137. Because the formula for converting kilometres to miles is linear, miles = kilometres x <strong>c</strong>, we know that increasing <strong>c</strong> will increase the output. Let’s nudge <strong>c</strong> up from 0.5 to 0.6 and see what happens.</p>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/second-shot.png" /></p>
+<p>With <strong>c</strong> now set to 0.6, we get miles = kilometres x <strong>c</strong> = 100 x 0.6 = 60. That’s better than the previous answer of 50. We’re clearly making progress! Now the error is a much smaller 2.137. It might even be an error we’re happy to live with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.6</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  60.0  miles
+Estimation error is  2.1370000000000005 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p>The important point here is that we used the error to guide how we nudged the value of c. We wanted to increase the output from 50 so we increased <strong>c</strong> a little bit. Rather than try to use algebra to work out the exact amount <strong>c</strong> needs to change, let’s continue with this approach of refining <strong>c</strong>. If you’re not convinced, and think it’s easy enough to work out the exact answer, remember that many more interesting problems won’t have simple mathematical formulas relating the output and input. That’s why we use “machine learning” methods. Let’s do this again. The output of 60 is still too small. Let’s nudge the value of <strong>c</strong> up again from 0.6 to 0.7.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.7</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  70.0  miles
+Estimation error is  -7.8629999999999995 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/overshoot.png" /></p>
+<p>Oh no! We’ve gone too far and <strong>overshot</strong> the known correct answer. Our previous error was 2.137 but now it’s -7.863. The minus sign simply says we overshot rather than undershot, remember the error is (correct value - calculated value). Ok so <strong>c</strong> = 0.6 was way better than c = 0.7. We could be happy with the small error from <strong>c</strong> = 0.6 and end this exercise now. But let’s go on for just a bit longer.</p>
+<p>Let’s split the difference from our last guess - we still have overshot, but not as much (-2.8629).<br />
+Split again to <strong>c</strong>=0.625, and overshoot is only (-0.3629) (we could sucessively split the <strong>c</strong> values until we are close enough. The method just illustrated is called bisection, and the important point is that we avoided any mathematics other than bigger/smaller and multiplication and subtraction; hence just arithmetic.)</p>
+<p>That’s much much better than before. We have an output value of 62.5 which is only wrong by 0.3629 from the correct 62.137. So that last effort taught us that we should moderate how much we nudge the value of <strong>c</strong>. If the outputs are getting close to the correct answer - that is, the error is getting smaller - then don’t nudge the constant so much. That way we avoid overshooting the right value, like we did earlier. Again without getting too distracted by exact ways of working out <strong>c</strong>, and to remain focussed on this idea of successively refining it, we could suggest that the correction is a fraction of the error. That’s intuitively right - a big error means a bigger correction is needed, and a tiny error means we need the teeniest of nudges to <strong>c</strong>. What we’ve just done, believe it or not, is walked through the very core process of learning in a neural network - we’ve trained the machine to get better and better at giving the right answer. It is worth pausing to reflect on that - we’ve not solved a problem exactly in one step. Instead, we’ve taken a very different approach by trying an answer and improving it repeatedly. Some use the term <strong>iterative</strong> and it means repeatedly improving an answer bit by bit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.65</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  65.0  miles
+Estimation error is  -2.8629999999999995 miles
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.625</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  62.5  miles
+Estimation error is  -0.36299999999999955 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s automate the process.</p>
+<p>We have our prediction engine structure embedded into the <code class="docutils literal notranslate"><span class="pre">km2miles()</span></code> function.  We have a database of observations (albeit its kind of small). We need to find a value of <code class="docutils literal notranslate"><span class="pre">c</span></code> that’s good enough then we can use the prediction engine to convert new values.  As stated above bisection seems appropriate, so here we will adapt a classical bisection algorithm for our machine.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code below is shamelessly lifted from <a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/Index.html">Qingkai Kong, Timmy Siauw, Alexandre M. Bayen, 2021 Python Programming and Numerical Methods, Academic Press</a> and adapted explicitly for the machine described herein.  If you go to the source the authors use <strong>lambda</strong> objects to generalize their scripts, but I choose to simply break their fine programming structure for my needs; something everyone should get comfortable with.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">howmany</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># number of iterations</span>
+<span class="n">clow</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># lower limit for c</span>
+<span class="n">chigh</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># upper limit for c</span>
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span> <span class="c1"># ground truth value</span>
+<span class="n">dtrue</span> <span class="o">=</span> <span class="mf">62.137</span> <span class="c1"># ground truth value</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-6</span> <span class="c1"># desired accuracy</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="c1"># useful library with absolute value and sign functions</span>
+
+<span class="c1">############ Learning Phase ################</span>
+<span class="c1"># check if clow and chigh bound a solution</span>
+<span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chigh</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The scalars clow and chigh do not bound a solution&quot;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>         
+<span class="c1"># get midpoint</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">clow</span> <span class="o">+</span> <span class="n">chigh</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+        <span class="c1"># stopping condition, report m as root</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal Exit Learning Complete&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">elif</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+        <span class="c1"># case where m is an improvement on a. </span>
+        <span class="c1"># Make recursive call with a = m</span>
+        <span class="n">clow</span> <span class="o">=</span> <span class="n">m</span> <span class="c1"># update a with m</span>
+    <span class="k">elif</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chigh</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+        <span class="c1"># case where m is an improvement on b. </span>
+        <span class="c1"># Make recursive call with b = m</span>
+        <span class="n">chigh</span> <span class="o">=</span> <span class="n">m</span> <span class="c1"># update b with m</span>
+<span class="c1">####################################################</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normal Exit Learning Complete
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">############# Testing Phase ########################</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number trials&#39;</span><span class="p">,</span><span class="n">iteration</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;model c value&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">dtrue</span><span class="o">-</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing Complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number trials 27
+model c value 0.6213699989020824
+100 kilometers is estimated to be  62.137  miles
+Estimation error is  0.0 miles
+Testing Complete
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">############ Deployment Phase #######################</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1000 kilometers is estimated to be  621.37  miles
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="topic">
 <h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>
-<p>lorem ipsum</p>
-<p>lorem ipsum</p>
-</div>
-<div class="section" id="id1">
-<h2>topic<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="subtopic">
 <h3>Subtopic<a class="headerlink" href="#subtopic" title="Permalink to this headline">¶</a></h3>
 <p>lorem ipsum</p>
@@ -309,6 +621,9 @@
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
 <li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
+<li><p>Rashid, Tariq. Make Your Own Neural Network. Kindle Edition.</p></li>
+<li><p><a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/Index.html">Qingkai Kong, Timmy Siauw, Alexandre M. Bayen, 2021 Python Programming and Numerical Methods, Academic Press,
+</a></p></li>
 </ol>
 </div>
 </div>

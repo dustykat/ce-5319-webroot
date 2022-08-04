@@ -3,7 +3,7 @@
 
 title: Machine Learning for Civil Engineers
 author: Theodore G. Cleveland
-logo: logo.png
+logo: borgcube.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

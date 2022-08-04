@@ -24,14 +24,213 @@
 
 # ## A Prediction Engine Example
 # 
-# A simple example of machine learning is the mundane process of linear regression; or the generation of a prediction engine (the regression equation) and subsequent application of the model.
+# A simple example of machine learning is the mundane process of fitting a model to data; or in ML jargon the building of a prediction engine (the model equation) and subsequent application of the engine to new situations.
 # 
-# lorem ipsum
+# Consider a simple case where we have some observations like:
 # 
-# ### Subtopic
-# lorem ipsum
+# |predictor1|predictor2|response|
+# |---:|---:|---:|
+# | 0.0 | 1.0 | 0.0 |
+# | 10.0 | 1.0 | 10.0 |
+# | 20.0 | 1.0 | 20.0 |
+# | 30.0 | 1.0 | 30.0 |
+# | 40.0 | 1.0 | 40.0 |
+# | 50.0 | 1.0 | 50.0 |
+# | 60.0 | 1.0 | 60.0 |
+# | 70.0 | 1.0 | 70.0 |
+# | 80.0 | 1.0 | 80.0 |
+# | 90.0 | 1.0 | 90.0 |
+# | 100.0 | 1.0 | 100.0 |
+# | 0.0 | 2.0 | 0.0 |
+# | 10.0 | 2.0 | 5.0 |
+# | 20.0 | 2.0 | 10.0 |
+# | 30.0 | 2.0 | 15.0 |
+# | 40.0 | 2.0 | 20.0 |
+# | 50.0 | 2.0 | 25.0 |
+# | 60.0 | 2.0 | 30.0 |
+# | 70.0 | 2.0 | 35.0 |
+# | 80.0 | 2.0 | 40.0 |
+# | 90.0 | 2.0 | 45.0 |
+# | 100.0 | 2.0 | 50.00 |
+# | 0.0 | 6.0 | 0.0 |
+# | 10.0 | 6.0 | 1.667 |
+# | 20.0 | 6.0 | 3.333 |
+# | 30.0 | 6.0 | 5.0 |
+# | 40.0 | 6.0 | 6.667 |
+# | 50.0 | 6.0 | 8.333 |
+# | 60.0 | 6.0 | 10.0 |
+# | 70.0 | 6.0 | 11.667 |
+# | 80.0 | 6.0 | 13.333 |
+# | 90.0 | 6.0 | 15.0 |
+# | 100.0 | 6.0 | 16.667 |
 # 
+# And if we simply try plotting we don't learn much.
+
+# In[1]:
+
+
+input1=[0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,]
+input2=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+        2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,
+        6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
+output=[0.0,10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,
+       100.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,0.0, 
+       1.6666833333333333, 3.3333666666666666, 5.00005, 6.666733333333333, 8.333416666666666, 10.0001, 11.666783333333331, 13.333466666666666, 15.00015, 16.666833333333333]
+
+import matplotlib.pyplot as plt # the python plotting library
+plottitle ='Simple Prediction Engine' 
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(input1, output, c='red',linewidth=0,marker='o') 
+plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Predictor')
+plt.ylabel('Response')
+plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# Lets postulate a prediction engine structure as
 # 
+# $$r=\beta_1 p_1^{\beta_2} \cdot \beta_3 p_2^{\beta_4}$$
+# 
+# and try to pick values that make the model explain the data - here strictly by plotting.
+# 
+# First our prediction engine 
+
+# In[2]:
+
+
+def response(beta1,beta2,beta3,beta4,predictor1,predictor2):
+    response = (beta1*predictor1**beta2)*(beta3*predictor2**beta4)
+    return(response)
+
+
+# Now some way to guess model parameters (the betas) and plot our model response against the observed response.  Here we choose to plot the observed values versus model values, if we find a good model, the line should plot as equal value line (45 degree line)  
+
+# In[3]:
+
+
+beta1 = 1
+beta2 = 1
+beta3 = 1
+beta4 = 1
+
+howmany = len(output)
+modeloutput = [0 for i in range(howmany)]
+
+for i in range(howmany):
+    modeloutput[i]=response(beta1,beta2,beta3,beta4,input1[i],input2[i])
+    
+# now the plot
+plottitle ='Simple Prediction Engine' 
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(modeloutput, output, c='red',linewidth=1,marker='o') 
+#plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Model Value')
+plt.ylabel('Observed Value')
+#plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# Our first try is not too great.  Lets change $\beta_2$
+
+# In[4]:
+
+
+beta1 = 1
+beta2 = 2
+beta3 = 1
+beta4 = 1
+
+howmany = len(output)
+modeloutput = [0 for i in range(howmany)]
+
+for i in range(howmany):
+    modeloutput[i]=response(beta1,beta2,beta3,beta4,input1[i],input2[i])
+    
+# now the plot
+plottitle ='Simple Prediction Engine' 
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(modeloutput, output, c='red',linewidth=1,marker='o') 
+#plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Model Value')
+plt.ylabel('Observed Value')
+#plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# Not much help.  After enough trials we might stumble on:
+
+# In[5]:
+
+
+beta1 = 1
+beta2 = 1
+beta3 = 1
+beta4 = -0.9
+
+howmany = len(output)
+modeloutput = [0 for i in range(howmany)]
+
+for i in range(howmany):
+    modeloutput[i]=response(beta1,beta2,beta3,beta4,input1[i],input2[i])
+    
+# now the plot
+plottitle ='Simple Prediction Engine' 
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(modeloutput, output, c='red',linewidth=1,marker='o') 
+#plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Model Value')
+plt.ylabel('Observed Value')
+#plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# And that's not too bad.  What would help is some systematic way to automatically update the model parameters until we get a good enough prediction engine, then go out and use it.  To get to perfection (which we can in this example because I know the data source), if we set the first three parameters to 1 and the last to -1 we obtain:
+
+# In[6]:
+
+
+beta1 = 1
+beta2 = 1
+beta3 = 1
+beta4 = -1
+
+howmany = len(output)
+modeloutput = [0 for i in range(howmany)]
+
+for i in range(howmany):
+    modeloutput[i]=response(beta1,beta2,beta3,beta4,input1[i],input2[i])
+    
+# now the plot
+plottitle ='Simple Prediction Engine' 
+mydata = plt.figure(figsize = (10,5)) # build a square drawing canvass from figure class
+plt.plot(modeloutput, output, c='red',linewidth=1,marker='o') 
+#plt.plot(input2, output, c='blue',linewidth=0,marker='o')
+#plt.plot(time, accumulate, c='blue',drawstyle='steps') # step plot
+plt.xlabel('Model Value')
+plt.ylabel('Observed Value')
+#plt.legend(['Predictor 1','Predictor 2'])
+plt.title(plottitle)
+plt.show()
+
+
+# Now with our machine all learned up we can use it for other cases, for instance if the inputs are [121,2]
+
+# In[7]:
+
+
+print('predicted response is',response(beta1,beta2,beta3,beta4,121,2))
+
 
 # ## Machine Learning Workflow
 # 
