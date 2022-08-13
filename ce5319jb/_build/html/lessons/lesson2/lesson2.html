@@ -323,6 +323,23 @@
   <a class="reference internal nav-link" href="#machine-learning-workflow">
    Machine Learning Workflow
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computational-thinking-and-data-science">
+     Computational Thinking and Data Science
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#problem-solving-protocol">
+     Problem Solving Protocol
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#workflow-steps">
+     Workflow Steps
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
@@ -837,7 +854,61 @@ Beta 4  -1.0
 </div>
 <div class="section" id="machine-learning-workflow">
 <h2>Machine Learning Workflow<a class="headerlink" href="#machine-learning-workflow" title="Permalink to this headline">¶</a></h2>
-<p>Despite the diverse applications of machine learning, most machine learning projects follow a typical workflow that includes some (or all) of the steps listed in this section.</p>
+<p>Despite the diverse applications of machine learning, most machine learning projects follow a typical workflow.  Prior to examination of workflow consider ordinary problem solving.</p>
+<div class="section" id="computational-thinking-and-data-science">
+<h3>Computational Thinking and Data Science<a class="headerlink" href="#computational-thinking-and-data-science" title="Permalink to this headline">¶</a></h3>
+<p>Computational thinking (CT) refers to the thought processes involved in expressing solutions as computational steps or algorithms that can be carried out by a computer.</p>
+<p>CT is literally a process for breaking down a problem into smaller parts, looking for patterns in the problems, identifying what kind of information is needed, developing a step-by-step solution, and implementing that solution.</p>
+<ol class="simple">
+<li><p><strong>Decomposition</strong> is the process of taking a complex problem and breaking it into more manageable sub-problems. Decomposition often leaves a framework of sub-problems that later have to be assembled (system integration) to produce a desired solution.</p></li>
+<li><p><strong>Pattern Recognition</strong> refers to finding similarities, or shared characteristics of problems, which allows a complex problem to become easier to solve, and allows use of same solution method for each occurrence of the pattern.</p></li>
+<li><p><strong>Abstraction</strong> is the process of identifying important characteristics of the problem and ignore characteristics that are not important. We use these characteristics to create a representation of what we are trying to solve.</p></li>
+<li><p><strong>Algorithms</strong> are step-by-step instructions of how to solve a problem</p></li>
+<li><p><strong>System Integration</strong> (implementation)is the assembly of the parts above into the complete (integrated) solution.  Integration combines parts into a program which is the realization of an algorithm using a syntax that the computer can understand.</p></li>
+</ol>
+</div>
+<div class="section" id="problem-solving-protocol">
+<h3>Problem Solving Protocol<a class="headerlink" href="#problem-solving-protocol" title="Permalink to this headline">¶</a></h3>
+<p>Many engineering courses emphasize a problem solving process that somewhat parallels the <a class="reference external" href="https://en.wikipedia.org/wiki/Scientific_method">scientific method</a> as one example of an effective problem solving strategy. Stated as a protocol it goes something like:</p>
+<ol class="simple">
+<li><p>Observation: Formulation of a question</p></li>
+<li><p>Hypothesis: A  conjecture that may explain observed behavior. Falsifiable by an experiment whose outcome conflicts with predictions deduced from the hypothesis</p></li>
+<li><p>Prediction: How the experiment should conclude if hypothesis is correct</p></li>
+<li><p>Testing: Experimental design, and conduct of the experiment.</p></li>
+<li><p>Analysis: Interpretation of experimental results</p></li>
+</ol>
+<p>This protocol can be directly adapted to computational problems as:</p>
+<ol class="simple">
+<li><p>Define the problem (problem statement)</p></li>
+<li><p>Gather information (identify known and unknown values, and governing equations)</p></li>
+<li><p>Generate and evaluate potential solutions</p></li>
+<li><p>Refine and implement a solution</p></li>
+<li><p>Verify and test the solution.</p></li>
+</ol>
+<p>For actual computational methods the protocol becomes:</p>
+<ol class="simple">
+<li><p>Explicitly state the problem</p></li>
+<li><p>State:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Input information</p></li>
+<li><p>Governing equations or principles, and</p></li>
+<li><p>The required output information.</p></li>
+</ul>
+<ol class="simple">
+<li><p>Work a sample problem by-hand for testing the general solution.</p></li>
+<li><p>Develop a general solution method (coding).</p></li>
+<li><p>Test the general solution against the by-hand example, then apply to the real problem.</p></li>
+</ol>
+<p>Oddly enough the first step is the most important and sometimes the most difficult. In a practical problem, step 2 is sometimes difficult because a skilled programmer is needed to translate the governing principles into an algorithm for the general solution (step 4).</p>
+<p>We can compare the steps above to a visual representation of the process below from <a class="reference external" href="http://ce-5319-webroot/3-Readings/MachineLearningTechniquesforCivilEngineeringProblems.pdf">Machine Learning Techniques for Civil Engineering Problems</a>.</p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/ProblemSolvingProtocol.png" width="800"> <figcaption>Figure 2.1. Problem Solving Protocol Diagram </figcaption>
+</figure>
+</div>
+<div class="section" id="workflow-steps">
+<h3>Workflow Steps<a class="headerlink" href="#workflow-steps" title="Permalink to this headline">¶</a></h3>
+<p>A typical machine learning workflow  includes some (or all) of the steps listed below adapted from <a class="reference external" href="https://www.amazon.com/Machine-Learning-Python-Beginners-Hands/dp/B09BT7YCCM">Machine Learning With Python For Beginners</a>.  As you examine the steps compare them to the more classical problem solving approaches to recognize the parallels.</p>
 <ul class="simple">
 <li><p>Step 1. Identify, Collect, and Loading Data. (Data Wrangling) The first step to any machine learning project is to load the data. Based on the data at hand, we would need different libraries to load the respective data.  If we are using a python derivative to perform the modeling then for loading CSV files, we need the pandas library. For loading 2D images, we can use the Pillow or OpenCV library.</p></li>
 <li><p>Step 2. Examine the data. (Exploratory Data Analysis) Assuming the data has been loaded correctly, the next step is to examine the data to get a general feel for the dataset. Let us take the case of a simple CSV file-based dataset. For starters, we can look at the dataset’s shape (i.e., the number of rows and columns in the dataset). We can also peek inside the dataset by looking at its first 10 or 20 rows. In addition, we can perform fundamental analysis on the data to generate some descriptive statistical measures (such as the mean, standard deviation, minimum and maximum values). Last but not least, we can check if the dataset contains missing data. If there are missing values, we need to handle them.</p></li>
@@ -857,16 +928,22 @@ Beta 4  -1.0
 </ul>
 <p>Consider Figure 2.1 below as another representation of workflow from <a class="reference external" href="https://towardsdatascience.com/the-machine-learning-workflow-explained-557abf882079">Machine Learning Workflow Explained</a>.</p>
 <figure align="center">
-<img src="https://miro.medium.com/max/700/1*XgcF3ayEH2Q8JEbZx8D09Q.png" width="800"> <figcaption>Figure 2.1. ML Workflow Diagram </figcaption>
+<img src="https://miro.medium.com/max/700/1*XgcF3ayEH2Q8JEbZx8D09Q.png" width="800"> <figcaption>Figure 2.2. ML Workflow Diagram </figcaption>
 </figure>
 <p>The figure components largely address each list item, some are shared, others combined - nevertheless we have a suitable workflow diagram.  The author of the diagram places data at the top and cycles from there, a subtle symbolic placement with which I wholly agree.  Read his blog post to see his thinking in that respect.</p>
 <p><a id=’#ref1’></a></p>
+</div>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
 <li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 5-7). Kindle Edition.</p></li>
 <li><p><a class="reference external" href="https://towardsdatascience.com/the-machine-learning-workflow-explained-557abf882079">Thevapalan, Arunn (2021). The Machine Learning Workflow Explained (and How You Can Practice It Now). Towards Data Science Blog</a></p></li>
+<li><p><a class="reference external" href="https://www.inferentialthinking.com/chapters/01/what-is-data-science.html">Computational and Inferential Thinking Ani Adhikari and John DeNero, Computational and Inferential Thinking, The Foundations of Data Science, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND) Chapter 1</a></p></li>
+<li><p><a class="reference external" href="https://learnpythonthehardway.org/book/">Learn Python the Hard Way (Online Book)</a>  Recommended for beginners who want a complete course in programming with Python.</p></li>
+<li><p><a class="reference external" href="https://www.learnpython.org/">LearnPython.org (Interactive Tutorial)</a>  Short, interactive tutorial for those who just need a quick way to pick up Python syntax.</p></li>
+<li><p><a class="reference external" href="https://runestone.academy/runestone/books/published/thinkcspy/index.html">How to Think Like a Computer Scientist (Interactive Book)</a> Interactive “CS 101” course taught in Python that really focuses on the art of problem solving.</p></li>
+<li><p><a class="reference external" href="https://elitedatascience.com/learn-python-for-data-science">How to Learn Python for Data Science, The Self-Starter Way</a></p></li>
 </ol>
 </div>
 </div>
