@@ -1,0 +1,5 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore 1-Databases 
+1-Databases
