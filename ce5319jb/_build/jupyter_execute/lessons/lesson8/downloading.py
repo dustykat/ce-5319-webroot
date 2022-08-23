@@ -43,9 +43,6 @@
 # 
 # Both global dimming and global warming have been happening all over the world and together they have caused severe changes in the rainfall patterns. It is also believed that it was global dimming behind the 1984 Saharan drought that killed millions of people in sub-Saharan Africa. Scientists believe that despite the cooling effect created by global dimming, the earth’s temperature has increased by more than 1 deg. in the last century.
 # 
-# 
-# 
-# ## Example Data Science Problem 
 # In Texas, evaporation rates (reported as inches per month) are available from the Texas Water Development Board.
 # https://waterdatafortexas.org/lake-evaporation-rainfall
 # The map below shows the quadrants (grid cells) for which data are tabulated.
@@ -54,8 +51,7 @@
 # 
 # Cell '911' is located between Corpus Christi and Houston in the Coastal Plains of Texas.  A copy of the dataset downloaded from the Texas Water Development Board is located at http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/all_quads_gross_evaporation.csv
 # 
-# Using naive data science anlayze the data for Cell '911' and decide if the conclusions by Peterson and others (1995) are supported by this data.
-# 
+# Using naive analysis examine the data for Cell '911' and decide if the conclusions by Peterson and others (1995) are supported by this data.
 
 # ### Getting the Data
 # To analyze these data a first step is to obtain the data.  The knowlwdge that the data are arranged in a file with a ``.csv`` extension is a clue how to proceede.  We will need a module to interface with the remote server, in this example lets use ``requests`` , which allows us to make GET and POST requests using the HTTP/HTTPS protocols to interact with web servers. So first we load the module
@@ -363,6 +359,7 @@ get_ipython().run_line_magic('pwd', '# notice no space between % and pwd')
 
 
 # Delete the directory if it already exists BE CAREFUL 
+# This code is here so the notebook resets during Jupyter Book builds
 get_ipython().run_line_magic('rm', '-rf ./MyImageFiles/')
 get_ipython().run_line_magic('rm', '-rf wget-log*')
 
@@ -436,13 +433,9 @@ get_ipython().system(' wget -nd -nH --no-parent --reject "index.html*" -e robots
 get_ipython().run_line_magic('ls', './MyImageFiles/')
 
 
-# In[76]:
+# Now we have the files, if we browse our machine we can examine them.  The copies for this example are residing at [Link](http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/MyImageFiles)
 
-
-
-
-
-# ## References (for this example)
+# ### References (for this example)
 # 
 # 1. [`wget` recursive directory hints](https://stackoverflow.com/questions/273743/using-wget-to-recursively-fetch-a-directory-with-arbitrary-files-in-it)
 # 2. [`wget` mirror hints](https://stackoverflow.com/questions/5043239/how-do-i-mirror-a-directory-with-wget-without-creating-parent-directories)
@@ -450,16 +443,10 @@ get_ipython().run_line_magic('ls', './MyImageFiles/')
 
 # 
 
-# ### References
+# ## References
 # 
 # 1. List processing tips [https://www.programiz.com/python-programming/del](https://www.programiz.com/python-programming/del)
 # 
 # 2. Character replacement tips [https://www.geeksforgeeks.org/python-string-replace/](https://www.geeksforgeeks.org/python-string-replace/)
 # 
 # 3. Python file manipulations [https://www.tutorialspoint.com/python/python_files_io.htm](https://www.tutorialspoint.com/python/python_files_io.htm)
-
-# In[ ]:
-
-
-
-
