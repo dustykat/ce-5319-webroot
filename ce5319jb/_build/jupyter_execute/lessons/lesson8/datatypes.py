@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
-
-
-
 # # Common Data Types
 # 
 # Two "kinds" of data that exist are: 
