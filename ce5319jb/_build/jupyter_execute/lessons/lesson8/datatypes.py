@@ -25,7 +25,6 @@
 # sometimes can be made quantitative for analysis. For example, flood is a
 # qualitative variable. However, we can define a threshold flowrate to determine
 # the flooding and non-flooding states in a river section.
-# 
 
 # # Scale
 # 
