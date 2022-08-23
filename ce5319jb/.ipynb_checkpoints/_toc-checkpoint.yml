@@ -12,6 +12,11 @@ chapters:
 - file: lessons/lesson6/lesson6 # unsupervised learning
 - file: lessons/lesson7/lesson7 # reinforcement learning
 - file: lessons/lesson8/lesson8 # exploratory data analysis
+  sections:
+  - file: lessons/lesson8/datatypes
+  - file: lessons/lesson8/exploratorydataanalysis
+  - file: lessons/lesson8/downloading
+  
 - file: lessons/lesson9/lesson9 # probability distributions
 - file: lessons/lesson10/optimization # optimization
   sections:

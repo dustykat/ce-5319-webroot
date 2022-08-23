@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Common Data Types &#8212; Machine Learning for Civil Engineers</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exploratory Analysis using Data Summaries" href="exploratorydataanalysis.html" />
+    <link rel="prev" title="Exploratory Data Analysis" href="lesson8.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/borgcube.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Machine Learning for Civil Engineers
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson1/lesson1.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson2/lesson2.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson3/lesson3.html">
+   Prediction Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson4/lesson4.html">
+   Classification Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson5/lesson5.html">
+   Supervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson6/lesson6.html">
+   Unsupervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson7/lesson7.html">
+   Reinforcement Learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="lesson8.html">
+   Exploratory Data Analysis
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Common Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="exploratorydataanalysis.html">
+     Exploratory Analysis using Data Summaries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="downloading.html">
+     Downloading Remote Data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson9/lesson9.html">
+   Probability Distributions
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson10/optimization.html">
+   Optimization Modeling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/1topic.html">
+     Scheduling Example
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/2topic.html">
+     Grid Search Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson10/3topic.html">
+     Gradient Descent Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson11/lesson11.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson12/lesson12.html">
+   Non-Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson13/lesson13.html">
+   Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson14/lesson14.html">
+   K Nearest Neigbor Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson15/lesson15.html">
+   Decision Tree Classification
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/lessons/lesson8/datatypes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flessons/lesson8/datatypes.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lessons/lesson8/datatypes.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Common Data Types
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quantitative-data">
+     Quantitative Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#qualitative-data">
+     Qualitative Data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scale">
+   Scale
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nominal-scale">
+     Nominal Scale
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ordinal-scale">
+     Ordinal Scale
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interval-scale">
+     Interval Scale
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ratio-scale">
+     Ratio Scale
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-and-discrete-data">
+   Continuous and Discrete Data
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#continuous-on-a-real-line">
+     Continuous on a real line
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#positive-continuous-variables">
+     Positive Continuous Variables
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mixture-datasets">
+   Mixture Datasets
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="common-data-types">
+<h1>Common Data Types<a class="headerlink" href="#common-data-types" title="Permalink to this headline">¶</a></h1>
+<p>Two “kinds” of data that exist are:</p>
+<ol class="simple">
+<li><p>Quantitative</p></li>
+<li><p>Qualitative</p></li>
+</ol>
+<div class="section" id="quantitative-data">
+<h2>Quantitative Data<a class="headerlink" href="#quantitative-data" title="Permalink to this headline">¶</a></h2>
+<p>Quantitative data deals with numbers and refers to variables that can be mea-
+sured objectively.  The root of the word is “quantity” which is an expression of how much of something exists.</p>
+<p>The load on a building, the width of a channel, the temperature of lake, and the bearing capacity of a soil are quantitative data. While the meaning of the quantitative data is clear and unambigious there is uncertainty associated with them from measurement errors, transcription errors, and related causes.</p>
+</div>
+<div class="section" id="qualitative-data">
+<h2>Qualitative Data<a class="headerlink" href="#qualitative-data" title="Permalink to this headline">¶</a></h2>
+<p>Qualitative data refers descriptors that are subjective in nature.
+The root of the work is “quality” which is an expression of how desirable is the object.</p>
+<p>Descriptors such as <em>small</em> loads, <em>wide</em> channel, <em>sharp</em> turn and <em>extreme</em> drought
+are some examples of qualitative data. The subjectivity arises because what is a
+<em>small</em> load for a large structure can be a substantial load for a small structure.
+The meaning of the qualitative data largely depends upon the situation and its
+interpretation can vary widely from one person to the next. Qualitative variables
+sometimes can be made quantitative for analysis. For example, flood is a
+qualitative variable. However, we can define a threshold flowrate to determine
+the flooding and non-flooding states in a river section.</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="scale">
+<h1>Scale<a class="headerlink" href="#scale" title="Permalink to this headline">¶</a></h1>
+<p>Four common measurement scales of data are:</p>
+<ol class="simple">
+<li><p>nominal,</p></li>
+<li><p>ordinal,</p></li>
+<li><p>interval, and</p></li>
+<li><p>ratio scales.</p></li>
+</ol>
+<div class="section" id="nominal-scale">
+<h2>Nominal Scale<a class="headerlink" href="#nominal-scale" title="Permalink to this headline">¶</a></h2>
+<p>The nominal scale is the simplest of all data scales.
+These data are qualitative and often used to label the data.
+For example, a traffic survey could ask a respondent’s gender (i.e., whether they are ’Male’ or ’Female’).
+The category ’Gender’ has two labels (Male and Female) which can be be used to filter data
+for further analysis.
+Nominal scale data have no order or hierarchy associated with them.</p>
+</div>
+<div class="section" id="ordinal-scale">
+<h2>Ordinal Scale<a class="headerlink" href="#ordinal-scale" title="Permalink to this headline">¶</a></h2>
+<p>The ordinal scale involves arranging data in an order. This ordering can be used
+to rank or compare two or more values. Ordinal scale also refers to qualitative
+data. For example we could classify droughts as ’mild’, moderate’ and ’severe’.
+Clearly severe droughts have far greater impacts than moderate droughts which
+in turn have a greater impact than mild droughts.
+We can also assign numeric values (say, 1 for mild, 2 for moderate and 3 for se-
+vere) to rank drought events in a region. However, we cannot do any arithmetic
+on these data (mild + moderate 6 = severe). Similarly the difference between a
+mild and moderate drought is not the same as the difference between a moderate
+and severe drought.
+Ordinal scales are often used to assess relative perceptions, choices and feedback.</p>
+</div>
+<div class="section" id="interval-scale">
+<h2>Interval Scale<a class="headerlink" href="#interval-scale" title="Permalink to this headline">¶</a></h2>
+<p>Interval scale data have an order and it is possible to calculate exact differences
+between the values. The interval scale is used with quantitative data. You can
+calculate summary measures (e.g., mean, variance) on interval scale data.
+The temperature measured in Celsius is a classic example of interval scale data.
+20 oC is twice the value of 10 oC (i.e., the difference is 10 oC). Similarly, the
+difference between 90 oC and 80 oC is also 10 oC. This is because the values
+are being measured on the same interval.
+However, 20 oC is not twice as hot as 10 oC. This is evident when these
+temperatures are converted to the Fahrenheit scale (10 oC = 50 oF and 20 oC
+= 68 oF ). The reason for this is that there is no absolute zero in either Celsius
+of Fahrenheit scales. Zero just another measurement.</p>
+</div>
+<div class="section" id="ratio-scale">
+<h2>Ratio Scale<a class="headerlink" href="#ratio-scale" title="Permalink to this headline">¶</a></h2>
+<p>Variables measured on the ratio scale have an order, there are measured on
+fixed intervals (differences between two values can be calculated) and have an
+absolute zero. In other words, Ratio Scale has all the properties of an interval
+scale and also has an absolute zero. Ratio scale is used for quantitative data.
+Consider daily rainfall amounts. There is an absolute zero which corresponds to
+no rainfall. Other measurable amounts of rainfall are measured with respect to
+this absolute zero. 20’ of rainfall is more than 10’ of rainfall. Also, 20’ of rainfall
+is twice the amount of 10’ accumulation. Their ratio is equal to 2. In a similar
+vein, 3’ of rainfall is twice the amount of 6’ accumulation (again the ratio is
+2). As the name suggests, variables measured on ratio scale can be divided to
+obtain ratios or the degree of proportionality between two observations.
+3</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="continuous-and-discrete-data">
+<h1>Continuous and Discrete Data<a class="headerlink" href="#continuous-and-discrete-data" title="Permalink to this headline">¶</a></h1>
+<p>Quantitative data can be further split into continuous and discrete data.
+Discrete data are integers and refer to variables that measure whole or indivisible entities.
+The number of vehicles passing an intersection over a year is discrete data as this is a whole number (integer).</p>
+<p>Continuous data on the other hand are not restricted to integer values but also can take on fractional or decimal values. For example, The temperature of water in a lake can be 67.3<span class="math notranslate nohighlight">\(^o\)</span>F .
+Sometimes a variable that is continuous can be discretely measured or made
+discrete. For example, if we measure (or round off) the temperature of a lake
+to the nearest degree then we would have temperature measurements that are
+only integers. While continuous variables can be treated as discrete due to
+measurement limitations or data approximations, it is important to remember
+that intrinsically they can take continuous values and the discretization was
+simply a matter of convenience or a measurement limitation.</p>
+<p>Summary measures of discrete variables (e.g., mean, standard deviation) can
+sometime have decimal values. For example, if 3 cars pass an intersection in
+the first hour and 4 cars in the second then the average number of cars is 3.5.
+In such instances, the value must be rounded appropriately (say to 4 if we are
+using it to estimate design loads on the pavement) as the decimal number is not
+physically realistic.</p>
+<div class="section" id="continuous-on-a-real-line">
+<h2>Continuous on a real line<a class="headerlink" href="#continuous-on-a-real-line" title="Permalink to this headline">¶</a></h2>
+<p>Some variables in civil engineering are continuous on a real line (axis). For
+example, soil temperature measured in Celsius or Fahrenheit can assume both
+positive and negative values in cold regions.
+Similarly, the groundwater table measured with respect to mean sea level (MSL)
+can be either positive (i.e., below MSL) or negative (above MSL). A zero value
+simply suggests that the water table coincides with MSL which is just as a valid
+state as water table being above or below MSL.
+For variables that are continuous on a real line (axis), zero values have no special
+meaning and represent yet another value that the variable can take. In other
+words, they are often measured on an interval scale.</p>
+</div>
+<div class="section" id="positive-continuous-variables">
+<h2>Positive Continuous Variables<a class="headerlink" href="#positive-continuous-variables" title="Permalink to this headline">¶</a></h2>
+<p>As discussed above, the magnitude of a force is always positive. As this magni-
+tude can take decimal values it is a positive continuous variable. Many variables
+of interest to civil engineers are positive continuous. Flowrates, pollutant con-
+centrations, the magnitude of shear stresses are all positive continuous.
+Some variables that are continuous on a real line can also be made positive con-
+tinuous by shifting the datum. For example, there are no negative temperatures
+on Kelvin scale. Temperatures measured using Celsius scale can be made all
+positive by converting them into Kelvin scale. In a similar vein, the groundwa-
+ter table measurements at a well can be made all positive by measuring values
+from the top of the well casing (assuming positive downwards) instead of the
+mean sea level.</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="mixture-datasets">
+<h1>Mixture Datasets<a class="headerlink" href="#mixture-datasets" title="Permalink to this headline">¶</a></h1>
+<p>The positive continuous scale starts at zero and in theory extends all the way to
+infinity. For some positive continuous variables zero is yet another value if they
+are measured on the interval scale. On the other hand if they are measured on
+a ratio scale the value of zero is absolute and can assume special importance.
+For example, zero rainfall implies no rainfall. Therefore, a time-series data of
+daily rainfall in a year can have several values of zero (no rainfall) and some days
+with positive (non-zero rainfall). Such a dataset can be viewed as a mixture</p>
+<ul class="simple">
+<li><p>At a high level the data is discrete where each day belongs to either (rain-
+fall=Yes) or (rainfall=No) state. Non-zero, positive continuous values exist for
+(Rainfall=Yes) state (see Figure 1).</p></li>
+</ul>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lessons/lesson8"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="lesson8.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Exploratory Data Analysis</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="exploratorydataanalysis.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Exploratory Analysis using Data Summaries</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Theodore G. Cleveland<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
