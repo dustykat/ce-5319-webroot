@@ -143,6 +143,187 @@
 # - At a high level the data is discrete where each day belongs to either (rain-
 # fall=Yes) or (rainfall=No) state. Non-zero, positive continuous values exist for
 # (Rainfall=Yes) state (see Figure 1).
+# 
+# ![figure8.1.1](mixturedatatype.png)
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/mixturedatatype.png" width="800"> <figcaption>Figure 8.1. Mixture Dataset Diagram </figcaption>
+# </figure>
+# 
+# Similar mixtures can also be seen with strictly discrete data. For example, if one were
+# to count number of vehicles passing an intersection every hour of a day, there
+# could be hours with no vehicles passing the intersection (traffic = No) and hours
+# where some vehicles passed the intersection (traffic = Yes). A discrete dataset
+# with non-zero values would correspond to the (traffic = Yes) state.
+# It is therefore important to ascertain upfront whether the value of zero is a
+# valid measurement for the questions we seek to address and how zero values will be handled during the analysis. Inclusion of a large number of zeros (zero-
+# inflated datasets) will lower the mean and will affect other summary measures,
+# on the other hand, exclusion of zero when it is a valid system response will lead
+# to selection bias. The choices on how to handle zeros will depend upon the
+# questions one seek to answer. It is important that the decision is made explicit
+# and justified.
+# 
+# # Truncated Data
+# 
+# Truncated data arise when values beyond a certain boundary are either not
+# collected or removed prior to analysis. For example, the exclusion of zero values
+# from a mixture data is one form of truncation.
+# 
+# Weigh-in-Motion (WIM) devices measure axle weights and gross vehicle weights of trucks while in motion. WIM data are used to estimate potential loads on bridges and also to select vehicles for static inspection (yep, profiling!). Trucks weighing below a certain weight are allowed to pass through or even when their weights are collected, the data is discarded when ascertaining design loads. There is a threshold load boundary that is used to truncate the data.
+# 
+# Flooding risks are often estimated using peak annual maximum flow data.
+# While flowrates are measured at a much higher rate (every 1 - 15 minutes), much of these data are discarded when assessing flooding risks. There is a threshold boundary that separates the maximum observed flow (`state == max.flow`) from the rest of the dataset (`state != max. flow`). However, the boundary in this case is not stable and varies annually. For example, The maximum flow obtained in a dry year could be lower than say the tenth highest flow observed in a wet year.
+# 
+# Truncation of data is also common when conducting or analyzing surveys .
+# Certain surveys may target a specific age-group (teenage drivers) while exclud-
+# ing others. Survey’s focused on environmental justice issues tend to focus on
+# low-income neighborhoods in industrial areas. These data subsets are often
+# extracted from larger ”quality of life” surveys that include respondents from
+# different socioeconomic strata.
+# 
+# Truncation of data creates a selection bias; hence any truncation/censoring made explicitly during data analysis or implicitly during data collection must be well documented. Inferences drawn from the censored data will be biased towards the sub-population that was sampled and will not be representative of the entire population. 
+# 
+# In a lot of applications truncating is appropriate, necessary, and understood - in instances where this is not so, disclosure is vital.
+
+# # Censored Data
+# 
+# Censoring occurs when certain values in the dataset are only partially known.
+# For example, a survey instrument measuring driving habits may classify the age
+# group as ≤ 19 years. In this case, we know whether the respondent is below 20
+# years of age but we don’t know the exact age of each respondent.
+# 
+# Censoring also arises from instrument measurement limitations. 
+# Many instruments produce a small response even when there is no stimulus on the system.
+# This response is referred to as the noise. 
+# The detection limit (DL) of an instrument is the lowest possible measurement that an instrument can make. This corresponds to a signal produced by the instrument that is significantly greater than the noise.
+# When an instrument reports a value below its detection limit we cannot be
+# fully confident of the value as the signal is affected by the noise. It is common
+# to report such values as ≤ DL.
+# 
+# Let us say, a flowmeter can reliably measure flows that are at least 2 cfs. A censored dataset would arise if some of the measurements are below 2 cfs. A
+# censored dataset would look like: 
+# 
+# |Measurement_ID|Reported_Value|
+# |---:|---:|
+# |808001|2.4|
+# |808002|3.2|
+# |808003|≤ 2.0|
+# |808004|2.1|
+# |808005|≤ 2.0|
+# |808006|2.3|
+# |$\vdots$|$\vdots$|
+# 
+# Censored data is a form of mixture data where some numbers are known with greater
+# certainty and reported as numbers and others are known with less certainty and
+# reported as inequalities. Left censoring refers to the situation where values
+# below a threshold are not known with certainty and represented as inequalities.
+# Instruments are designed to work correctly up to some specified upper limit.
+# For example, a weighing scale may be designed to measure a maximum mass
+# of 1000 kg. If we were to place a mass of 1200 kg on such a machine, we could
+# ascertain that the mass is ≥ 1000 kg (instrument upper limit) but would not get
+# a reading of 1200 kg. The dial on an analog scale would go past the maximum
+# value of 1000 kg or a digital readout would raise an exception message stating the
+# mass is over the instrument maximum limit. Situations where values above a
+# threshold are uncertain are referred to as right censored data. 
+# 
+# As another example, a traffic survey might categorize people over ≥ 70 years as elderly.
+# Respondents who select these category are at least 75 years of age but we would
+# not know how old they actually are.
+# 
+# It is not hard to conceive of situations where a dataset can be censored on both
+# ends (i.e., be left and right censored). Such datasets are referred to as interval
+# censored data
+# 
+# The figure below depicts the left and right censoring idea. The censoring occurs at values equal to 30 and 50. While the instrument may read a value of 25 or 55, because
+# of the censoring they should be reported as ≤ 30 and ≥ 50 respectively.
+# 
+# ![figure8.1.2](censoreddatatype.png)
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/censoreddatatype.png" width="800"> <figcaption>Figure 8.2. Censored Dataset Diagram </figcaption>
+# </figure>
+# 
+# ## Censoring versus Truncation
+# 
+# Censoring and truncation are distinct and should not be confused for one an-
+# other. Both censoring and truncation define boundaries in the dataset. However,
+# in censoring, we may be making (or have) measurements outside the boundaries.
+# We don’t want to throw away or exclude the data that are outside the censoring
+# boundaries. These are valid measurements but we don’t know their true values
+# are.
+# 
+# On the other hand, in truncation, we are either not making measurements out-
+# side the boundaries or willingly excluding data that are collected outside the
+# truncation boundaries. Both truncation and censoring are distinct from round-
+# ing where data are displayed to a specified number of significant digits to be
+# consistent with the precision of the instrument and physical meaning of the
+# variable.
+# 
+# # Image Data
+# 
+# Images are usually arrays of signed integers or floats, that are interpreted by our programs to render what we see as an image.  Underneath they are truncated data (black and white are used as upper and lower bounds depending on the color palette).  Later on we will use image data and it will be important to have some feel for the underlying data.
+# 
+# Recall our cat image
+# 
+# ![figure8.1.3](cat784.png)
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/cat784.png" width="200"> <figcaption>Figure 8.3. Cat Image </figcaption>
+# </figure>
+# 
+# Lets see it in gray scale
+
+# In[1]:
+
+
+import numpy              # useful numerical routines
+import scipy.special      # special functions library
+import scipy.misc         # image processing code
+import imageio            # image processing library
+import matplotlib.pyplot  # import plotting routines
+import warnings           # suppress warnings
+warnings.filterwarnings('ignore') 
+img_array = imageio.imread("cat784.png", as_gray = True)
+img_data1 = 255.0 - img_array.reshape(784)
+img_data1 = ((img_data1/255.0)*0.99) + 0.01
+matplotlib.pyplot.imshow(numpy.asfarray(img_data1).reshape((28,28)),cmap = 'Greys') # construct a graphic object #
+matplotlib.pyplot.show() # show the graphic object to a window #
+matplotlib.pyplot.close('all')
+
+
+# Now lets examine the 28x28 array of numbers that are representing our image
+
+# In[2]:
+
+
+cat_data = numpy.asfarray(img_data1).reshape((28,28)) # extract image as 32-bit float
+for irow in range(28):
+    for jcol in range(28):
+        cat_data[irow][jcol]=round(cat_data[irow][jcol],2) # round to 2 digits
+    print(cat_data[irow][:],'\n')
+
+
+# ## Summary
+# 
+# Understanding data types and their measurement scales is an important
+# first step of data analysis and ultimately machine learning sucess or failure.
+# 
+# The choice of the models and analysis techniques depend upon the characteristics of the data (data type and scale)
+
+# # References (for this section)
+# 
+# 1. [Discrete and Continuous Data](https://www.open.edu/openlearn/mod/oucontent/view.php?id=85587&section=1)
+# 
+# 2. [Types of Measurement Scales](https://www.mymarketresearchmethods.com/types-of-data-nominal-ordinal-interval-ratio/)
+# 
+# 3. [Qualitative and Quantitative Data](https://www.g2.com/articles/qualitative-vs-quantitative-data)
+# 
+# 4. [Truncated and Censored Data](https://www.statology.org/truncated-censored-data/)
+# 
+# 5. [Types of Data Sets](https://study.com/learn/lesson/data-set-in-math-types-examples.html)
+# 
+# 6. [Storing Images in Databases](https://www.researchgate.net/post/How_to_store_images_photos_in_database_in_mysql)
+# 
 
 # In[ ]:
 

@@ -385,6 +385,40 @@
    Mixture Datasets
   </a>
  </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#truncated-data">
+   Truncated Data
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#censored-data">
+   Censored Data
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#censoring-versus-truncation">
+     Censoring versus Truncation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-data">
+   Image Data
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-for-this-section">
+   References (for this section)
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -546,6 +580,272 @@ with positive (non-zero rainfall). Such a dataset can be viewed as a mixture</p>
 fall=Yes) or (rainfall=No) state. Non-zero, positive continuous values exist for
 (Rainfall=Yes) state (see Figure 1).</p></li>
 </ul>
+<p><img alt="figure8.1.1" src="../../_images/mixturedatatype.png" /></p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/mixturedatatype.png" width="800"> <figcaption>Figure 8.1. Mixture Dataset Diagram </figcaption>
+</figure>
+<p>Similar mixtures can also be seen with strictly discrete data. For example, if one were
+to count number of vehicles passing an intersection every hour of a day, there
+could be hours with no vehicles passing the intersection (traffic = No) and hours
+where some vehicles passed the intersection (traffic = Yes). A discrete dataset
+with non-zero values would correspond to the (traffic = Yes) state.
+It is therefore important to ascertain upfront whether the value of zero is a
+valid measurement for the questions we seek to address and how zero values will be handled during the analysis. Inclusion of a large number of zeros (zero-
+inflated datasets) will lower the mean and will affect other summary measures,
+on the other hand, exclusion of zero when it is a valid system response will lead
+to selection bias. The choices on how to handle zeros will depend upon the
+questions one seek to answer. It is important that the decision is made explicit
+and justified.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="truncated-data">
+<h1>Truncated Data<a class="headerlink" href="#truncated-data" title="Permalink to this headline">¶</a></h1>
+<p>Truncated data arise when values beyond a certain boundary are either not
+collected or removed prior to analysis. For example, the exclusion of zero values
+from a mixture data is one form of truncation.</p>
+<p>Weigh-in-Motion (WIM) devices measure axle weights and gross vehicle weights of trucks while in motion. WIM data are used to estimate potential loads on bridges and also to select vehicles for static inspection (yep, profiling!). Trucks weighing below a certain weight are allowed to pass through or even when their weights are collected, the data is discarded when ascertaining design loads. There is a threshold load boundary that is used to truncate the data.</p>
+<p>Flooding risks are often estimated using peak annual maximum flow data.
+While flowrates are measured at a much higher rate (every 1 - 15 minutes), much of these data are discarded when assessing flooding risks. There is a threshold boundary that separates the maximum observed flow (<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">max.flow</span></code>) from the rest of the dataset (<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">!=</span> <span class="pre">max.</span> <span class="pre">flow</span></code>). However, the boundary in this case is not stable and varies annually. For example, The maximum flow obtained in a dry year could be lower than say the tenth highest flow observed in a wet year.</p>
+<p>Truncation of data is also common when conducting or analyzing surveys .
+Certain surveys may target a specific age-group (teenage drivers) while exclud-
+ing others. Survey’s focused on environmental justice issues tend to focus on
+low-income neighborhoods in industrial areas. These data subsets are often
+extracted from larger ”quality of life” surveys that include respondents from
+different socioeconomic strata.</p>
+<p>Truncation of data creates a selection bias; hence any truncation/censoring made explicitly during data analysis or implicitly during data collection must be well documented. Inferences drawn from the censored data will be biased towards the sub-population that was sampled and will not be representative of the entire population.</p>
+<p>In a lot of applications truncating is appropriate, necessary, and understood - in instances where this is not so, disclosure is vital.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="censored-data">
+<h1>Censored Data<a class="headerlink" href="#censored-data" title="Permalink to this headline">¶</a></h1>
+<p>Censoring occurs when certain values in the dataset are only partially known.
+For example, a survey instrument measuring driving habits may classify the age
+group as ≤ 19 years. In this case, we know whether the respondent is below 20
+years of age but we don’t know the exact age of each respondent.</p>
+<p>Censoring also arises from instrument measurement limitations.
+Many instruments produce a small response even when there is no stimulus on the system.
+This response is referred to as the noise.
+The detection limit (DL) of an instrument is the lowest possible measurement that an instrument can make. This corresponds to a signal produced by the instrument that is significantly greater than the noise.
+When an instrument reports a value below its detection limit we cannot be
+fully confident of the value as the signal is affected by the noise. It is common
+to report such values as ≤ DL.</p>
+<p>Let us say, a flowmeter can reliably measure flows that are at least 2 cfs. A censored dataset would arise if some of the measurements are below 2 cfs. A
+censored dataset would look like:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:right head"><p>Measurement_ID</p></th>
+<th class="text-align:right head"><p>Reported_Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:right"><p>808001</p></td>
+<td class="text-align:right"><p>2.4</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>808002</p></td>
+<td class="text-align:right"><p>3.2</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p>808003</p></td>
+<td class="text-align:right"><p>≤ 2.0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>808004</p></td>
+<td class="text-align:right"><p>2.1</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p>808005</p></td>
+<td class="text-align:right"><p>≤ 2.0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>808006</p></td>
+<td class="text-align:right"><p>2.3</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p><span class="math notranslate nohighlight">\(\vdots\)</span></p></td>
+<td class="text-align:right"><p><span class="math notranslate nohighlight">\(\vdots\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Censored data is a form of mixture data where some numbers are known with greater
+certainty and reported as numbers and others are known with less certainty and
+reported as inequalities. Left censoring refers to the situation where values
+below a threshold are not known with certainty and represented as inequalities.
+Instruments are designed to work correctly up to some specified upper limit.
+For example, a weighing scale may be designed to measure a maximum mass
+of 1000 kg. If we were to place a mass of 1200 kg on such a machine, we could
+ascertain that the mass is ≥ 1000 kg (instrument upper limit) but would not get
+a reading of 1200 kg. The dial on an analog scale would go past the maximum
+value of 1000 kg or a digital readout would raise an exception message stating the
+mass is over the instrument maximum limit. Situations where values above a
+threshold are uncertain are referred to as right censored data.</p>
+<p>As another example, a traffic survey might categorize people over ≥ 70 years as elderly.
+Respondents who select these category are at least 75 years of age but we would
+not know how old they actually are.</p>
+<p>It is not hard to conceive of situations where a dataset can be censored on both
+ends (i.e., be left and right censored). Such datasets are referred to as interval
+censored data</p>
+<p>The figure below depicts the left and right censoring idea. The censoring occurs at values equal to 30 and 50. While the instrument may read a value of 25 or 55, because
+of the censoring they should be reported as ≤ 30 and ≥ 50 respectively.</p>
+<p><img alt="figure8.1.2" src="../../_images/censoreddatatype.png" /></p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/censoreddatatype.png" width="800"> <figcaption>Figure 8.2. Censored Dataset Diagram </figcaption>
+</figure>
+<div class="section" id="censoring-versus-truncation">
+<h2>Censoring versus Truncation<a class="headerlink" href="#censoring-versus-truncation" title="Permalink to this headline">¶</a></h2>
+<p>Censoring and truncation are distinct and should not be confused for one an-
+other. Both censoring and truncation define boundaries in the dataset. However,
+in censoring, we may be making (or have) measurements outside the boundaries.
+We don’t want to throw away or exclude the data that are outside the censoring
+boundaries. These are valid measurements but we don’t know their true values
+are.</p>
+<p>On the other hand, in truncation, we are either not making measurements out-
+side the boundaries or willingly excluding data that are collected outside the
+truncation boundaries. Both truncation and censoring are distinct from round-
+ing where data are displayed to a specified number of significant digits to be
+consistent with the precision of the instrument and physical meaning of the
+variable.</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="image-data">
+<h1>Image Data<a class="headerlink" href="#image-data" title="Permalink to this headline">¶</a></h1>
+<p>Images are usually arrays of signed integers or floats, that are interpreted by our programs to render what we see as an image.  Underneath they are truncated data (black and white are used as upper and lower bounds depending on the color palette).  Later on we will use image data and it will be important to have some feel for the underlying data.</p>
+<p>Recall our cat image</p>
+<p><img alt="figure8.1.3" src="../../_images/cat784.png" /></p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/cat784.png" width="200"> <figcaption>Figure 8.3. Cat Image </figcaption>
+</figure>
+<p>Lets see it in gray scale</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>              <span class="c1"># useful numerical routines</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>      <span class="c1"># special functions library</span>
+<span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
+<span class="kn">import</span> <span class="nn">imageio</span>            <span class="c1"># image processing library</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+<span class="kn">import</span> <span class="nn">warnings</span>           <span class="c1"># suppress warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> 
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;cat784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data1</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/datatypes_4_0.png" src="../../_images/datatypes_4_0.png" />
+</div>
+</div>
+<p>Now lets examine the 28x28 array of numbers that are representing our image</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat_data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">))</span> <span class="c1"># extract image as 32-bit float</span>
+<span class="k">for</span> <span class="n">irow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">28</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">jcol</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">28</span><span class="p">):</span>
+        <span class="n">cat_data</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="n">jcol</span><span class="p">]</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">cat_data</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="n">jcol</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># round to 2 digits</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cat_data</span><span class="p">[</span><span class="n">irow</span><span class="p">][:],</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.6  0.56 0.57 0.57 0.69 0.87 0.85 0.86 0.86 0.88 0.89 0.88 0.88 0.87
+ 0.85 0.86 0.9  0.92 0.92 0.92 0.89 0.78 0.63 0.59 0.55 0.57 0.69 0.61] 
+
+[0.63 0.55 0.56 0.58 0.58 0.8  0.88 0.81 0.79 0.78 0.78 0.79 0.81 0.82
+ 0.8  0.79 0.78 0.81 0.8  0.79 0.74 0.67 0.65 0.6  0.62 0.67 0.77 0.61] 
+
+[0.66 0.57 0.57 0.57 0.54 0.57 0.83 0.8  0.71 0.69 0.71 0.73 0.74 0.73
+ 0.74 0.72 0.71 0.74 0.71 0.73 0.64 0.68 0.65 0.59 0.58 0.66 0.78 0.59] 
+
+[0.78 0.59 0.61 0.6  0.54 0.51 0.67 0.76 0.65 0.63 0.68 0.68 0.68 0.68
+ 0.7  0.69 0.69 0.66 0.66 0.73 0.65 0.68 0.7  0.7  0.68 0.73 0.8  0.6 ] 
+
+[0.79 0.69 0.66 0.62 0.55 0.53 0.57 0.64 0.6  0.58 0.67 0.66 0.65 0.66
+ 0.66 0.68 0.67 0.66 0.6  0.69 0.64 0.6  0.67 0.68 0.69 0.76 0.8  0.53] 
+
+[0.72 0.71 0.67 0.57 0.53 0.51 0.52 0.56 0.57 0.58 0.67 0.61 0.61 0.61
+ 0.63 0.65 0.7  0.67 0.61 0.61 0.62 0.58 0.63 0.67 0.74 0.83 0.81 0.55] 
+
+[0.73 0.67 0.6  0.47 0.5  0.5  0.51 0.51 0.51 0.49 0.59 0.56 0.54 0.57
+ 0.6  0.66 0.69 0.59 0.57 0.59 0.66 0.66 0.65 0.6  0.61 0.8  0.8  0.51] 
+
+[0.83 0.63 0.55 0.51 0.48 0.46 0.44 0.44 0.42 0.42 0.53 0.56 0.52 0.56
+ 0.57 0.69 0.61 0.52 0.51 0.55 0.6  0.63 0.64 0.65 0.68 0.76 0.75 0.49] 
+
+[0.69 0.54 0.52 0.5  0.45 0.41 0.38 0.36 0.32 0.39 0.44 0.57 0.58 0.61
+ 0.6  0.6  0.53 0.49 0.43 0.47 0.51 0.53 0.58 0.62 0.66 0.68 0.72 0.56] 
+
+[0.56 0.53 0.49 0.46 0.38 0.35 0.36 0.27 0.26 0.44 0.37 0.57 0.63 0.7
+ 0.66 0.5  0.54 0.51 0.33 0.39 0.48 0.47 0.49 0.54 0.56 0.59 0.65 0.53] 
+
+[0.56 0.49 0.44 0.39 0.3  0.27 0.3  0.24 0.26 0.53 0.34 0.51 0.64 0.68
+ 0.66 0.46 0.52 0.55 0.3  0.36 0.42 0.42 0.44 0.47 0.51 0.53 0.62 0.49] 
+
+[0.52 0.43 0.41 0.37 0.24 0.27 0.34 0.33 0.24 0.47 0.34 0.47 0.57 0.62
+ 0.6  0.47 0.51 0.55 0.4  0.44 0.42 0.39 0.42 0.51 0.5  0.49 0.6  0.52] 
+
+[0.52 0.49 0.56 0.54 0.46 0.6  0.63 0.76 0.59 0.32 0.37 0.47 0.5  0.59
+ 0.55 0.58 0.53 0.58 0.73 0.77 0.74 0.68 0.57 0.57 0.52 0.49 0.63 0.52] 
+
+[0.6  0.62 0.58 0.5  0.45 0.52 0.55 0.9  0.71 0.43 0.29 0.43 0.44 0.52
+ 0.59 0.63 0.52 0.77 0.71 0.84 0.8  0.72 0.71 0.68 0.68 0.65 0.68 0.54] 
+
+[0.68 0.63 0.54 0.39 0.35 0.59 0.6  0.85 0.58 0.57 0.22 0.31 0.46 0.53
+ 0.59 0.54 0.58 0.83 0.66 0.89 0.8  0.66 0.59 0.52 0.68 0.79 0.8  0.6 ] 
+
+[0.62 0.53 0.56 0.49 0.3  0.51 0.6  0.58 0.58 0.69 0.25 0.28 0.45 0.56
+ 0.57 0.46 0.62 0.91 0.74 0.72 0.71 0.65 0.45 0.52 0.72 0.79 0.84 0.63] 
+
+[0.56 0.46 0.46 0.56 0.5  0.39 0.46 0.51 0.43 0.33 0.34 0.32 0.39 0.5
+ 0.54 0.47 0.55 0.62 0.67 0.67 0.61 0.5  0.54 0.7  0.75 0.73 0.78 0.63] 
+
+[0.63 0.56 0.47 0.48 0.51 0.5  0.46 0.34 0.21 0.37 0.49 0.39 0.36 0.44
+ 0.53 0.57 0.62 0.48 0.34 0.42 0.52 0.62 0.71 0.76 0.72 0.71 0.75 0.61] 
+
+[0.73 0.67 0.63 0.52 0.47 0.47 0.49 0.46 0.38 0.46 0.52 0.45 0.39 0.45
+ 0.58 0.66 0.67 0.58 0.52 0.55 0.64 0.69 0.71 0.73 0.75 0.75 0.78 0.62] 
+
+[0.7  0.68 0.65 0.62 0.59 0.56 0.49 0.39 0.38 0.46 0.54 0.48 0.39 0.45
+ 0.59 0.71 0.66 0.6  0.58 0.61 0.71 0.74 0.77 0.78 0.81 0.8  0.82 0.63] 
+
+[0.7  0.67 0.66 0.58 0.53 0.48 0.4  0.37 0.35 0.38 0.42 0.39 0.34 0.4
+ 0.55 0.63 0.58 0.6  0.59 0.64 0.72 0.77 0.78 0.79 0.79 0.79 0.81 0.66] 
+
+[0.84 0.67 0.61 0.6  0.54 0.45 0.31 0.39 0.39 0.29 0.32 0.47 0.45 0.52
+ 0.66 0.63 0.49 0.55 0.67 0.7  0.7  0.72 0.72 0.74 0.75 0.74 0.81 0.67] 
+
+[0.81 0.69 0.57 0.51 0.49 0.43 0.23 0.25 0.33 0.27 0.17 0.47 0.62 0.7
+ 0.75 0.51 0.48 0.6  0.65 0.59 0.59 0.64 0.66 0.7  0.72 0.75 0.86 0.68] 
+
+[0.85 0.83 0.7  0.58 0.53 0.45 0.31 0.27 0.3  0.24 0.19 0.25 0.56 0.71
+ 0.53 0.44 0.49 0.54 0.6  0.61 0.67 0.71 0.72 0.71 0.74 0.81 0.88 0.68] 
+
+[0.85 0.84 0.8  0.7  0.61 0.58 0.52 0.41 0.31 0.27 0.28 0.36 0.55 0.63
+ 0.52 0.51 0.53 0.6  0.68 0.73 0.77 0.78 0.79 0.81 0.84 0.87 0.89 0.69] 
+
+[0.89 0.86 0.83 0.82 0.78 0.72 0.68 0.64 0.53 0.47 0.46 0.53 0.62 0.65
+ 0.63 0.61 0.65 0.73 0.79 0.82 0.83 0.83 0.84 0.87 0.89 0.9  0.92 0.71] 
+
+[0.9  0.9  0.9  0.89 0.89 0.9  0.85 0.8  0.81 0.79 0.65 0.5  0.48 0.56
+ 0.63 0.72 0.83 0.88 0.88 0.89 0.89 0.89 0.9  0.91 0.92 0.92 0.95 0.75] 
+
+[0.65 0.65 0.64 0.64 0.63 0.62 0.64 0.64 0.63 0.63 0.62 0.52 0.41 0.45
+ 0.51 0.6  0.63 0.63 0.64 0.64 0.64 0.63 0.64 0.65 0.64 0.64 0.67 0.53] 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Understanding data types and their measurement scales is an important
+first step of data analysis and ultimately machine learning sucess or failure.</p>
+<p>The choice of the models and analysis techniques depend upon the characteristics of the data (data type and scale)</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="references-for-this-section">
+<h1>References (for this section)<a class="headerlink" href="#references-for-this-section" title="Permalink to this headline">¶</a></h1>
+<ol class="simple">
+<li><p><a class="reference external" href="https://www.open.edu/openlearn/mod/oucontent/view.php?id=85587%C2%A7ion=1">Discrete and Continuous Data</a></p></li>
+<li><p><a class="reference external" href="https://www.mymarketresearchmethods.com/types-of-data-nominal-ordinal-interval-ratio/">Types of Measurement Scales</a></p></li>
+<li><p><a class="reference external" href="https://www.g2.com/articles/qualitative-vs-quantitative-data">Qualitative and Quantitative Data</a></p></li>
+<li><p><a class="reference external" href="https://www.statology.org/truncated-censored-data/">Truncated and Censored Data</a></p></li>
+<li><p><a class="reference external" href="https://study.com/learn/lesson/data-set-in-math-types-examples.html">Types of Data Sets</a></p></li>
+<li><p><a class="reference external" href="https://www.researchgate.net/post/How_to_store_images_photos_in_database_in_mysql">Storing Images in Databases</a></p></li>
+</ol>
 </div>
 
     <script type="text/x-thebe-config">
