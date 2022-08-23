@@ -18,9 +18,9 @@
 # 
 # For multiple files I resort to operating system calls using various Magic Functions as are illustrated.  The examples herein are assuming a Linux (Debian-based) operating system, so Windoze users will have to find equivalents (or use the WSL feature in Windoze)
 
-# ## Example 1 
+# ## Example 1 Reading a .CSV file from a Web Server
 # 
-# Keep in mind the example herein is about data acquisition.
+# Keep in mind the example herein is about data acquisition.  In this example, we DO NOT have control of the remote server.
 # 
 # ### Background
 # Global warming is a currently popular and hotly (pun intended) debated issue. 
@@ -223,7 +223,9 @@ else:
 # https://www.conserve-energy-future.com/causes-and-effects-of-global-dimming.php
 # 
 
-# ## Example 2 - Reading a Structured Data File 
+# ## Example 2 - Reading a Structured .TXT File from a Web Server
+# 
+# This example is functionally the same, just a different file structure. 
 # 
 # In this example we will make a contour plot using data in a file at [http://54.243.252.9/engr-1330-webroot/8-Labs/Lab07/gridded_data.txt](http://54.243.252.9/engr-1330-webroot/8-Labs/Lab07/gridded_data.txt) that 
 # The data in the file are organized as follows:
@@ -334,7 +336,7 @@ ax.set_title('Contour Plot from Gridded Data File')
 # 
 # 1. [About Contour Plots](https://clouds.eos.ubc.ca/~phil/docs/problem_solving/06-Plotting-with-Matplotlib/06.14-Contour-Plots.html)
 
-# ## Example 3 - Reading Contents of a Directory
+# ## Example 3 - Reading Contents of a Web Server Directory
 # 
 # This example will read the contents of a web directory that contains a lot of files we wish to process.  
 # 
@@ -360,11 +362,20 @@ get_ipython().run_line_magic('pwd', '# notice no space between % and pwd')
 # In[25]:
 
 
-# magic function to create a destination to store the files into
-get_ipython().run_line_magic('mkdir', 'MyImageFiles # name the directory what you wish, locate it somewhere you can find')
+# Delete the directory if it already exists BE CAREFUL 
+get_ipython().run_line_magic('rm', '-rf ./MyImageFiles/')
+get_ipython().run_line_magic('rm', '-rf wget-log*')
 
 
 # In[26]:
+
+
+# magic function to create a destination to store the files into
+get_ipython().run_line_magic('mkdir', 'MyImageFiles # name the directory what you wish, locate it somewhere you can find')
+# In the example, its just being stored in the lesson directory, which you probably don't have
+
+
+# In[27]:
 
 
 # magic function to list the contents of my current directory
@@ -373,7 +384,7 @@ get_ipython().run_line_magic('ls', '')
 
 # Notice the MyImageFiles directory, this is where we will download to (the destination)!
 
-# In[27]:
+# In[28]:
 
 
 # magic function to show contents of MyImageFiles (there will only be two system files)
@@ -391,14 +402,33 @@ get_ipython().run_line_magic('ls', '-la ./MyImageFiles/')
 # - --recursive == descend the directory structure from supplied starting directory
 # - -P ./MyImageFiles == relative or absolute path to store results
 # - http://54.243.252.9/ce-5319-webroot/1-Databases/MaterialCracking/UT-881-image_src/ == the URL to attempt to copy, this defines the starting directory 
-
-# In[28]:
-
-
-get_ipython().system(' wget -nd -nH --no-parent --reject "index.html*" -e robots=off --recursive -P ./MyImageFiles http://54.243.252.9/ce-5319-webroot/1-Databases/MaterialCracking/UT-881-image_src/ > temp.txt')
-
+# 
+# :::{warning}
+# There is a lot of output generated - I did not figure out how to suppress, but it is essentially a transcript of the transactions between the server and your computer.
+# 
+# Scroll past this to continue the lesson
+# :::
 
 # In[29]:
+
+
+####################################
+# Here is the directory "get" call #
+####################################
+get_ipython().system(' wget -nd -nH --no-parent --reject "index.html*" -e robots=off --recursive -P ./MyImageFiles http://54.243.252.9/ce-5319-webroot/1-Databases/MaterialCracking/UT-881-image_src/ ')
+#
+#
+#
+#
+
+
+# ### Contents of MyImages (after wget completes)
+# 
+# :::{note}
+# This note is inserted so its easy to find the post-wget materials
+# :::
+
+# In[30]:
 
 
 # magic function to show contents of MyImageFiles 
@@ -406,10 +436,10 @@ get_ipython().system(' wget -nd -nH --no-parent --reject "index.html*" -e robots
 get_ipython().run_line_magic('ls', './MyImageFiles/')
 
 
-# In[30]:
+# In[76]:
 
 
-#%rm -rf ./MyImageFiles/
+
 
 
 # ## References (for this example)
