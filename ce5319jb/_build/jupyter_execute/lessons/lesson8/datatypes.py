@@ -143,10 +143,8 @@
 # fall=Yes) or (rainfall=No) state. Non-zero, positive continuous values exist for
 # (Rainfall=Yes) state (see Figure 1).
 # 
-# ![figure8.1.1](mixturedatatype.png)
-# 
 # <figure align="center">
-# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/mixturedatatype.png" width="800"> <figcaption>Figure 8.1. Mixture Dataset Diagram </figcaption>
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/mixturedatatype.png" width="400"> <figcaption>Figure 8.1. Mixture Dataset Diagram </figcaption>
 # </figure>
 # 
 # Similar mixtures can also be seen with strictly discrete data. For example, if one were
@@ -236,10 +234,8 @@
 # The figure below depicts the left and right censoring idea. The censoring occurs at values equal to 30 and 50. While the instrument may read a value of 25 or 55, because
 # of the censoring they should be reported as ≤ 30 and ≥ 50 respectively.
 # 
-# ![figure8.1.2](censoreddatatype.png)
-# 
 # <figure align="center">
-# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/censoreddatatype.png" width="800"> <figcaption>Figure 8.2. Censored Dataset Diagram </figcaption>
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/censoreddatatype.png" width="400"> <figcaption>Figure 8.2. Censored Dataset Diagram </figcaption>
 # </figure>
 # 
 # ## Censoring versus Truncation
@@ -263,8 +259,6 @@
 # Images are usually arrays of signed integers or floats, that are interpreted by our programs to render what we see as an image.  Underneath they are truncated data (black and white are used as upper and lower bounds depending on the color palette).  Later on we will use image data and it will be important to have some feel for the underlying data.
 # 
 # Recall our cat image
-# 
-# ![figure8.1.3](cat784.png)
 # 
 # <figure align="center">
 # <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/cat784.png" width="200"> <figcaption>Figure 8.3. Cat Image </figcaption>
