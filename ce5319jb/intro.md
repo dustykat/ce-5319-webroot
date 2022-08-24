@@ -8,7 +8,7 @@ This JupyterBook are my instructor notes that can serve as sort-of a textbook.  
 
 ## Course Syllabus
 
-http://54.243.252.9/ce-5319-webroot/0-Syllabus/ce-5319-MachineLearning.html
+http://54.243.252.9/ce-5319-webroot/0-Syllabus/ce-5319-syllabus-2022-3.html
 
 ## Textbook(s)
 
