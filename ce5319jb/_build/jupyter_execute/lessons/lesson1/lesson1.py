@@ -70,6 +70,13 @@
 # 
 # 
 
+# ## References
+# 
+# 1. [Uddameri, V. (2019) Overview and Objectives. *Lecture Notes for CE 5319 Fall 2021* ](http://54.243.252.9/ce-5319-webroot/Fall2020Lessons/Lecture1-Overview.pdf)
+# 
+# 2. [Uddameri, V. (2019) Installing Anaconda and RStudio. *Lecture Notes for CE 5319 Fall 2021* ](http://54.243.252.9/ce-5319-webroot/Fall2020Lessons/Lecture2-Installing_Anaconda_R_and_R_Studio.pdf)
+# 
+
 # In[ ]:
 
 

@@ -317,6 +317,8 @@ for irow in range(28):
 # 
 # 6. [Storing Images in Databases](https://www.researchgate.net/post/How_to_store_images_photos_in_database_in_mysql)
 # 
+# 7. [Uddameri, V. (2019) Common Data Types *Lecture Notes for CE 5319 Fall 2021*](http://54.243.252.9/ce-5319-webroot/Fall2020Lessons/Lecture3-CommonDataTypes.pdf)
+# 
 
 # In[ ]:
 
