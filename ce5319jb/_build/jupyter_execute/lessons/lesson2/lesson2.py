@@ -39,7 +39,7 @@
 # From your **prior** experience you recall that softness, and color are good indicators of tastiness, the goal is to generalize this experience into a prediction rule
 # 
 # <figure align="center">
-# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/taste_class.png" width="400"> <figcaption>Figure 2.3. Taste classification engine </figcaption>
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/taste_class.png" width="800"> <figcaption>Figure 2.3. Taste classification engine </figcaption>
 # </figure>
 # 
 # The resulting "rule" is a classification engine.
