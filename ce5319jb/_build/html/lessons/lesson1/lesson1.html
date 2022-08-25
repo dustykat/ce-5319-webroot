@@ -415,16 +415,94 @@ This connection is mainly used to run the code and does not consume much data.</
 <p class="admonition-title">Note</p>
 <p>The hardware requirements are modest.  This JupyterBook is developed on my home machine which is a Raspberry Pi 4B 8GB SBC using a 256GB MicroSD card to house the OS and data files.  At current prices the hardware cost is about $240 so hardware is not a limiting issue.</p>
 </div>
-<!-- 2022-0804
-|Item|Price|
-|---|---:|
-|[Raspberry Pi 4B 8GB](https://www.amazon.com/Raspberry-Pi-Model-8GB-Quad-core/dp/B08Q8L3B9D/ref=sr_1_4?crid=71YF8SDQEJR&keywords=raspberry+pi+4+8gb&qid=1659640159&sprefix=raspberry+%2Caps%2C124&sr=8-4)|\$184.99|
-|[Power Supply](https://www.amazon.com/CanaKit-Raspberry-Power-Supply-PiSwitch/dp/B07TSFYXBC/ref=pd_day0fbt_img_sccl_1/143-0240484-2623030?pd_rd_w=VvEoF&content-id=amzn1.sym.0a3d352f-2699-4ba2-810c-59dcb4abfa1b&pf_rd_p=0a3d352f-2699-4ba2-810c-59dcb4abfa1b&pf_rd_r=56GMWHGEPH151FJRAHWX&pd_rd_wg=FZHQw&pd_rd_r=30356ac1-7999-4e1e-a242-2a3b3f7f94ee&pd_rd_i=B07TSFYXBC&psc=1)|\$10.99|
-|[Micro SD Card Class 10 or faster](https://www.amazon.com/SanDisk-256GB-Extreme-microSD-Adapter/dp/B07FCR3316/ref=sr_1_2?crid=3KZ2LHC3OMR8U&keywords=micro+sd+card&nav_sdd=aps&qid=1659640639&refinements=p_n_feature_two_browse-bin%3A13203835011&rnid=6518301011&s=pc&sprefix=micro&sr=1-2)|\$34.99|
-|Total|\$230.97|
+<p>Here’s a price list for your own JupyterHub server</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="text-align:right head"><p>Price</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.amazon.com/Raspberry-Pi-Model-8GB-Quad-core/dp/B08Q8L3B9D/ref=sr_1_4?crid=71YF8SDQEJR&amp;keywords=raspberry+pi+4+8gb&amp;qid=1659640159&amp;sprefix=raspberry+%2Caps%2C124&amp;sr=8-4">Raspberry Pi 4B 8GB</a></p></td>
+<td class="text-align:right"><p>$184.99</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.amazon.com/CanaKit-Raspberry-Power-Supply-PiSwitch/dp/B07TSFYXBC/ref=pd_day0fbt_img_sccl_1/143-0240484-2623030?pd_rd_w=VvEoF&amp;content-id=amzn1.sym.0a3d352f-2699-4ba2-810c-59dcb4abfa1b&amp;pf_rd_p=0a3d352f-2699-4ba2-810c-59dcb4abfa1b&amp;pf_rd_r=56GMWHGEPH151FJRAHWX&amp;pd_rd_wg=FZHQw&amp;pd_rd_r=30356ac1-7999-4e1e-a242-2a3b3f7f94ee&amp;pd_rd_i=B07TSFYXBC&amp;psc=1">Power Supply</a></p></td>
+<td class="text-align:right"><p>$10.99</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.amazon.com/SanDisk-256GB-Extreme-microSD-Adapter/dp/B07FCR3316/ref=sr_1_2?crid=3KZ2LHC3OMR8U&amp;keywords=micro+sd+card&amp;nav_sdd=aps&amp;qid=1659640639&amp;refinements=p_n_feature_two_browse-bin%3A13203835011&amp;rnid=6518301011&amp;s=pc&amp;sprefix=micro&amp;sr=1-2">Micro SD Card Class 10 or faster</a></p></td>
+<td class="text-align:right"><p>$34.99</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total</p></td>
+<td class="text-align:right"><p>$230.97</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you can find the Raspberry Pi at the MSRP ($75) you will fare even better.</p>
+<div class="admonition-build-notes-for-raspberry-pi-running-ubuntu admonition">
+<p class="admonition-title">Build Notes for Raspberry Pi running Ubuntu</p>
+<p>Here are the build commands to make your own JupyterHub on a raspberry pi</p>
+<p>First you will want a web server, might as well install R to see if we can get it into kernel list</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># install and configure apache</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">apache2</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">apache2</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">apache2</span>
+<span class="c1"># install R</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">r</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">core</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">r</span><span class="o">-</span><span class="n">base</span>
+</pre></div>
+</div>
+<p>Next Jupyter specific instructions</p>
+<div class="highlight-# notranslate"><div class="highlight"><pre><span></span>sudo apt install -y python3-pip
+sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
+sudo apt-get install python3-venv
+sudo python3 -m venv /opt/jupyterhub/
+sudo apt install nodejs npm
+sudo npm install -g configurable-http-proxy
+sudo /opt/jupyterhub/bin/python3 -m pip install wheel
+sudo /opt/jupyterhub/bin/python3 -m pip install jupyterhub jupyterlab
+sudo /opt/jupyterhub/bin/python3 -m pip install ipywidgets
+sudo mkdir -p /opt/jupyterhub/etc/jupyterhub/
+cd /opt/jupyterhub/etc/jupyterhub/
+sudo /opt/jupyterhub/bin/jupyterhub --generate-config
+EDIT THE CONFIG &quot;c.Spawner.default_url = &#39;/lab&#39;&quot;
+sudo mkdir -p /opt/jupyterhub/etc/systemd
+sudo nano /opt/jupyterhub/etc/systemd/jupyterhub.service
+INSERT &lt;--
+[Unit]
+Description=JupyterHub
+After=syslog.target network.target
 
-If you can find the Raspberry Pi at the MSRP (\$75) you will fare even better.
--->
+[Service]
+User=root
+Environment=&quot;PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin&quot;
+ExecStart=/opt/jupyterhub/bin/jupyterhub -f /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+
+[Install]
+WantedBy=multi-user.target
+--&gt;
+sudo ln -s /opt/jupyterhub/etc/systemd/jupyterhub.service /etc/systemd/system/jupyterhub.service
+sudo systemctl daemon-reload
+sudo systemctl enable jupyterhub.service
+sudo systemctl status jupyterhub.service
+sudo systemctl start jupyterhub.service
+</pre></div>
+</div>
+<p>If you want the mathematical typesetting to work, you also need a Latex engine.</p>
+<p>If you want to be able to build PDF renderings of notebooks a few added dependencies need to be added:</p>
+<div class="highlight---&gt; notranslate"><div class="highlight"><pre><span></span>  texlive-lang-french texlive-latex-base texlive-latex-recommended
+  python-pil-doc python3-pil-dbg python-pygments-doc ttf-bitstream-vera
+  python-pyparsing-doc dvipng imagemagick-6.q16 latexmk libjs-mathjax
+  python3-sphinx-rtd-theme python3-stemmer sphinx-doc texlive-fonts-recommended
+  texlive-latex-extra texlive-plain-generic sgml-base-doc debhelper
+  gdb-doc python3-doc python3-pil.imagetk python3-gdbm-dbg python3-tk-dbg
+ghostscript-x imagemagick-doc autotrace cups-bsd | lpr | lprng enscript ffmpeg gimp gnuplot grads graphviz hp2xx html2ps
+libwmf-bin mplayer povray radiance sane-utils transfig ufraw-batch colord libfftw3-bin libfftw3-dev libgd-tools gvfs fonts-mathjax-extras fonts-stix libjs-mathjax-doc inkscape libjxr-tools librsvg2-bin libwmf0.2-7-gtk www-browser zathura-ps zathura-djvu zathura-cb
+&lt;---- end dependencies ----
+
+</pre></div>
+</div>
+<p>At this point you are about 3 hours into the build, and should have a useable JupyterHub (a lot like the Colaboratory, but you own it - warts and all!</p>
+</div>
 </div>
 </div>
 <div class="section" id="why-python">

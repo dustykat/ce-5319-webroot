@@ -43,7 +43,8 @@
 # The hardware requirements are modest.  This JupyterBook is developed on my home machine which is a Raspberry Pi 4B 8GB SBC using a 256GB MicroSD card to house the OS and data files.  At current prices the hardware cost is about \$240 so hardware is not a limiting issue.  
 # :::
 # 
-# <!-- 2022-0804
+# Here's a price list for your own JupyterHub server
+# 
 # |Item|Price|
 # |---|---:|
 # |[Raspberry Pi 4B 8GB](https://www.amazon.com/Raspberry-Pi-Model-8GB-Quad-core/dp/B08Q8L3B9D/ref=sr_1_4?crid=71YF8SDQEJR&keywords=raspberry+pi+4+8gb&qid=1659640159&sprefix=raspberry+%2Caps%2C124&sr=8-4)|\$184.99|
@@ -52,8 +53,79 @@
 # |Total|\$230.97|
 # 
 # If you can find the Raspberry Pi at the MSRP (\$75) you will fare even better.
-# -->
 # 
+# 
+# :::{admonition} Build Notes for Raspberry Pi running Ubuntu
+# 
+# Here are the build commands to make your own JupyterHub on a raspberry pi
+# 
+# First you will want a web server, might as well install R to see if we can get it into kernel list
+# 
+# ```
+# # install and configure apache
+# sudo apt install apache2
+# sudo systemctl status apache2
+# sudo systemctl stop apache2
+# # install R
+# sudo apt-get install r-base-core
+# sudo apt-get install r-base
+# ```
+# Next Jupyter specific instructions
+# 
+# ```# install and configure JupyterHub
+# sudo apt install -y python3-pip
+# sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
+# sudo apt-get install python3-venv
+# sudo python3 -m venv /opt/jupyterhub/
+# sudo apt install nodejs npm
+# sudo npm install -g configurable-http-proxy
+# sudo /opt/jupyterhub/bin/python3 -m pip install wheel
+# sudo /opt/jupyterhub/bin/python3 -m pip install jupyterhub jupyterlab
+# sudo /opt/jupyterhub/bin/python3 -m pip install ipywidgets
+# sudo mkdir -p /opt/jupyterhub/etc/jupyterhub/
+# cd /opt/jupyterhub/etc/jupyterhub/
+# sudo /opt/jupyterhub/bin/jupyterhub --generate-config
+# EDIT THE CONFIG "c.Spawner.default_url = '/lab'"
+# sudo mkdir -p /opt/jupyterhub/etc/systemd
+# sudo nano /opt/jupyterhub/etc/systemd/jupyterhub.service
+# INSERT <--
+# [Unit]
+# Description=JupyterHub
+# After=syslog.target network.target
+# 
+# [Service]
+# User=root
+# Environment="PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin"
+# ExecStart=/opt/jupyterhub/bin/jupyterhub -f /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+# 
+# [Install]
+# WantedBy=multi-user.target
+# -->
+# sudo ln -s /opt/jupyterhub/etc/systemd/jupyterhub.service /etc/systemd/system/jupyterhub.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable jupyterhub.service
+# sudo systemctl status jupyterhub.service
+# sudo systemctl start jupyterhub.service
+# ```
+# If you want the mathematical typesetting to work, you also need a Latex engine.
+# 
+# If you want to be able to build PDF renderings of notebooks a few added dependencies need to be added:
+# 
+# ```--> dependencies to get nbconvert to work ---------
+#   texlive-lang-french texlive-latex-base texlive-latex-recommended
+#   python-pil-doc python3-pil-dbg python-pygments-doc ttf-bitstream-vera
+#   python-pyparsing-doc dvipng imagemagick-6.q16 latexmk libjs-mathjax
+#   python3-sphinx-rtd-theme python3-stemmer sphinx-doc texlive-fonts-recommended
+#   texlive-latex-extra texlive-plain-generic sgml-base-doc debhelper
+#   gdb-doc python3-doc python3-pil.imagetk python3-gdbm-dbg python3-tk-dbg
+# ghostscript-x imagemagick-doc autotrace cups-bsd | lpr | lprng enscript ffmpeg gimp gnuplot grads graphviz hp2xx html2ps
+# libwmf-bin mplayer povray radiance sane-utils transfig ufraw-batch colord libfftw3-bin libfftw3-dev libgd-tools gvfs fonts-mathjax-extras fonts-stix libjs-mathjax-doc inkscape libjxr-tools librsvg2-bin libwmf0.2-7-gtk www-browser zathura-ps zathura-djvu zathura-cb
+# <---- end dependencies ----
+# 
+# ```
+# At this point you are about 3 hours into the build, and should have a useable JupyterHub (a lot like the Colaboratory, but you own it - warts and all!
+# 
+# :::
 # 
 # 
 # ### Why Python?
