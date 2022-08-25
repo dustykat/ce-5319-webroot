@@ -70,7 +70,8 @@
 # sudo apt-get install r-base-core
 # sudo apt-get install r-base
 # ```
-# Next Jupyter specific instructions
+# 
+# Next some Jupyter specific instructions
 # 
 # ```# install and configure JupyterHub
 # sudo apt install -y python3-pip
@@ -111,19 +112,50 @@
 # 
 # If you want to be able to build PDF renderings of notebooks a few added dependencies need to be added:
 # 
-# ```--> dependencies to get nbconvert to work ---------
+# ```
+# --> dependencies to get nbconvert to work (this is a list, build a few at a time until it works)---------
 #   texlive-lang-french texlive-latex-base texlive-latex-recommended
 #   python-pil-doc python3-pil-dbg python-pygments-doc ttf-bitstream-vera
 #   python-pyparsing-doc dvipng imagemagick-6.q16 latexmk libjs-mathjax
 #   python3-sphinx-rtd-theme python3-stemmer sphinx-doc texlive-fonts-recommended
 #   texlive-latex-extra texlive-plain-generic sgml-base-doc debhelper
 #   gdb-doc python3-doc python3-pil.imagetk python3-gdbm-dbg python3-tk-dbg
-# ghostscript-x imagemagick-doc autotrace cups-bsd | lpr | lprng enscript ffmpeg gimp gnuplot grads graphviz hp2xx html2ps
-# libwmf-bin mplayer povray radiance sane-utils transfig ufraw-batch colord libfftw3-bin libfftw3-dev libgd-tools gvfs fonts-mathjax-extras fonts-stix libjs-mathjax-doc inkscape libjxr-tools librsvg2-bin libwmf0.2-7-gtk www-browser zathura-ps zathura-djvu zathura-cb
+#   ghostscript-x imagemagick-doc autotrace cups-bsd | lpr | lprng enscript ffmpeg gimp 
+#   gnuplot grads graphviz hp2xx html2ps
+#   libwmf-bin mplayer povray radiance sane-utils transfig ufraw-batch colord libfftw3-bin 
+#   libfftw3-dev libgd-tools gvfs fonts-mathjax-extras fonts-stix libjs-mathjax-doc inkscape 
+#   libjxr-tools librsvg2-bin libwmf0.2-7-gtk www-browser zathura-ps zathura-djvu zathura-cb
 # <---- end dependencies ----
 # 
 # ```
-# At this point you are about 3 hours into the build, and should have a useable JupyterHub (a lot like the Colaboratory, but you own it - warts and all!
+# 
+# Build a desktop
+# 
+# ```
+# # install Xfce and TightVNC for a desktop
+# sudo apt update
+# sudo apt install xfce4 xfce4-goodies
+# sudo apt install tightvncserver
+# 
+# Into ~/.vnc/xstartup 
+# 
+# ---add--->
+# 
+# #!/bin/bash
+# xrdb $HOME/.Xresources
+# startxfce4 &
+# 
+# ```
+# Next open holes in the firewall for everything to work
+# 
+# ```
+# sudo ufw allow from 192.168.1.1/24 to any port 5901 
+# sudo ufw allow 'Apache Full'
+# sudo ufw allow 'OpenSSH'
+# ```
+# 
+# 
+# At this point you would be about 3-5 hours into the build, and should have a useable JupyterHub (a lot like the Colaboratory, but you own it - warts and all!
 # 
 # :::
 # 
