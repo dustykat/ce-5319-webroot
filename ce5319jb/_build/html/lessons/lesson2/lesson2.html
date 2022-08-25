@@ -325,6 +325,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-classification-engine">
+   A Classification Engine
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#a-prediction-engine-example">
    A Prediction Engine Example
   </a>
@@ -393,9 +398,30 @@
 <p>Machine learning can improve the sorting program by identifying each email’s unique attributes and autonomously synthesize rules to automate the sorting process, thereby preventing the need for manually engineered rules.</p>
 <p>For a machine to do that, we provide it with data. The goal is for the machine to infer useful rules directly from the data, using what are known as machine learning algorithms. In a nutshell, machine learning algorithms are made up of formulas and procedures derived from mathematical concepts in linear algebra, calculus, probability, statistics, and other fields. These formulas and procedures are implemented in programming code and used to perform calculations on our data. After performing the calculations, the algorithm typically generates an output known as a model (data model, prediction engine model, classification model - there are a lot of equivalent names). The process of generating a model is known as training. The model describes the rules, numbers, and any other algorithm-specific data structures that our machine learned from the data. Our machine can then use the model to perform the rules to new data.</p>
 </div>
+<div class="section" id="a-classification-engine">
+<h2>A Classification Engine<a class="headerlink" href="#a-classification-engine" title="Permalink to this headline">¶</a></h2>
+<p>You’ve just arrived on some small pacific island</p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/island.png" width="400"> <figcaption>Figure 2.1. Small Pacific Island </figcaption>
+</figure>
+<p>You soon find out that papayas are a substantial ingredient in the local diet</p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/papaya.png" width="400"> <figcaption>Figure 2.2. Papaya Tree </figcaption>
+</figure>
+<p>Your obvious question: are papayas tasty?</p>
+<p>From your <strong>prior</strong> experience you recall that softness, and color are good indicators of tastiness, the goal is to generalize this experience into a prediction rule</p>
+<figure align="center">
+<img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/taste_class.png" width="400"> <figcaption>Figure 2.3. Taste classification engine </figcaption>
+</figure>
+<p>The resulting “rule” is a classification engine.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I have implicitly assumed that there are quantitative metrics for softness and color (RGB+intensity perhaps), and we don’t want to actually put one into our mouth.  An interesting twist on this example would be <a class="reference external" href="https://en.wikipedia.org/wiki/Durian#/media/File:Durian.jpg">Durian</a>, a most tasty fruit but in its harvested state most decidedly not soft nor of especially pleasing color.</p>
+</div>
+</div>
 <div class="section" id="a-prediction-engine-example">
 <h2>A Prediction Engine Example<a class="headerlink" href="#a-prediction-engine-example" title="Permalink to this headline">¶</a></h2>
-<p>A simple example of machine learning is the mundane process of fitting a model to data; or in ML jargon the building of a prediction engine (the model equation) and subsequent application of the engine to new situations.</p>
+<p>Another simple example of machine learning (this time using numbers) is the mundane process of fitting a model to data; or in ML jargon the building of a prediction engine (the model equation) and subsequent application of the engine to new situations.</p>
 <p>Consider a simple case where we have some observations like:</p>
 <table class="colwidths-auto table">
 <thead>

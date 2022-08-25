@@ -20,11 +20,37 @@
 # For a machine to do that, we provide it with data. The goal is for the machine to infer useful rules directly from the data, using what are known as machine learning algorithms. In a nutshell, machine learning algorithms are made up of formulas and procedures derived from mathematical concepts in linear algebra, calculus, probability, statistics, and other fields. These formulas and procedures are implemented in programming code and used to perform calculations on our data. After performing the calculations, the algorithm typically generates an output known as a model (data model, prediction engine model, classification model - there are a lot of equivalent names). The process of generating a model is known as training. The model describes the rules, numbers, and any other algorithm-specific data structures that our machine learned from the data. Our machine can then use the model to perform the rules to new data.
 # 
 
+# ## A Classification Engine
 # 
+# You’ve just arrived on some small pacific island
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/island.png" width="400"> <figcaption>Figure 2.1. Small Pacific Island </figcaption>
+# </figure>
+# 
+# You soon find out that papayas are a substantial ingredient in the local diet
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/papaya.png" width="400"> <figcaption>Figure 2.2. Papaya Tree </figcaption>
+# </figure>
+# 
+# Your obvious question: are papayas tasty?
+# 
+# From your **prior** experience you recall that softness, and color are good indicators of tastiness, the goal is to generalize this experience into a prediction rule
+# 
+# <figure align="center">
+# <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/taste_class.png" width="400"> <figcaption>Figure 2.3. Taste classification engine </figcaption>
+# </figure>
+# 
+# The resulting "rule" is a classification engine.
+# 
+# :::{note}
+# I have implicitly assumed that there are quantitative metrics for softness and color (RGB+intensity perhaps), and we don't want to actually put one into our mouth.  An interesting twist on this example would be [Durian](https://en.wikipedia.org/wiki/Durian#/media/File:Durian.jpg), a most tasty fruit but in its harvested state most decidedly not soft nor of especially pleasing color.
+# :::
 
 # ## A Prediction Engine Example
 # 
-# A simple example of machine learning is the mundane process of fitting a model to data; or in ML jargon the building of a prediction engine (the model equation) and subsequent application of the engine to new situations.
+# Another simple example of machine learning (this time using numbers) is the mundane process of fitting a model to data; or in ML jargon the building of a prediction engine (the model equation) and subsequent application of the engine to new situations.
 # 
 # Consider a simple case where we have some observations like:
 # 

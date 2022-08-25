@@ -76,6 +76,8 @@
 # 
 # 2. [Uddameri, V. (2019) Installing Anaconda and RStudio. *Lecture Notes for CE 5319 Fall 2021* ](http://54.243.252.9/ce-5319-webroot/Fall2020Lessons/Lecture2-Installing_Anaconda_R_and_R_Studio.pdf)
 # 
+# 3. [Shai Shalev-Shwartz (2014) Selected Lecture Notes from "Understanding Machine Learning" at Hebrew University of Jerusalem](https://www.cs.huji.ac.il/~shais/Lectures2014/MotivationLecture.pdf)
+# 
 
 # In[ ]:
 
