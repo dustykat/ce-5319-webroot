@@ -8,7 +8,8 @@ This JupyterBook are my instructor notes that can serve as sort-of a textbook.  
 
 ## Course Syllabus
 
-http://54.243.252.9/ce-5319-webroot/0-Syllabus/ce-5319-syllabus-2022-3.html
+[http://54.243.252.9/ce-5319-webroot/0-Syllabus/ce-5319-syllabus-2022-3.html](http://54.243.252.9/ce-5319-webroot/0-Syllabus/ce-5319-syllabus-2022-3.html)
 
 ## Textbook(s)
 
+[Shai, S-S and Shai B-D (2014) Understanding Machine Learning: From Theory to Algorithms. Cambridge University Press](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning)
