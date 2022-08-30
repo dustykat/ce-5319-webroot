@@ -388,6 +388,22 @@ newot = response(xbest[0],xbest[1],xbest[2],xbest[3],newp1,newp2)
 print('predicted response to predictor1 =',newp1,'and predictor2 =',newp2,' is :',round(newot,3))
 
 
+# ## Learning Theory Concepts
+# 
+# There is a whole field of obfuscated matmematics that try to explain learning (I think in a machine sense as the discipline is trying to simulate human cognitive processes), as I proceede in the practical aspects, I will try to translate these concepts into more obsolete (I guess) terms.   
+# 
+# Undoubtably there will be mistakes, but a lot of high-level engineering research and development is reverse engineering  and transcription.
+# 
+# - *Hypothesis* is a structural representation of predictor response relationship; $r=f(p)$
+# - *Model* is a **fitted** hypothesis.  $f(p) = \beta_1 p^{beta_2}$ where $\beta_1$ and $\beta_2$ have been determined by application of a learner (i.e. they are known).  So all we do is supply predictor values and get a response.
+# - *Learner* is an algorithm that fits a hypothesis to produce a data model.
+# 
+# Types of learners
+# 
+# - consistent learner
+# - halving learner
+# - ellipsoid learner
+
 # ## Machine Learning Workflow
 # 
 # Despite the diverse applications of machine learning, most machine learning projects follow a typical workflow.  Prior to examination of workflow consider ordinary problem solving.

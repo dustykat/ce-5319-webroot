@@ -347,6 +347,11 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-theory-concepts">
+   Learning Theory Concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#machine-learning-workflow">
    Machine Learning Workflow
   </a>
@@ -899,6 +904,22 @@ Beta 4  -1.0
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="learning-theory-concepts">
+<h2>Learning Theory Concepts<a class="headerlink" href="#learning-theory-concepts" title="Permalink to this headline">¶</a></h2>
+<p>There is a whole field of obfuscated matmematics that try to explain learning (I think in a machine sense as the discipline is trying to simulate human cognitive processes), as I proceede in the practical aspects, I will try to translate these concepts into more obsolete (I guess) terms.</p>
+<p>Undoubtably there will be mistakes, but a lot of high-level engineering research and development is reverse engineering  and transcription.</p>
+<ul class="simple">
+<li><p><em>Hypothesis</em> is a structural representation of predictor response relationship; <span class="math notranslate nohighlight">\(r=f(p)\)</span></p></li>
+<li><p><em>Model</em> is a <strong>fitted</strong> hypothesis.  <span class="math notranslate nohighlight">\(f(p) = \beta_1 p^{beta_2}\)</span> where <span class="math notranslate nohighlight">\(\beta_1\)</span> and <span class="math notranslate nohighlight">\(\beta_2\)</span> have been determined by application of a learner (i.e. they are known).  So all we do is supply predictor values and get a response.</p></li>
+<li><p><em>Learner</em> is an algorithm that fits a hypothesis to produce a data model.</p></li>
+</ul>
+<p>Types of learners</p>
+<ul class="simple">
+<li><p>consistent learner</p></li>
+<li><p>halving learner</p></li>
+<li><p>ellipsoid learner</p></li>
+</ul>
 </div>
 <div class="section" id="machine-learning-workflow">
 <h2>Machine Learning Workflow<a class="headerlink" href="#machine-learning-workflow" title="Permalink to this headline">¶</a></h2>
