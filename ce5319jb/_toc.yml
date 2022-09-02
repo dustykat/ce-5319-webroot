@@ -30,3 +30,5 @@ chapters:
 - file: lessons/lesson13/lesson13
 - file: lessons/lesson14/lesson14
 - file: lessons/lesson15/lesson15
+
+- file: lessons/lesson16/lesson16 # neural networks
