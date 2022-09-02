@@ -325,6 +325,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-theory-concepts">
+   Learning Theory Concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#topic">
    topic
   </a>
@@ -631,6 +636,25 @@ Testing Complete
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="learning-theory-concepts">
+<h2>Learning Theory Concepts<a class="headerlink" href="#learning-theory-concepts" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><em>Learning in the limit</em> Given a continuous stream of examples where the learner predicts whether each one is a member of the concept or not and is then is told the correct answer, does the learner eventually converge to a correct concept and never make a mistake again.  One can think of this as if the learner has a big enough training set, then it eventually can achieve a “perfect” fit.  I am extrapolating a bit, but the idea is that in the limit perfection is achievable.</p></li>
+<li><p>By simple <em>enumeration</em> (what I called Grid Search), concepts from any known finite hypothesis space are learnable in the limit, although typically requires an exponential (or doubly exponential) number of examples and time.</p></li>
+</ul>
+<p>Recall my definitions:</p>
+<ul class="simple">
+<li><p><em>Hypothesis</em> is a structural representation of predictor response relationship; <span class="math notranslate nohighlight">\(r=f(p)\)</span></p></li>
+<li><p><em>Model</em> is a <strong>fitted</strong> hypothesis.  <span class="math notranslate nohighlight">\(f(p) = \beta_1 p^{beta_2}\)</span> where <span class="math notranslate nohighlight">\(\beta_1\)</span> and <span class="math notranslate nohighlight">\(\beta_2\)</span> have been determined by application of a learner (i.e. they are known).  So all we do is supply predictor values and get a response.</p></li>
+<li><p><em>Learner</em> is an algorithm that fits a hypothesis to produce a data model.</p></li>
+</ul>
+<p>Types of learners</p>
+<ul class="simple">
+<li><p><em>Consistent Learner</em> A learner L using a hypothesis H and training data D is said to be a consistent learner if it always outputs a <strong>model</strong> with zero error on D whenever H contains such a hypothesis. By definition, a consistent learner must produce a <strong>model</strong> in the version space for H given D.</p></li>
+<li><p><em>Halving learner</em> I cannot find a simple translation, its the name given to a concept where the learner splits the training data space into a partion that produces <em>crappy models</em> and a partition that produces <em>good models</em> or even <em>consistent</em> models (using above definition).  I think the concept refers to the entire hypothesis,training,model process; obviously the ability to split the predictor space into the parts that are effective and not will be quite useful.</p></li>
+<li><p><em>Ellipsoid learner</em> Refers to a classification algorithm that searches an n-dimensional ellipsoid in the training domain to determine a classification scheme.</p></li>
+</ul>
 </div>
 <div class="section" id="topic">
 <h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>

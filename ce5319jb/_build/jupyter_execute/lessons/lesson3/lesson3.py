@@ -237,6 +237,26 @@ y=km2miles(xx,m)
 print(xx,'kilometers is estimated to be ',round(y,3),' miles')
 
 
+# ## Learning Theory Concepts
+# 
+# - *Learning in the limit* Given a continuous stream of examples where the learner predicts whether each one is a member of the concept or not and is then is told the correct answer, does the learner eventually converge to a correct concept and never make a mistake again.  One can think of this as if the learner has a big enough training set, then it eventually can achieve a "perfect" fit.  I am extrapolating a bit, but the idea is that in the limit perfection is achievable.
+# 
+# - By simple *enumeration* (what I called Grid Search), concepts from any known finite hypothesis space are learnable in the limit, although typically requires an exponential (or doubly exponential) number of examples and time.
+# 
+# Recall my definitions:
+# 
+# - *Hypothesis* is a structural representation of predictor response relationship; $r=f(p)$
+# - *Model* is a **fitted** hypothesis.  $f(p) = \beta_1 p^{beta_2}$ where $\beta_1$ and $\beta_2$ have been determined by application of a learner (i.e. they are known).  So all we do is supply predictor values and get a response.
+# - *Learner* is an algorithm that fits a hypothesis to produce a data model.
+# 
+# Types of learners
+# 
+# - *Consistent Learner* A learner L using a hypothesis H and training data D is said to be a consistent learner if it always outputs a **model** with zero error on D whenever H contains such a hypothesis. By definition, a consistent learner must produce a **model** in the version space for H given D. 
+# 
+# - *Halving learner* I cannot find a simple translation, its the name given to a concept where the learner splits the training data space into a partion that produces *crappy models* and a partition that produces *good models* or even *consistent* models (using above definition).  I think the concept refers to the entire hypothesis,training,model process; obviously the ability to split the predictor space into the parts that are effective and not will be quite useful.  
+# 
+# - *Ellipsoid learner* Refers to a classification algorithm that searches an n-dimensional ellipsoid in the training domain to determine a classification scheme.
+
 # ## topic
 # 
 # ### Subtopic
