@@ -478,13 +478,11 @@ Tree      0.484061       0.049499817
 <p>That’s much better! This line neatly separates caterpillars from ladybirds. We can now use this line as a <strong>classifier</strong> of bugs. We are assuming that there are no other kinds of bugs <em>that we haven’t seen</em> - but that’s ok for now, we’re simply trying to illustrate the idea of a simple classifier.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<blockquote>
-<div><p>Recall the discussion about humans seeing a critter for the first time.  They cannot necessarily classifi it into the exact type of critter, but know it is a critter.  We could even place it into a taxonomy chart based on enough specific characteristics.
+<p>Recall the discussion about humans seeing a critter for the first time.  They cannot necessarily classifi it into the exact type of critter, but know it is a critter.  We could even place it into a taxonomy chart based on enough specific characteristics.
 <img alt="" src="../../_images/taxonomicChart.png" />
 and maybe determine what the critter is.  But consider a <a class="reference external" href="https://en.wikipedia.org/wiki/Platypus">platypus</a> which has four limbs (quadraped), fur, is a mammal, but has bird-like bill, and lays eggs.  If you have never seen one before, the best you could do is classify as varmit or critter.</p>
-</div></blockquote>
 </div>
-<p><img alt="" src="../../_images/lesson4" />Imagine next time our computer used a robot arm to pick up a new bug and measured its width and height, it could then use the above line to classify it correctly as a caterpillar or a ladybird. Look at the following plot, you can see the unknown bug is a caterpillar because it lies above the line. This classification is simple but pretty powerful already!</p>
+<p>Imagine next time our computer used a robot arm to pick up a new bug and measured its width and height, it could then use the above line to classify it correctly as a caterpillar or a ladybird. Look at the following plot, you can see the unknown bug is a caterpillar because it lies above the line. This classification is simple but pretty powerful already!</p>
 <p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/newbug.png" /></p>
 <p>We’ve seen how a linear function inside our simple predictors can be used to classify previously unseen data. But we’ve skipped over a crucial element. How do we get the right slope? How do we improve a line we know isn’t a good divider between the two kinds of bugs? The answer to that is again at the very heart of how machines learn, and we’ll look at this next.</p>
 <div class="section" id="training-a-simple-classifier">
@@ -532,6 +530,51 @@ Let’s plot these two training data examples. Visualising data is often very he
 <p class="admonition-title">Note</p>
 <p>In our ML jargon, <strong>algorithm</strong> and <strong>learner</strong> are synonyms; recipe is a good analogy. Anastasia’s good friend <em>reptition</em> shows up yet again too!</p>
 </div>
+<p>Let’s look at the first training example: the width is 3.0 and length is 1.0 for a ladybird.
+If we tested the <span class="math notranslate nohighlight">\(y = Ax\)</span> function with this example where <span class="math notranslate nohighlight">\(x\)</span> is 3.0, we’d get <span class="math notranslate nohighlight">\(y = (0.25) * (3.0) = 0.75\)</span>
+The function, with the parameter <span class="math notranslate nohighlight">\(A\)</span> set to the initial arbitrary chosen value of 0.25, is suggesting that for a bug of width 3.0, the length should be 0.75.
+We know that’s too small because the training data example tells us it must be a length of 1.0. So we have a difference, an <strong>error</strong>.
+Just as before, with the miles to kilometres predictor, we can use this error to inform how we adjust the parameter <span class="math notranslate nohighlight">\(A\)</span>. But let’s think about what <span class="math notranslate nohighlight">\(y\)</span> should be again.
+If <span class="math notranslate nohighlight">\(y\)</span> was 1.0 then the line goes right through the point where the ladybird sits at <span class="math notranslate nohighlight">\((x,y) = (3.0, 1.0)\)</span>.
+It’s a subtle point but we don’t actually want that.
+We want the line to go above that point.
+Why? Because we want all the ladybird points to be below the line, not on it.
+The line needs to be a <em>dividing line</em> between ladybirds and caterpillars, not a predictor of a bug’s length given its width.
+So let’s try to aim for <span class="math notranslate nohighlight">\(y = 1.1\)</span> when <span class="math notranslate nohighlight">\(x = 3.0\)</span>.
+It’s just a small number above 1.0, We could have chosen 1.2, or even 1.3, but we don’t want a larger number like 10 or 100 because that would make it more likely that the line goes above both ladybirds and caterpillars, resulting in a separator that wasn’t useful at all. So the desired target is 1.1, and the error <strong>E</strong> is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>error = (desired target - actual output)
+</pre></div>
+</div>
+<p>Which is, <span class="math notranslate nohighlight">\(E = 1.1 - 0.75 = 0.35\)</span></p>
+<p>Let’s examine the error, the desired target and the calculated value visually.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/visualbugs.png" /></p>
+<p>Now, what do we do with this <strong>E</strong> to guide us to a better refined parameter <span class="math notranslate nohighlight">\(A\)</span>?</p>
+<p>We want to use the error in <span class="math notranslate nohighlight">\(y\)</span>, which we call <strong>E</strong>, to inform the required change in parameter <span class="math notranslate nohighlight">\(A\)</span>.
+To do this we need to know how the two are related. How is <span class="math notranslate nohighlight">\(A\)</span> related to <strong>E</strong>?</p>
+<p>If we know this, then we can understand how changing one affects the other (correlation anyone?).</p>
+<p>Let’s start with the linear function for the classifier: <span class="math notranslate nohighlight">\(y = Ax\)</span>
+We know that for initial guesses of <span class="math notranslate nohighlight">\(A\)</span> this gives the wrong answer for <span class="math notranslate nohighlight">\(y\)</span>, which should be the value given by the training data.
+Let’s call the correct desired value, <span class="math notranslate nohighlight">\(t\)</span> for target value. To get that value <span class="math notranslate nohighlight">\(t\)</span>, we need to adjust <span class="math notranslate nohighlight">\(A\)</span> by a small amount; <span class="math notranslate nohighlight">\( t = (A + \Delta A)x\)</span> Let’s picture this to make it easier to understand. You can see the new slope <span class="math notranslate nohighlight">\((A + \Delta A)\)</span>.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/deltaA.png" /></p>
+<p>Remember the error <strong>E</strong> was the difference between the desired correct value and the one we calculate based on our current guess for <span class="math notranslate nohighlight">\(A\)</span>. That is, <strong>E</strong> was <span class="math notranslate nohighlight">\(t - y\)</span> (Kind of smells like a residual!);</p>
+<div class="math notranslate nohighlight">
+\[ t - y = (A + \Delta A)x - Ax\]</div>
+<p>Expanding out the terms and simplifying:</p>
+<div class="math notranslate nohighlight">
+\[ \textbf{E} = t - y = (Ax + \Delta A)x - Ax =  E = (\Delta A)x \]</div>
+<p>That’s remarkable! The error <strong>E</strong> is related to <span class="math notranslate nohighlight">\(\Delta A\)</span> in a very simple way.</p>
+<p>We wanted to know how much to adjust <span class="math notranslate nohighlight">\(A\)</span> by to improve the slope of the line so it is a better classifier, being informed by the error <strong>E</strong>.
+To do this we simply re-arrange that last equation: <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span>
+That’s the magic expression we’ve been looking for. We can use the error <strong>E</strong> to refine the slope <span class="math notranslate nohighlight">\(A\)</span> of the classifying line by an amount  <span class="math notranslate nohighlight">\(\Delta A\)</span>.</p>
+<p>Let’s update that initial slope. The error was 0.35 and the <span class="math notranslate nohighlight">\(x\)</span> was 3.0.
+That gives <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span> as 0.35/ 3.0 = 0.1167.
+That means we need to change the current <span class="math notranslate nohighlight">\(A = 0.25\)</span> by <span class="math notranslate nohighlight">\(0.1167\)</span>.
+That means the new improved value for <span class="math notranslate nohighlight">\(A\)</span> is (A​ + ΔA​) which is 0.25 + 0.1167 = 0.3667. As it happens, the calculated value of <span class="math notranslate nohighlight">\(y\)</span> with this new <span class="math notranslate nohighlight">\(A\)</span> is 1.1 as you’d expect - it’s the desired target value.</p>
+<p>Now we have a method for refining that parameter <span class="math notranslate nohighlight">\(A\)</span>, informed by the current error. Now we’re done with one training example, let’s learn from the next one. Here we have a known true pairing of <span class="math notranslate nohighlight">\(x\)</span> = 1.0 and <span class="math notranslate nohighlight">\(y\)</span> = 3.0. Let’s see what happens when we put <span class="math notranslate nohighlight">\(x\)</span> = 1.0 into the linear function which is now using the updated <span class="math notranslate nohighlight">\(A\)</span> = 0.3667. We get <span class="math notranslate nohighlight">\(y\)</span> = 0.3667 * 1.0 = 0.3667.
+That’s not very close to the training example with <span class="math notranslate nohighlight">\(y\)</span> = 3.0 at all.</p>
+<p>Using the same reasoning as before that we want the line to not cross the training data but instead be just above or below it, we can set the desired target value at 2.9. This way the training example of a caterpillar is just above the line, not on it. The error E​ is (2.9 ­ 0.3667) = 2.5333. That’s a bigger error than before, but if you think about it, all we’ve had so far for the linear function to learn from is a single training example, which clearly biases the line towards that single example.</p>
+<p>Let’s update the <span class="math notranslate nohighlight">\(A\)</span> again, just like we did before. The <span class="math notranslate nohighlight">\(\Delta A\)</span> is <span class="math notranslate nohighlight">\(\textbf{E}/x\)</span> which is 2.5333/ 1.0 = 2.5333. That means the even newer <span class="math notranslate nohighlight">\(A\)</span> is 0.3667 + 2.5333 = 2.9. That means for <span class="math notranslate nohighlight">\(x = 1.0\)</span> the function gives 2.9 as the answer, which is what the desired value was.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/someupdates.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
@@ -598,51 +641,6 @@ error smaller than tolerance, next training row
 </div>
 </div>
 </div>
-<p>Let’s look at the first training example: the width is 3.0 and length is 1.0 for a ladybird.
-If we tested the <span class="math notranslate nohighlight">\(y = Ax\)</span> function with this example where <span class="math notranslate nohighlight">\(x\)</span> is 3.0, we’d get <span class="math notranslate nohighlight">\(y = (0.25) * (3.0) = 0.75\)</span>
-The function, with the parameter <span class="math notranslate nohighlight">\(A\)</span> set to the initial arbitrary chosen value of 0.25, is suggesting that for a bug of width 3.0, the length should be 0.75.
-We know that’s too small because the training data example tells us it must be a length of 1.0. So we have a difference, an <strong>error</strong>.
-Just as before, with the miles to kilometres predictor, we can use this error to inform how we adjust the parameter <span class="math notranslate nohighlight">\(A\)</span>. But let’s think about what <span class="math notranslate nohighlight">\(y\)</span> should be again.
-If <span class="math notranslate nohighlight">\(y\)</span> was 1.0 then the line goes right through the point where the ladybird sits at <span class="math notranslate nohighlight">\((x,y) = (3.0, 1.0)\)</span>.
-It’s a subtle point but we don’t actually want that.
-We want the line to go above that point.
-Why? Because we want all the ladybird points to be below the line, not on it.
-The line needs to be a <em>dividing line</em> between ladybirds and caterpillars, not a predictor of a bug’s length given its width.
-So let’s try to aim for <span class="math notranslate nohighlight">\(y = 1.1\)</span> when <span class="math notranslate nohighlight">\(x = 3.0\)</span>.
-It’s just a small number above 1.0, We could have chosen 1.2, or even 1.3, but we don’t want a larger number like 10 or 100 because that would make it more likely that the line goes above both ladybirds and caterpillars, resulting in a separator that wasn’t useful at all. So the desired target is 1.1, and the error <strong>E</strong> is</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>error = (desired target - actual output)
-</pre></div>
-</div>
-<p>Which is, <span class="math notranslate nohighlight">\(E = 1.1 - 0.75 = 0.35\)</span></p>
-<p>Let’s examine the error, the desired target and the calculated value visually.</p>
-<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/visualbugs.png" /></p>
-<p>Now, what do we do with this <strong>E</strong> to guide us to a better refined parameter <span class="math notranslate nohighlight">\(A\)</span>?</p>
-<p>We want to use the error in <span class="math notranslate nohighlight">\(y\)</span>, which we call <strong>E</strong>, to inform the required change in parameter <span class="math notranslate nohighlight">\(A\)</span>.
-To do this we need to know how the two are related. How is <span class="math notranslate nohighlight">\(A\)</span> related to <strong>E</strong>?</p>
-<p>If we know this, then we can understand how changing one affects the other (correlation anyone?).</p>
-<p>Let’s start with the linear function for the classifier: <span class="math notranslate nohighlight">\(y = Ax\)</span>
-We know that for initial guesses of <span class="math notranslate nohighlight">\(A\)</span> this gives the wrong answer for <span class="math notranslate nohighlight">\(y\)</span>, which should be the value given by the training data.
-Let’s call the correct desired value, <span class="math notranslate nohighlight">\(t\)</span> for target value. To get that value <span class="math notranslate nohighlight">\(t\)</span>, we need to adjust <span class="math notranslate nohighlight">\(A\)</span> by a small amount; <span class="math notranslate nohighlight">\( t = (A + \Delta A)x\)</span> Let’s picture this to make it easier to understand. You can see the new slope <span class="math notranslate nohighlight">\((A + \Delta A)\)</span>.</p>
-<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/deltaA.png" /></p>
-<p>Remember the error <strong>E</strong> was the difference between the desired correct value and the one we calculate based on our current guess for <span class="math notranslate nohighlight">\(A\)</span>. That is, <strong>E</strong> was <span class="math notranslate nohighlight">\(t - y\)</span> (Kind of smells like a residual!);</p>
-<div class="math notranslate nohighlight">
-\[ t - y = (A + \Delta A)x - Ax\]</div>
-<p>Expanding out the terms and simplifying:</p>
-<div class="math notranslate nohighlight">
-\[ \textbf{E} = t - y = (Ax + \Delta A)x - Ax =  E = (\Delta A)x \]</div>
-<p>That’s remarkable! The error <strong>E</strong> is related to <span class="math notranslate nohighlight">\(\Delta A\)</span> in a very simple way.</p>
-<p>We wanted to know how much to adjust <span class="math notranslate nohighlight">\(A\)</span> by to improve the slope of the line so it is a better classifier, being informed by the error <strong>E</strong>.
-To do this we simply re-arrange that last equation: <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span>
-That’s the magic expression we’ve been looking for. We can use the error <strong>E</strong> to refine the slope <span class="math notranslate nohighlight">\(A\)</span> of the classifying line by an amount  <span class="math notranslate nohighlight">\(\Delta A\)</span>.</p>
-<p>Let’s update that initial slope. The error was 0.35 and the <span class="math notranslate nohighlight">\(x\)</span> was 3.0.
-That gives <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span> as 0.35/ 3.0 = 0.1167.
-That means we need to change the current <span class="math notranslate nohighlight">\(A = 0.25\)</span> by <span class="math notranslate nohighlight">\(0.1167\)</span>.
-That means the new improved value for <span class="math notranslate nohighlight">\(A\)</span> is (A​ + ΔA​) which is 0.25 + 0.1167 = 0.3667. As it happens, the calculated value of <span class="math notranslate nohighlight">\(y\)</span> with this new <span class="math notranslate nohighlight">\(A\)</span> is 1.1 as you’d expect - it’s the desired target value.</p>
-<p>Now we have a method for refining that parameter <span class="math notranslate nohighlight">\(A\)</span>, informed by the current error. Now we’re done with one training example, let’s learn from the next one. Here we have a known true pairing of <span class="math notranslate nohighlight">\(x\)</span> = 1.0 and <span class="math notranslate nohighlight">\(y\)</span> = 3.0. Let’s see what happens when we put <span class="math notranslate nohighlight">\(x\)</span> = 1.0 into the linear function which is now using the updated <span class="math notranslate nohighlight">\(A\)</span> = 0.3667. We get <span class="math notranslate nohighlight">\(y\)</span> = 0.3667 * 1.0 = 0.3667.
-That’s not very close to the training example with <span class="math notranslate nohighlight">\(y\)</span> = 3.0 at all.</p>
-<p>Using the same reasoning as before that we want the line to not cross the training data but instead be just above or below it, we can set the desired target value at 2.9. This way the training example of a caterpillar is just above the line, not on it. The error E​ is (2.9 ­ 0.3667) = 2.5333. That’s a bigger error than before, but if you think about it, all we’ve had so far for the linear function to learn from is a single training example, which clearly biases the line towards that single example.</p>
-<p>Let’s update the <span class="math notranslate nohighlight">\(A\)</span> again, just like we did before. The <span class="math notranslate nohighlight">\(\Delta A\)</span> is <span class="math notranslate nohighlight">\(\textbf{E}/x\)</span> which is 2.5333/ 1.0 = 2.5333. That means the even newer <span class="math notranslate nohighlight">\(A\)</span> is 0.3667 + 2.5333 = 2.9. That means for <span class="math notranslate nohighlight">\(x = 1.0\)</span> the function gives 2.9 as the answer, which is what the desired value was.</p>
-<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/someupdates.png" /></p>
 <p>The  plot shows the initial line, the line updated after learning from the first training example, and the final line after learning from the second training example.</p>
 <p>Looking at that plot, we don’t seem to have improved the slope in the way we had hoped. It hasn’t divided neatly the region between ladybirds and caterpillars.
 The line updates to give each desired value for y.
@@ -927,6 +925,113 @@ Target value =  2.9
 <li><p>not ladybird, not catapillar (the whole wedge between the two slopes, assuming we saved the two slopes)</p></li>
 </ul>
 <p>Clearly on the right track but not quite finished.</p>
+<p>Anticipating that the average slope might be useful, lets report that upon exit from each test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># MODERATED LEARNING </span>
+<span class="c1"># SEQUENCE, SELECTION, AND REPETITION </span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="n">string</span><span class="p">):</span> <span class="c1"># note multiple returns</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=-</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;input not string&#39;</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+<span class="n">howmanytrials</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">howmanytests</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">learningrate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="c1"># Wrap the updates into a repetition structure</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">abar</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytests</span><span class="p">):</span>
+    <span class="n">deltaA</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># initial value </span>
+    <span class="k">for</span> <span class="n">iguess</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytrials</span><span class="p">):</span>
+<span class="c1"># Next Guess - iset Training Example</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+        <span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+        <span class="n">nudge</span> <span class="o">=</span> <span class="n">offset</span><span class="p">(</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#use the truth table to offset the seperator</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">nudge</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+        <span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1">#print(&#39;Updated Guess Training Set&#39;,iset+1)</span>
+        <span class="c1">#print(&#39;Trial Count  = &#39;,iguess+1)</span>
+        <span class="c1">#print(&#39;Target value = &#39;,round(error+ymodel,3))</span>
+        <span class="c1">#print(&#39; Model value = &#39;,round(ymodel,3))</span>
+        <span class="c1">#print(&#39; Error value = &#39;,round(error,3))</span>
+        <span class="c1">#print(&#39; Slope value = &#39;,round(a,3))</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">iset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">abar</span><span class="o">=</span><span class="n">a</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">abar</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">abar</span><span class="o">+</span><span class="n">a</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Updated Guess Training Set&#39;</span><span class="p">,</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trial Count  = &#39;</span><span class="p">,</span><span class="n">iguess</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average Slope =&#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">abar</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>error smaller than tolerance, next training row
+Updated Guess Training Set 1
+Trial Count  =  10
+Target value =  1.1
+ Model value =  1.099
+ Error value =  0.001
+ Slope value =  0.366
+Average Slope = 0.366
+error smaller than tolerance, next training row
+Updated Guess Training Set 2
+Trial Count  =  13
+Target value =  2.9
+ Model value =  2.899
+ Error value =  0.001
+ Slope value =  2.899
+Average Slope = 1.633
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have something of a learner - the meaningful output will be an average slope based on the training classifications, and will incorporate all the training inputs instead of just the most recent one.  Building a classification engine at this point is relatively simple.</p>
+<p>Take new inputs, <span class="math notranslate nohighlight">\(x_{new}\)</span> and <span class="math notranslate nohighlight">\(y_{new}\)</span>, compute a slope as <span class="math notranslate nohighlight">\(s_{new}=\frac{y_{new}}{x_{new}}\)</span>.  Test if the slope is smaller than the average slope then ladybird and if greater than average then catapillar.  Now of course a bigger training set would be in order, and if we had a third bug type that would complicate things a bit - but the idea is straight forward.</p>
+<p>Naturally, with images the problem is way more complex, but the underlying theme is the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xnew</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">ynew</span> <span class="o">=</span> <span class="mf">3.3</span>
+<span class="n">snew</span> <span class="o">=</span> <span class="n">ynew</span><span class="o">/</span><span class="n">xnew</span>
+<span class="k">if</span> <span class="n">snew</span> <span class="o">&lt;=</span> <span class="n">abar</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;You gots a ladybug!&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">snew</span> <span class="o">&gt;</span> <span class="n">abar</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its a catapillar! ... meow&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Its a catapillar! ... meow
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="learning-theory-concepts">

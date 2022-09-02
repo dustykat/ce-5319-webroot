@@ -127,12 +127,12 @@ print("tree784 statistics : ",img_data2.mean(),img_data2.var())
 # That’s much better! This line neatly separates caterpillars from ladybirds. We can now use this line as a **classifier** of bugs. We are assuming that there are no other kinds of bugs *that we haven’t seen* - but that’s ok for now, we’re simply trying to illustrate the idea of a simple classifier. 
 # 
 # :::{note}
-# >Recall the discussion about humans seeing a critter for the first time.  They cannot necessarily classifi it into the exact type of critter, but know it is a critter.  We could even place it into a taxonomy chart based on enough specific characteristics.
-# > ![](taxonomicChart.png)
+# Recall the discussion about humans seeing a critter for the first time.  They cannot necessarily classifi it into the exact type of critter, but know it is a critter.  We could even place it into a taxonomy chart based on enough specific characteristics.
+# ![](taxonomicChart.png)
 # and maybe determine what the critter is.  But consider a [platypus](https://en.wikipedia.org/wiki/Platypus) which has four limbs (quadraped), fur, is a mammal, but has bird-like bill, and lays eggs.  If you have never seen one before, the best you could do is classify as varmit or critter.
 # :::
 # 
-# ![]()Imagine next time our computer used a robot arm to pick up a new bug and measured its width and height, it could then use the above line to classify it correctly as a caterpillar or a ladybird. Look at the following plot, you can see the unknown bug is a caterpillar because it lies above the line. This classification is simple but pretty powerful already!
+# Imagine next time our computer used a robot arm to pick up a new bug and measured its width and height, it could then use the above line to classify it correctly as a caterpillar or a ladybird. Look at the following plot, you can see the unknown bug is a caterpillar because it lies above the line. This classification is simple but pretty powerful already!
 # 
 # ![](http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/newbug.png)
 # 
@@ -180,61 +180,6 @@ print("tree784 statistics : ",img_data2.mean(),img_data2.var())
 # :::{note}
 # In our ML jargon, **algorithm** and **learner** are synonyms; recipe is a good analogy. Anastasia's good friend *reptition* shows up yet again too!
 # :::
-
-# In[6]:
-
-
-# Simple Classifier Example
-# UNMODERATED LEARNING 
-
-dataframe1 = [[3,1,'L'],[1,3,'C']] # a list of truth table values, L = ladybug, C = cat a pillar
-# seperator line hypothesis
-def yAx(a,x): # produce a y-value to test for seperation
-    yAx = a*x
-    return(yAx)
-
-# Hyperparameters
-margin = 1.1 #seperation margin as fraction of exact answer
-howclose = 1e-4
-# Initial Guess - 1st Training Example
-a=0.25
-
-ymodel = yAx(a,dataframe1[0][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
-error = margin*dataframe1[0][1] - ymodel
-
-# Update a
-deltaA = error/dataframe1[0][0]
-print(ymodel,error,deltaA)
-if abs(error) <= howclose:
-    print('error smaller than tolerance, next training row')
-
-# Next Guess - 1st Training Example
-a=a+deltaA
-ymodel = yAx(a,dataframe1[0][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
-error = margin*dataframe1[0][1] - ymodel
-deltaA = error/dataframe1[0][0]
-print(ymodel,error,deltaA)
-if abs(error) <= howclose:
-    print('error smaller than tolerance, next training row')
-
-# Initial Guess - 2nd Training Example
-a=a+deltaA
-ymodel = yAx(a,dataframe1[1][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
-error = margin*dataframe1[1][1] - ymodel
-deltaA = error/dataframe1[1][0]
-print(ymodel,error,deltaA)
-if abs(error) <= howclose:
-    print('error smaller than tolerance, next training row')
-
-# Next Guess - 2nd Training Example
-a=a+deltaA
-ymodel = yAx(a,dataframe1[1][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
-error = margin*dataframe1[1][1] - ymodel
-deltaA = error/dataframe1[1][0]
-print(ymodel,error,deltaA)
-if abs(error) <= howclose:
-    print('error smaller than tolerance, next training row')
-
 
 # Let’s look at the first training example: the width is 3.0 and length is 1.0 for a ladybird. 
 # If we tested the $y = Ax$ function with this example where $x$ is 3.0, we’d get $y = (0.25) * (3.0) = 0.75$ 
@@ -297,6 +242,61 @@ if abs(error) <= howclose:
 # Let’s update the $A$ again, just like we did before. The $\Delta A$ is $\textbf{E}/x$ which is 2.5333/ 1.0 = 2.5333. That means the even newer $A$ is 0.3667 + 2.5333 = 2.9. That means for $x = 1.0$ the function gives 2.9 as the answer, which is what the desired value was.
 # 
 # ![](http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/someupdates.png)
+
+# In[6]:
+
+
+# Simple Classifier Example
+# UNMODERATED LEARNING 
+
+dataframe1 = [[3,1,'L'],[1,3,'C']] # a list of truth table values, L = ladybug, C = cat a pillar
+# seperator line hypothesis
+def yAx(a,x): # produce a y-value to test for seperation
+    yAx = a*x
+    return(yAx)
+
+# Hyperparameters
+margin = 1.1 #seperation margin as fraction of exact answer
+howclose = 1e-4
+# Initial Guess - 1st Training Example
+a=0.25
+
+ymodel = yAx(a,dataframe1[0][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
+error = margin*dataframe1[0][1] - ymodel
+
+# Update a
+deltaA = error/dataframe1[0][0]
+print(ymodel,error,deltaA)
+if abs(error) <= howclose:
+    print('error smaller than tolerance, next training row')
+
+# Next Guess - 1st Training Example
+a=a+deltaA
+ymodel = yAx(a,dataframe1[0][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
+error = margin*dataframe1[0][1] - ymodel
+deltaA = error/dataframe1[0][0]
+print(ymodel,error,deltaA)
+if abs(error) <= howclose:
+    print('error smaller than tolerance, next training row')
+
+# Initial Guess - 2nd Training Example
+a=a+deltaA
+ymodel = yAx(a,dataframe1[1][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
+error = margin*dataframe1[1][1] - ymodel
+deltaA = error/dataframe1[1][0]
+print(ymodel,error,deltaA)
+if abs(error) <= howclose:
+    print('error smaller than tolerance, next training row')
+
+# Next Guess - 2nd Training Example
+a=a+deltaA
+ymodel = yAx(a,dataframe1[1][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
+error = margin*dataframe1[1][1] - ymodel
+deltaA = error/dataframe1[1][0]
+print(ymodel,error,deltaA)
+if abs(error) <= howclose:
+    print('error smaller than tolerance, next training row')
+
 
 # The  plot shows the initial line, the line updated after learning from the first training example, and the final line after learning from the second training example. 
 # 
@@ -520,6 +520,92 @@ for iset in range(howmanytests):
 # - not ladybird, not catapillar (the whole wedge between the two slopes, assuming we saved the two slopes)
 # 
 # Clearly on the right track but not quite finished.
+# 
+# Anticipating that the average slope might be useful, lets report that upon exit from each test set.
+
+# In[10]:
+
+
+# Simple Classifier Example
+# MODERATED LEARNING 
+# SEQUENCE, SELECTION, AND REPETITION 
+
+dataframe1 = [[3,1,'L'],[1,3,'C']] # a list of truth table values, L = ladybug, C = cat a pillar
+# seperator line hypothesis
+def yAx(a,x): # produce a y-value to test for seperation
+    yAx = a*x
+    return(yAx)
+
+def offset(string): # note multiple returns
+    if string == 'L':
+        offset=0.1
+        return(offset)
+    if string == 'C':
+        offset=-0.1
+        return(offset)
+    else: 
+        raise Exception('input not string')
+
+# Hyperparameters
+howmanytrials = 18
+howmanytests = 2
+learningrate = 0.5
+howclose = 1e-3
+
+# Wrap the updates into a repetition structure
+a = 0.25
+abar = a
+
+for iset in range(howmanytests):
+    deltaA = 0.0 # initial value 
+    for iguess in range(howmanytrials):
+# Next Guess - iset Training Example
+        a=a+deltaA
+        ymodel = yAx(a,dataframe1[iset][0]) #note the adressing structure - we are sending the 1st training row [0],the first column[0]
+        nudge = offset(dataframe1[iset][2]) #use the truth table to offset the seperator
+        error = nudge+dataframe1[iset][1] - ymodel
+        deltaA = learningrate*(error/dataframe1[iset][0])
+        #print('Updated Guess Training Set',iset+1)
+        #print('Trial Count  = ',iguess+1)
+        #print('Target value = ',round(error+ymodel,3))
+        #print(' Model value = ',round(ymodel,3))
+        #print(' Error value = ',round(error,3))
+        #print(' Slope value = ',round(a,3))
+        if abs(error) <= howclose:
+            if iset == 0:
+                abar=a
+            else:
+                abar=0.5*(abar+a)
+            print('error smaller than tolerance, next training row')
+            print('Updated Guess Training Set',iset+1)
+            print('Trial Count  = ',iguess+1)
+            print('Target value = ',round(error+ymodel,3))
+            print(' Model value = ',round(ymodel,3))
+            print(' Error value = ',round(error,3))
+            print(' Slope value = ',round(a,3))
+            print('Average Slope =',round(abar,3))
+            break
+
+
+# 
+
+# Now we have something of a learner - the meaningful output will be an average slope based on the training classifications, and will incorporate all the training inputs instead of just the most recent one.  Building a classification engine at this point is relatively simple.
+# 
+# Take new inputs, $x_{new}$ and $y_{new}$, compute a slope as $s_{new}=\frac{y_{new}}{x_{new}}$.  Test if the slope is smaller than the average slope then ladybird and if greater than average then catapillar.  Now of course a bigger training set would be in order, and if we had a third bug type that would complicate things a bit - but the idea is straight forward.
+# 
+# Naturally, with images the problem is way more complex, but the underlying theme is the same.
+
+# In[11]:
+
+
+xnew = 2
+ynew = 3.3
+snew = ynew/xnew
+if snew <= abar:
+    print('You gots a ladybug!')
+if snew > abar:
+    print('Its a catapillar! ... meow')
+
 
 # ## Learning Theory Concepts
 # Im just going to grow this list each chapter - maybe someday it will all come together.
