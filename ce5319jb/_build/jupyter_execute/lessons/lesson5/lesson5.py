@@ -13,8 +13,13 @@
 # 2. Unsupervised Learning
 # 3. Reinforcement Learning
 # 
+# :::{note}
+# In supervised learning, the dataset is a collection of **labeled** examples ${(x_i,y_i)}_{i=1}^N$ Each element of $x_i$ is called a **feature** vector, or in my jargon a **predictor**.  The **label** $y_i$ can be a class (Tasty/Yucky ...) or a real valued response, or a more complex structure.  In my jargon we called an entire row of the set the **predictor-truth** table.
 # 
+# The goal of a supervised learner is to produce a **model** (aka fitted hypothesis) that will take as input a feature vector and produce as output a response (class or value
 # 
+# What follows below is lifted largely from IBM marketing materials - its kind of fluffy but worth a read as we construct a language relevant to ML in Civil Engineering
+# :::
 
 # ### What is supervised learning?
 # 

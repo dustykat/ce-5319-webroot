@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -213,6 +215,11 @@
    Decision Tree Classification
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson16/lesson16.html">
+   Introduction to Neural Network Classification
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -379,6 +386,12 @@ learning has evolved into several different types of learning tasks. The three b
 <li><p>Unsupervised Learning</p></li>
 <li><p>Reinforcement Learning</p></li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In supervised learning, the dataset is a collection of <strong>labeled</strong> examples <span class="math notranslate nohighlight">\({(x_i,y_i)}_{i=1}^N\)</span> Each element of <span class="math notranslate nohighlight">\(x_i\)</span> is called a <strong>feature</strong> vector, or in my jargon a <strong>predictor</strong>.  The <strong>label</strong> <span class="math notranslate nohighlight">\(y_i\)</span> can be a class (Tasty/Yucky …) or a real valued response, or a more complex structure.  In my jargon we called an entire row of the set the <strong>predictor-truth</strong> table.</p>
+<p>The goal of a supervised learner is to produce a <strong>model</strong> (aka fitted hypothesis) that will take as input a feature vector and produce as output a response (class or value</p>
+<p>What follows below is lifted largely from IBM marketing materials - its kind of fluffy but worth a read as we construct a language relevant to ML in Civil Engineering</p>
+</div>
 <div class="section" id="what-is-supervised-learning">
 <h3>What is supervised learning?<a class="headerlink" href="#what-is-supervised-learning" title="Permalink to this headline">¶</a></h3>
 <p>Supervised learning is defined by its extensive use of labeled datasets to train algorithms to classify data or predict outcomes accurately. As input data is fed into the model, it adjusts its weights until the model has been fitted appropriately, which occurs as part of the cross validation process. Supervised learning helps organizations solve for a variety of real-world problems at scale, such as classifying spam in a separate folder from your inbox.</p>
