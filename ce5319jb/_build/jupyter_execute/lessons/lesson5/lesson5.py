@@ -36,6 +36,24 @@
 # 
 # - Regression is used to understand the relationship between dependent and independent variables. It is commonly used to make projections, such as for sales revenue for a given business. Linear regression, logistical regression, and polynomial regression are popular regression algorithms.
 # 
+# :::{admonition} Another explaination 
+# The supervised learning process starts with gathering the data. The data for supervised  learning is a collection of paired or labeled information usually called **examples** (input, output). Input could be anything, for example, email  messages, pictures, or sensor voltages. Outputs are usually real numbers, or labels  (e.g. “spam”, “not_spam”, “cat”, “dog”, “mouse”, etc). In some cases, outputs are vectors (e.g.,  four coordinates of the rectangle around a person on the picture), sequences (e.g. [“adjective”,  “adjective”, “noun”] for the input “big beautiful car”), or have some other structure.  Let’s say the problem that you want to solve using supervised learning is spam detection.  You gather the data, for example, 10,000 email messages, each with a label either “spam” or  “not_spam” (you could add those labels manually or pay someone to do that for you). Now, you have to convert each email message into a feature vector.  The data analyst decides, based on their experience, how to convert a real-world entity, such  as an email message, into a feature vector. One common way to convert a text into a feature vector, called bag of words, is to take a dictionary of English words (let’s say it contains  20,000 alphabetically sorted words) and stipulate that in our feature vector:  
+# 
+# - the first feature is equal to 1 if the email message contains the word “a”; otherwise, this  feature is 0; 
+# - the second feature is equal to 1 if the email message contains the word “aaron”;  otherwise, this feature equals 0;  
+# - ...  
+# - the feature at position 20,000 is equal to 1 if the email message contains the word  “zulu”; otherwise, this feature is equal to 0.  
+# 
+# You repeat the above procedure for every email message in our collection, which gives  us 10,000 feature vectors (each vector having the dimensionality of 20,000) and a label  (“spam”/“not_spam”).  Now you have machine-readable input data, but the output labels are still in the form of  human-readable text. Some learning algorithms require transforming labels into numbers.  For example, some algorithms require numbers like 0 (to represent the label “not_spam”)  and 1 (to represent the label “spam”). A [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support-vector_machine) algorithm typically requires that the positive label (in  our case it’s “spam”) has the numeric value of +1 (one), and the negative label (“not_spam”) has the value of −1 (minus one). 
+# 
+# > The ladybug, catapillar example is a SVM. If you recall we generated two support vectors, which I averaged because I didn't want to write the necessary code to keep track of the two vectors.
+# 
+# At this point, you have a dataset and a learning algorithm, so you are ready to apply the learning algorithm to the dataset to get the model.  SVM sees every feature vector as a point in a high-dimensional space (in our case, space  is 20,000-dimensional). The algorithm puts all feature vectors on an imaginary 20,000-dimensional plot and draws an imaginary 19,999-dimensional line (a hyperplane) that separates examples with positive labels from examples with negative labels. In machine learning, the boundary separating the examples of different classes is called the **decision boundary**.  The equation of the hyperplane is given by two parameters, a real-valued vector $w$ of the  same dimensionality as our input feature vector $x$, and a real number $b$ like this:  $wx − b = 0$,  where the expression $wx$ means $w^{(1)}x^{(1)} + w^{(2)}x^{(2)} +... + w^{(D)}x^{(D)}$, and $D$ is the number  of dimensions of the feature vector $x$.   Now, the predicted label for some input feature vector $x$ is given like this:  $y = sign(wx − b)$,  where sign is a mathematical operator that takes any value as input and returns +1 if the input is a positive number or −1 if the input is a negative number. (we already used `numpy.sign()` in the bisection example)
+# 
+# :::
+# 
+# 
+# 
 # #### Common supervised learning algorithms
 # Various algorithms and computation techniques are used in supervised machine learning processes. Below are brief explanations of some of the most commonly used learning methods, typically calculated through use of programs like R or Python:
 # 

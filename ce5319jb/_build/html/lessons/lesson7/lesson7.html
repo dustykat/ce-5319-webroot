@@ -213,6 +213,11 @@
    Decision Tree Classification
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson16/lesson16.html">
+   Introduction to Neural Network Classification
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -352,9 +357,16 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="reinforcement-learning">
 <h1>Reinforcement Learning<a class="headerlink" href="#reinforcement-learning" title="Permalink to this headline">¶</a></h1>
-<p>Reinforcement learning (RL) is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward. Reinforcement learning is one of three basic machine learning paradigms, alongside supervised learning and unsupervised learning.</p>
-<p>Reinforcement learning differs from supervised learning in not needing labelled input/output pairs be presented, and in not needing sub-optimal actions to be explicitly corrected. Instead the focus is on finding a balance between exploration (of uncharted territory) and exploitation (of current knowledge).[1] Partially supervised RL algorithms can combine the advantages of supervised and RL algorithms.</p>
-<p>The environment is typically stated in the form of a Markov decision process (MDP), because many reinforcement learning algorithms for this context use dynamic programming techniques. The main difference between the classical dynamic programming methods and reinforcement learning algorithms is that the latter do not assume knowledge of an exact mathematical model of the MDP and they target large MDPs where exact methods become infeasible.</p>
+<p>Reinforcement learning (RL) is a type of ML where the “machine” lives in an “environment” and detects the <strong>state</strong> of the environment (maybe with sensors) as a feature vector, and can generate actions (control functions like in a <a class="reference external" href="https://en.wikipedia.org/wiki/PID_controller">PID controller</a>)) in any state.  Different actions provide rewards and can move the machine into another “environmental” state.  The goal of reinforcement learning is to learn a <strong>policy</strong> (similar to the <strong>model</strong> in supervised learning) that takes the curent feature vector of a state and outputs a “non-inferior” action (<strong>policy</strong>) to apply in that state.  The action is said to be optimal if it maximizes the expected average reward (here <em>expected</em> is in the statistical sense that is the integral of the product of reward value and probability of getting that reward).</p>
+<p>RL solves problems where decision making is sequential, and the goal is somewhat long-term.  Logistics (Amazon, FedEx, UPS), resource management (fuel production, …) , robotics (PUMA, wharehouse robots, autonomous killing machines,…), and game-playing (not fun games, but “wargaming” to guide decision makers) are all general categoires of human activity that leverages RL.</p>
+<p><a class="reference external" href="https://www.ibm.com/topics/what-is-a-digital-twin">Digital twin</a> simulation and control most probably falls squarely in this category of ML.</p>
+<div class="highlight-{admonition}From notranslate"><div class="highlight"><pre><span></span>Reinforcement learning (RL) is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward. Reinforcement learning is one of three basic machine learning paradigms, alongside supervised learning and unsupervised learning.
+
+Reinforcement learning differs from supervised learning in not needing labelled input/output pairs be presented, and in not needing sub-optimal actions to be explicitly corrected. Instead the focus is on finding a balance between exploration (of uncharted territory) and exploitation (of current knowledge).[1] Partially supervised RL algorithms can combine the advantages of supervised and RL algorithms.
+
+The environment is typically stated in the form of a Markov decision process (MDP), because many reinforcement learning algorithms for this context use dynamic programming techniques. The main difference between the classical dynamic programming methods and reinforcement learning algorithms is that the latter do not assume knowledge of an exact mathematical model of the MDP and they target large MDPs where exact methods become infeasible.
+</pre></div>
+</div>
 <div class="section" id="topic">
 <h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>
 <p>lorem ipsum</p>
@@ -373,6 +385,7 @@
 <li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
 <li><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/R352.pdf">Applied Dynamic Programming Bellman and Dreyfus (1962)</a></p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement Learning (Wikipedia)</a></p></li>
+<li><p><a class="reference external" href="https://www.ibm.com/topics/what-is-a-digital-twin">Digital Twins (IBM)</a></p></li>
 </ol>
 </div>
 </div>
