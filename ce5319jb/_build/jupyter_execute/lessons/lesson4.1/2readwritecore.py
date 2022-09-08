@@ -1,17 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Histograms
+# # Local Files
 # 
-# ## importing pyplot sub-package
 # 
-# - 
-# - 
-# - 
-# 
-# ## line plots
-# 
-# - Reasons to do so
-# - 
-# 
-# ## scatterplots
