@@ -8,9 +8,16 @@ chapters:
 - file: lessons/lesson2/lesson2 # overview, ML workflow
 - file: lessons/lesson3/lesson3 # prediction engines
 - file: lessons/lesson4/lesson4 # classification engines
+- file: lessons/lesson4.1/filetransfer
+  sections:
+  - file: lessons/lesson4.1/1filesystems
+  - file: lessons/lesson4.1/2readwritecore
+  - file: lessons/lesson4.1/3readwriteweb
+
 - file: lessons/lesson5/lesson5 # supervised learning
 - file: lessons/lesson6/lesson6 # unsupervised learning
 - file: lessons/lesson7/lesson7 # reinforcement learning
+
 - file: lessons/lesson8/lesson8 # exploratory data analysis
   sections:
   - file: lessons/lesson8/datatypes
@@ -29,3 +36,5 @@ chapters:
 - file: lessons/lesson13/lesson13
 - file: lessons/lesson14/lesson14
 - file: lessons/lesson15/lesson15
+
+- file: lessons/lesson16/lesson16 # neural networks
