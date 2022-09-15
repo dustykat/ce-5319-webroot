@@ -22,6 +22,7 @@ chapters:
   sections:
   - file: lessons/lesson8/datatypes
   - file: lessons/lesson8/exploratorydataanalysis
+  - file: lessons/lesson8/exploratorydataanalysisvisual
   - file: lessons/lesson8/downloading
   
 - file: lessons/lesson9/lesson9 # probability distributions
