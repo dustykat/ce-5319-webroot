@@ -43,8 +43,11 @@
 # 
 
 # ## References
-# 1. [Tukey, J (1977). Exploratory Data Analysis. Addison-Wessley](https://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160)
+# 1. [Tukey, J (1977). Exploratory Data Analysis. Addison-Wessley (Amazon)](https://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160)
 # 
+# 2. [Tukey, J (1977). Exploratory Data Analysis. Addison-Wessley (Copy)](http://54.243.252.9/ce-5319-webroot/3-Readings/102_05_01_Tukey-Exploratory-Data-Analysis-1977.pdf)
+# 
+# 3. [Applications of Statistics in Water Resources (TWRI Book 4 A3) ](http://54.243.252.9/ce-5319-webroot/3-Readings/tm4a3.pdf)
 
 # In[ ]:
 
