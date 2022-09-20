@@ -21,9 +21,10 @@ chapters:
 - file: lessons/lesson8/lesson8 # exploratory data analysis
   sections:
   - file: lessons/lesson8/datatypes
+  - file: lessons/lesson8/downloading
   - file: lessons/lesson8/exploratorydataanalysis
   - file: lessons/lesson8/exploratorydataanalysisvisual
-  - file: lessons/lesson8/downloading
+
   
 - file: lessons/lesson9/lesson9 # probability distributions
 - file: lessons/lesson10/optimization # optimization

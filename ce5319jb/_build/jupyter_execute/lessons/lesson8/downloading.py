@@ -435,18 +435,32 @@ get_ipython().run_line_magic('ls', './MyImageFiles/')
 
 # Now we have the files, if we browse our machine we can examine them.  The copies for this example are residing at [Link](http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/MyImageFiles)
 
-# ### References (for this example)
+# ### Databases for Examples
+# 
+# Some subsequent examples will make use of the [Material Cracking](http://54.243.252.9/ce-5319-webroot/1-Databases/MaterialCracking/) databases like above above (for classification engines) and the [ConcreteStrength](http://54.243.252.9/ce-5319-webroot/1-Databases/ConcreteMixtures/concreteData.xls) (for prediction engines).  
+# 
+# We already have the image files from the [Material Cracking](http://54.243.252.9/ce-5319-webroot/1-Databases/MaterialCracking/) directory.
+# 
+# Now lets get the [ConcreteStrength](http://54.243.252.9/ce-5319-webroot/1-Databases/ConcreteMixtures/concreteData.csv) database (and automate the getting, so if we lose the local path we can easily recover a copy).
+
+# In[31]:
+
+
+import requests # Module to process http/https requests
+remote_url="http://54.243.252.9/ce-5319-webroot/1-Databases/ConcreteMixtures/concreteData.csv"  # set the url
+response = requests.get(remote_url, allow_redirects=True)  # get the remote resource, follow imbedded links
+open('concreteData.csv','wb').write(response.content); # extract from the remote the contents, assign to a local file same name
+
+
+# ### References 
 # 
 # 1. [`wget` recursive directory hints](https://stackoverflow.com/questions/273743/using-wget-to-recursively-fetch-a-directory-with-arbitrary-files-in-it)
 # 2. [`wget` mirror hints](https://stackoverflow.com/questions/5043239/how-do-i-mirror-a-directory-with-wget-without-creating-parent-directories)
 # 3. [Jupyter Directory (magic functions) manipulation](https://stackoverflow.com/questions/15680463/change-ipython-jupyter-notebook-working-directory)
-
-# 
+# 4. [List processing tips](https://www.programiz.com/python-programming/del)
+# 5. [Character replacement tips](https://www.geeksforgeeks.org/python-string-replace/)
+# 6. [Python file manipulations](https://www.tutorialspoint.com/python/python_files_io.htm)
 
 # ## References
 # 
-# 1. List processing tips [https://www.programiz.com/python-programming/del](https://www.programiz.com/python-programming/del)
 # 
-# 2. Character replacement tips [https://www.geeksforgeeks.org/python-string-replace/](https://www.geeksforgeeks.org/python-string-replace/)
-# 
-# 3. Python file manipulations [https://www.tutorialspoint.com/python/python_files_io.htm](https://www.tutorialspoint.com/python/python_files_io.htm)

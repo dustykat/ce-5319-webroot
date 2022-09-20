@@ -56,8 +56,10 @@
 #Step 1: import needed modules to interact with the internet
 import requests
 #Step 2: make the connection to the remote file (actually its implementing "bash curl -O http://fqdn/path ...")
-
-#Step 3: download the file and store a copy locally
+remote_url="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson8/pip-corner-sumps.txt"  # set the url
+response = requests.get(remote_url, allow_redirects=True)     
+#Step 3: read the file and store a copy locally
+open('pip-corner-sumps.txt','wb').write(response.content);# extract from the remote the contents, assign to a local file same name
 
 
 # In[3]:
@@ -87,7 +89,7 @@ coord_xy = numpy.column_stack((coord_x, coord_y))
 lon = numpy.linspace(min(coord_x), max(coord_x), 200)
 lat = numpy.linspace(min(coord_y), max(coord_y), 200)
 X, Y = numpy.meshgrid(lon, lat)
-# Grid the data; use cubic spline interpolation (other choices are nearest and linear)
+# Grid the data; use linear interpolation (choices are nearest, linear, cubic)
 Z = griddata(numpy.array(coord_xy), numpy.array(coord_z), (X, Y), method='linear')
 # Build the map
 fig, ax = matplotlib.pyplot.subplots()

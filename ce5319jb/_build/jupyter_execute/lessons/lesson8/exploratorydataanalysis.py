@@ -451,6 +451,238 @@ print("The kurtosis of the budget of the Top10 highest-grossing films is ",Kurt)
 # - "Measures of Shape: Skewness and Kurtosis"
 # by __*Stan Brown*__, available @ https://brownmath.com/stat/shape.htm
 
+# ## In-Class Exercises
+# 
+# Using the concrete database already downloaded, explore its contents using summary metrics.  We will start as if we are going to do some kind of complete analysis ...
+
+# # Concrete Compressive Strength
+# The Compressive Strength of Concrete determines the quality of Concrete. 
+# The strength is determined by a standard crushing test on a concrete cylinder, that requires engineers to build small concrete cylinders with different combinations of raw materials and test these cylinders for strength variations with a change in each raw material. 
+# The recommended wait time for testing the cylinder is 28 days to ensure correct results, although there are formulas for making estimates from shorter cure times.
+# The formal 28-day approach consumes a lot of time and labor to prepare different prototypes and test them. 
+# Also, this method is prone to human error and one small mistake can cause the wait time to drastically increase.
+# 
+# One way of reducing the wait time and reducing the number of combinations to try is to make use of digital simulations, where we can provide information to the computer about what we know and the computer tries different combinations to predict the compressive strength.
+# This approach can reduce the number of combinations we can try physically and reduce the total amount of time for experimentation. 
+# But, to design such software we have to know the relations between all the raw materials and how one material affects the strength. 
+# It is possible to derive mathematical equations and run simulations based on these equations, but we cannot expect the relations to be same in real-world. 
+# Also, these tests have been performed for many numbers of times now and we have enough real-world data that can be used for predictive modelling.
+# 
+# We are going to analyse a Concrete Compressive Strength dataset and build a Machine Learning Model to predict the compressive strength for given mixture (inputs). 
+# 
+# ## Dataset Description
+# 
+# The dataset consists of 1030 instances with 9 attributes and has no missing values. 
+# There are 8 input variables and 1 output variable. 
+# Seven input variables represent the amount of raw material (measured in $kg/m^3$) and one represents Age (in Days). 
+# The target variable is Concrete Compressive Strength measured in (MPa — Mega Pascal). 
+# We shall explore the data to see how input features are affecting compressive strength.
+# 
+# ## Obtain the Database, Perform Initial EDA
+# 
+# 1. Get the database from a repository 
+# 2. Import/install support packages (if install required, either on your machine, or contact network admin to do a root install)
+# 3. EDA
+
+# > Local (our server copy)
+# ```
+# import requests # Module to process http/https requests
+# remote_url="http://54.243.252.9/ce-5319-webroot/1-Databases/ConcreteMixtures/concreteData.csv"  # set the url
+# response = requests.get(remote_url, allow_redirects=True)  # get the remote resource, follow imbedded links
+# open('concreteData.csv','wb').write(response.content); # extract from the remote the contents, assign to a local file same name
+# ```
+# 
+# The script below gets the file from the actual remote repository
+
+# In[25]:
+
+
+#Get database -- use the Get Data From URL Script
+#Step 1: import needed modules to interact with the internet
+import requests
+#Step 2: make the connection to the remote file (actually its implementing "bash curl -O http://fqdn/path ...")
+remote_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/concrete/compressive/Concrete_Data.xls' # an Excel file
+response = requests.get(remote_url) # Gets the file contents puts into an object
+output = open('concreteData.xls', 'wb') # Prepare a destination, local
+output.write(response.content) # write contents of object to named local file
+output.close() # close the connection
+
+
+# Import/install support packages (if install required, either on your machine, or contact network admin to do a root install)
+
+# In[26]:
+
+
+# The usual suspects plus some newish ones!
+### Import/install support packages
+import numpy as np
+import pandas
+import matplotlib.pyplot as plt
+import seaborn 
+get_ipython().run_line_magic('matplotlib', 'inline')
+
+
+# Now try to read the file, use pandas methods
+
+# In[27]:
+
+
+data = pandas.read_excel("concreteData.xls")
+
+
+# Now lets examine the file, first the length the `head` method
+
+# In[28]:
+
+
+print("How many rows :",len(data))
+
+
+# A quick look at the sturcture of the data object
+
+# In[29]:
+
+
+data.head() # head is a pandas method that becomes accessible when the dataframe is created with the read above
+
+
+# Rename the columns to simpler names, notice use of a set constructor.
+# Once renamed, again look at the first few rows
+
+# In[30]:
+
+
+req_col_names = ["Cement", "BlastFurnaceSlag", "FlyAsh", "Water", "Superplasticizer",
+                 "CoarseAggregate", "FineAggregate", "Age", "CC_Strength"]
+curr_col_names = list(data.columns)
+
+mapper = {}
+for i, name in enumerate(curr_col_names):
+    mapper[name] = req_col_names[i]
+
+data = data.rename(columns=mapper)
+
+data.head()
+
+
+# ## Exploratory Data Analysis
+# 
+# The first step in a Data Science project is to understand the data and gain insights from the data before doing any modelling. This includes checking for any missing values, plotting the features with respect to the target variable, observing the distributions of all the features and so on. Let us import the data and start analysing.
+# 
+# First we check for null values, as the database grows, one can expect null values, so check for presence. 
+# We wont act in this case, but concievably would in future iterations.
+
+# In[31]:
+
+
+data.isna().sum() # isna() and sum() are pandas methods that become accessible when the dataframe is created with the read above
+
+
+# Lets explore the database a little bit
+
+# In[32]:
+
+
+data.describe() # describe is a pandas method that becomes accessible when the dataframe is created with the read above
+
+
+# ### Association Measures (Covariance and Correlation)
+# 
+# **Covariance:**
+# is a measure of the joint variability of two random variables.  The formula to compute covariance is:
+# 
+# $$cov(x,y)=\frac{\sum_{i=1}^{n}(x-\bar x)(y-\bar y)}{n-1}$$
+# 
+# If the greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, (i.e., the variables tend to show similar behavior), the covariance is positive. 
+# In the opposite case, when the greater values of one variable mainly correspond to the lesser values of the other, (i.e., the variables tend to show opposite behavior), the covariance is negative. 
+# The sign of the covariance therefore shows the tendency of any linear relationship between the variables. 
+# The magnitude of the covariance is not particularly useful to interpret because it depends on the magnitudes of the variables. 
+# 
+# <!--![](https://www.wallstreetmojo.com/wp-content/uploads/2019/03/Covariance-Formula.jpg) <br>-->
+# 
+# A normalized version of the covariance, the correlation coefficient, however, is useful in terms of sign and magnitude.
+# 
+# <!--![](https://media.geeksforgeeks.org/wp-content/uploads/Correl.png) <br>-->
+# 
+# <img src="https://media.geeksforgeeks.org/wp-content/uploads/Correl.png" width="500">
+#     
+# **Correlation Coefficient:** is a measure how strong a relationship is between two variables. There are several types of correlation coefficients, but the most popular is Pearson’s. Pearson’s correlation (also called Pearson’s R) is a correlation coefficient commonly used in linear regression. Correlation coefficient formulas are used to find how strong a relationship is between data. The formula for Pearson’s R is:
+# 
+# $$r=\frac{n(\sum xy)-(\sum x)(\sum y)}{[n\sum x^2 - (\sum x)^2][n\sum y^2 - (\sum y)^2]}$$
+# 
+# <!--![](https://www.statisticshowto.com/wp-content/uploads/2012/10/pearson.gif) <br>-->
+#     
+# The correlation coefficient returns a value between -1 and 1, where:
+# 
+# <img src="https://www.statisticshowto.com/wp-content/uploads/2012/10/pearson-2-small.png" width="500"> <br>
+# 
+# - 1 : A correlation coefficient of 1 means that for every positive increase in one variable, there is a positive increase of a fixed proportion in the other. For example, shoe sizes go up in (almost) perfect correlation with foot length.
+# - -1: A correlation coefficient of -1 means that for every positive increase in one variable, there is a negative decrease of a fixed proportion in the other. For example, the amount of gas in a tank decreases in (almost) perfect correlation with speed.
+# - 0 : Zero means that for every increase, there isn’t a positive or negative increase. The two just aren’t related.
+# 
+# ---
+# 
+# Now lets examine our dataframe.
+
+# In[33]:
+
+
+data.plot.scatter(x=['Cement'],y=['CC_Strength']) # some plotting methods come with pandas dataframes
+
+
+# In[34]:
+
+
+data.plot.scatter(x=['CoarseAggregate'],y=['CC_Strength']) # some plotting methods come with pandas dataframes
+
+
+# In[35]:
+
+
+data.plot.scatter(x=['Water'],y=['CC_Strength']) # some plotting methods come with pandas dataframes
+
+
+# In[36]:
+
+
+data.corr() # corr (Pearson's correlation coefficient) is a pandas method that becomes accessible when the dataframe is created with the read above
+
+
+# In[37]:
+
+
+corr = data.corr()
+plt.figure(figsize=(9,7))
+seaborn.heatmap(corr, annot=True, cmap='Blues')
+b, t = plt.ylim()
+plt.ylim(b+0.5, t-0.5)
+plt.title("Feature Correlation Heatmap")
+plt.show()
+
+
+# ### Initial Observations
+# 
+# The high correlations (> 0.3) between Compressive strength and other features are for Cement, Age and Super plasticizer.  Notice water has a negative correlation which is well known and the reason for dry mixtures in high performance concrete. Super Plasticizer has a negative high correlation with Water (also well known, SP is used to replace water in the blends and provide necessary workability), positive correlations with Fly ash and Fine aggregate.
+# 
+# We can further analyze these correlations visually by plotting these relations.
+
+# In[38]:
+
+
+ax = seaborn.distplot(data.CC_Strength);
+ax.set_title("Compressive Strength Distribution");
+
+
+# In[39]:
+
+
+fig, ax = plt.subplots(figsize=(10,7))
+seaborn.scatterplot(y="CC_Strength", x="Cement", hue="Water", size="Age", data=data, ax=ax, sizes=(50, 300))
+ax.set_title("CC Strength vs (Cement, Age, Water)")
+ax.legend(loc="upper left", bbox_to_anchor=(1,1))
+plt.show()
+
+
 # In[ ]:
 
 
