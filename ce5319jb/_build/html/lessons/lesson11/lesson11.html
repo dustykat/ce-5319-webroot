@@ -761,40 +761,52 @@ Beta 2  0.129
 <h3>Computational Linear Algebra<a class="headerlink" href="#computational-linear-algebra" title="Permalink to this headline">¶</a></h3>
 <p>We will start again with our linear data model</p>
 <p><span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 \cdot x_i + \epsilon_i\)</span>  then replace with vectors as</p>
-<p>\begin{gather}
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather}
 \mathbf{Y}=
 \begin{pmatrix}
-y_1 \
-y_2 \
-\vdots \
-y_n \
+y_1 \\
+y_2 \\
+\vdots \\
+y_n \\
 \end{pmatrix}
-\end{gather}</p>
-<p>\begin{gather}
+\end{gather}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather}
 \mathbf{\beta}=
 \begin{pmatrix}
-\beta_0 \
-\beta_1 \
+\beta_0 \\
+\beta_1 \\
 \end{pmatrix}
-\end{gather}</p>
-<p>\begin{gather}
+\end{gather}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather}
 \mathbf{X}=
 \begin{pmatrix}
-1 &amp; x_1 &amp; x_1^2\
-1 &amp; x_2 &amp; x_2^2\
-\vdots \
-1 &amp; x_n &amp; x_n^2\
+1 &amp; x_1 &amp; x_1^2\\
+1 &amp; x_2 &amp; x_2^2\\
+\vdots \\
+1 &amp; x_n &amp; x_n^2\\
 \end{pmatrix}
-\end{gather}</p>
-<p>\begin{gather}
+\end{gather}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather}
 \mathbf{\epsilon}=
 \begin{pmatrix}
-\epsilon_1 \
-\epsilon_2 \
-\vdots \
-\epsilon_n \
+\epsilon_1 \\
+\epsilon_2 \\
+\vdots \\
+\epsilon_n \\
 \end{pmatrix}
-\end{gather}</p>
+\end{gather}
+\end{split}\]</div>
 <p>So our system can now be expressed in matrix-vector form as</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{Y}=\mathbf{X}\mathbf{\beta}+\mathbf{\epsilon}\)</span> if we perfrom the same vector calculus as before we will end up with a result where pre-multiply by the transpose of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> we will have a linear system in <span class="math notranslate nohighlight">\(\mathbf{\beta}\)</span> which we can solve using Gaussian reduction, or LU decomposition or some other similar method.</p>
 <p>The resulting system (that minimizes <span class="math notranslate nohighlight">\(\mathbf{\epsilon^T}\mathbf{\epsilon}\)</span>) is</p>

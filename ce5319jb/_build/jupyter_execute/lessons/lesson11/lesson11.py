@@ -252,6 +252,7 @@ plt.show()
 # 
 # $y_i = \beta_0 + \beta_1 \cdot x_i + \epsilon_i$  then replace with vectors as
 # 
+# $$
 # \begin{gather}
 # \mathbf{Y}=
 # \begin{pmatrix}
@@ -261,7 +262,9 @@ plt.show()
 # y_n \\
 # \end{pmatrix}
 # \end{gather}
+# $$
 # 
+# $$
 # \begin{gather}
 # \mathbf{\beta}=
 # \begin{pmatrix}
@@ -269,7 +272,9 @@ plt.show()
 # \beta_1 \\
 # \end{pmatrix}
 # \end{gather}
+# $$
 # 
+# $$
 # \begin{gather}
 # \mathbf{X}=
 # \begin{pmatrix}
@@ -279,7 +284,9 @@ plt.show()
 # 1 & x_n & x_n^2\\
 # \end{pmatrix}
 # \end{gather}
+# $$
 # 
+# $$
 # \begin{gather}
 # \mathbf{\epsilon}=
 # \begin{pmatrix}
@@ -289,6 +296,7 @@ plt.show()
 # \epsilon_n \\
 # \end{pmatrix}
 # \end{gather}
+# $$
 # 
 # So our system can now be expressed in matrix-vector form as
 # 
