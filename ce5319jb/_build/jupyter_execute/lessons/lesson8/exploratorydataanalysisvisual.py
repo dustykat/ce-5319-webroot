@@ -90,7 +90,7 @@ lon = numpy.linspace(min(coord_x), max(coord_x), 200)
 lat = numpy.linspace(min(coord_y), max(coord_y), 200)
 X, Y = numpy.meshgrid(lon, lat)
 # Grid the data; use linear interpolation (choices are nearest, linear, cubic)
-Z = griddata(numpy.array(coord_xy), numpy.array(coord_z), (X, Y), method='linear')
+Z = griddata(numpy.array(coord_xy), numpy.array(coord_z), (X, Y), method='nearest')
 # Build the map
 fig, ax = matplotlib.pyplot.subplots()
 fig.set_size_inches(14, 7)
@@ -152,7 +152,7 @@ ax = plt.axes(projection ="3d")
 ax.scatter3D(model_x, model_y, model_z, color = "red")
 #ax.scatter3D(x1, y1, z1, color = "red")
 plt.title("simple 3D scatter plot")
-zangle = 75
+zangle = 85
 ax.view_init(30, zangle)
  
 # show plot

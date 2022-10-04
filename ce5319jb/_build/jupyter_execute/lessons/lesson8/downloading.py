@@ -460,7 +460,3 @@ open('concreteData.csv','wb').write(response.content); # extract from the remote
 # 4. [List processing tips](https://www.programiz.com/python-programming/del)
 # 5. [Character replacement tips](https://www.geeksforgeeks.org/python-string-replace/)
 # 6. [Python file manipulations](https://www.tutorialspoint.com/python/python_files_io.htm)
-
-# ## References
-# 
-# 

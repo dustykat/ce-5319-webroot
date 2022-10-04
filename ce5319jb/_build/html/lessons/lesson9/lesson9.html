@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -52,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Optimization Modeling" href="../lesson10/optimization.html" />
-    <link rel="prev" title="Downloading Remote Data" href="../lesson8/downloading.html" />
+    <link rel="prev" title="Exploratory Analysis using Visual Summaries" href="../lesson8/exploratorydataanalysisvisual.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -114,6 +116,42 @@
    Classification Engines
   </a>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson4.1/filetransfer.html">
+   Transferring Data Files
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/1filesystems.html">
+     File Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/2readwritecore.html">
+     Local Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/3readwriteweb.html">
+     Files from the Web (
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       requests.get
+      </span>
+      <span class="pre">
+       ...
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson5/lesson5.html">
    Supervised Learning
@@ -133,8 +171,8 @@
   <a class="reference internal" href="../lesson8/lesson8.html">
    Exploratory Data Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -145,13 +183,18 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/downloading.html">
+     Downloading Remote Data
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../lesson8/exploratorydataanalysis.html">
      Exploratory Analysis using Data Summaries
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson8/downloading.html">
-     Downloading Remote Data
+    <a class="reference internal" href="../lesson8/exploratorydataanalysisvisual.html">
+     Exploratory Analysis using Visual Summaries
     </a>
    </li>
   </ul>
@@ -165,8 +208,8 @@
   <a class="reference internal" href="../lesson10/optimization.html">
    Optimization Modeling
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -211,6 +254,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson15/lesson15.html">
    Decision Tree Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson16/lesson16.html">
+   Introduction to Neural Network Classification
   </a>
  </li>
 </ul>
@@ -323,14 +371,93 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   topic
+  <a class="reference internal nav-link" href="#some-common-distributions">
+   Some Common Distributions
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#subtopic">
-     Subtopic
+    <a class="reference internal nav-link" href="#normal-and-log-normal-distribution">
+     Normal (and Log-Normal) Distribution
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#python-examples">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gamma-distribution">
+     Gamma Distribution
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#poisson-distribution">
+     Poisson Distribution
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exponential-distribution">
+     Exponential Distribution
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binomial-distribution">
+     Binomial Distribution
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#logistic-distribution">
+     Logistic Distribution
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Python Examples
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multinomial-distribution-s">
+     Multinomial Distribution(s)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       Python Examples
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -357,17 +484,115 @@
 <p>lorem ipsum</p>
 <p>lorem ipsum</p>
 </div>
+<div class="section" id="some-common-distributions">
+<h2>Some Common Distributions<a class="headerlink" href="#some-common-distributions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="normal-and-log-normal-distribution">
+<h3>Normal (and Log-Normal) Distribution<a class="headerlink" href="#normal-and-log-normal-distribution" title="Permalink to this headline">¶</a></h3>
+<p>The normal distributions are used to explain central tendencies</p>
+<ul class="simple">
+<li><p>Defined using two parameters</p>
+<ul>
+<li><p>Mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and Standard Deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>)</p></li>
+<li><p>Symmetric distribution</p></li>
+<li><p>Represents additive processes</p></li>
+</ul>
+</li>
+<li><p>The lognormal distribution stipulates that the log of random variable x (i.e., log(x) is normally distributed</p>
+<ul>
+<li><p>Does not work for negative data (in orginal space)</p></li>
+<li><p>Represents multiplicative process</p></li>
+</ul>
+</li>
+</ul>
+<p>Lognormal distribution is often appropriate when the data are skewed. (See the Gamma distribution later on)
+Normal and Lognormal Distributions are best suited to represent central tendencies</p>
+<div class="section" id="python-examples">
+<h4>Python Examples<a class="headerlink" href="#python-examples" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="gamma-distribution">
+<h3>Gamma Distribution<a class="headerlink" href="#gamma-distribution" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id1">
-<h2>topic<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="subtopic">
-<h3>Subtopic<a class="headerlink" href="#subtopic" title="Permalink to this headline">¶</a></h3>
-<p>lorem ipsum</p>
+<h4>Python Examples<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="poisson-distribution">
+<h3>Poisson Distribution<a class="headerlink" href="#poisson-distribution" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A discrete distribution used to represent the number of independent events within a fixed time</p>
+<ul>
+<li><p>Number of independent rainfall events within a year</p></li>
+</ul>
+</li>
+<li><p>Related to Exponential Distribution</p></li>
+<li><p>Continuous distribution for inter-arrival times</p></li>
+<li><p>Poisson distribution assumes stationarity</p></li>
+<li><p>Rate at which events occur is constant</p></li>
+</ul>
+<p>An example of application is <a class="reference external" href="http://54.243.252.9/about-me-webroot/about-me/MyWebPapers/thesis/srg_model/srg_model.pdf">Synthetic Rainfall Generation Model for Evaluating Potential Erosion
+at Highway Construction Sites</a></p>
+<div class="section" id="id2">
+<h4>Python Examples<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="exponential-distribution">
+<h3>Exponential Distribution<a class="headerlink" href="#exponential-distribution" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Often used to model the time between two independent
+events</p>
+<ul>
+<li><p>Time between two rainstorms</p></li>
+</ul>
+</li>
+<li><p>Exponential distribution is represented by the parameter (<span class="math notranslate nohighlight">\(\lambda\)</span>)</p>
+<ul>
+<li><p>Reciprocal of Average inter-event time</p></li>
+</ul>
+</li>
+<li><p>Related to Poisson Distribution</p></li>
+<li><p>A discrete distribution for number of events in a fixed time</p></li>
+</ul>
+<div class="section" id="id3">
+<h4>Python Examples<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="binomial-distribution">
+<h3>Binomial Distribution<a class="headerlink" href="#binomial-distribution" title="Permalink to this headline">¶</a></h3>
+<p>Used when there are two outcomes</p>
+<ul class="simple">
+<li><p>Success and Failure</p></li>
+<li><p>The probability of success for each event is denoted by “p”</p>
+<ul>
+<li><p>Often assumed stationary</p></li>
+</ul>
+</li>
+<li><p>The PMF calculates the probability of success of x out of N total events</p></li>
+</ul>
+<p>The binomial distribution is often used for risk and reliability calculations</p>
+<div class="section" id="id4">
+<h4>Python Examples<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="logistic-distribution">
+<h3>Logistic Distribution<a class="headerlink" href="#logistic-distribution" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h4>Python Examples<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="multinomial-distribution-s">
+<h3>Multinomial Distribution(s)<a class="headerlink" href="#multinomial-distribution-s" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h4>Python Examples<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+</div>
 </div>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
 <li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
+<li><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/Fall2020Lessons/Lecture6-MachineLearningforCEProbabilityDistributions.pdf">Machine Learning for CE Probability Distributions (Fall 2020 Lesson)</a></p></li>
+<li><p><a class="reference external" href="http://54.243.252.9/about-me-webroot/about-me/MyWebPapers/thesis/srg_model/srg_model.pdf">Synthetic Rainfall Generation Model for Evaluating Potential Erosion
+at Highway Construction Sites</a></p></li>
 </ol>
 </div>
 </div>
@@ -402,11 +627,11 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../lesson8/downloading.html" title="previous page">
+        <a class="left-prev" href="../lesson8/exploratorydataanalysisvisual.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Downloading Remote Data</p>
+                <p class="prevnext-title">Exploratory Analysis using Visual Summaries</p>
             </div>
         </a>
     </div>

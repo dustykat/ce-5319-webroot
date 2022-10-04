@@ -519,7 +519,7 @@ import numpy as np
 import pandas
 import matplotlib.pyplot as plt
 import seaborn 
-get_ipython().run_line_magic('matplotlib', 'inline')
+#%matplotlib inline
 
 
 # Now try to read the file, use pandas methods
@@ -543,7 +543,7 @@ print("How many rows :",len(data))
 # In[29]:
 
 
-data.head() # head is a pandas method that becomes accessible when the dataframe is created with the read above
+data.tail() # head is a pandas method that becomes accessible when the dataframe is created with the read above
 
 
 # Rename the columns to simpler names, notice use of a set constructor.
@@ -627,7 +627,7 @@ data.describe() # describe is a pandas method that becomes accessible when the d
 # In[33]:
 
 
-data.plot.scatter(x=['Cement'],y=['CC_Strength']) # some plotting methods come with pandas dataframes
+data.plot.scatter(x=['Cement'],y=['CC_Strength']); # some plotting methods come with pandas dataframes
 
 
 # In[34]:
@@ -669,7 +669,7 @@ plt.show()
 # In[38]:
 
 
-ax = seaborn.distplot(data.CC_Strength);
+ax = seaborn.distplot(data.Cement);
 ax.set_title("Compressive Strength Distribution");
 
 
@@ -682,6 +682,34 @@ ax.set_title("CC Strength vs (Cement, Age, Water)")
 ax.legend(loc="upper left", bbox_to_anchor=(1,1))
 plt.show()
 
+
+# The observations we can make from this plot,
+# 
+# - Compressive strength increases as the amount of cement increases, as the dots move up when we move towards right on the x-axis.
+# - Compressive strength increases with age (as the size of dots represents the age), this not the case always but can be up to an extent.
+# - Cement with less age requires more cement for higher strength, as the smaller dots are moving up when we move towards right on the x-axis.
+#     The older the cement is the more water it requires, can be confirmed by observing the colour of the dots. Larger dots with dark colour indicate high age and more water.
+# - Concrete strength increases when less water is used in preparing it since the dots on the lower side (y-axis) are darker and the dots on higher-end (y-axis) are brighter.
+# 
+# Continuing with the exploratory analysis, same features, but different plot structure:
+
+# In[40]:
+
+
+fig, ax = plt.subplots(figsize=(10,7))
+seaborn.scatterplot(y="CC_Strength", x="FineAggregate", hue="FlyAsh",
+   size="Superplasticizer", data=data, ax=ax, sizes=(50, 300))
+ax.set_title("CC Strength vs (FineAggregate, FlyAsh, Superplasticizer)")
+ax.legend(loc="upper left", bbox_to_anchor=(1,1))
+plt.show()
+
+
+# Observations,
+# 
+# - Compressive strength decreases Fly ash increases, as darker dots are concentrated in the region representing low compressive strength.
+# - Compressive strength increases with Superplasticizer since larger the dot the higher they are in the plot.
+# 
+# We can visually understand 2D, 3D and max up to 4D plots (features represented by colour and size) as shown above, we can further use row-wise and column-wise plotting features by seaborn to do further analysis, but still, we lack the ability to track all these correlations by ourselves. 
 
 # In[ ]:
 

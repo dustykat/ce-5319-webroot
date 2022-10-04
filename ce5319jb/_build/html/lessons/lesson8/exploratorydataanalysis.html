@@ -818,9 +818,7 @@ ModeResult(mode=array([2202]), count=array([1]))
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>James Cameron
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    James Cameron
+0    James Cameron
 dtype: object
 </pre></div>
 </div>
@@ -895,10 +893,7 @@ Each dataset has three quartiles, which are the percentiles that divide the data
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 10th percentile of the budget of the Top10 highest-grossing films is  7.77
 The 40th and 70th percentile of the budget of the Top10 highest-grossing films are  [ 11.  211.1]
-The 10th percentile of the budget of the Top10 highest-grossing films is 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 7.77
+The 10th percentile of the budget of the Top10 highest-grossing films is  7.77
 The quartiles of the budget of the Top10 highest-grossing films is  [10.625, 12.0, 227.75]
 </pre></div>
 </div>
@@ -1189,7 +1184,7 @@ We shall explore the data to see how input features are affecting compressive st
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> 
-<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1">#%matplotlib inline</span>
 </pre></div>
 </div>
 </div>
@@ -1218,7 +1213,7 @@ We shall explore the data to see how input features are affecting compressive st
 <p>A quick look at the sturcture of the data object</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># head is a pandas method that becomes accessible when the dataframe is created with the read above</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span> <span class="c1"># head is a pandas method that becomes accessible when the dataframe is created with the read above</span>
 </pre></div>
 </div>
 </div>
@@ -1254,64 +1249,64 @@ We shall explore the data to see how input features are affecting compressive st
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>540.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>162.0</td>
-      <td>2.5</td>
-      <td>1040.0</td>
-      <td>676.0</td>
+      <th>1025</th>
+      <td>276.4</td>
+      <td>116.0</td>
+      <td>90.3</td>
+      <td>179.6</td>
+      <td>8.9</td>
+      <td>870.1</td>
+      <td>768.3</td>
       <td>28</td>
-      <td>79.986111</td>
+      <td>44.284354</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>540.0</td>
+      <th>1026</th>
+      <td>322.2</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>162.0</td>
-      <td>2.5</td>
-      <td>1055.0</td>
-      <td>676.0</td>
+      <td>115.6</td>
+      <td>196.0</td>
+      <td>10.4</td>
+      <td>817.9</td>
+      <td>813.4</td>
       <td>28</td>
-      <td>61.887366</td>
+      <td>31.178794</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>332.5</td>
-      <td>142.5</td>
-      <td>0.0</td>
-      <td>228.0</td>
-      <td>0.0</td>
-      <td>932.0</td>
-      <td>594.0</td>
-      <td>270</td>
-      <td>40.269535</td>
+      <th>1027</th>
+      <td>148.5</td>
+      <td>139.4</td>
+      <td>108.6</td>
+      <td>192.7</td>
+      <td>6.1</td>
+      <td>892.4</td>
+      <td>780.0</td>
+      <td>28</td>
+      <td>23.696601</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>332.5</td>
-      <td>142.5</td>
+      <th>1028</th>
+      <td>159.1</td>
+      <td>186.7</td>
       <td>0.0</td>
-      <td>228.0</td>
-      <td>0.0</td>
-      <td>932.0</td>
-      <td>594.0</td>
-      <td>365</td>
-      <td>41.052780</td>
+      <td>175.6</td>
+      <td>11.3</td>
+      <td>989.6</td>
+      <td>788.9</td>
+      <td>28</td>
+      <td>32.768036</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>198.6</td>
-      <td>132.4</td>
-      <td>0.0</td>
-      <td>192.0</td>
-      <td>0.0</td>
-      <td>978.4</td>
-      <td>825.5</td>
-      <td>360</td>
-      <td>44.296075</td>
+      <th>1029</th>
+      <td>260.9</td>
+      <td>100.5</td>
+      <td>78.3</td>
+      <td>200.6</td>
+      <td>8.6</td>
+      <td>864.5</td>
+      <td>761.5</td>
+      <td>28</td>
+      <td>32.401235</td>
     </tr>
   </tbody>
 </table>
@@ -1624,15 +1619,12 @@ The magnitude of the covariance is not particularly useful to interpret because 
 <p>Now lets examine our dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cement&#39;</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CC_Strength&#39;</span><span class="p">])</span> <span class="c1"># some plotting methods come with pandas dataframes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cement&#39;</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CC_Strength&#39;</span><span class="p">]);</span> <span class="c1"># some plotting methods come with pandas dataframes</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;[Cement]&#39;, ylabel=&#39;[CC_Strength]&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/exploratorydataanalysis_85_1.png" src="../../_images/exploratorydataanalysis_85_1.png" />
+<img alt="../../_images/exploratorydataanalysis_85_0.png" src="../../_images/exploratorydataanalysis_85_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1833,7 +1825,7 @@ The magnitude of the covariance is not particularly useful to interpret because 
 <p>We can further analyze these correlations visually by plotting these relations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">CC_Strength</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Cement</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Compressive Strength Distribution&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1860,6 +1852,36 @@ The magnitude of the covariance is not particularly useful to interpret because 
 <img alt="../../_images/exploratorydataanalysis_92_0.png" src="../../_images/exploratorydataanalysis_92_0.png" />
 </div>
 </div>
+<p>The observations we can make from this plot,</p>
+<ul class="simple">
+<li><p>Compressive strength increases as the amount of cement increases, as the dots move up when we move towards right on the x-axis.</p></li>
+<li><p>Compressive strength increases with age (as the size of dots represents the age), this not the case always but can be up to an extent.</p></li>
+<li><p>Cement with less age requires more cement for higher strength, as the smaller dots are moving up when we move towards right on the x-axis.
+The older the cement is the more water it requires, can be confirmed by observing the colour of the dots. Larger dots with dark colour indicate high age and more water.</p></li>
+<li><p>Concrete strength increases when less water is used in preparing it since the dots on the lower side (y-axis) are darker and the dots on higher-end (y-axis) are brighter.</p></li>
+</ul>
+<p>Continuing with the exploratory analysis, same features, but different plot structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">seaborn</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;CC_Strength&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;FineAggregate&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;FlyAsh&quot;</span><span class="p">,</span>
+   <span class="n">size</span><span class="o">=</span><span class="s2">&quot;Superplasticizer&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;CC Strength vs (FineAggregate, FlyAsh, Superplasticizer)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/exploratorydataanalysis_94_0.png" src="../../_images/exploratorydataanalysis_94_0.png" />
+</div>
+</div>
+<p>Observations,</p>
+<ul class="simple">
+<li><p>Compressive strength decreases Fly ash increases, as darker dots are concentrated in the region representing low compressive strength.</p></li>
+<li><p>Compressive strength increases with Superplasticizer since larger the dot the higher they are in the plot.</p></li>
+</ul>
+<p>We can visually understand 2D, 3D and max up to 4D plots (features represented by colour and size) as shown above, we can further use row-wise and column-wise plotting features by seaborn to do further analysis, but still, we lack the ability to track all these correlations by ourselves.</p>
 </div>
 </div>
 </div>
