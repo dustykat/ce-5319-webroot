@@ -589,8 +589,60 @@ plt.show()
 
 # code here
 # plotting function
+
 # linear model function
+
+def funny(a,b,tttt2):
+    funny=a+b*tttt2
+    return(funny)
+
+bac = [2.5,
+3.6,
+5.3,
+9.5,
+14,
+16.5,
+18.8,
+21.5,
+23.2,
+26.8,
+28.4]
+time = [0,
+0.25,
+0.5,
+1,
+2,
+3,
+4,
+5,
+6,
+8,
+10]
 # supply data
+# build lists of observation
+# build lists of model
+a = 1
+b = 2.5
+# Copy above, change x and y to our variables/design matrix
+x = np.array(time)
+y = np.array(bac)
+A = np.vstack([x, np.ones(len(x))]).T
+#print(A)
+m, c = np.linalg.lstsq(A, y, rcond=None)[0]
+print(m, c)
+a = c
+b = m
+bacmodel = [0. for i in range(len(bac))]
+for irow in range(len(time)):
+    bacmodel[irow] = funny(a,b,time[irow])
+
+    
+import matplotlib.pyplot as plt
+_ = plt.plot(time, bac, 'o', label='Original data', markersize=10, color ='red')
+_ = plt.plot(time,bacmodel, 'r', label='Fitted line', color= 'blue')
+_ = plt.legend()
+
+plt.show()
 # build lists of observation
 # build lists of model
 # plot
@@ -612,6 +664,33 @@ plt.show()
 
 # code here
 # quadratic model function
+def funnyhaha(a,b,cc,tttt2):
+    funnyhaha=a+b*tttt2+cc*(tttt2**2)
+    return(funnyhaha)
+# build lists of model
+# plot
+# prediction residuals
+# Copy above, change x and y to our variables/design matrix
+x = np.array(time)
+xx = x*x
+# print(xx)
+y = np.array(bac)
+A = np.vstack([xx, x, np.ones(len(x))]).T
+#print(A)
+cc, b, a = np.linalg.lstsq(A, y, rcond=None)[0]
+# sum_of_squares
+bacmodel = [0. for i in range(len(bac))]
+for irow in range(len(time)):
+    bacmodel[irow] = funnyhaha(a,b,cc,time[irow])
+
+    
+import matplotlib.pyplot as plt
+_ = plt.plot(time, bac, 'o', label='Original data', markersize=10, color ='red')
+_ = plt.plot(time,bacmodel, 'r', label='Fitted line', color= 'blue')
+_ = plt.legend()
+
+plt.show()
+# build lists of observation
 # build lists of model
 # plot
 # prediction residuals
@@ -633,6 +712,40 @@ plt.show()
 
 # code here
 # cubic model function
+# code here
+# quadratic model function
+def funnylol(a,b,cc,ccc,tttt2):
+    funnylol=a+b*tttt2+cc*(tttt2**2)+ccc*(tttt2**3)
+    return(funnylol)
+# build lists of model
+# plot
+# prediction residuals
+# Copy above, change x and y to our variables/design matrix
+x = np.array(time)
+xx = x*x
+xxx =xx*x
+# print(xx)
+y = np.array(bac)
+A = np.vstack([xxx, xx, x, np.ones(len(x))]).T
+#print(A)
+ccc, cc, b, a = np.linalg.lstsq(A, y, rcond=None)[0]
+# sum_of_squares
+bacmodel = [0. for i in range(len(bac))]
+for irow in range(len(time)):
+    bacmodel[irow] = funnylol(a,b,cc,ccc,time[irow])
+
+    
+import matplotlib.pyplot as plt
+_ = plt.plot(time, bac, 'o', label='Original data', markersize=10, color ='red')
+_ = plt.plot(time,bacmodel, 'r', label='Fitted line', color= 'blue')
+_ = plt.legend()
+
+plt.show()
+# build lists of observation
+# build lists of model
+# plot
+# prediction residuals
+# sum_of_squares
 # build lists of model
 # plot
 # prediction residuals
