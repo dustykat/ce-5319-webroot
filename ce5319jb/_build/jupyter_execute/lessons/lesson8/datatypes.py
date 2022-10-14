@@ -286,7 +286,7 @@ matplotlib.pyplot.close('all')
 
 # Now lets examine the 28x28 array of numbers that are representing our image
 
-# In[24]:
+# In[2]:
 
 
 cat_data = numpy.asfarray(img_data1).reshape((28,28)) # extract image as 32-bit float
