@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/opt/jupyterhub/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 1087, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 540, in async_execute
+    await self.async_execute_cell(
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 832, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 740, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy              # useful numerical routines
+import scipy.special      # special functions library
+import scipy.misc         # image processing code
+import imageio            # image processing library
+import matplotlib.pyplot  # import plotting routines
+import warnings           # suppress warnings
+warnings.filterwarnings('ignore') 
+img_array = imageio.imread("cat784.png", as_gray = True)
+img_data1 = 255.0 - img_array.reshape(784)
+img_data1 = ((img_data1/255.0)*0.99) + 0.01
+matplotlib.pyplot.imshow(numpy.asfarray(img_data1).reshape((28,28)),cmap = 'Greys') # construct a graphic object #
+matplotlib.pyplot.show() # show the graphic object to a window #
+matplotlib.pyplot.close('all')
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m<ipython-input-1-40e08eac4c6b>[0m in [0;36m<module>[0;34m[0m
+[1;32m      2[0m [0;32mimport[0m [0mscipy[0m[0;34m.[0m[0mspecial[0m      [0;31m# special functions library[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0;32mimport[0m [0mscipy[0m[0;34m.[0m[0mmisc[0m         [0;31m# image processing code[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 4[0;31m [0;32mimport[0m [0mimageio[0m            [0;31m# image processing library[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      5[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m  [0;31m# import plotting routines[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0;32mimport[0m [0mwarnings[0m           [0;31m# suppress warnings[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mModuleNotFoundError[0m: No module named 'imageio'
+ModuleNotFoundError: No module named 'imageio'
+

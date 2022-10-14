@@ -759,27 +759,61 @@ plt.show()
 # $\mu g_{release} = \beta_0 (1- e^{-\beta_1 \cdot t_{days}}) $ 
 # 
 # 1. Perform your trial-and-error fit for this model. Report the sum of square of residuals of your fitted data model.
+# 
+# :::{note}
+# This cannot be solved by linear regression - the form of the prototype is indeed non-linear, however a useful rule of thumb for this kind of structure is:
+# 1. $\beta_0$ is roughly the horizontal asymptote, in our case around 33 (an educated guess).
+# 2. $\beta_1$ is an exponential decay time constant, roughly 5 time constants should get us to within 10% the asymptote.  In the data herein, we get our asymptote at 10 time units. So $\beta_1$ should be around $\frac{1}{5}$
+# :::
 
 # In[21]:
 
 
 # code here
 # exponential decay model function
+def hhaa(b1,b2,t):
+    import math
+    hhaa=b1*(1.-math.exp(-b2*t))
+    return(hhaa)
+
+b1 = 30.0
+b2 = 1/(3.65) 
+bactmodel = [0 for i in range(len(time))]
+
+for i in range(len(time)):
+    bactmodel[i]=hhaa(b1,b2,time[i])
+
+import matplotlib.pyplot as plt
+_ = plt.plot(time, bac, 'o', label='Original data', markersize=10, color ='red')
+_ = plt.plot(time,bactmodel, 'r', label='Fitted line', color= 'blue')
+_ = plt.legend()
+
+plt.show()
+
+
 # build lists of model
 # plot
 # prediction residuals
 # sum_of_squares
 
 
+# In[22]:
+
+
+import math
+math.exp(-10*0.275)
+1/.275
+
+
 # ## Exercise-5
 # 
 # Which of the drug-release models do you like best?  Why?  The parameters in the exponential-decay model have bio-chemical conceptual meaning.  What is the significance of $\beta_0$ in this model? (Consider what happens as time gets large)
 
-# In[22]:
-
-
-# change to markdown and write your answer
-
+# # change to markdown and write your answer
+# We heart 5
+# 
+# 1. $\beta_0 = 30$ 
+# 2. $\beta_1 = \frac{1}{3.65}$ 
 
 # ## Exercise-5 (continued)
 # 
@@ -797,11 +831,35 @@ plt.show()
 
 # code here
 # add new data to observations
+time.append(12)
+time.append(16)
+time.append(21)
+bac.append(28.4)
+bac.append(28.5)
+bac.append(29.5)
+
 # use favorite model function with already determined parameters
 # build lists of model
+bactmodel = [0 for i in range(len(time))]
+
+for i in range(len(time)):
+    bactmodel[i]=hhaa(b1,b2,time[i])
 # plot
+import matplotlib.pyplot as plt
+_ = plt.plot(time, bac, 'o', label='Original data', markersize=10, color ='red')
+_ = plt.plot(time,bactmodel, 'r', label='Fitted line', color= 'blue')
+_ = plt.legend()
+
+plt.show()
 # compute prediction error 
+prederr = [0 for i in range(len(time))]
+
+for i in range(len(time)):
+    prederr[i]=(bac[i]-bactmodel[i])**2
+# plot
 # report error for 12,16,21 days values
+for i in range(len(time)):
+    print(time[i],prederr[i])
 
 
 # ## Concrete Strength Database

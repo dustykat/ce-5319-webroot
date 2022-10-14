@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Supervised Learning" href="../lesson5/lesson5.html" />
+    <link rel="next" title="Transferring Data Files" href="../lesson4.1/filetransfer.html" />
     <link rel="prev" title="Prediction Engines" href="../lesson3/lesson3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -116,6 +116,42 @@
    Classification Engines
   </a>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson4.1/filetransfer.html">
+   Transferring Data Files
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/1filesystems.html">
+     File Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/2readwritecore.html">
+     Local Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/3readwriteweb.html">
+     Files from the Web (
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       requests.get
+      </span>
+      <span class="pre">
+       ...
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson5/lesson5.html">
    Supervised Learning
@@ -135,8 +171,8 @@
   <a class="reference internal" href="../lesson8/lesson8.html">
    Exploratory Data Analysis
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -147,13 +183,18 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/downloading.html">
+     Downloading Remote Data
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../lesson8/exploratorydataanalysis.html">
      Exploratory Analysis using Data Summaries
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson8/downloading.html">
-     Downloading Remote Data
+    <a class="reference internal" href="../lesson8/exploratorydataanalysisvisual.html">
+     Exploratory Analysis using Visual Summaries
     </a>
    </li>
   </ul>
@@ -167,8 +208,8 @@
   <a class="reference internal" href="../lesson10/optimization.html">
    Optimization Modeling
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -213,6 +254,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson15/lesson15.html">
    Decision Tree Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson16/lesson16.html">
+   Introduction to Neural Network Classification
   </a>
  </li>
 </ul>
@@ -374,6 +420,19 @@ We can process the quite large amount of information that the images contain, an
 <span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
 <span class="kn">import</span> <span class="nn">imageio</span>            <span class="c1"># image processing library</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">4327138002</span><span class="n">ba</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">scipy.special</span>      <span class="c1"># special functions library</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">imageio</span>            <span class="c1"># image processing library</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;imageio&#39;
 </pre></div>
 </div>
 </div>
@@ -1103,10 +1162,10 @@ Average Slope = 1.633
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="../lesson5/lesson5.html" title="next page">
+        <a class="right-next" href="../lesson4.1/filetransfer.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Supervised Learning</p>
+                <p class="prevnext-title">Transferring Data Files</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

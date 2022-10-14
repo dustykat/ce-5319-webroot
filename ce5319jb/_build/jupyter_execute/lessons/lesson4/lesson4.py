@@ -36,7 +36,7 @@ import matplotlib.pyplot  # import plotting routines
 # 
 # Now we read and render the people image in reduced resolution about 1/2 of the original -- still barely recognizable for us humans.  The image is converted to an array of floating point values from 0 to 255 (256 different values), each representing a different shade of grey.   
 
-# In[2]:
+# In[11]:
 
 
 ########### suppress warnings ######
@@ -53,7 +53,7 @@ matplotlib.pyplot.close('all')
 
 # Now render the cat image in reduced resolution about 1/2 of the original -- still  recognizable for us humans
 
-# In[3]:
+# In[12]:
 
 
 img_array = imageio.imread("cat784.png", as_gray = True)
@@ -66,7 +66,7 @@ matplotlib.pyplot.close('all')
 
 # Now render the tree image in reduced resolution about 1/3 of the original -- still  recognizable for us humans
 
-# In[4]:
+# In[13]:
 
 
 img_array = imageio.imread("tree784.png", as_gray = True)
@@ -77,7 +77,7 @@ matplotlib.pyplot.show() # show the graphic object to a window #
 matplotlib.pyplot.close('all')
 
 
-# In[5]:
+# In[14]:
 
 
 print("people784 statistics : ",img_data0.mean(),img_data0.var())
@@ -243,7 +243,7 @@ print("tree784 statistics : ",img_data2.mean(),img_data2.var())
 # 
 # ![](http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/someupdates.png)
 
-# In[6]:
+# In[60]:
 
 
 # Simple Classifier Example
@@ -320,7 +320,7 @@ if abs(error) <= howclose:
 # 
 # This is really good! Even with these two simple training examples, and a relatively simple update method using a moderating **learning rate**, we have very rapidly arrived at a good dividing line $y = Ax$ where $A$ is 1.6042. Let’s not diminish what we’ve achieved. We’ve achieved an automated method of learning to classify from examples that is remarkably effective given the simplicity of the approach.
 
-# In[7]:
+# In[29]:
 
 
 # Simple Classifier Example
@@ -399,7 +399,7 @@ if abs(error) <= howclose:
 
 # Now to try to get to a limit based on our pre-selected tolerance
 
-# In[8]:
+# In[44]:
 
 
 # Simple Classifier Example
@@ -455,7 +455,7 @@ for iguess in range(howmany):
         break
 
 
-# In[9]:
+# In[59]:
 
 
 # Simple Classifier Example
@@ -523,7 +523,7 @@ for iset in range(howmanytests):
 # 
 # Anticipating that the average slope might be useful, lets report that upon exit from each test set.
 
-# In[10]:
+# In[61]:
 
 
 # Simple Classifier Example
@@ -595,7 +595,7 @@ for iset in range(howmanytests):
 # 
 # Naturally, with images the problem is way more complex, but the underlying theme is the same.
 
-# In[11]:
+# In[73]:
 
 
 xnew = 2
