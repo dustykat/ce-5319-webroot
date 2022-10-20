@@ -34,6 +34,8 @@ chapters:
   - file: lessons/lesson10/3topic
     
 - file: lessons/lesson11/lesson11
+  sections:
+  - file: lessons/lesson11/regressionModels
 - file: lessons/lesson12/lesson12
 - file: lessons/lesson13/lesson13
 - file: lessons/lesson14/lesson14

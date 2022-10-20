@@ -53,6 +53,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Non-Linear Regression" href="../lesson12/lesson12.html" />
+    <link rel="prev" title="Linear Regression" href="lesson11.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,7 +95,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson1/lesson1.html">
    Introduction
@@ -831,41 +833,33 @@ There are three common versions of Linear Regression</p>
 </div>
 <div class="section" id="lasso-regression">
 <h3>LASSO Regression<a class="headerlink" href="#lasso-regression" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-{admonition}From notranslate"><div class="highlight"><pre><span></span>In statistics and machine learning, lasso (least absolute shrinkage and selection operator; also Lasso or LASSO) is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the resulting statistical model. It was originally introduced in geophysics, and later by Robert Tibshirani, who coined the term.
-
-Lasso was originally formulated for linear regression models. This simple case reveals a substantial amount about the estimator. These include its relationship to ridge regression and best subset selection and the connections between lasso coefficient estimates and so-called soft thresholding. It also reveals that (like standard linear regression) the coefficient estimates do not need to be unique if covariates are collinear.
-
-Though originally defined for linear regression, lasso regularization is easily extended to other statistical models including generalized linear models, generalized estimating equations, proportional hazards models, and M-estimators. Lasso&#39;s ability to perform subset selection relies on the form of the constraint and has a variety of interpretations including in terms of geometry, Bayesian statistics and convex analysis. 
-
-...
-
-*interpret the linear algebra here*
-</pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>From Wikipedia</em></p>
+<p>In statistics and machine learning, lasso (least absolute shrinkage and selection operator; also Lasso or LASSO) is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the resulting statistical model. It was originally introduced in geophysics, and later by Robert Tibshirani, who coined the term.</p>
+<p>Lasso was originally formulated for linear regression models. This simple case reveals a substantial amount about the estimator. These include its relationship to ridge regression and best subset selection and the connections between lasso coefficient estimates and so-called soft thresholding. It also reveals that (like standard linear regression) the coefficient estimates do not need to be unique if covariates are collinear.</p>
+<p>Though originally defined for linear regression, lasso regularization is easily extended to other statistical models including generalized linear models, generalized estimating equations, proportional hazards models, and M-estimators. Lasso’s ability to perform subset selection relies on the form of the constraint and has a variety of interpretations including in terms of geometry, Bayesian statistics and convex analysis.</p>
+<p>…</p>
+<p><em>interpret the linear algebra here</em></p>
 </div>
 <p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html">Lasso API notes</a></p>
 </div>
 <div class="section" id="ridge-regression">
 <h3>Ridge Regression<a class="headerlink" href="#ridge-regression" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-{admonition}From notranslate"><div class="highlight"><pre><span></span>Ridge regression is a method of estimating the coefficients of multiple-regression models in scenarios where the independent variables are highly correlated. It has been used in many fields including econometrics, chemistry, and engineering. Also known as Tikhonov regularization, named for Andrey Tikhonov, it is a method of regularization of ill-posed problems; it is particularly useful to mitigate the problem of multicollinearity in linear regression, which commonly occurs in models with large numbers of parameters. In general, the method provides improved efficiency in parameter estimation problems in exchange for a tolerable amount of bias (see bias–variance tradeoff).
-
-The theory was first introduced by Hoerl and Kennard in 1970 in their Technometrics papers “RIDGE regressions: biased estimation of nonorthogonal problems” and “RIDGE regressions: applications in nonorthogonal problems”. This was the result of ten years of research into the field of ridge analysis.
-
-Ridge regression was developed as a possible solution to the imprecision of least square estimators when linear regression models have some multicollinear (highly correlated) independent variables—by creating a ridge regression estimator (RR). This provides a more precise ridge parameters estimate, as its variance and mean square estimator are often smaller than the least square estimators previously derived.
-
-...
-
-In the simplest case, the problem of a near-singular moment matrix ${\displaystyle (\mathbf {X} ^{\mathsf {T}}\mathbf {X} )}$ is alleviated by adding positive elements to the diagonals, thereby decreasing its condition number. Analogous to the ordinary least squares estimator, the simple ridge estimator is then given by
-
-$${\displaystyle {\hat {\beta }}_{R}=(\mathbf {X} ^{\mathsf {T}}\mathbf {X} +\lambda \mathbf {I} )^{-1}\mathbf {X}^{\mathsf {T}}\mathbf {y} } $$
-
-where $\mathbf {y}$ is the target and, $\mathbf {X}$ is the design matrix, $\mathbf {I}$ is the identity matrix, and the ridge parameter $\lambda \geq 0$ serves as the constant shifting the diagonals of the moment matrix. It can be shown that this estimator is the solution to the least squares problem subject to the constraint ${\displaystyle \beta ^{\mathsf {T}}\beta =c}$, which can be expressed as a Lagrangian:
-
-
-    
-$${\displaystyle \min _{\beta }\,(\mathbf {y} -\mathbf {X} \beta )^{\mathsf {T}}(\mathbf {y} -\mathbf {X} \beta)+\lambda (\beta ^{\mathsf {T}}\beta -c)}$$
-
-which shows that $\lambda$ is nothing but the Lagrange multiplier of the constraint. Typically, $\lambda$ is chosen according to a heuristic criterion, so that the constraint will not be satisfied exactly. Specifically in the case of $\lambda =0$, in which the constraint is non-binding, the ridge estimator reduces to ordinary least squares. 
-</pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>From Wikipedia</em></p>
+<p>Ridge regression is a method of estimating the coefficients of multiple-regression models in scenarios where the independent variables are highly correlated. It has been used in many fields including econometrics, chemistry, and engineering. Also known as Tikhonov regularization, named for Andrey Tikhonov, it is a method of regularization of ill-posed problems; it is particularly useful to mitigate the problem of multicollinearity in linear regression, which commonly occurs in models with large numbers of parameters. In general, the method provides improved efficiency in parameter estimation problems in exchange for a tolerable amount of bias (see bias–variance tradeoff).</p>
+<p>The theory was first introduced by Hoerl and Kennard in 1970 in their Technometrics papers “RIDGE regressions: biased estimation of nonorthogonal problems” and “RIDGE regressions: applications in nonorthogonal problems”. This was the result of ten years of research into the field of ridge analysis.</p>
+<p>Ridge regression was developed as a possible solution to the imprecision of least square estimators when linear regression models have some multicollinear (highly correlated) independent variables—by creating a ridge regression estimator (RR). This provides a more precise ridge parameters estimate, as its variance and mean square estimator are often smaller than the least square estimators previously derived.</p>
+<p>…</p>
+<p>In the simplest case, the problem of a near-singular moment matrix <span class="math notranslate nohighlight">\({\displaystyle (\mathbf {X} ^{\mathsf {T}}\mathbf {X} )}\)</span> is alleviated by adding positive elements to the diagonals, thereby decreasing its condition number. Analogous to the ordinary least squares estimator, the simple ridge estimator is then given by</p>
+<div class="math notranslate nohighlight">
+\[{\displaystyle {\hat {\beta }}_{R}=(\mathbf {X} ^{\mathsf {T}}\mathbf {X} +\lambda \mathbf {I} )^{-1}\mathbf {X}^{\mathsf {T}}\mathbf {y} } \]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf {y}\)</span> is the target and, <span class="math notranslate nohighlight">\(\mathbf {X}\)</span> is the design matrix, <span class="math notranslate nohighlight">\(\mathbf {I}\)</span> is the identity matrix, and the ridge parameter <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span> serves as the constant shifting the diagonals of the moment matrix. It can be shown that this estimator is the solution to the least squares problem subject to the constraint <span class="math notranslate nohighlight">\({\displaystyle \beta ^{\mathsf {T}}\beta =c}\)</span>, which can be expressed as a Lagrangian:</p>
+<div class="math notranslate nohighlight">
+\[{\displaystyle \min _{\beta }\,(\mathbf {y} -\mathbf {X} \beta )^{\mathsf {T}}(\mathbf {y} -\mathbf {X} \beta)+\lambda (\beta ^{\mathsf {T}}\beta -c)}\]</div>
+<p>which shows that <span class="math notranslate nohighlight">\(\lambda\)</span> is nothing but the Lagrange multiplier of the constraint. Typically, <span class="math notranslate nohighlight">\(\lambda\)</span> is chosen according to a heuristic criterion, so that the constraint will not be satisfied exactly. Specifically in the case of <span class="math notranslate nohighlight">\(\lambda =0\)</span>, in which the constraint is non-binding, the ridge estimator reduces to ordinary least squares.</p>
 </div>
 <p>So ridge regression introduces an adjustment to the diagional of the design matrix after the transpose and multiply operation.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> default we have to supply our guess of <span class="math notranslate nohighlight">\(\lambda\)</span></p>
@@ -1217,7 +1211,7 @@ Dep. Variable:                      y   R-squared:                       0.910
 Model:                            WLS   Adj. R-squared:                  0.909
 Method:                 Least Squares   F-statistic:                     487.9
 Date:                Thu, 20 Oct 2022   Prob (F-statistic):           8.52e-27
-Time:                        19:31:52   Log-Likelihood:                -57.048
+Time:                        19:49:04   Log-Likelihood:                -57.048
 No. Observations:                  50   AIC:                             118.1
 Df Residuals:                      48   BIC:                             121.9
 Df Model:                           1                                         
@@ -1305,7 +1299,7 @@ Dep. Variable:            CC_Strength   R-squared (uncentered):                 
 Model:                            WLS   Adj. R-squared (uncentered):              0.105
 Method:                 Least Squares   F-statistic:                              13.03
 Date:                Thu, 20 Oct 2022   Prob (F-statistic):                    8.82e-18
-Time:                        19:31:52   Log-Likelihood:                         -4154.2
+Time:                        19:49:05   Log-Likelihood:                         -4154.2
 No. Observations:                 824   AIC:                                      8324.
 Df Residuals:                     816   BIC:                                      8362.
 Df Model:                           8                                                  
@@ -1408,6 +1402,24 @@ dtype: float64
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="lesson11.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Linear Regression</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../lesson12/lesson12.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Non-Linear Regression</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
