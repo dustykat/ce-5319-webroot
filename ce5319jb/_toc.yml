@@ -42,7 +42,7 @@ chapters:
 
 
 
-- file: lessons/lesson13/lesson13 
+- file: lessons/logisticregression/logisticregression 
 - file: lessons/lesson14/lesson14 # KNN Classification
 - file: lessons/lesson15/lesson15 # Decision Tree Random Forests
 
