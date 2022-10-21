@@ -569,7 +569,7 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 # set the weights
-w = np.ones(len(X_train))          # This will be OLS until we change the weights
+w = np.ones(len(X_train))   # This will be OLS until we change the weights
 # Now attempt a fit
 mod_wls = sm.WLS(y_train, X_train, weights=w)
 res_wls = mod_wls.fit()
@@ -601,10 +601,16 @@ print(lr.coef_)
 # 
 # 2. [Weighted Least Squares (Wikipedia)](https://en.wikipedia.org/wiki/Weighted_least_squares)
 
-# In[ ]:
+# In[25]:
 
 
+w[0:30]=30.0*31
 
+
+# In[26]:
+
+
+w
 
 
 # In[ ]:

@@ -33,7 +33,7 @@ chapters:
   - file: lessons/lesson10/2topic
   - file: lessons/lesson10/3topic
     
-- file: lessons/lesson11/lesson11
+- file: lessons/lesson11/lesson11 # regression models
   sections:
   - file: lessons/lesson11/regressionModels
 - file: lessons/lesson12/lesson12
