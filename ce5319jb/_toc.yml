@@ -27,19 +27,25 @@ chapters:
 
   
 - file: lessons/lesson9/lesson9 # probability distributions
-- file: lessons/lesson10/optimization # optimization
+
+- file: lessons/optimization/optimization # optimization
   sections:
-  - file: lessons/lesson10/1topic
-  - file: lessons/lesson10/2topic
-  - file: lessons/lesson10/3topic
+  - file: lessons/optimization/1topic
+  - file: lessons/optimization/2topic
+  - file: lessons/optimization/3topic
     
 - file: lessons/lesson11/lesson11 # regression models
   sections:
   - file: lessons/lesson11/regressionModels
   
 - file: lessons/lesson12/lesson12 # non-linear regression
-- file: lessons/lesson13/lesson13 # KNN Classification
-- file: lessons/lesson14/lesson14 # Decision Tree Random Forests
-- file: lessons/lesson15/lesson15
 
-- file: lessons/lesson16/lesson16  # neural networks
+
+
+- file: lessons/lesson13/lesson13 
+- file: lessons/lesson14/lesson14 # KNN Classification
+- file: lessons/lesson15/lesson15 # Decision Tree Random Forests
+
+- file: lessons/neuralnetworks/neuralnetworks  # neural networks
+  sections:
+  - file: lessons/neuralnetworks/deeplearners  # neural networks

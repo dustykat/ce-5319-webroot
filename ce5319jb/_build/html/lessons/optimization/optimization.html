@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Non-Linear Regression &#8212; Machine Learning for Civil Engineers</title>
+    <title>Optimization Modeling &#8212; Machine Learning for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -53,8 +53,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Logistic Regression" href="../lesson13/lesson13.html" />
-    <link rel="prev" title="Linear Regression using packages" href="../lesson11/regressionModels.html" />
+    <link rel="next" title="Scheduling Example" href="1topic.html" />
+    <link rel="prev" title="Probability Distributions" href="../lesson9/lesson9.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -204,28 +204,28 @@
    Probability Distributions
   </a>
  </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../lesson10/optimization.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="current reference internal" href="#">
    Optimization Modeling
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/1topic.html">
+    <a class="reference internal" href="1topic.html">
      Scheduling Example
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/2topic.html">
+    <a class="reference internal" href="2topic.html">
      Grid Search Methods
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/3topic.html">
+    <a class="reference internal" href="3topic.html">
      Gradient Descent Methods
     </a>
    </li>
@@ -236,8 +236,8 @@
    Linear Regression
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson12/lesson12.html">
    Non-Linear Regression
   </a>
  </li>
@@ -257,7 +257,7 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../lesson16/lesson16.html">
+  <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
    Introduction to Neural Network Classification
   </a>
  </li>
@@ -302,7 +302,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/lessons/lesson12/lesson12.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/lessons/optimization/optimization.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -322,7 +322,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flessons/lesson12/lesson12.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flessons/optimization/optimization.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -343,7 +343,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lessons/lesson12/lesson12.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lessons/optimization/optimization.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -366,21 +366,46 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#topic">
-   topic
+  <a class="reference internal nav-link" href="#optimization-problem-characteristics">
+   Optimization Problem Characteristics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#useful-optimization-jargon">
+   Useful Optimization Jargon
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#subtopic">
-     Subtopic
+    <a class="reference internal nav-link" href="#functions">
+     Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optima">
+     Optima
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convex">
+     Convex
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concave">
+     Concave
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#global-optimum-values">
+     Global Optimum Values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#local-optimal-values">
+     Local Optimal Values
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
  </li>
 </ul>
 
@@ -393,36 +418,99 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="non-linear-regression">
-<h1>Non-Linear Regression<a class="headerlink" href="#non-linear-regression" title="Permalink to this headline">¶</a></h1>
-<p>Nonlinear regression is a form of regression analysis in which observational data are modeled by a function which is a <strong>nonlinear</strong> combination of the model parameters and depends on one or more independent (predictor, explainatory, feature …) variables. The data are fitted by a method of successive approximations.</p>
-<p>In nonlinear regression, a statistical model of the form,</p>
-<div class="math notranslate nohighlight">
-\[{\displaystyle \mathbf {y} \sim f(\mathbf {x} ,{\boldsymbol {\beta }})}\]</div>
-<p>relates a vector of independent variables, <span class="math notranslate nohighlight">\( \mathbf {x}\)</span> , and its associated observed dependent variables, <span class="math notranslate nohighlight">\(\mathbf {y} \)</span>. The function <span class="math notranslate nohighlight">\( f\)</span> is nonlinear in the components of the vector of parameters <span class="math notranslate nohighlight">\( \beta\)</span> , but otherwise arbitrary. For example, the Michaelis–Menten model for enzyme kinetics has two parameters and one independent variable, related by <span class="math notranslate nohighlight">\( f \)</span> by</p>
-<div class="math notranslate nohighlight">
-\[f(x,{\boldsymbol \beta })={\frac {\beta _{1}x}{\beta _{2}+x}}\]</div>
+  <div class="tex2jax_ignore mathjax_ignore section" id="optimization-modeling">
+<h1>Optimization Modeling<a class="headerlink" href="#optimization-modeling" title="Permalink to this headline">¶</a></h1>
+<p>Most engineering problems have multiple workable solutions (called feasible solutions).  Usually we apply some metric (measurement) of fitness (such as cost, weight, yield, <span class="math notranslate nohighlight">\(\dots\)</span> , or a linear or nonlinear combination of multiple measures) that distinguish one solution from another.  If a particular solution requires time-travel, that would be infeasible (circa 2022) and removed from consideration without bothering to determine its fitness in the other measures.</p>
+<p>The mathematical expression of fitness is called the <em>objective function</em> (also <em>merit function</em>, <em>cost function</em>, <em>performance function</em> are some other frequently appearing names for the same thing - a measure of how “good” the solution is!).  The supporting conditions, conservation laws, capacity restrictions, or other technical limitations that must be satisfied are called <em>constraints</em> (or <em>design requirements</em>, <em>feasibility conditions</em>, <em>auxiliary conditions</em>)</p>
+<p>When selecting an optimal solution (or non-inferior solution) we seek design values that minimize or maximize the <em>objective function</em> while simultaneously satisfying all the <em>constraints</em>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In this example from Wikipedia, domain knowledge is implicit in the machine learning aspect of the example.  As said in class, we have to understand the process we are trying to model to some level, otherwise a mere statistician could ahndle the work (and most can with our guidance!)</p>
+<p>Our least-squares regression analysis that led to the normal equations in line fitting is an example of an optimization problem.  The objective function was the SSE, the constraints were mostly that the <span class="math notranslate nohighlight">\(\beta_i\)</span>’s are real valued numbers.  This is an example of unconstrained optimization - a valuable subset of the overall optimization process.</p>
 </div>
-<p>This function is nonlinear because it cannot be expressed as a linear combination of the two <span class="math notranslate nohighlight">\( \beta \)</span>s.</p>
-<p>Systematic error may be present in the independent variables but its treatment is outside the scope of regression analysis. If the independent variables are not error-free, this is an errors-in-variables model, also outside this scope.</p>
-<p>Other examples of nonlinear functions include exponential functions, logarithmic functions, trigonometric functions, power functions, Gaussian function, and Lorentz distributions. Some functions, such as the exponential or logarithmic functions, can be transformed so that they are linear. When so transformed, standard linear regression can be performed but must be interpreted with caution.</p>
-<p>In general, there is no closed-form expression for the best-fitting parameters, as there is in linear regression. Usually numerical <strong>optimization algorithms</strong> are applied to determine the best-fitting parameters. Again in contrast to linear regression, there may be many local minima of the function to be optimized and even the global minimum may produce a biased estimate. In practice, estimated values of the parameters are used, in conjunction with the optimization algorithm, to attempt to find the global minimum of a sum of squares or some other objective (merit, cost, value, quality) function.</p>
-<p>lorem ipsum</p>
-<div class="section" id="topic">
-<h2>topic<a class="headerlink" href="#topic" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="subtopic">
-<h3>Subtopic<a class="headerlink" href="#subtopic" title="Permalink to this headline">¶</a></h3>
-<p>lorem ipsum</p>
+<p>For example, suppose we want to determine the lightest weight bridge that will satisfy a given set of design requirements.  The objective function is the bridge weight expressed in terms of the dimensions of the structural elements.  The constraints will be various force and moment relationships that must be satisfied (we want the bridge to actually work!). A typical problem is to determine the dimensions of the structural elements that will minimize the weight of the bridge, subject to the appliciable constraints.  Such problems are known as optimization problems and solutions are found using mathematical programming.</p>
+<p>Generally speaking solving linear and non-linear programming problems is relatively straightforward (given the right packages) but the formulation of the problem requires considerable care.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Recall in our problem solving process, the problem statement was a first step to success - in mathematical programming it is a vital step, and if done haphazardly the program will fail, when the actual problem has a solution. Development of the skill to deal with such an outcome is largely experience based - the abstraction process is also vital here.</p>
+</div>
+<div class="section" id="optimization-problem-characteristics">
+<h2>Optimization Problem Characteristics<a class="headerlink" href="#optimization-problem-characteristics" title="Permalink to this headline">¶</a></h2>
+<p>An optimization problem is written using the following logic.</p>
+<p>Find values of the independent (<em>design, policy, or decision are other common names for these variables</em>) variables <span class="math notranslate nohighlight">\(x_1,x_2,\dots,x_n\)</span> that will minimize (or maximize) the objective function <span class="math notranslate nohighlight">\(y=f(x_1,x_2,\dots,x_n)\)</span>.</p>
+<p>The resulting solutions must also satisfy one or more constraint conditions usually expressed as equations or inequalities as:</p>
+<p><span class="math notranslate nohighlight">\(g_{eq;j}(x_1,x_2,\dots,x_n) = 0\)</span> <br>
+<span class="math notranslate nohighlight">\(g_{le;j}(x_1,x_2,\dots,x_n) \le 0\)</span> <br>
+<span class="math notranslate nohighlight">\(g_{ge;j}(x_1,x_2,\dots,x_n) \ge 0\)</span> <br></p>
+<p>for <span class="math notranslate nohighlight">\(j=1,2,\dots,m\)</span> where <span class="math notranslate nohighlight">\(m\)</span> is the total number of constraints.</p>
+<p>In addition, the permissible values of the independent variables are usually restricted to be non-negative as,</p>
+<p><span class="math notranslate nohighlight">\(x_i \ge 0~\text{for}~~i=1,2,\dots,n\)</span></p>
+<p>A further constraint, common in logistics problems is that the independent variables are integer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Optimization problems that are integer constrained are difficult to solve elegantly.  Don’t be fooled into thinking that a real-valued solution rounded to the nearest integer is “optimal”; it might not even be feasible. It is a reasonable hack to get started, and often is a good enough approximation - just check that the result is at least feasible before commiting to the solution.</p>
 </div>
 </div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
-</ol>
+<div class="section" id="useful-optimization-jargon">
+<h2>Useful Optimization Jargon<a class="headerlink" href="#useful-optimization-jargon" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<p>Functions map a relationship between input(s) and output(s)</p>
+<p>Functions can be of many types:</p>
+<ul class="simple">
+<li><p>Mathematical, logical, rule-based</p></li>
+<li><p>The mapping of inputs =&gt; outputs can be linear or nonlinear</p></li>
+<li><p>The function can be one-dimensional or multi-dimensional; the inputs can similarily be univariate (one dimension) or multivariate (many dimensions)</p></li>
+</ul>
+</div>
+<div class="section" id="optima">
+<h3>Optima<a class="headerlink" href="#optima" title="Permalink to this headline">¶</a></h3>
+<p>Optimization means finding either a ‘maximum’ or a ‘minimum’ of a function. The optimum value is typically defined over a range of interest.</p>
+<figure align="center">
+<!--<img src="./convexplot.png" width="300" >-->
+<img src="https://75.3.84.227/ce-5319-webroot/ce5319jb/lessons/lesson10/optima.png" width="300" >
+<figcaption>Figure X: Optima of some function </figcaption>
+</figure>
+<p>A local maximum occurs when its value is higher than other values in the vicinity; A local minimum occurs when its value is lower than other values in the vicinity. The global maximum is the largest value in the range (a,b); The global minimum is the smallest value in the range (a,b).  A Saddle Point Occurs when the value of the function is higher on one side and lower on the other (the slope and curvature are zero at the point)</p>
+</div>
+<div class="section" id="convex">
+<h3>Convex<a class="headerlink" href="#convex" title="Permalink to this headline">¶</a></h3>
+<p>A function is said to be strictly convex when a line connecting any two points of the function lies strictly above the function</p>
+<figure align="center">
+<!--<img src="./convexplot.png" width="300" >-->
+<img src="https://75.3.84.227/ce-5319-webroot/ce5319jb/lessons/lesson10/convexplot.png" width="300" >
+<figcaption>Figure X: Convex Function </figcaption>
+</figure>
+<p>A function is convex if the second derivative is greater than or equal 0</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x} \ge 0\]</div>
+<p>Strictly convex if greater than</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x} \gt 0\]</div>
+</div>
+<div class="section" id="concave">
+<h3>Concave<a class="headerlink" href="#concave" title="Permalink to this headline">¶</a></h3>
+<p>A function is concave function when a line joining any two points lies below the function
+The second derivative of a concave</p>
+<figure align="center">
+<!--<img src="./concaveplot.png" width="300" >-->
+<img src="https://75.3.84.227/ce-5319-webroot/ce5319jb/lessons/lesson10/concaveplot.png" width="300" >
+<figcaption>Figure X: Concave Function </figcaption>
+</figure>
+<p>A function is concave if the second derivative is greater than or equal 0</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x} \le 0\]</div>
+<p>Strictly concave if less than</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x} \lt 0\]</div>
+</div>
+<div class="section" id="global-optimum-values">
+<h3>Global Optimum Values<a class="headerlink" href="#global-optimum-values" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="local-optimal-values">
+<h3>Local Optimal Values<a class="headerlink" href="#local-optimal-values" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 
@@ -439,7 +527,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./lessons/lesson12"
+            path: "./lessons/optimization"
         },
         predefinedOutput: true
     }
@@ -456,19 +544,19 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../lesson11/regressionModels.html" title="previous page">
+        <a class="left-prev" href="../lesson9/lesson9.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Linear Regression using packages</p>
+                <p class="prevnext-title">Probability Distributions</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="../lesson13/lesson13.html" title="next page">
+        <a class="right-next" href="1topic.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Logistic Regression</p>
+                <p class="prevnext-title">Scheduling Example</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
