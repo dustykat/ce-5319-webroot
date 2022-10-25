@@ -43,6 +43,10 @@ chapters:
 
 
 - file: lessons/logisticregression/logisticregression 
+  sections:
+  - file: lessons/logisticregression/example1
+  - file: lessons/logisticregression/example2
+  
 - file: lessons/lesson14/lesson14 # KNN Classification
 - file: lessons/lesson15/lesson15 # Decision Tree Random Forests
 
