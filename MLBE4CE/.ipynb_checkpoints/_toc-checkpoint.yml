@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: chapters/introduction/introduction # introduction
+  sections:
+  - file: chapters/introduction/whatisml
+  - file: chapters/introduction/learningtypes
+
