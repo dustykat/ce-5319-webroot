@@ -11,6 +11,7 @@ chapters:
   
   
 - file: chapters/exploratorydata/exploratorydata # EDA
+
 - file: chapters/datapreparation/datapreparation # data prep
 
 - file: chapters/optimization/optimization # optimization
@@ -18,5 +19,15 @@ chapters:
 - file: chapters/linearregression/linearregression # linear regression
 
 - file: chapters/nonlinearregression/nonlinearregression # non-linear regression
+
+- file: chapters/logisticregression/logisticregression # logistic regression 
+
+- file: chapters/decisiontrees/decisiontrees # decision trees
+
+- file: chapters/supportvectors/supportvectors # support vectors 
+
+- file: chapters/neuralnetworks/neuralnetworks # neural networks
+
+- file: chapters/nearestneighbors/nearestneighbors # nearest neighbors
 
 - file: chapters/clustering/clustering # clustering
