@@ -8,4 +8,15 @@ chapters:
   sections:
   - file: chapters/introduction/whatisml
   - file: chapters/introduction/learningtypes
+  
+  
+- file: chapters/exploratorydata/exploratorydata # EDA
+- file: chapters/datapreparation/datapreparation # data prep
 
+- file: chapters/optimization/optimization # optimization
+
+- file: chapters/linearregression/linearregression # linear regression
+
+- file: chapters/nonlinearregression/nonlinearregression # non-linear regression
+
+- file: chapters/clustering/clustering # clustering
