@@ -31,7 +31,7 @@
 # 
 # The example below should help clarify a bit.
 # 
-# ## Example 1 
+# ## Success at Task vs Experience 
 # 
 # A systems analyst studied the effect of experience on ability to complete a complex task within a specified time.
 # The participants had varying amounts of experience measured in months as shown in the table below, where E represents months of experience, and S is binary 0=FAIL, 1=SUCCESS

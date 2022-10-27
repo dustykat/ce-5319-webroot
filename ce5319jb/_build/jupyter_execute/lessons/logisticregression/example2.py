@@ -19,7 +19,7 @@
 # 
 # Consider an illustrative example below
 
-# ## Example 2
+# ## Redemption Rate vs Rebate Value
 # 
 # A marketing study to estimate the effectiveness of coupons offering a price reduction on a given product selected 1000 participants and a coupon and advertising material were distributed to each participant.  The coupons offered different price reductions (5,10,15,20, and 30 dollars) and 200 participants were randomly selected for each price reduction level.
 # 

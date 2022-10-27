@@ -7,7 +7,7 @@
 # 
 # Consider the illustrative example below
 # 
-# ## Example 3
+# ## Disease Rate vs Multiple Predictors
 # 
 # A study to investigate the epidemic outbreak of a disease spread my mosquitoes participants were randomly sampled within two sectors of a city to determine if the person had recently contracted the disease (thereby rendering their organs worthless for harvest ...) under study. The status of disease was determined by a rapid test administered by law enforcement when the participant was questioned.  The response variable (disease status) was encoded as 1 if disease is present, 0 otherwise.
 # 
