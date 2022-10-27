@@ -21,7 +21,11 @@ chapters:
 - file: chapters/nonlinearregression/nonlinearregression # non-linear regression
 
 - file: chapters/logisticregression/logisticregression # logistic regression 
-
+  sections:
+  - file: chapters/logisticregression/example1
+  - file: chapters/logisticregression/example2
+  - file: chapters/logisticregression/example3
+  
 - file: chapters/decisiontrees/decisiontrees # decision trees
 
 - file: chapters/supportvectors/supportvectors # support vectors 
