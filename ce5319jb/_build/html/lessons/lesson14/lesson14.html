@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Decision Trees and Random Forests" href="../lesson15/lesson15.html" />
-    <link rel="prev" title="Logistic Regression" href="../lesson13/lesson13.html" />
+    <link rel="prev" title="Multiple Logistic Regression" href="../logisticregression/example3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -205,7 +205,7 @@
   </a>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../lesson10/optimization.html">
+  <a class="reference internal" href="../optimization/optimization.html">
    Optimization Modeling
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
@@ -215,17 +215,17 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/1topic.html">
+    <a class="reference internal" href="../optimization/1topic.html">
      Scheduling Example
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/2topic.html">
+    <a class="reference internal" href="../optimization/2topic.html">
      Grid Search Methods
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/3topic.html">
+    <a class="reference internal" href="../optimization/3topic.html">
      Gradient Descent Methods
     </a>
    </li>
@@ -242,8 +242,8 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../lesson13/lesson13.html">
-   Logistic Regression
+  <a class="reference internal" href="../logisticregression/logisticregression.html">
+   Logistic Regression and Classification
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -256,10 +256,22 @@
    Decision Trees and Random Forests
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lesson16/lesson16.html">
-   Introduction to Neural Network Classification
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
+   Neural Networks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -837,18 +849,18 @@ Hence, it is a multiclass classification problem and the number of observations 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 7  0  0]
- [ 0  9  2]
- [ 0  0 12]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[12  0  0]
+ [ 0  9  1]
+ [ 0  0  8]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00         7
-Iris-versicolor       1.00      0.82      0.90        11
- Iris-virginica       0.86      1.00      0.92        12
+    Iris-setosa       1.00      1.00      1.00        12
+Iris-versicolor       1.00      0.90      0.95        10
+ Iris-virginica       0.89      1.00      0.94         8
 
-       accuracy                           0.93        30
-      macro avg       0.95      0.94      0.94        30
-   weighted avg       0.94      0.93      0.93        30
+       accuracy                           0.97        30
+      macro avg       0.96      0.97      0.96        30
+   weighted avg       0.97      0.97      0.97        30
 </pre></div>
 </div>
 </div>
@@ -987,11 +999,11 @@ Iris-versicolor       1.00      0.82      0.90        11
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../lesson13/lesson13.html" title="previous page">
+        <a class="left-prev" href="../logisticregression/example3.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Logistic Regression</p>
+                <p class="prevnext-title">Multiple Logistic Regression</p>
             </div>
         </a>
     </div>

@@ -203,7 +203,7 @@
   </a>
  </li>
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../lesson10/optimization.html">
+  <a class="reference internal" href="../optimization/optimization.html">
    Optimization Modeling
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
@@ -213,17 +213,17 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/1topic.html">
+    <a class="reference internal" href="../optimization/1topic.html">
      Scheduling Example
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/2topic.html">
+    <a class="reference internal" href="../optimization/2topic.html">
      Grid Search Methods
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../lesson10/3topic.html">
+    <a class="reference internal" href="../optimization/3topic.html">
      Gradient Descent Methods
     </a>
    </li>
@@ -240,8 +240,8 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../lesson13/lesson13.html">
-   Logistic Regression
+  <a class="reference internal" href="../logisticregression/logisticregression.html">
+   Logistic Regression and Classification
   </a>
  </li>
  <li class="toctree-l1">
@@ -251,13 +251,25 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lesson15/lesson15.html">
-   Decision Tree Classification
+   Decision Trees and Random Forests
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lesson16/lesson16.html">
-   Introduction to Neural Network Classification
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
+   Neural Networks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -498,39 +510,40 @@ This connection is mainly used to run the code and does not consume much data.</
 </pre></div>
 </div>
 <p>Next some Jupyter specific instructions</p>
-<div class="highlight-# notranslate"><div class="highlight"><pre><span></span>sudo apt install -y python3-pip
-sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
-sudo apt-get install python3-venv
-sudo python3 -m venv /opt/jupyterhub/
-sudo apt install nodejs npm
-sudo npm install -g configurable-http-proxy
-sudo /opt/jupyterhub/bin/python3 -m pip install wheel
-sudo /opt/jupyterhub/bin/python3 -m pip install jupyterhub jupyterlab
-sudo /opt/jupyterhub/bin/python3 -m pip install ipywidgets
-sudo mkdir -p /opt/jupyterhub/etc/jupyterhub/
-cd /opt/jupyterhub/etc/jupyterhub/
-sudo /opt/jupyterhub/bin/jupyterhub --generate-config
-EDIT THE CONFIG &quot;c.Spawner.default_url = &#39;/lab&#39;&quot;
-sudo mkdir -p /opt/jupyterhub/etc/systemd
-sudo nano /opt/jupyterhub/etc/systemd/jupyterhub.service
-INSERT &lt;--
-[Unit]
-Description=JupyterHub
-After=syslog.target network.target
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># install and configure JupyterHub</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span> <span class="n">libffi</span><span class="o">-</span><span class="n">dev</span> <span class="n">python3</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">venv</span>
+<span class="n">sudo</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">nodejs</span> <span class="n">npm</span>
+<span class="n">sudo</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">configurable</span><span class="o">-</span><span class="n">http</span><span class="o">-</span><span class="n">proxy</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">wheel</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterhub</span> <span class="n">jupyterlab</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">ipywidgets</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">jupyterhub</span> <span class="o">--</span><span class="n">generate</span><span class="o">-</span><span class="n">config</span>
+<span class="n">EDIT</span> <span class="n">THE</span> <span class="n">CONFIG</span> <span class="s2">&quot;c.Spawner.default_url = &#39;/lab&#39;&quot;</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span>
+<span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span>
+<span class="n">INSERT</span> <span class="o">&lt;--</span>
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">JupyterHub</span>
+<span class="n">After</span><span class="o">=</span><span class="n">syslog</span><span class="o">.</span><span class="n">target</span> <span class="n">network</span><span class="o">.</span><span class="n">target</span>
 
-[Service]
-User=root
-Environment=&quot;PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin&quot;
-ExecStart=/opt/jupyterhub/bin/jupyterhub -f /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">root</span>
+<span class="n">Environment</span><span class="o">=</span><span class="s2">&quot;PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin&quot;</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">jupyterhub</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">jupyterhub_config</span><span class="o">.</span><span class="n">py</span>
 
-[Install]
-WantedBy=multi-user.target
---&gt;
-sudo ln -s /opt/jupyterhub/etc/systemd/jupyterhub.service /etc/systemd/system/jupyterhub.service
-sudo systemctl daemon-reload
-sudo systemctl enable jupyterhub.service
-sudo systemctl status jupyterhub.service
-sudo systemctl start jupyterhub.service
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+<span class="o">--&gt;</span>
+<span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">jupyterhub</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
 </div>
 <p>If you want the mathematical typesetting to work, you also need a Latex engine.</p>
@@ -562,7 +575,7 @@ Into ~/.vnc/xstartup
 ---add---&gt;
 
 #!/bin/bash
-xrdb $HOME/.Xresources
+xrdb \$HOME/.Xresources
 startxfce4 &amp;
 
 </pre></div>

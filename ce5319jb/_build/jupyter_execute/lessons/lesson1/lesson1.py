@@ -73,7 +73,8 @@
 # 
 # Next some Jupyter specific instructions
 # 
-# ```# install and configure JupyterHub
+# ```
+# # install and configure JupyterHub
 # sudo apt install -y python3-pip
 # sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
 # sudo apt-get install python3-venv
@@ -142,7 +143,7 @@
 # ---add--->
 # 
 # #!/bin/bash
-# xrdb $HOME/.Xresources
+# xrdb \$HOME/.Xresources
 # startxfce4 &
 # 
 # ```
