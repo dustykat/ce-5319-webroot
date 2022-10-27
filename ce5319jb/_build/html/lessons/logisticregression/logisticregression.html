@@ -383,172 +383,52 @@
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#for-the-last-few-sessions-we-have-talked-about-simple-linear-regression-br">
-     For the last few sessions we have talked about simple linear regression …
-     <br/>
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#we-discussed">
-       We discussed …
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#logistic-regression">
      Logistic Regression
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#example-1-diagnosing-diabetes-br">
-       Example 1: Diagnosing Diabetes
+      <a class="reference internal nav-link" href="#diagnosing-diabetes-br">
+       Diagnosing Diabetes
        <br/>
       </a>
       <ul class="nav section-nav flex-column">
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#the-diabetes-csv-dataset-is-originally-from-the-national-institute-of-diabetes-and-digestive-and-kidney-diseases-the-objective-of-the-dataset-is-to-diagnostically-predict-whether-or-not-a-patient-has-diabetes-based-on-certain-diagnostic-measurements-included-in-the-dataset">
-         The “diabetes.csv” dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the dataset is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the dataset.
+        <a class="reference internal nav-link" href="#selecting-features">
+         Selecting Features:
         </a>
        </li>
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#the-datasets-consists-of-several-medical-predictor-variables-and-one-target-variable-outcome-predictor-variables-includes-the-number-of-pregnancies-the-patient-has-had-their-bmi-insulin-level-age-and-so-on">
-         The datasets consists of several medical predictor variables and one target variable, Outcome. Predictor variables includes the number of pregnancies the patient has had, their BMI, insulin level, age, and so on.
+        <a class="reference internal nav-link" href="#splitting-data">
+         Splitting Data:
         </a>
        </li>
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#let-s-see-if-we-can-build-a-logistic-regression-model-to-accurately-predict-whether-or-not-the-patients-in-the-dataset-have-diabetes-or-not">
-         Let’s see if we can build a logistic regression model to accurately predict whether or not the patients in the dataset have diabetes or not?
+        <a class="reference internal nav-link" href="#model-development-and-prediction">
+         Model Development and Prediction:
         </a>
        </li>
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#selecting-feature-here-we-need-to-divide-the-given-columns-into-two-types-of-variables-dependent-or-target-variable-and-independent-variable-or-feature-variables-or-predictors">
-         Selecting Feature: Here, we need to divide the given columns into two types of variables dependent(or target variable) and independent variable(or feature variables or predictors).
+        <a class="reference internal nav-link" href="#model-evaluation-using-confusion-matrix">
+         Model Evaluation using Confusion Matrix:
         </a>
        </li>
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#splitting-data-to-understand-model-performance-dividing-the-dataset-into-a-training-set-and-a-test-set-is-a-good-strategy-let-s-split-dataset-by-using-function-train-test-split-you-need-to-pass-3-parameters-features-target-and-test-set-size-additionally-you-can-use-random-state-to-select-records-randomly-here-the-dataset-is-broken-into-two-parts-in-a-ratio-of-75-25-it-means-75-data-will-be-used-for-model-training-and-25-for-model-testing">
-         Splitting Data: To understand model performance, dividing the dataset into a training set and a test set is a good strategy. Let’s split dataset by using function train_test_split(). You need to pass 3 parameters: features, target, and test_set size. Additionally, you can use random_state to select records randomly. Here, the Dataset is broken into two parts in a ratio of 75:25. It means 75% data will be used for model training and 25% for model testing:
+        <a class="reference internal nav-link" href="#visualizing-confusion-matrix-using-heatmap">
+         Visualizing Confusion Matrix using Heatmap:
         </a>
        </li>
        <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#model-development-and-prediction-first-import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict">
-         Model Development and Prediction: First, import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#model-evaluation-using-confusion-matrix-a-confusion-matrix-is-a-table-that-is-used-to-evaluate-the-performance-of-a-classification-model-you-can-also-visualize-the-performance-of-an-algorithm-the-fundamental-of-a-confusion-matrix-is-the-number-of-correct-and-incorrect-predictions-are-summed-up-class-wise">
-         Model Evaluation using Confusion Matrix: A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#here-you-can-see-the-confusion-matrix-in-the-form-of-the-array-object-the-dimension-of-this-matrix-is-2-2-because-this-model-is-binary-classification-you-have-two-classes-0-and-1-diagonal-values-represent-accurate-predictions-while-non-diagonal-elements-are-inaccurate-predictions-in-the-output-119-and-36-are-actual-predictions-and-26-and-11-are-incorrect-predictions">
-         Here, you can see the confusion matrix in the form of the array object. The dimension of this matrix is 2*2 because this model is binary classification. You have two classes 0 and 1. Diagonal values represent accurate predictions, while non-diagonal elements are inaccurate predictions. In the output, 119 and 36 are actual predictions, and 26 and 11 are incorrect predictions.
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#visualizing-confusion-matrix-using-heatmap-let-s-visualize-the-results-of-the-model-in-the-form-of-a-confusion-matrix-using-matplotlib-and-seaborn">
-         Visualizing Confusion Matrix using Heatmap: Let’s visualize the results of the model in the form of a confusion matrix using matplotlib and seaborn.
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#confusion-matrix-evaluation-metrics-let-s-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall">
-         Confusion Matrix Evaluation Metrics: Let’s evaluate the model using model evaluation metrics such as accuracy, precision, and recall.
+        <a class="reference internal nav-link" href="#confusion-matrix-evaluation-metrics">
+         Confusion Matrix Evaluation Metrics:
         </a>
        </li>
       </ul>
      </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-credit-card-fraud-detection-br">
-     Example: Credit Card Fraud Detection
-     <br/>
-    </a>
-    <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#for-many-companies-losses-involving-transaction-fraud-amount-to-more-than-10-of-their-total-expenses-the-concern-with-these-massive-losses-leads-companies-to-constantly-seek-new-solutions-to-prevent-detect-and-eliminate-fraud-machine-learning-is-one-of-the-most-promising-technological-weapons-to-combat-financial-fraud-the-objective-of-this-project-is-to-create-a-simple-logistic-regression-model-capable-of-detecting-fraud-in-credit-card-operations-thus-seeking-to-minimize-the-risk-and-loss-of-the-business">
-       For many companies, losses involving transaction fraud amount to more than 10% of their total expenses. The concern with these massive losses leads companies to constantly seek new solutions to prevent, detect and eliminate fraud. Machine Learning is one of the most promising technological weapons to combat financial fraud. The objective of this project is to create a simple Logistic Regression model capable of detecting fraud in credit card operations, thus seeking to minimize the risk and loss of the business.
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#the-dataset-used-contains-transactions-carried-out-by-european-credit-card-holders-that-took-place-over-two-days-in-september-2013-and-is-a-shorter-version-of-a-dataset-that-is-available-on-kaggle-at-https-www-kaggle-com-mlg-ulb-creditcardfraud-version-3">
-       The dataset used contains transactions carried out by European credit card holders that took place over two days in September 2013, and is a shorter version of a dataset that is available on kaggle at https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3.
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#it-contains-only-numerical-input-variables-which-are-the-result-of-a-pca-transformation-unfortunately-due-to-confidentiality-issues-we-cannot-provide-the-original-features-and-more-background-information-about-the-data-features-v1-v2-v28-are-the-principal-components-obtained-with-pca-the-only-features-which-have-not-been-transformed-with-pca-are-time-and-amount-feature-time-contains-the-seconds-elapsed-between-each-transaction-and-the-first-transaction-in-the-dataset-the-feature-amount-is-the-transaction-amount-this-feature-can-be-used-for-example-dependant-cost-senstive-learning-feature-class-is-the-response-variable-and-it-takes-value-1-in-case-of-fraud-and-0-otherwise">
-       “It contains only numerical input variables which are the result of a PCA transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are ‘Time’ and ‘Amount’. Feature ‘Time’ contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature ‘Amount’ is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature ‘Class’ is the response variable and it takes value 1 in case of fraud and 0 otherwise.”
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#as-you-know-by-now-the-first-step-is-to-load-some-necessary-libraries">
-       As you know by now, the first step is to load some necessary libraries:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#then-we-should-read-the-dataset-and-explore-it-using-tools-such-as-descriptive-statistics">
-       Then, we should read the dataset and explore it using tools such as descriptive statistics:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#as-expected-the-dataset-has-31-columns-and-the-target-variable-is-located-in-the-last-one-let-s-check-and-see-whether-we-have-any-missing-values-in-the-dataset">
-       As expected, the dataset has 31 columns and the target variable is located in the last one. Let’s check and see whether we have any missing values in the dataset:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#great-no-missing-values">
-       Great! No missing values!
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#we-have-a-total-of-140000-samples-in-this-dataset-the-pca-components-v1-v28-look-as-if-they-have-similar-spreads-and-rather-small-mean-values-in-comparison-to-another-predictors-such-as-time-the-majority-75-of-transactions-are-below-81-euros-with-some-considerably-high-outliers-the-max-is-19656-53-euros-around-0-19-of-all-the-observed-transactions-were-found-to-be-fraudulent-which-means-that-we-are-dealing-with-an-extremely-unbalanced-dataset-an-important-characteristic-of-such-problems-although-the-share-may-seem-small-each-fraud-transaction-can-represent-a-very-significant-expense-which-together-can-represent-billions-of-dollars-of-lost-revenue-each-year">
-       We have a total of 140000 samples in this dataset. The PCA components (V1-V28) look as if they have similar spreads and rather small mean values in comparison to another predictors such as ‘Time’. The majority (75%) of transactions are below 81 euros with some considerably high outliers (the max is 19656.53 euros). Around 0.19% of all the observed transactions were found to be fraudulent which means that we are dealing with an extremely unbalanced dataset. An important characteristic of such problems. Although the share may seem small, each fraud transaction can represent a very significant expense, which together can represent billions of dollars of lost revenue each year.
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#the-next-step-is-to-defind-our-predictors-and-target">
-       The next step is to defind our predictors and target:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#the-next-step-would-be-to-split-our-dataset-and-define-the-training-and-testing-sets-the-random-seed-np-random-seed-is-used-to-ensure-that-the-same-data-is-used-for-all-runs-let-s-do-a-70-30-split">
-       The next step would be to split our dataset and define the training and testing sets. The random seed (np.random.seed) is used to ensure that the same data is used for all runs. Let’s do a 70/30 split:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#now-it-is-time-for-model-development-and-prediction">
-       Now it is time for model development and prediction!
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict">
-       import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#once-the-model-and-the-predictions-are-ready-we-can-assess-the-performance-of-our-classifier-first-we-need-to-get-our-confusion-matrix">
-       Once the model and the predictions are ready, we can assess the performance of our classifier. First, we need to get our confusion matrix:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#we-should-go-further-and-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall-these-are-calculated-based-on-the-confustion-matrix">
-       We should go further and evaluate the model using model evaluation metrics such as accuracy, precision, and recall. These are calculated based on the confustion matrix:
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#that-is-a-fantastic-accuracy-score-isn-t-it">
-       That is a fantastic accuracy score, isn’t it?
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#although-the-accuracy-is-excellent-the-model-struggles-with-fraud-detection-and-has-not-captured-about-30-out-of-71-fraudulent-transactions">
-       Although the accuracy is excellent, the model struggles with fraud detection and has not captured about 30 out of 71 fraudulent transactions.
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#accuracy-in-a-highly-unbalanced-data-set-does-not-represent-a-correct-value-for-the-efficiency-of-a-model-that-s-where-precision-recall-and-more-specifically-f1-score-as-their-combinations-becomes-important">
-       Accuracy in a highly unbalanced data set does not represent a correct value for the efficiency of a model. That’s where precision, recall and more specifically F1-score as their combinations becomes important:
+      <a class="reference internal nav-link" href="#credit-card-fraud-detection-br">
+       Credit Card Fraud Detection
+       <br/>
       </a>
      </li>
     </ul>
@@ -635,11 +515,9 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="logistic-regression-and-classification">
 <h1>Logistic Regression and Classification<a class="headerlink" href="#logistic-regression-and-classification" title="Permalink to this headline">¶</a></h1>
 <p><img alt="" src="https://d2slcw3kip6qmk.cloudfront.net/marketing/blog/2018Q2/critical-elements-for-decision-making/operations-webinar-recap-header&#64;2x.png" /> <br></p>
-<div class="section" id="for-the-last-few-sessions-we-have-talked-about-simple-linear-regression-br">
-<h2>For the last few sessions we have talked about simple linear regression … <br><a class="headerlink" href="#for-the-last-few-sessions-we-have-talked-about-simple-linear-regression-br" title="Permalink to this headline">¶</a></h2>
+<p>For the last few sessions we have talked about simple linear regression … <br></p>
 <p><img alt="" src="https://biol609.github.io/lectures/images/03/simple_regression.jpeg" /> <br></p>
-<div class="section" id="we-discussed">
-<h3>We discussed …<a class="headerlink" href="#we-discussed" title="Permalink to this headline">¶</a></h3>
+<p>We discussed …</p>
 <ul class="simple">
 <li><p><strong>The theory and implementation of simple linear regression in Python</strong><br></p></li>
 <li><p><strong>OLS and MLE methods for estimation of slope and intercept coefficients</strong>  <br></p></li>
@@ -667,8 +545,6 @@
 <p>We can apply classification in many fields of science and technology. For example, text classification algorithms are used to separate legitimate and spam emails, as well as positive and negative comments. Other examples involve medical applications, biological classification, credit scoring, and more.</p>
 </li>
 </ul>
-</div>
-</div>
 <div class="section" id="logistic-regression">
 <h2>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -690,15 +566,12 @@ As you see, The sigmoid function has values very close to either 0 or 1 across m
 <p>logistic regression is estimated using Maximum Likelihood Estimation (MLE) approach. Maximizing the likelihood function determines the parameters that are most likely to produce the observed data.</p>
 <p>Let’s work on an example in Python! <br></p>
 <p><img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQS4dpT6isEOjJZ2WAahxwOHvpAwYq6Khy4TQ&amp;usqp=CAU" /> <br></p>
-<div class="section" id="example-1-diagnosing-diabetes-br">
-<h3>Example 1: Diagnosing Diabetes <br><a class="headerlink" href="#example-1-diagnosing-diabetes-br" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="diagnosing-diabetes-br">
+<h3>Diagnosing Diabetes <br><a class="headerlink" href="#diagnosing-diabetes-br" title="Permalink to this headline">¶</a></h3>
 <p><img alt="" src="https://res.cloudinary.com/grohealth/image/upload/c_fill,f_auto,fl_lossy,h_650,q_auto,w_1085/v1581695681/DCUK/Content/causes-of-diabetes.png" /> <br></p>
-<div class="section" id="the-diabetes-csv-dataset-is-originally-from-the-national-institute-of-diabetes-and-digestive-and-kidney-diseases-the-objective-of-the-dataset-is-to-diagnostically-predict-whether-or-not-a-patient-has-diabetes-based-on-certain-diagnostic-measurements-included-in-the-dataset">
-<h4>The “diabetes.csv” dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the dataset is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the dataset.<a class="headerlink" href="#the-diabetes-csv-dataset-is-originally-from-the-national-institute-of-diabetes-and-digestive-and-kidney-diseases-the-objective-of-the-dataset-is-to-diagnostically-predict-whether-or-not-a-patient-has-diabetes-based-on-certain-diagnostic-measurements-included-in-the-dataset" title="Permalink to this headline">¶</a></h4>
-<p><em>Several constraints were placed on the selection of these instances from a larger database. In particular, all patients here are females at least 21 years old of Pima Indian heritage.</em></p>
-</div>
-<div class="section" id="the-datasets-consists-of-several-medical-predictor-variables-and-one-target-variable-outcome-predictor-variables-includes-the-number-of-pregnancies-the-patient-has-had-their-bmi-insulin-level-age-and-so-on">
-<h4>The datasets consists of several medical predictor variables and one target variable, Outcome. Predictor variables includes the number of pregnancies the patient has had, their BMI, insulin level, age, and so on.<a class="headerlink" href="#the-datasets-consists-of-several-medical-predictor-variables-and-one-target-variable-outcome-predictor-variables-includes-the-number-of-pregnancies-the-patient-has-had-their-bmi-insulin-level-age-and-so-on" title="Permalink to this headline">¶</a></h4>
+<p>The “diabetes.csv” dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the dataset is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the dataset.
+<em>Several constraints were placed on the selection of these instances from a larger database. In particular, all patients here are females at least 21 years old of Pima Indian heritage.</em></p>
+<p>The datasets consists of several medical predictor variables and one target variable, Outcome. Predictor variables includes the number of pregnancies the patient has had, their BMI, insulin level, age, and so on.</p>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:right head"><p>Columns</p></th>
@@ -735,10 +608,8 @@ As you see, The sigmoid function has values very close to either 0 or 1 across m
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="let-s-see-if-we-can-build-a-logistic-regression-model-to-accurately-predict-whether-or-not-the-patients-in-the-dataset-have-diabetes-or-not">
-<h4>Let’s see if we can build a logistic regression model to accurately predict whether or not the patients in the dataset have diabetes or not?<a class="headerlink" href="#let-s-see-if-we-can-build-a-logistic-regression-model-to-accurately-predict-whether-or-not-the-patients-in-the-dataset-have-diabetes-or-not" title="Permalink to this headline">¶</a></h4>
-<p><em>Acknowledgements:
+<p>Let’s see if we can build a logistic regression model to accurately predict whether or not the patients in the dataset have diabetes or not?
+<em>Acknowledgements:
 Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., &amp; Johannes, R.S. (1988). Using the ADAP learning algorithm to forecast the onset of diabetes mellitus. In Proceedings of the Symposium on Computer Applications and Medical Care (pp. 261–265). IEEE Computer Society Press.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1060,15 +931,15 @@ Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., &amp; Johannes, R.S. 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0xffff6ff008b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0xffff5bcde760&gt;
 </pre></div>
 </div>
 <img alt="../../_images/logisticregression_11_1.png" src="../../_images/logisticregression_11_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="selecting-feature-here-we-need-to-divide-the-given-columns-into-two-types-of-variables-dependent-or-target-variable-and-independent-variable-or-feature-variables-or-predictors">
-<h4>Selecting Feature: Here, we need to divide the given columns into two types of variables dependent(or target variable) and independent variable(or feature variables or predictors).<a class="headerlink" href="#selecting-feature-here-we-need-to-divide-the-given-columns-into-two-types-of-variables-dependent-or-target-variable-and-independent-variable-or-feature-variables-or-predictors" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="selecting-features">
+<h4>Selecting Features:<a class="headerlink" href="#selecting-features" title="Permalink to this headline">¶</a></h4>
+<p>Here, we need to divide the given columns into two types of variables dependent(or target variable) and independent variable(or feature variables or predictors).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#split dataset in features and target variable</span>
@@ -1080,8 +951,9 @@ Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., &amp; Johannes, R.S. 
 </div>
 </div>
 </div>
-<div class="section" id="splitting-data-to-understand-model-performance-dividing-the-dataset-into-a-training-set-and-a-test-set-is-a-good-strategy-let-s-split-dataset-by-using-function-train-test-split-you-need-to-pass-3-parameters-features-target-and-test-set-size-additionally-you-can-use-random-state-to-select-records-randomly-here-the-dataset-is-broken-into-two-parts-in-a-ratio-of-75-25-it-means-75-data-will-be-used-for-model-training-and-25-for-model-testing">
-<h4>Splitting Data: To understand model performance, dividing the dataset into a training set and a test set is a good strategy. Let’s split dataset by using function train_test_split(). You need to pass 3 parameters: features, target, and test_set size. Additionally, you can use random_state to select records randomly. Here, the Dataset is broken into two parts in a ratio of 75:25. It means 75% data will be used for model training and 25% for model testing:<a class="headerlink" href="#splitting-data-to-understand-model-performance-dividing-the-dataset-into-a-training-set-and-a-test-set-is-a-good-strategy-let-s-split-dataset-by-using-function-train-test-split-you-need-to-pass-3-parameters-features-target-and-test-set-size-additionally-you-can-use-random-state-to-select-records-randomly-here-the-dataset-is-broken-into-two-parts-in-a-ratio-of-75-25-it-means-75-data-will-be-used-for-model-training-and-25-for-model-testing" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="splitting-data">
+<h4>Splitting Data:<a class="headerlink" href="#splitting-data" title="Permalink to this headline">¶</a></h4>
+<p>To understand model performance, dividing the dataset into a training set and a test set is a good strategy. Let’s split dataset by using function train_test_split(). You need to pass 3 parameters: features, target, and test_set size. Additionally, you can use random_state to select records randomly. Here, the Dataset is broken into two parts in a ratio of 75:25. It means 75% data will be used for model training and 25% for model testing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># split X and y into training and testing sets</span>
@@ -1092,8 +964,9 @@ Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., &amp; Johannes, R.S. 
 </div>
 </div>
 </div>
-<div class="section" id="model-development-and-prediction-first-import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict">
-<h4>Model Development and Prediction: First, import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().<a class="headerlink" href="#model-development-and-prediction-first-import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="model-development-and-prediction">
+<h4>Model Development and Prediction:<a class="headerlink" href="#model-development-and-prediction" title="Permalink to this headline">¶</a></h4>
+<p>First, import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the class</span>
@@ -1153,8 +1026,9 @@ There are also a lot of situations where both precision and recall are equally i
 This is easier to work with since now, instead of balancing precision and recall, we can just aim for a good F1-score and that would be indicative of a good Precision and a good Recall value as well.
 <br>    <img alt="" src="https://memegenerator.net/img/instances/85090403.jpg" /> <br></p>
 </div>
-<div class="section" id="model-evaluation-using-confusion-matrix-a-confusion-matrix-is-a-table-that-is-used-to-evaluate-the-performance-of-a-classification-model-you-can-also-visualize-the-performance-of-an-algorithm-the-fundamental-of-a-confusion-matrix-is-the-number-of-correct-and-incorrect-predictions-are-summed-up-class-wise">
-<h4>Model Evaluation using Confusion Matrix: A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.<a class="headerlink" href="#model-evaluation-using-confusion-matrix-a-confusion-matrix-is-a-table-that-is-used-to-evaluate-the-performance-of-a-classification-model-you-can-also-visualize-the-performance-of-an-algorithm-the-fundamental-of-a-confusion-matrix-is-the-number-of-correct-and-incorrect-predictions-are-summed-up-class-wise" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="model-evaluation-using-confusion-matrix">
+<h4>Model Evaluation using Confusion Matrix:<a class="headerlink" href="#model-evaluation-using-confusion-matrix" title="Permalink to this headline">¶</a></h4>
+<p>A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the metrics class</span>
@@ -1171,12 +1045,11 @@ This is easier to work with since now, instead of balancing precision and recall
 </div>
 </div>
 </div>
+<p>Here, you can see the confusion matrix in the form of the array object. The dimension of this matrix is 2*2 because this model is binary classification. You have two classes 0 and 1. Diagonal values represent accurate predictions, while non-diagonal elements are inaccurate predictions. In the output, 119 and 36 are actual predictions, and 26 and 11 are incorrect predictions.</p>
 </div>
-<div class="section" id="here-you-can-see-the-confusion-matrix-in-the-form-of-the-array-object-the-dimension-of-this-matrix-is-2-2-because-this-model-is-binary-classification-you-have-two-classes-0-and-1-diagonal-values-represent-accurate-predictions-while-non-diagonal-elements-are-inaccurate-predictions-in-the-output-119-and-36-are-actual-predictions-and-26-and-11-are-incorrect-predictions">
-<h4>Here, you can see the confusion matrix in the form of the array object. The dimension of this matrix is 2*2 because this model is binary classification. You have two classes 0 and 1. Diagonal values represent accurate predictions, while non-diagonal elements are inaccurate predictions. In the output, 119 and 36 are actual predictions, and 26 and 11 are incorrect predictions.<a class="headerlink" href="#here-you-can-see-the-confusion-matrix-in-the-form-of-the-array-object-the-dimension-of-this-matrix-is-2-2-because-this-model-is-binary-classification-you-have-two-classes-0-and-1-diagonal-values-represent-accurate-predictions-while-non-diagonal-elements-are-inaccurate-predictions-in-the-output-119-and-36-are-actual-predictions-and-26-and-11-are-incorrect-predictions" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="visualizing-confusion-matrix-using-heatmap-let-s-visualize-the-results-of-the-model-in-the-form-of-a-confusion-matrix-using-matplotlib-and-seaborn">
-<h4>Visualizing Confusion Matrix using Heatmap: Let’s visualize the results of the model in the form of a confusion matrix using matplotlib and seaborn.<a class="headerlink" href="#visualizing-confusion-matrix-using-heatmap-let-s-visualize-the-results-of-the-model-in-the-form-of-a-confusion-matrix-using-matplotlib-and-seaborn" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="visualizing-confusion-matrix-using-heatmap">
+<h4>Visualizing Confusion Matrix using Heatmap:<a class="headerlink" href="#visualizing-confusion-matrix-using-heatmap" title="Permalink to this headline">¶</a></h4>
+<p>Let’s visualize the results of the model in the form of a confusion matrix using matplotlib and seaborn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># name  of classes</span>
@@ -1202,8 +1075,9 @@ This is easier to work with since now, instead of balancing precision and recall
 </div>
 </div>
 </div>
-<div class="section" id="confusion-matrix-evaluation-metrics-let-s-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall">
-<h4>Confusion Matrix Evaluation Metrics: Let’s evaluate the model using model evaluation metrics such as accuracy, precision, and recall.<a class="headerlink" href="#confusion-matrix-evaluation-metrics-let-s-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="confusion-matrix-evaluation-metrics">
+<h4>Confusion Matrix Evaluation Metrics:<a class="headerlink" href="#confusion-matrix-evaluation-metrics" title="Permalink to this headline">¶</a></h4>
+<p>Let’s evaluate the model using model evaluation metrics such as accuracy, precision, and recall.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -1246,19 +1120,15 @@ weighted avg       0.79      0.79      0.79       192
 <p><img alt="" src="https://memegenerator.net/img/instances/85090569.jpg" /></p>
 </div>
 </div>
-</div>
 <hr class="docutils" />
-<div class="section" id="example-credit-card-fraud-detection-br">
-<h2>Example: Credit Card Fraud Detection <br><a class="headerlink" href="#example-credit-card-fraud-detection-br" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="credit-card-fraud-detection-br">
+<h3>Credit Card Fraud Detection <br><a class="headerlink" href="#credit-card-fraud-detection-br" title="Permalink to this headline">¶</a></h3>
 <p><img alt="" src="https://i.pinimg.com/originals/5e/2e/a9/5e2ea94eb6d47c16ece524873234d199.png" /> <br></p>
-<div class="section" id="for-many-companies-losses-involving-transaction-fraud-amount-to-more-than-10-of-their-total-expenses-the-concern-with-these-massive-losses-leads-companies-to-constantly-seek-new-solutions-to-prevent-detect-and-eliminate-fraud-machine-learning-is-one-of-the-most-promising-technological-weapons-to-combat-financial-fraud-the-objective-of-this-project-is-to-create-a-simple-logistic-regression-model-capable-of-detecting-fraud-in-credit-card-operations-thus-seeking-to-minimize-the-risk-and-loss-of-the-business">
-<h3>For many companies, losses involving transaction fraud amount to more than 10% of their total expenses. The concern with these massive losses leads companies to constantly seek new solutions to prevent, detect and eliminate fraud. Machine Learning is one of the most promising technological weapons to combat financial fraud. The objective of this project is to create a simple Logistic Regression model capable of detecting fraud in credit card operations, thus seeking to minimize the risk and loss of the business.<a class="headerlink" href="#for-many-companies-losses-involving-transaction-fraud-amount-to-more-than-10-of-their-total-expenses-the-concern-with-these-massive-losses-leads-companies-to-constantly-seek-new-solutions-to-prevent-detect-and-eliminate-fraud-machine-learning-is-one-of-the-most-promising-technological-weapons-to-combat-financial-fraud-the-objective-of-this-project-is-to-create-a-simple-logistic-regression-model-capable-of-detecting-fraud-in-credit-card-operations-thus-seeking-to-minimize-the-risk-and-loss-of-the-business" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="the-dataset-used-contains-transactions-carried-out-by-european-credit-card-holders-that-took-place-over-two-days-in-september-2013-and-is-a-shorter-version-of-a-dataset-that-is-available-on-kaggle-at-https-www-kaggle-com-mlg-ulb-creditcardfraud-version-3">
-<h3>The dataset used contains transactions carried out by European credit card holders that took place over two days in September 2013, and is a shorter version of a dataset that is available on kaggle at <a class="reference external" href="https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3">https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3</a>.<a class="headerlink" href="#the-dataset-used-contains-transactions-carried-out-by-european-credit-card-holders-that-took-place-over-two-days-in-september-2013-and-is-a-shorter-version-of-a-dataset-that-is-available-on-kaggle-at-https-www-kaggle-com-mlg-ulb-creditcardfraud-version-3" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="it-contains-only-numerical-input-variables-which-are-the-result-of-a-pca-transformation-unfortunately-due-to-confidentiality-issues-we-cannot-provide-the-original-features-and-more-background-information-about-the-data-features-v1-v2-v28-are-the-principal-components-obtained-with-pca-the-only-features-which-have-not-been-transformed-with-pca-are-time-and-amount-feature-time-contains-the-seconds-elapsed-between-each-transaction-and-the-first-transaction-in-the-dataset-the-feature-amount-is-the-transaction-amount-this-feature-can-be-used-for-example-dependant-cost-senstive-learning-feature-class-is-the-response-variable-and-it-takes-value-1-in-case-of-fraud-and-0-otherwise">
-<h3>“It contains only numerical input variables which are the result of a PCA transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are ‘Time’ and ‘Amount’. Feature ‘Time’ contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature ‘Amount’ is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature ‘Class’ is the response variable and it takes value 1 in case of fraud and 0 otherwise.”<a class="headerlink" href="#it-contains-only-numerical-input-variables-which-are-the-result-of-a-pca-transformation-unfortunately-due-to-confidentiality-issues-we-cannot-provide-the-original-features-and-more-background-information-about-the-data-features-v1-v2-v28-are-the-principal-components-obtained-with-pca-the-only-features-which-have-not-been-transformed-with-pca-are-time-and-amount-feature-time-contains-the-seconds-elapsed-between-each-transaction-and-the-first-transaction-in-the-dataset-the-feature-amount-is-the-transaction-amount-this-feature-can-be-used-for-example-dependant-cost-senstive-learning-feature-class-is-the-response-variable-and-it-takes-value-1-in-case-of-fraud-and-0-otherwise" title="Permalink to this headline">¶</a></h3>
+<p>For many companies, losses involving transaction fraud amount to more than 10% of their total expenses. The concern with these massive losses leads companies to constantly seek new solutions to prevent, detect and eliminate fraud. Machine Learning is one of the most promising technological weapons to combat financial fraud. The objective of this project is to create a simple Logistic Regression model capable of detecting fraud in credit card operations, thus seeking to minimize the risk and loss of the business.</p>
+<p>The dataset used contains transactions carried out by European credit card holders that took place over two days in September 2013, and is a shorter version of a dataset that is available on kaggle at <a class="reference external" href="https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3">https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3</a>.</p>
+<blockquote>
+<div><p>“It contains only numerical input variables which are the result of a PCA (Principal Component Analysis) transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are ‘Time’ and ‘Amount’. Feature ‘Time’ contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature ‘Amount’ is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature ‘Class’ is the response variable and it takes value 1 in case of fraud and 0 otherwise.”</p>
+</div></blockquote>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:right head"><p>Columns</p></th>
@@ -1280,7 +1150,10 @@ weighted avg       0.79      0.79      0.79       192
 </tr>
 </tbody>
 </table>
-<p><em>NOTE: Principal Component Analysis, or PCA, is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Principal Component Analysis, or PCA, is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set.</p>
+</div>
 <hr>
 <p><em><strong>Acknowledgements</strong></em>
 The dataset has been collected and analysed during a research collaboration of Worldline and the Machine Learning Group (<a class="reference external" href="http://mlg.ulb.ac.be">http://mlg.ulb.ac.be</a>) of ULB (Université Libre de Bruxelles) on big data mining and fraud detection.
@@ -1294,9 +1167,7 @@ More details on current and past projects on related topics are available on <a 
 <p><em>Carcillo, Fabrizio; Le Borgne, Yann-Aël; Caelen, Olivier; Bontempi, Gianluca. Streaming active learning strategies for real-life credit card fraud detection: assessment and visualization, International Journal of Data Science and Analytics, 5,4,285-300,2018,Springer International Publishing</em></p>
 <p><em>Bertrand Lebichot, Yann-Aël Le Borgne, Liyun He, Frederic Oblé, Gianluca Bontempi Deep-Learning Domain Adaptation Techniques for Credit Cards Fraud Detection, INNSBDDL 2019: Recent Advances in Big Data and Deep Learning, pp 78-88, 2019</em></p>
 <p><em>Fabrizio Carcillo, Yann-Aël Le Borgne, Olivier Caelen, Frederic Oblé, Gianluca Bontempi Combining Unsupervised and Supervised Learning in Credit Card Fraud Detection Information Sciences, 2019</em></p>
-</div>
-<div class="section" id="as-you-know-by-now-the-first-step-is-to-load-some-necessary-libraries">
-<h3>As you know by now, the first step is to load some necessary libraries:<a class="headerlink" href="#as-you-know-by-now-the-first-step-is-to-load-some-necessary-libraries" title="Permalink to this headline">¶</a></h3>
+<p>As you know by now, the first step is to load some necessary libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1309,9 +1180,7 @@ More details on current and past projects on related topics are available on <a 
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="then-we-should-read-the-dataset-and-explore-it-using-tools-such-as-descriptive-statistics">
-<h3>Then, we should read the dataset and explore it using tools such as descriptive statistics:<a class="headerlink" href="#then-we-should-read-the-dataset-and-explore-it-using-tools-such-as-descriptive-statistics" title="Permalink to this headline">¶</a></h3>
+<p>Then, we should read the dataset and explore it using tools such as descriptive statistics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the dataset:</span>
@@ -1488,9 +1357,7 @@ More details on current and past projects on related topics are available on <a 
 <p>5 rows × 31 columns</p>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="as-expected-the-dataset-has-31-columns-and-the-target-variable-is-located-in-the-last-one-let-s-check-and-see-whether-we-have-any-missing-values-in-the-dataset">
-<h3>As expected, the dataset has 31 columns and the target variable is located in the last one. Let’s check and see whether we have any missing values in the dataset:<a class="headerlink" href="#as-expected-the-dataset-has-31-columns-and-the-target-variable-is-located-in-the-last-one-let-s-check-and-see-whether-we-have-any-missing-values-in-the-dataset" title="Permalink to this headline">¶</a></h3>
+<p>As expected, the dataset has 31 columns and the target variable is located in the last one. Let’s check and see whether we have any missing values in the dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -1534,9 +1401,7 @@ dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="great-no-missing-values">
-<h3>Great! No missing values!<a class="headerlink" href="#great-no-missing-values" title="Permalink to this headline">¶</a></h3>
+<p>Great! No missing values!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1825,12 +1690,8 @@ Name: Amount, dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="we-have-a-total-of-140000-samples-in-this-dataset-the-pca-components-v1-v28-look-as-if-they-have-similar-spreads-and-rather-small-mean-values-in-comparison-to-another-predictors-such-as-time-the-majority-75-of-transactions-are-below-81-euros-with-some-considerably-high-outliers-the-max-is-19656-53-euros-around-0-19-of-all-the-observed-transactions-were-found-to-be-fraudulent-which-means-that-we-are-dealing-with-an-extremely-unbalanced-dataset-an-important-characteristic-of-such-problems-although-the-share-may-seem-small-each-fraud-transaction-can-represent-a-very-significant-expense-which-together-can-represent-billions-of-dollars-of-lost-revenue-each-year">
-<h3>We have a total of 140000 samples in this dataset. The PCA components (V1-V28) look as if they have similar spreads and rather small mean values in comparison to another predictors such as ‘Time’. The majority (75%) of transactions are below 81 euros with some considerably high outliers (the max is 19656.53 euros). Around 0.19% of all the observed transactions were found to be fraudulent which means that we are dealing with an extremely unbalanced dataset. An important characteristic of such problems. Although the share may seem small, each fraud transaction can represent a very significant expense, which together can represent billions of dollars of lost revenue each year.<a class="headerlink" href="#we-have-a-total-of-140000-samples-in-this-dataset-the-pca-components-v1-v28-look-as-if-they-have-similar-spreads-and-rather-small-mean-values-in-comparison-to-another-predictors-such-as-time-the-majority-75-of-transactions-are-below-81-euros-with-some-considerably-high-outliers-the-max-is-19656-53-euros-around-0-19-of-all-the-observed-transactions-were-found-to-be-fraudulent-which-means-that-we-are-dealing-with-an-extremely-unbalanced-dataset-an-important-characteristic-of-such-problems-although-the-share-may-seem-small-each-fraud-transaction-can-represent-a-very-significant-expense-which-together-can-represent-billions-of-dollars-of-lost-revenue-each-year" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="the-next-step-is-to-defind-our-predictors-and-target">
-<h3>The next step is to defind our predictors and target:<a class="headerlink" href="#the-next-step-is-to-defind-our-predictors-and-target" title="Permalink to this headline">¶</a></h3>
+<p>We have a total of 140000 samples in this dataset. The PCA components (V1-V28) look as if they have similar spreads and rather small mean values in comparison to another predictors such as ‘Time’. The majority (75%) of transactions are below 81 euros with some considerably high outliers (the max is 19656.53 euros). Around 0.19% of all the observed transactions were found to be fraudulent which means that we are dealing with an extremely unbalanced dataset. An important characteristic of such problems. Although the share may seem small, each fraud transaction can represent a very significant expense, which together can represent billions of dollars of lost revenue each year.</p>
+<p>The next step is to define our <strong>predictors</strong> and <strong>target</strong>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#split dataset in features and target variable</span>
@@ -1840,9 +1701,7 @@ Name: Amount, dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="the-next-step-would-be-to-split-our-dataset-and-define-the-training-and-testing-sets-the-random-seed-np-random-seed-is-used-to-ensure-that-the-same-data-is-used-for-all-runs-let-s-do-a-70-30-split">
-<h3>The next step would be to split our dataset and define the training and testing sets. The random seed (np.random.seed) is used to ensure that the same data is used for all runs. Let’s do a 70/30 split:<a class="headerlink" href="#the-next-step-would-be-to-split-our-dataset-and-define-the-training-and-testing-sets-the-random-seed-np-random-seed-is-used-to-ensure-that-the-same-data-is-used-for-all-runs-let-s-do-a-70-30-split" title="Permalink to this headline">¶</a></h3>
+<p>The next step would be to split our dataset and define the training and testing sets. The random seed (np.random.seed) is used to ensure that the same data is used for all runs. Let’s do a 70/30 split:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># split X and y into training and testing sets</span>
@@ -1854,12 +1713,8 @@ Name: Amount, dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="now-it-is-time-for-model-development-and-prediction">
-<h3>Now it is time for model development and prediction!<a class="headerlink" href="#now-it-is-time-for-model-development-and-prediction" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict">
-<h3>import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().<a class="headerlink" href="#import-the-logistic-regression-module-and-create-a-logistic-regression-classifier-object-using-logisticregression-function-then-fit-your-model-on-the-train-set-using-fit-and-perform-prediction-on-the-test-set-using-predict" title="Permalink to this headline">¶</a></h3>
+<p>Now it is time for model development and prediction!</p>
+<p><code class="docutils literal notranslate"><span class="pre">import</span></code> the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the class</span>
@@ -1887,10 +1742,10 @@ Name: Amount, dtype: float64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="once-the-model-and-the-predictions-are-ready-we-can-assess-the-performance-of-our-classifier-first-we-need-to-get-our-confusion-matrix">
-<h3>Once the model and the predictions are ready, we can assess the performance of our classifier. First, we need to get our confusion matrix:<a class="headerlink" href="#once-the-model-and-the-predictions-are-ready-we-can-assess-the-performance-of-our-classifier-first-we-need-to-get-our-confusion-matrix" title="Permalink to this headline">¶</a></h3>
-<p><em>A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.</em></p>
+<p>Once the model and the predictions are ready, we can assess the performance of our classifier. First, we need to get our confusion matrix:</p>
+<blockquote>
+<div><p>A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
@@ -1942,9 +1797,7 @@ False Negative Cases are 50
 <img alt="../../_images/logisticregression_46_1.png" src="../../_images/logisticregression_46_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="we-should-go-further-and-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall-these-are-calculated-based-on-the-confustion-matrix">
-<h3>We should go further and evaluate the model using model evaluation metrics such as accuracy, precision, and recall. These are calculated based on the confustion matrix:<a class="headerlink" href="#we-should-go-further-and-evaluate-the-model-using-model-evaluation-metrics-such-as-accuracy-precision-and-recall-these-are-calculated-based-on-the-confustion-matrix" title="Permalink to this headline">¶</a></h3>
+<p>We should go further and evaluate the model using model evaluation metrics such as accuracy, precision, and recall. These are calculated based on the confustion matrix:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -1957,9 +1810,7 @@ False Negative Cases are 50
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="that-is-a-fantastic-accuracy-score-isn-t-it">
-<h3>That is a fantastic accuracy score, isn’t it?<a class="headerlink" href="#that-is-a-fantastic-accuracy-score-isn-t-it" title="Permalink to this headline">¶</a></h3>
+<p>That is a fantastic accuracy score, isn’t it?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision:&quot;</span><span class="p">,</span><span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -1997,12 +1848,8 @@ weighted avg       1.00      1.00      1.00     42000
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="although-the-accuracy-is-excellent-the-model-struggles-with-fraud-detection-and-has-not-captured-about-30-out-of-71-fraudulent-transactions">
-<h3>Although the accuracy is excellent, the model struggles with fraud detection and has not captured about 30 out of 71 fraudulent transactions.<a class="headerlink" href="#although-the-accuracy-is-excellent-the-model-struggles-with-fraud-detection-and-has-not-captured-about-30-out-of-71-fraudulent-transactions" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="accuracy-in-a-highly-unbalanced-data-set-does-not-represent-a-correct-value-for-the-efficiency-of-a-model-that-s-where-precision-recall-and-more-specifically-f1-score-as-their-combinations-becomes-important">
-<h3>Accuracy in a highly unbalanced data set does not represent a correct value for the efficiency of a model. That’s where precision, recall and more specifically F1-score as their combinations becomes important:<a class="headerlink" href="#accuracy-in-a-highly-unbalanced-data-set-does-not-represent-a-correct-value-for-the-efficiency-of-a-model-that-s-where-precision-recall-and-more-specifically-f1-score-as-their-combinations-becomes-important" title="Permalink to this headline">¶</a></h3>
+<p>Although the accuracy is excellent, the model struggles with fraud detection and has not captured about 30 out of 71 fraudulent transactions.</p>
+<p>Accuracy in a highly unbalanced data set does not represent a correct value for the efficiency of a model. That’s where precision, recall and more specifically F1-score as their combinations becomes important:</p>
 <ul class="simple">
 <li><p><em>Accuracy is used when the True Positives and True negatives are more important while F1-score is used when the False Negatives and False Positives are crucial</em></p></li>
 <li><p><em>Accuracy can be used when the class distribution is similar while F1-score is a better metric when there are imbalanced classes as in the above case.</em></p></li>
@@ -2309,7 +2156,7 @@ memory usage: 6.8+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff6dc4c6a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff599abf10&gt;
 </pre></div>
 </div>
 <img alt="../../_images/logisticregression_67_1.png" src="../../_images/logisticregression_67_1.png" />
@@ -2453,7 +2300,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff6df7fa90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff595eebb0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/logisticregression_77_1.png" src="../../_images/logisticregression_77_1.png" />
@@ -2513,7 +2360,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff6cea8340&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0xffff58c483a0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/logisticregression_85_1.png" src="../../_images/logisticregression_85_1.png" />
@@ -2762,10 +2609,10 @@ Output Shape (19, 4)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Features 4
 Optimized weights [[-0.13397714  0.13130132 -0.18248682 -0.18319564]]
-Optimized intercept -0.024134631921343585
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training Accuracy 1.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimized intercept -0.024134631921343585
+Training Accuracy 1.0
 Test Accuracy 1.0
 </pre></div>
 </div>

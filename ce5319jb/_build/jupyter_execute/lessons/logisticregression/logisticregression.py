@@ -6,11 +6,11 @@
 # ![](https://d2slcw3kip6qmk.cloudfront.net/marketing/blog/2018Q2/critical-elements-for-decision-making/operations-webinar-recap-header@2x.png) <br>
 # 
 
-# ## For the last few sessions we have talked about simple linear regression ... <br>
+# For the last few sessions we have talked about simple linear regression ... <br>
 # 
 # ![](https://biol609.github.io/lectures/images/03/simple_regression.jpeg) <br>
 # 
-# ### We discussed ...
+# We discussed ...
 # - __The theory and implementation of simple linear regression in Python__<br>
 # - __OLS and MLE methods for estimation of slope and intercept coefficients__  <br>    
 # - __Errors (Noise, Variance, Bias) and their impacts on model's performance__ <br>
@@ -73,15 +73,16 @@
 # 
 # ![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQS4dpT6isEOjJZ2WAahxwOHvpAwYq6Khy4TQ&usqp=CAU) <br>
 
-# ### Example 1: Diagnosing Diabetes <br>
+# ### Diagnosing Diabetes <br>
 # 
 # ![](https://res.cloudinary.com/grohealth/image/upload/c_fill,f_auto,fl_lossy,h_650,q_auto,w_1085/v1581695681/DCUK/Content/causes-of-diabetes.png) <br>
 # 
 # 
 # 
-# #### The "diabetes.csv" dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the dataset is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the dataset. 
+# The "diabetes.csv" dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The objective of the dataset is to diagnostically predict whether or not a patient has diabetes, based on certain diagnostic measurements included in the dataset. 
 # *Several constraints were placed on the selection of these instances from a larger database. In particular, all patients here are females at least 21 years old of Pima Indian heritage.*
-# #### The datasets consists of several medical predictor variables and one target variable, Outcome. Predictor variables includes the number of pregnancies the patient has had, their BMI, insulin level, age, and so on. 
+# 
+# The datasets consists of several medical predictor variables and one target variable, Outcome. Predictor variables includes the number of pregnancies the patient has had, their BMI, insulin level, age, and so on. 
 # 
 # |Columns|Info.|
 # |---:|---:|
@@ -96,7 +97,7 @@
 # |Outcome |Class variable (0 or 1) 268 of 768 are 1, the others are 0|
 # 
 # 
-# #### Let's see if we can build a logistic regression model to accurately predict whether or not the patients in the dataset have diabetes or not?
+# Let's see if we can build a logistic regression model to accurately predict whether or not the patients in the dataset have diabetes or not?
 # *Acknowledgements:
 # Smith, J.W., Everhart, J.E., Dickson, W.C., Knowler, W.C., & Johannes, R.S. (1988). Using the ADAP learning algorithm to forecast the onset of diabetes mellitus. In Proceedings of the Symposium on Computer Applications and Medical Care (pp. 261--265). IEEE Computer Society Press.*
 
@@ -153,7 +154,8 @@ sns.distplot(data['label'], kde = False, rug= True, color ='purple', bins=2)
 sns.jointplot(x ='glucose', y ='label', data = data, kind ='kde')
 
 
-# #### Selecting Feature: Here, we need to divide the given columns into two types of variables dependent(or target variable) and independent variable(or feature variables or predictors).
+# #### Selecting Features: 
+# Here, we need to divide the given columns into two types of variables dependent(or target variable) and independent variable(or feature variables or predictors).
 
 # In[8]:
 
@@ -164,7 +166,8 @@ X = data[feature_cols] # Features
 y = data.label # Target variable
 
 
-# #### Splitting Data: To understand model performance, dividing the dataset into a training set and a test set is a good strategy. Let's split dataset by using function train_test_split(). You need to pass 3 parameters: features, target, and test_set size. Additionally, you can use random_state to select records randomly. Here, the Dataset is broken into two parts in a ratio of 75:25. It means 75% data will be used for model training and 25% for model testing:
+# #### Splitting Data: 
+# To understand model performance, dividing the dataset into a training set and a test set is a good strategy. Let's split dataset by using function train_test_split(). You need to pass 3 parameters: features, target, and test_set size. Additionally, you can use random_state to select records randomly. Here, the Dataset is broken into two parts in a ratio of 75:25. It means 75% data will be used for model training and 25% for model testing:
 
 # In[9]:
 
@@ -174,7 +177,8 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=0)
 
 
-# #### Model Development and Prediction: First, import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
+# #### Model Development and Prediction: 
+# First, import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
 
 # In[10]:
 
@@ -222,7 +226,8 @@ y_pred=logreg.predict(X_test)
 # This is easier to work with since now, instead of balancing precision and recall, we can just aim for a good F1-score and that would be indicative of a good Precision and a good Recall value as well.
 # <br>    ![](https://memegenerator.net/img/instances/85090403.jpg) <br>
 
-# #### Model Evaluation using Confusion Matrix: A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.
+# #### Model Evaluation using Confusion Matrix: 
+# A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.
 
 # In[11]:
 
@@ -233,8 +238,10 @@ cnf_matrix = metrics.confusion_matrix(y_pred, y_test)
 cnf_matrix
 
 
-# #### Here, you can see the confusion matrix in the form of the array object. The dimension of this matrix is 2*2 because this model is binary classification. You have two classes 0 and 1. Diagonal values represent accurate predictions, while non-diagonal elements are inaccurate predictions. In the output, 119 and 36 are actual predictions, and 26 and 11 are incorrect predictions.
-# #### Visualizing Confusion Matrix using Heatmap: Let's visualize the results of the model in the form of a confusion matrix using matplotlib and seaborn.
+# Here, you can see the confusion matrix in the form of the array object. The dimension of this matrix is 2*2 because this model is binary classification. You have two classes 0 and 1. Diagonal values represent accurate predictions, while non-diagonal elements are inaccurate predictions. In the output, 119 and 36 are actual predictions, and 26 and 11 are incorrect predictions.
+# 
+# #### Visualizing Confusion Matrix using Heatmap: 
+# Let's visualize the results of the model in the form of a confusion matrix using matplotlib and seaborn.
 
 # In[12]:
 
@@ -253,7 +260,9 @@ plt.ylabel('Predicted label')
 plt.xlabel('Actual label')
 
 
-# #### Confusion Matrix Evaluation Metrics: Let's evaluate the model using model evaluation metrics such as accuracy, precision, and recall.
+# #### Confusion Matrix Evaluation Metrics: 
+# 
+# Let's evaluate the model using model evaluation metrics such as accuracy, precision, and recall.
 
 # In[13]:
 
@@ -275,17 +284,17 @@ print(classification_report(y_test, y_pred))
 # ![](https://memegenerator.net/img/instances/85090569.jpg)
 
 # ___
-# ## Example: Credit Card Fraud Detection <br>
+# ### Credit Card Fraud Detection <br>
 # 
 # ![](https://i.pinimg.com/originals/5e/2e/a9/5e2ea94eb6d47c16ece524873234d199.png) <br>
 # 
 # 
 # 
-# ### For many companies, losses involving transaction fraud amount to more than 10% of their total expenses. The concern with these massive losses leads companies to constantly seek new solutions to prevent, detect and eliminate fraud. Machine Learning is one of the most promising technological weapons to combat financial fraud. The objective of this project is to create a simple Logistic Regression model capable of detecting fraud in credit card operations, thus seeking to minimize the risk and loss of the business.
+# For many companies, losses involving transaction fraud amount to more than 10% of their total expenses. The concern with these massive losses leads companies to constantly seek new solutions to prevent, detect and eliminate fraud. Machine Learning is one of the most promising technological weapons to combat financial fraud. The objective of this project is to create a simple Logistic Regression model capable of detecting fraud in credit card operations, thus seeking to minimize the risk and loss of the business.
 # 
-# ### The dataset used contains transactions carried out by European credit card holders that took place over two days in September 2013, and is a shorter version of a dataset that is available on kaggle at https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3.
+# The dataset used contains transactions carried out by European credit card holders that took place over two days in September 2013, and is a shorter version of a dataset that is available on kaggle at https://www.kaggle.com/mlg-ulb/creditcardfraud/version/3.
 # 
-# ### "It contains only numerical input variables which are the result of a PCA transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are 'Time' and 'Amount'. Feature 'Time' contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature 'Amount' is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature 'Class' is the response variable and it takes value 1 in case of fraud and 0 otherwise."
+# >"It contains only numerical input variables which are the result of a PCA (Principal Component Analysis) transformation. Unfortunately, due to confidentiality issues, we cannot provide the original features and more background information about the data. Features V1, V2, … V28 are the principal components obtained with PCA, the only features which have not been transformed with PCA are 'Time' and 'Amount'. Feature 'Time' contains the seconds elapsed between each transaction and the first transaction in the dataset. The feature 'Amount' is the transaction Amount, this feature can be used for example-dependant cost-senstive learning. Feature 'Class' is the response variable and it takes value 1 in case of fraud and 0 otherwise."
 # 
 # 
 # |Columns|Info.|
@@ -296,7 +305,9 @@ print(classification_report(y_test, y_pred))
 # |Class |1 for fraudulent transactions, 0 otherwise|
 # 
 # 
-# *NOTE: Principal Component Analysis, or PCA, is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set.*
+# :::{note}
+# Principal Component Analysis, or PCA, is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set.
+# :::
 # 
 # <hr>
 # 
@@ -322,7 +333,7 @@ print(classification_report(y_test, y_pred))
 # 
 # *Fabrizio Carcillo, Yann-Aël Le Borgne, Olivier Caelen, Frederic Oblé, Gianluca Bontempi Combining Unsupervised and Supervised Learning in Credit Card Fraud Detection Information Sciences, 2019*
 
-# ### As you know by now, the first step is to load some necessary libraries:
+# As you know by now, the first step is to load some necessary libraries:
 
 # In[15]:
 
@@ -335,7 +346,7 @@ import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# ### Then, we should read the dataset and explore it using tools such as descriptive statistics:
+# Then, we should read the dataset and explore it using tools such as descriptive statistics:
 
 # In[16]:
 
@@ -345,7 +356,7 @@ data = pd.read_csv("creditcard_m.csv")
 data.head()
 
 
-# ### As expected, the dataset has 31 columns and the target variable is located in the last one. Let's check and see whether we have any missing values in the dataset:
+# As expected, the dataset has 31 columns and the target variable is located in the last one. Let's check and see whether we have any missing values in the dataset:
 
 # In[17]:
 
@@ -353,7 +364,7 @@ data.head()
 data.isnull().sum()
 
 
-# ### Great! No missing values!
+# Great! No missing values!
 
 # In[18]:
 
@@ -374,8 +385,9 @@ print ()
 print (round(data.Amount[data.Class == 1].describe(),2))
 
 
-# ### We have a total of 140000 samples in this dataset. The PCA components (V1-V28) look as if they have similar spreads and rather small mean values in comparison to another predictors such as 'Time'. The majority (75%) of transactions are below 81 euros with some considerably high outliers (the max is 19656.53 euros). Around 0.19% of all the observed transactions were found to be fraudulent which means that we are dealing with an extremely unbalanced dataset. An important characteristic of such problems. Although the share may seem small, each fraud transaction can represent a very significant expense, which together can represent billions of dollars of lost revenue each year.
-# ### The next step is to defind our predictors and target:
+# We have a total of 140000 samples in this dataset. The PCA components (V1-V28) look as if they have similar spreads and rather small mean values in comparison to another predictors such as 'Time'. The majority (75%) of transactions are below 81 euros with some considerably high outliers (the max is 19656.53 euros). Around 0.19% of all the observed transactions were found to be fraudulent which means that we are dealing with an extremely unbalanced dataset. An important characteristic of such problems. Although the share may seem small, each fraud transaction can represent a very significant expense, which together can represent billions of dollars of lost revenue each year.
+# 
+# The next step is to define our **predictors** and **target**:
 
 # In[20]:
 
@@ -385,7 +397,7 @@ y = data.Class # Target variable
 X = data.loc[:, data.columns != "Class"] # Features
 
 
-# ### The next step would be to split our dataset and define the training and testing sets. The random seed (np.random.seed) is used to ensure that the same data is used for all runs. Let's do a 70/30 split:
+# The next step would be to split our dataset and define the training and testing sets. The random seed (np.random.seed) is used to ensure that the same data is used for all runs. Let's do a 70/30 split:
 
 # In[21]:
 
@@ -397,8 +409,9 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.30,random_state=1)
 
 
-# ### Now it is time for model development and prediction! 
-# ### import the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
+# Now it is time for model development and prediction! 
+# 
+# `import` the Logistic Regression module and create a Logistic Regression classifier object using LogisticRegression() function. Then, fit your model on the train set using fit() and perform prediction on the test set using predict().
 
 # In[22]:
 
@@ -420,9 +433,9 @@ logreg.fit(X_train,y_train)
 y_pred=logreg.predict(X_test)
 
 
-# ### Once the model and the predictions are ready, we can assess the performance of our classifier. First, we need to get our confusion matrix:
+# Once the model and the predictions are ready, we can assess the performance of our classifier. First, we need to get our confusion matrix:
 # 
-# *A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.*
+# >A confusion matrix is a table that is used to evaluate the performance of a classification model. You can also visualize the performance of an algorithm. The fundamental of a confusion matrix is the number of correct and incorrect predictions are summed up class-wise.
 
 # In[24]:
 
@@ -457,7 +470,7 @@ plt.ylabel('Predicted label')
 plt.xlabel('Actual label')
 
 
-# ### We should go further and evaluate the model using model evaluation metrics such as accuracy, precision, and recall. These are calculated based on the confustion matrix:
+# We should go further and evaluate the model using model evaluation metrics such as accuracy, precision, and recall. These are calculated based on the confustion matrix:
 
 # In[26]:
 
@@ -465,7 +478,7 @@ plt.xlabel('Actual label')
 print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
 
-# ### That is a fantastic accuracy score, isn't it?
+# That is a fantastic accuracy score, isn't it?
 
 # In[27]:
 
@@ -483,8 +496,9 @@ from sklearn.metrics import classification_report
 print(classification_report(y_test, y_pred))
 
 
-# ### Although the accuracy is excellent, the model struggles with fraud detection and has not captured about 30 out of 71 fraudulent transactions.
-# ### Accuracy in a highly unbalanced data set does not represent a correct value for the efficiency of a model. That's where precision, recall and more specifically F1-score as their combinations becomes important:
+# Although the accuracy is excellent, the model struggles with fraud detection and has not captured about 30 out of 71 fraudulent transactions.
+# 
+# Accuracy in a highly unbalanced data set does not represent a correct value for the efficiency of a model. That's where precision, recall and more specifically F1-score as their combinations becomes important:
 # 
 # - *Accuracy is used when the True Positives and True negatives are more important while F1-score is used when the False Negatives and False Positives are crucial*
 # 
