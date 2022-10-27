@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Simple Logistic Regression
+# # Simple Logistic Regression Examples
 # 
 # Logistic regression is a type of model fitting exercise where the **observed** responses are binary encoded (0,1).  The input design matrix is a collection of features much like ordinary linear regression. 
 # 

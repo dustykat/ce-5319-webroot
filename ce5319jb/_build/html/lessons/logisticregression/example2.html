@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data &#8212; Machine Learning for Civil Engineers</title>
+    <title>Designed Experiments &#8212; Machine Learning for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -52,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="K Nearest Neigbor Classification" href="../lesson14/lesson14.html" />
-    <link rel="prev" title="Simple Logistic Regression" href="example1.html" />
+    <link rel="prev" title="Simple Logistic Regression Examples" href="example1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -370,6 +372,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-2">
+   Example 2
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -378,19 +403,117 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="data">
-<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="designed-experiments">
+<h1>Designed Experiments<a class="headerlink" href="#designed-experiments" title="Permalink to this headline">¶</a></h1>
+<p>Logistic regression is useful in interpreting the outcome of structured experiments, where the outcome of a stimulus is a proportion (such as in a survey, 1000 sent, 300 reply and similar situations).  In such cases the <span class="math notranslate nohighlight">\(\pi_i\)</span> function is unchanged but has a different meaning; instead or observed responses appearing binary we are interested in the proportion of binary responses in a group. In that case</p>
+<div class="math notranslate nohighlight">
+\[ p_j = \frac{R_j}{n_j} \]</div>
+<p>where <span class="math notranslate nohighlight">\(p_j\)</span> is the proportion of 1s in a category (or level) of stimulus.</p>
+<p>In this case the error is</p>
+<div class="math notranslate nohighlight">
+\[\epsilon_j=p_j - \frac{e^{X_j~\beta}}{1+e^{X_j~\beta}}\]</div>
+<p>and the function to minimize is</p>
+<div class="math notranslate nohighlight">
+\[\min_{\beta} (\overrightarrow{p} - \pi(\beta))^T(\overrightarrow{p}-\pi(\beta))\]</div>
+<p>Consider an illustrative example below</p>
+<div class="section" id="example-2">
+<h2>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h2>
+<p>A marketing study to estimate the effectiveness of coupons offering a price reduction on a given product selected 1000 participants and a coupon and advertising material were distributed to each participant.  The coupons offered different price reductions (5,10,15,20, and 30 dollars) and 200 participants were randomly selected for each price reduction level.</p>
+<p>The predictor feature is the price reduction, and the response is the number redemmed after a specified time.  The data  are tabulated below</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:right head"><p>Level <span class="math notranslate nohighlight">\(j\)</span></p></th>
+<th class="text-align:right head"><p>Price Reduction <span class="math notranslate nohighlight">\(X_j\)</span></p></th>
+<th class="text-align:right head"><p>Participants <span class="math notranslate nohighlight">\(n_j\)</span></p></th>
+<th class="text-align:right head"><p>Redeemed <span class="math notranslate nohighlight">\(R_j\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:right"><p>1</p></td>
+<td class="text-align:right"><p>5</p></td>
+<td class="text-align:right"><p>200</p></td>
+<td class="text-align:right"><p>30</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>2</p></td>
+<td class="text-align:right"><p>10</p></td>
+<td class="text-align:right"><p>200</p></td>
+<td class="text-align:right"><p>55</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p>3</p></td>
+<td class="text-align:right"><p>15</p></td>
+<td class="text-align:right"><p>200</p></td>
+<td class="text-align:right"><p>70</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:right"><p>4</p></td>
+<td class="text-align:right"><p>20</p></td>
+<td class="text-align:right"><p>200</p></td>
+<td class="text-align:right"><p>100</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:right"><p>5</p></td>
+<td class="text-align:right"><p>30</p></td>
+<td class="text-align:right"><p>200</p></td>
+<td class="text-align:right"><p>137</p></td>
+</tr>
+</tbody>
+</table>
+<p>As with our typical ML workflow, first we assemble the data, and make any preparatory computations (in this case the proportions)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load The Data</span>
+<span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 <span class="n">reduction</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">]</span>
-<span class="n">households</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
+<span class="n">participants</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span>
 <span class="n">redeemed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">137</span><span class="p">]</span>
-<span class="n">proportion</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">150</span><span class="p">,</span><span class="o">.</span><span class="mi">275</span><span class="p">,</span><span class="o">.</span><span class="mi">350</span><span class="p">,</span><span class="o">.</span><span class="mi">500</span><span class="p">,</span><span class="o">.</span><span class="mi">685</span><span class="p">]</span>
+<span class="n">proportion</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">))]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">proportion</span><span class="p">)):</span>
+    <span class="n">proportion</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">redeemed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">participants</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Next some exploratory data analysis (mostly just a plot of the data)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">def</span> <span class="nf">make1plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span><span class="n">strlablx</span><span class="p">,</span><span class="n">strlably</span><span class="p">,</span><span class="n">strtitle</span><span class="p">):</span>
+    <span class="n">mydata</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span> <span class="c1"># build a square drawing canvass from figure class</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># basic data plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">strlablx</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">strlably</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;Model&#39;</span><span class="p">])</span><span class="c1"># modify for argument insertion</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">strtitle</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">make2plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span><span class="n">listx2</span><span class="p">,</span><span class="n">listy2</span><span class="p">,</span><span class="n">strlablx</span><span class="p">,</span><span class="n">strlably</span><span class="p">,</span><span class="n">strtitle</span><span class="p">):</span>
+    <span class="n">mydata</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span> <span class="c1"># build a square drawing canvass from figure class</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># basic data plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listx2</span><span class="p">,</span><span class="n">listy2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># basic model plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">strlablx</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">strlably</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;Model&#39;</span><span class="p">])</span><span class="c1"># modify for argument insertion</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">strtitle</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make1plot</span><span class="p">(</span><span class="n">reduction</span><span class="p">,</span><span class="n">proportion</span><span class="p">,</span><span class="s1">&#39;Price Reduction&#39;</span><span class="p">,</span><span class="s1">&#39;Proportion Redemmed&#39;</span><span class="p">,</span><span class="s1">&#39;Plot of Proportion of Coupons Redeemed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/example2_5_0.png" src="../../_images/example2_5_0.png" />
+</div>
+</div>
+<p>From this plot we can observe the more stimmys the more coupons redemmed (and relatedly the more crappy product is moved off the store shelves). Now suppose we actually want to predict response for values outside our study range.  A logistic regression model can give some insight.</p>
+<p>Next define our functions (they are literally the same and in the prior example, with names changed to access the correct data)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pii</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1">#sigmoidal function</span>
@@ -412,22 +535,11 @@
         <span class="n">mod</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">reduction</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="n">merit</span> <span class="o">=</span> <span class="n">sse</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">proportion</span><span class="p">)</span>
     <span class="k">return</span><span class="p">(</span><span class="n">merit</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="k">def</span> <span class="nf">make2plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span><span class="n">listx2</span><span class="p">,</span><span class="n">listy2</span><span class="p">,</span><span class="n">strlablx</span><span class="p">,</span><span class="n">strlably</span><span class="p">,</span><span class="n">strtitle</span><span class="p">):</span>
-    <span class="n">mydata</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span> <span class="c1"># build a square drawing canvass from figure class</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listx1</span><span class="p">,</span><span class="n">listy1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># basic data plot</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">listx2</span><span class="p">,</span><span class="n">listy2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># basic model plot</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">strlablx</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">strlably</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;Model&#39;</span><span class="p">])</span><span class="c1"># modify for argument insertion</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">strtitle</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Make an initial guess to test the merit function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># initial guess</span>
@@ -441,6 +553,7 @@
 </div>
 </div>
 </div>
+<p>Insert our optimizer (for the homebrew use powell’s method)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -448,7 +561,7 @@
 
 <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.09</span><span class="p">])</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">merit</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;powell&#39;</span><span class="p">,</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
-
+<span class="c1"># </span>
 <span class="n">fitted</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)]</span>
 <span class="n">xaxis</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
@@ -457,6 +570,7 @@
     
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b0 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b1 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
 <span class="n">plottitle</span> <span class="o">=</span> <span class="s1">&#39;Coupons Retreived and</span><span class="se">\n</span><span class="s1"> Fitted Logistic Response Function</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="s1">&#39;b0: &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span> <span class="s1">&#39; b1: &#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">make2plot</span><span class="p">(</span><span class="n">reduction</span><span class="p">,</span><span class="n">proportion</span><span class="p">,</span><span class="n">xaxis</span><span class="p">,</span><span class="n">fitted</span><span class="p">,</span><span class="s1">&#39;Price Reduction&#39;</span><span class="p">,</span><span class="s1">&#39;Proportion Redemmed&#39;</span><span class="p">,</span><span class="n">plottitle</span><span class="p">)</span>
 </pre></div>
@@ -471,69 +585,63 @@
  b1 =  0.09580373659184761
 </pre></div>
 </div>
-<img alt="../../_images/example2_5_1.png" src="../../_images/example2_5_1.png" />
+<img alt="../../_images/example2_11_1.png" src="../../_images/example2_11_1.png" />
 </div>
 </div>
+<p>Now we can interrogate the model.  For example what reduction will achieve 50-percent redemption)?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test the merit function</span>
-<span class="n">b0</span><span class="o">=-</span><span class="mf">2.04435</span>
-<span class="n">b1</span><span class="o">=</span><span class="mf">0.096834</span>
-<span class="n">mod</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">))]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">)):</span>
-    <span class="n">mod</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">reduction</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-<span class="n">err</span> <span class="o">=</span> <span class="n">sse</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">proportion</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-
-<span class="n">fitted</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)]</span>
-<span class="n">xaxis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess</span> <span class="o">=</span> <span class="mf">21.05</span>
+<span class="n">fraction</span> <span class="o">=</span> <span class="n">pii</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">guess</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;For Reduction of &quot;</span><span class="p">,</span><span class="n">guess</span><span class="p">,</span><span class="s2">&quot; projected redemption rate is &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For Reduction of  21.05  projected redemption rate is  0.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose we want 98-percent redemption (a really crappy as seen on TV product we want out of our retail chain, but still want some revenue)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess</span> <span class="o">=</span> <span class="mf">61.90</span>
+<span class="n">fraction</span> <span class="o">=</span> <span class="n">pii</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">guess</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;For Reduction of &quot;</span><span class="p">,</span><span class="n">guess</span><span class="p">,</span><span class="s2">&quot; projected redemption rate is &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For Reduction of  61.9  projected redemption rate is  0.98
+</pre></div>
+</div>
+</div>
+</div>
+<p>For client management, we might be better off with a graph</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">)]</span>
+<span class="n">xaxis</span> <span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">):</span>
     <span class="n">xaxis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">fitted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">fitted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+<span class="n">plottitle</span> <span class="o">=</span> <span class="s1">&#39;Coupons Retreived and</span><span class="se">\n</span><span class="s1"> Fitted Logistic Response Function</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="s1">&#39;b0: &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span> <span class="s1">&#39; b1: &#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">make2plot</span><span class="p">(</span><span class="n">reduction</span><span class="p">,</span><span class="n">proportion</span><span class="p">,</span><span class="n">xaxis</span><span class="p">,</span><span class="n">fitted</span><span class="p">,</span><span class="s1">&#39;Price Reduction&#39;</span><span class="p">,</span><span class="s1">&#39;Proportion Redemmed&#39;</span><span class="p">,</span><span class="n">plottitle</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.00206662968218915
-</pre></div>
+<img alt="../../_images/example2_17_0.png" src="../../_images/example2_17_0.png" />
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make2plot</span><span class="p">(</span><span class="n">reduction</span><span class="p">,</span><span class="n">proportion</span><span class="p">,</span><span class="n">xaxis</span><span class="p">,</span><span class="n">fitted</span><span class="p">,</span><span class="s1">&#39;Price Reduction&#39;</span><span class="p">,</span><span class="s1">&#39;Proportion Redemmed&#39;</span><span class="p">,</span><span class="s1">&#39;Coupons Retreived and</span><span class="se">\n</span><span class="s1"> Fitted Logistic Response Function&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/example2_9_0.png" src="../../_images/example2_9_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merit</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span> <span class="c1"># merit function to minimize</span>
-    <span class="k">global</span> <span class="n">proportion</span><span class="p">,</span><span class="n">reduction</span> <span class="c1">#access lists already defined external to function</span>
-    <span class="n">mod</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">proportion</span><span class="p">))]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">)):</span>
-        <span class="n">mod</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">reduction</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">merit</span> <span class="o">=</span> <span class="n">sse</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">proportion</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">merit</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merit</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span> <span class="c1"># merit function to minimize</span>
-    <span class="k">global</span> <span class="n">proportion</span><span class="p">,</span><span class="n">reduction</span> <span class="c1">#access lists already defined external to function</span>
-    <span class="n">mod</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">proportion</span><span class="p">))]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">)):</span>
-        <span class="n">mod</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">pii</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">reduction</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">merit</span> <span class="o">=</span> <span class="n">sse</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="n">proportion</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">merit</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -571,7 +679,7 @@
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Simple Logistic Regression</p>
+                <p class="prevnext-title">Simple Logistic Regression Examples</p>
             </div>
         </a>
     </div>
