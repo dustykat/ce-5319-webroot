@@ -25,7 +25,6 @@ chapters:
   - file: lessons/lesson8/exploratorydataanalysis
   - file: lessons/lesson8/exploratorydataanalysisvisual
 
-  
 - file: lessons/lesson9/lesson9 # probability distributions
 
 - file: lessons/optimization/optimization # optimization
@@ -39,8 +38,6 @@ chapters:
   - file: lessons/lesson11/regressionModels
   
 - file: lessons/lesson12/lesson12 # non-linear regression
-
-
 
 - file: lessons/logisticregression/logisticregression 
   sections:
