@@ -1,0 +1,1197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classification Engines &#8212; Machine Learning for Civil Engineers</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Transferring Data Files" href="../lesson4.1/filetransfer.html" />
+    <link rel="prev" title="Prediction Engines" href="../lesson3/lesson3.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/borgcube.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Machine Learning for Civil Engineers
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson1/lesson1.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson2/lesson2.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson3/lesson3.html">
+   Prediction Engines
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Classification Engines
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson4.1/filetransfer.html">
+   Transferring Data Files
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/1filesystems.html">
+     File Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/2readwritecore.html">
+     Local Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/3readwriteweb.html">
+     Files from the Web (
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       requests.get
+      </span>
+      <span class="pre">
+       ...
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson5/lesson5.html">
+   Supervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson6/lesson6.html">
+   Unsupervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson7/lesson7.html">
+   Reinforcement Learning
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson8/lesson8.html">
+   Exploratory Data Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/datatypes.html">
+     Common Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/downloading.html">
+     Downloading Remote Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/exploratorydataanalysis.html">
+     Exploratory Analysis using Data Summaries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/exploratorydataanalysisvisual.html">
+     Exploratory Analysis using Visual Summaries
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson9/lesson9.html">
+   Probability Distributions
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../optimization/optimization.html">
+   Optimization Modeling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/1topic.html">
+     Scheduling Example
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/2topic.html">
+     Grid Search Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/3topic.html">
+     Gradient Descent Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson11/lesson11.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson12/lesson12.html">
+   Non-Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logisticregression/logisticregression.html">
+   Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson14/lesson14.html">
+   K Nearest Neigbor Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson15/lesson15.html">
+   Decision Trees and Random Forests
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
+   Neural Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/lessons/lesson4/lesson4.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flessons/lesson4/lesson4.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lessons/lesson4/lesson4.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-simple-classification-machine">
+   A Simple Classification Machine
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training-a-simple-classifier">
+     Training A Simple Classifier
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-theory-concepts">
+   Learning Theory Concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="classification-engines">
+<h1>Classification Engines<a class="headerlink" href="#classification-engines" title="Permalink to this headline">¶</a></h1>
+<p>In contrast to prediction engines the other category of great interest in machine learning is classification.</p>
+<p>Computers are mostly calculators; They are very very fast at doing arithmetic. This feature is great for doing tasks that match what a calculator does: summing numbers to work out sales, applying percentages to work out tax, plotting graphs of existing data, solving <a class="reference external" href="https://mathworld.wolfram.com/Tractrix.html">tractrix</a> equations to create smoking holes in the ocean where there used be an aircraft carrier.  Even watching TV or streaming music through your computer doesn’t involve much more than the computer executing simple arithmetic instructions repeatedly.
+Reconstructing a video frame from the ones and zeros that are piped across the internet to your computer is done using arithmetic not much more complex than the sums we did in grade school.<br />
+Adding up numbers really quickly  thousands, or even millions of times a second  may be impressive  but it isn’t intelligence.</p>
+<p>A human may find it hard to do large sums very quickly but the  process of doing it doesn’t require much intelligence at all (the size of the federal government, and number of elected officials is a testament to this fact). It simply requires an ability to follow  very basic instructions, and this is what the electronics inside a computer does.  Now let’s flips things and turn the tables on computers!  Look at the following images and see if you can recognise what they contain:</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/pictures.png" /></p>
+<p>You can immediately recognize people, a cat, and a tree – you are able to classify the pictures very fast.
+We can process the quite large amount of information that the images contain, and very  successfully process it to recognise what’s in the image. This kind of task isn’t easy for computers  in fact it’s incredibly difficult.</p>
+<p>Consider what happens when we reduce the information into a 27X27 pixel map to see one reason why classification is hard for a machine – a resolution issue, also we will see how at reduce resolution the pictures look alike.  First some image processing libraries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>              <span class="c1"># useful numerical routines</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>      <span class="c1"># special functions library</span>
+<span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
+<span class="kn">import</span> <span class="nn">imageio</span>            <span class="c1"># image processing library</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the files containing the images if you want to try this at home</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/people784.png">people784.png</a><br>
+<a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/cat784.png">cat784.png</a><br>
+<a class="reference external" href="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson4/tree784.png">tree784.png</a><br></p>
+<p>Now we read and render the people image in reduced resolution about 1/2 of the original – still barely recognizable for us humans.  The image is converted to an array of floating point values from 0 to 255 (256 different values), each representing a different shade of grey.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">########### suppress warnings ######</span>
+<span class="kn">import</span> <span class="nn">warnings</span>                   <span class="c1">##</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="c1">##</span>
+<span class="c1">####################################</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;people784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="c1"># read file ignore rgb, only gray scale</span>
+<span class="n">img_data0</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span> 
+<span class="n">img_data0</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data0</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_3_0.png" src="../../_images/lesson4_3_0.png" />
+</div>
+</div>
+<p>Now render the cat image in reduced resolution about 1/2 of the original – still  recognizable for us humans</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;cat784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data1</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data1</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_5_0.png" src="../../_images/lesson4_5_0.png" />
+</div>
+</div>
+<p>Now render the tree image in reduced resolution about 1/3 of the original – still  recognizable for us humans</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;tree784.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">img_data2</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data2</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data2</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/lesson4_7_0.png" src="../../_images/lesson4_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;people784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data0</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data0</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data1</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tree784 statistics : &quot;</span><span class="p">,</span><span class="n">img_data2</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">img_data2</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>people784 statistics :  0.48325375 0.06275265
+cat784 statistics :  0.60355407 0.023282547
+tree784 statistics :  0.484061 0.049499817
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the image statistics, which is just the gray-scale value of each pixel (0-255), we see that the images are different with this simple metric but not by much</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Image       Mean           Variance
+People    0.48325375     0.06275265
+Cat       0.60355407     0.023282547
+Tree      0.484061       0.049499817
+</pre></div>
+</div>
+<p>If we used just a statistical description, in the mean people and tree are the same, whereas a cat is different. But not all cats will have the same mean (or variance).  So simplistic numerical descriptors are useless, we need more that a couple of metrics for the image perhaps higher moments, or a way to consider all pixels at once – sort of like a regression model.</p>
+<p>We humans naturally fill in missing information and can classify very fast  – cognative scientists think (now thats a pun!) that our mind performs “regressions” on the whole image and reduces it to a set of classifiers then these are compared in our brain to historical results and the classification that throw off the most dopamine (our brain’s drug of choice) is selected.  It happens fast because the chemical reactions involved can be processed in parallel, the message is sent evreywhere at once and the molecules themselves don’t even have to arrive for the classification to occur.</p>
+<p>Anyway the whole process of taking inputs and determining which category or class it belongs is called classification.</p>
+<div class="section" id="id1">
+<h2><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="a-simple-classification-machine">
+<h2>A Simple Classification Machine<a class="headerlink" href="#a-simple-classification-machine" title="Permalink to this headline">¶</a></h2>
+<p>Recall our kilometers to miles prediction engine.  That simple machine is a <strong>predicton model</strong>, because it takes an input and makes a prediction of what the output should be. We refined that prediction by adjusting an internal parameter, informed by the error we saw when comparing with a known-true example.</p>
+<p>Now look at the following graph showing the measured widths and lengths of garden bugs.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/ladybugs.png" /></p>
+<p>You can clearly see two groups. The caterpillars are thin and long, and the ladybugs are wide and short. Remember the predictor that tried to work out the correct number of miles given kilometres? That predictor had an adjustable linear function at it’s heart. Remember, linear functions give straight lines when you plot their output against input. The adjustable parameter <strong>c</strong> changed the slope of that straight line.</p>
+<p>What happens if we place a straight line over that plot?</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/bugslope1.png" /></p>
+<p>We can’t use the line in the same way we did before - to convert one number (kilometres) into another (miles), but perhaps we can use the line to separate different kinds of things. In the plot above, if the line was dividing the caterpillars from the ladybirds, then it could be used to <strong>classify</strong> an unknown bug based on its measurements. The line above doesn’t do this yet because half the caterpillars are on the same side of the dividing line as the ladybirds. Let’s try a different line, by adjusting the slope again, and see what happens.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/bugslope2.png" /></p>
+<p>This time the line is even less useful! It doesn’t separate the two kinds of bugs at all. Let’s have another go:</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/bugslope3.png" /></p>
+<p>That’s much better! This line neatly separates caterpillars from ladybirds. We can now use this line as a <strong>classifier</strong> of bugs. We are assuming that there are no other kinds of bugs <em>that we haven’t seen</em> - but that’s ok for now, we’re simply trying to illustrate the idea of a simple classifier.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recall the discussion about humans seeing a critter for the first time.  They cannot necessarily classifi it into the exact type of critter, but know it is a critter.  We could even place it into a taxonomy chart based on enough specific characteristics.
+<img alt="" src="../../_images/taxonomicChart.png" />
+and maybe determine what the critter is.  But consider a <a class="reference external" href="https://en.wikipedia.org/wiki/Platypus">platypus</a> which has four limbs (quadraped), fur, is a mammal, but has bird-like bill, and lays eggs.  If you have never seen one before, the best you could do is classify as varmit or critter.</p>
+</div>
+<p>Imagine next time our computer used a robot arm to pick up a new bug and measured its width and height, it could then use the above line to classify it correctly as a caterpillar or a ladybird. Look at the following plot, you can see the unknown bug is a caterpillar because it lies above the line. This classification is simple but pretty powerful already!</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/newbug.png" /></p>
+<p>We’ve seen how a linear function inside our simple predictors can be used to classify previously unseen data. But we’ve skipped over a crucial element. How do we get the right slope? How do we improve a line we know isn’t a good divider between the two kinds of bugs? The answer to that is again at the very heart of how machines learn, and we’ll look at this next.</p>
+<div class="section" id="training-a-simple-classifier">
+<h3>Training A Simple Classifier<a class="headerlink" href="#training-a-simple-classifier" title="Permalink to this headline">¶</a></h3>
+<p>We want to <strong>train</strong> our linear classifier to correctly classify bugs as ladybirds or caterpillars. We saw above this is simply about refining the slope of the dividing line that separates the two groups of points on a plot of big width and height.</p>
+<p>How do we do this? We need some examples to learn from. The following truth-table shows two examples, just to keep this exercise simple.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The moniker <em>truth-table</em> is <strong>my</strong> jargon for observations that have been labeled as belonging to a particular class.  In fact this labeling (or coding in the medical industry) is a vital step in supervised learning and is what the human has to provide.  When you have to deal with one of these:<br>
+<img alt="" src="../../_images/captcha.png" /><br>
+You are part of a Turing test, but are also providing training labels for the images for future use.</p>
+</div>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>Example</p></th>
+<th class="text-align:left head"><p>Width</p></th>
+<th class="text-align:left head"><p>Length</p></th>
+<th class="text-align:left head"><p>Bug</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>1</p></td>
+<td class="text-align:left"><p>3.0</p></td>
+<td class="text-align:left"><p>1.0</p></td>
+<td class="text-align:left"><p>ladybird</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
+<td class="text-align:left"><p>1.0</p></td>
+<td class="text-align:left"><p>3.0</p></td>
+<td class="text-align:left"><p>caterpillar</p></td>
+</tr>
+</tbody>
+</table>
+<p>We have an example of a bug which has width 3.0 and length 1.0, which we know is a ladybird. We also have an example of a bug which is longer at 3.0 and thinner at 1.0, which is a caterpillar. This is a set of examples which we declare to be the truth.</p>
+<p>It is these examples which will help refine the slope of the classifier function. Examples of truth used to teach a predictor or a classifier are called the <strong>training data.</strong>
+Let’s plot these two training data examples. Visualising data is often very helpful to get a better understand of it, a feel for it, which isn’t easy to get just by looking at a list or table of numbers.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/trainingbugs.png" /></p>
+<p>Let’s start with a random dividing line, just to get started somewhere. Looking back at our miles to kilometre predictor, we had a linear function whose parameter we adjusted. We can do the same here, because the dividing line is a straight line: <span class="math notranslate nohighlight">\(y = Ax+b\)</span></p>
+<p>We’ve deliberately used the names <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> instead of length and width, because strictly speaking, the line is not a predictor here. It doesn’t convert width to length, like we previously converted miles to kilometres. Instead, it is a dividing line, a classifier. To keep the garden bug scenario as simple as possible we will choose a zero intercept <span class="math notranslate nohighlight">\(b=0\)</span>.</p>
+<p>We saw before that the parameter <span class="math notranslate nohighlight">\(A\)</span> controls the slope of the line. The larger <span class="math notranslate nohighlight">\(A\)</span> is the larger the slope. Let’s go for <span class="math notranslate nohighlight">\(A\)</span> is 0.25 to get started. The dividing line is <span class="math notranslate nohighlight">\(y = 0.25x\)</span>. Let’s plot this line on the same plot of training data to see what it looks like:</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/classyline1.png" /></p>
+<p>Well, we can see that the line <span class="math notranslate nohighlight">\(y = 0.25x\)</span> isn’t a good classifier already without the need to do any calculations. The line doesn’t divide the two types of bug - We can’t say “if the bug is above the line then it is a caterpillar” because the ladybird is above the line too.</p>
+<p>So intuitively we need to move the line up a bit. We’ll resist the temptation to do this by looking at the plot and drawing a suitable line. We want to see if we can find a repeatable recipe to do this, a series of computer instructions, which computer scientists call an <strong>algorithm</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In our ML jargon, <strong>algorithm</strong> and <strong>learner</strong> are synonyms; recipe is a good analogy. Anastasia’s good friend <em>reptition</em> shows up yet again too!</p>
+</div>
+<p>Let’s look at the first training example: the width is 3.0 and length is 1.0 for a ladybird.
+If we tested the <span class="math notranslate nohighlight">\(y = Ax\)</span> function with this example where <span class="math notranslate nohighlight">\(x\)</span> is 3.0, we’d get <span class="math notranslate nohighlight">\(y = (0.25) * (3.0) = 0.75\)</span>
+The function, with the parameter <span class="math notranslate nohighlight">\(A\)</span> set to the initial arbitrary chosen value of 0.25, is suggesting that for a bug of width 3.0, the length should be 0.75.
+We know that’s too small because the training data example tells us it must be a length of 1.0. So we have a difference, an <strong>error</strong>.
+Just as before, with the miles to kilometres predictor, we can use this error to inform how we adjust the parameter <span class="math notranslate nohighlight">\(A\)</span>. But let’s think about what <span class="math notranslate nohighlight">\(y\)</span> should be again.
+If <span class="math notranslate nohighlight">\(y\)</span> was 1.0 then the line goes right through the point where the ladybird sits at <span class="math notranslate nohighlight">\((x,y) = (3.0, 1.0)\)</span>.
+It’s a subtle point but we don’t actually want that.
+We want the line to go above that point.
+Why? Because we want all the ladybird points to be below the line, not on it.
+The line needs to be a <em>dividing line</em> between ladybirds and caterpillars, not a predictor of a bug’s length given its width.
+So let’s try to aim for <span class="math notranslate nohighlight">\(y = 1.1\)</span> when <span class="math notranslate nohighlight">\(x = 3.0\)</span>.
+It’s just a small number above 1.0, We could have chosen 1.2, or even 1.3, but we don’t want a larger number like 10 or 100 because that would make it more likely that the line goes above both ladybirds and caterpillars, resulting in a separator that wasn’t useful at all. So the desired target is 1.1, and the error <strong>E</strong> is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>error = (desired target - actual output)
+</pre></div>
+</div>
+<p>Which is, <span class="math notranslate nohighlight">\(E = 1.1 - 0.75 = 0.35\)</span></p>
+<p>Let’s examine the error, the desired target and the calculated value visually.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/visualbugs.png" /></p>
+<p>Now, what do we do with this <strong>E</strong> to guide us to a better refined parameter <span class="math notranslate nohighlight">\(A\)</span>?</p>
+<p>We want to use the error in <span class="math notranslate nohighlight">\(y\)</span>, which we call <strong>E</strong>, to inform the required change in parameter <span class="math notranslate nohighlight">\(A\)</span>.
+To do this we need to know how the two are related. How is <span class="math notranslate nohighlight">\(A\)</span> related to <strong>E</strong>?</p>
+<p>If we know this, then we can understand how changing one affects the other (correlation anyone?).</p>
+<p>Let’s start with the linear function for the classifier: <span class="math notranslate nohighlight">\(y = Ax\)</span>
+We know that for initial guesses of <span class="math notranslate nohighlight">\(A\)</span> this gives the wrong answer for <span class="math notranslate nohighlight">\(y\)</span>, which should be the value given by the training data.
+Let’s call the correct desired value, <span class="math notranslate nohighlight">\(t\)</span> for target value. To get that value <span class="math notranslate nohighlight">\(t\)</span>, we need to adjust <span class="math notranslate nohighlight">\(A\)</span> by a small amount; <span class="math notranslate nohighlight">\( t = (A + \Delta A)x\)</span> Let’s picture this to make it easier to understand. You can see the new slope <span class="math notranslate nohighlight">\((A + \Delta A)\)</span>.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/deltaA.png" /></p>
+<p>Remember the error <strong>E</strong> was the difference between the desired correct value and the one we calculate based on our current guess for <span class="math notranslate nohighlight">\(A\)</span>. That is, <strong>E</strong> was <span class="math notranslate nohighlight">\(t - y\)</span> (Kind of smells like a residual!);</p>
+<div class="math notranslate nohighlight">
+\[ t - y = (A + \Delta A)x - Ax\]</div>
+<p>Expanding out the terms and simplifying:</p>
+<div class="math notranslate nohighlight">
+\[ \textbf{E} = t - y = (Ax + \Delta A)x - Ax =  E = (\Delta A)x \]</div>
+<p>That’s remarkable! The error <strong>E</strong> is related to <span class="math notranslate nohighlight">\(\Delta A\)</span> in a very simple way.</p>
+<p>We wanted to know how much to adjust <span class="math notranslate nohighlight">\(A\)</span> by to improve the slope of the line so it is a better classifier, being informed by the error <strong>E</strong>.
+To do this we simply re-arrange that last equation: <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span>
+That’s the magic expression we’ve been looking for. We can use the error <strong>E</strong> to refine the slope <span class="math notranslate nohighlight">\(A\)</span> of the classifying line by an amount  <span class="math notranslate nohighlight">\(\Delta A\)</span>.</p>
+<p>Let’s update that initial slope. The error was 0.35 and the <span class="math notranslate nohighlight">\(x\)</span> was 3.0.
+That gives <span class="math notranslate nohighlight">\(\Delta A = \textbf{E}/ x\)</span> as 0.35/ 3.0 = 0.1167.
+That means we need to change the current <span class="math notranslate nohighlight">\(A = 0.25\)</span> by <span class="math notranslate nohighlight">\(0.1167\)</span>.
+That means the new improved value for <span class="math notranslate nohighlight">\(A\)</span> is (A​ + ΔA​) which is 0.25 + 0.1167 = 0.3667. As it happens, the calculated value of <span class="math notranslate nohighlight">\(y\)</span> with this new <span class="math notranslate nohighlight">\(A\)</span> is 1.1 as you’d expect - it’s the desired target value.</p>
+<p>Now we have a method for refining that parameter <span class="math notranslate nohighlight">\(A\)</span>, informed by the current error. Now we’re done with one training example, let’s learn from the next one. Here we have a known true pairing of <span class="math notranslate nohighlight">\(x\)</span> = 1.0 and <span class="math notranslate nohighlight">\(y\)</span> = 3.0. Let’s see what happens when we put <span class="math notranslate nohighlight">\(x\)</span> = 1.0 into the linear function which is now using the updated <span class="math notranslate nohighlight">\(A\)</span> = 0.3667. We get <span class="math notranslate nohighlight">\(y\)</span> = 0.3667 * 1.0 = 0.3667.
+That’s not very close to the training example with <span class="math notranslate nohighlight">\(y\)</span> = 3.0 at all.</p>
+<p>Using the same reasoning as before that we want the line to not cross the training data but instead be just above or below it, we can set the desired target value at 2.9. This way the training example of a caterpillar is just above the line, not on it. The error E​ is (2.9 ­ 0.3667) = 2.5333. That’s a bigger error than before, but if you think about it, all we’ve had so far for the linear function to learn from is a single training example, which clearly biases the line towards that single example.</p>
+<p>Let’s update the <span class="math notranslate nohighlight">\(A\)</span> again, just like we did before. The <span class="math notranslate nohighlight">\(\Delta A\)</span> is <span class="math notranslate nohighlight">\(\textbf{E}/x\)</span> which is 2.5333/ 1.0 = 2.5333. That means the even newer <span class="math notranslate nohighlight">\(A\)</span> is 0.3667 + 2.5333 = 2.9. That means for <span class="math notranslate nohighlight">\(x = 1.0\)</span> the function gives 2.9 as the answer, which is what the desired value was.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/someupdates.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># UNMODERATED LEARNING </span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+<span class="n">margin</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="c1">#seperation margin as fraction of exact answer</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="c1"># Initial Guess - 1st Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="mf">0.25</span>
+
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">margin</span><span class="o">*</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+
+<span class="c1"># Update a</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">deltaA</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Next Guess - 1st Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">margin</span><span class="o">*</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">deltaA</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initial Guess - 2nd Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">margin</span><span class="o">*</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">deltaA</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Next Guess - 2nd Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">margin</span><span class="o">*</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">deltaA</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.75 0.3500000000000001 0.1166666666666667
+1.1 0.0 0.0
+error smaller than tolerance, next training row
+0.3666666666666667 2.9333333333333336 2.9333333333333336
+3.3000000000000003 0.0 0.0
+error smaller than tolerance, next training row
+</pre></div>
+</div>
+</div>
+</div>
+<p>The  plot shows the initial line, the line updated after learning from the first training example, and the final line after learning from the second training example.</p>
+<p>Looking at that plot, we don’t seem to have improved the slope in the way we had hoped. It hasn’t divided neatly the region between ladybirds and caterpillars.
+The line updates to give each desired value for y.
+If we keep doing this, updating for each training data example, all we get is that the final update simply matches the last training example closely. We might as well have not bothered with all previous training examples. In effect we are throwing away any learning that previous training examples might gives us and just learning from the last one. How do we fix this?</p>
+<p>Easy! And this is an important idea in machine learning.<strong>We moderate</strong> the updates. That is, we calm them down a bit. Instead of jumping enthusiastically to each new <span class="math notranslate nohighlight">\(A\)</span>, we take a fraction of the change <span class="math notranslate nohighlight">\(\Delta A\)</span>, not all of it. This way we move in the direction that the training example suggests, but do so slightly cautiously, keeping some of the previous value which was arrived at through potentially many previous training iterations. We saw this idea of moderating our refinements before - with the simpler miles to kilometres predictor, where we nudged the parameter <strong>c</strong> as a fraction of the actual error.</p>
+<p>This moderation, has another very powerful and useful side effect. When the training data itself can’t be trusted to be perfectly true, and contains errors or noise, both of which are normal in real world measurements, the moderation can dampen the impact of those errors or noise. It smooths them out. Ok let’s rerun that again, but this time we’ll add a moderation into the update formula: <span class="math notranslate nohighlight">\(\Delta A = L (E/ x)\)</span></p>
+<p>The moderating factor is often called a <strong>learning rate</strong>, and we’ve called it <span class="math notranslate nohighlight">\(L\)</span>. Let’s pick <span class="math notranslate nohighlight">\(L\)</span> = 0.5 as a reasonable fraction just to get started. It simply means we only update half as much as would have done without moderation.</p>
+<p>Running through that all again, we have an initial <span class="math notranslate nohighlight">\(A\)</span> = 0.25. The first training example gives us y = 0.25 * 3.0 = 0.75. A desired value of 1.1 gives us an error of 0.35. The <span class="math notranslate nohighlight">\(\Delta A = L (E/ x)\)</span> = 0.5 * 0.35/ 3.0 = 0.0583. The updated <span class="math notranslate nohighlight">\(A\)</span> is 0.25 + 0.0583 = 0.3083.</p>
+<p>Trying out this new A on the training example at <span class="math notranslate nohighlight">\(x\)</span> = 3.0 gives y​ = 0.3083 * 3.0 = 0.9250. The line now falls on the wrong side of the training example because it is below 1.1 but it’s not a bad result if you consider it a first refinement step of many to come. It did move in the right direction away from the initial line.</p>
+<p>Let’s press on to the second training data example at <span class="math notranslate nohighlight">\(x\)</span> = 1.0. Using <span class="math notranslate nohighlight">\(A\)</span> = 0.3083 we have y = 0.3083 * 1.0 = 0.3083. The desired value was 2.9 so the error is (2.9 * 0.3083) = 2.5917. The <span class="math notranslate nohighlight">\(\Delta A = L (E/ x)\)</span> = 0.5 * 2.5917/ 1.0 = 1.2958. The even newer <span class="math notranslate nohighlight">\(A\)</span> is now 0.3083 + 1.2958 = 1.6042. Let’s visualise again the initial, improved and final line to see if moderating updates leads to a better dividing line between ladybird and caterpillar regions.</p>
+<p><img alt="" src="http://54.243.252.9/engr-1330-webroot/1-Lessons/Lesson22/moderatedUpdates.png" /></p>
+<p>This is really good! Even with these two simple training examples, and a relatively simple update method using a moderating <strong>learning rate</strong>, we have very rapidly arrived at a good dividing line <span class="math notranslate nohighlight">\(y = Ax\)</span> where <span class="math notranslate nohighlight">\(A\)</span> is 1.6042. Let’s not diminish what we’ve achieved. We’ve achieved an automated method of learning to classify from examples that is remarkably effective given the simplicity of the approach.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># MODERATED LEARNING </span>
+<span class="c1"># SEQUENCE AND SELECTION</span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+
+<span class="n">learningrate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-4</span>
+
+<span class="c1"># Initial Guess - 1st Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="mf">0.25</span>
+
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+
+<span class="c1"># Update a</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initial Guess 1st Training Set&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Next Guess - 1st Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Updated Guess 1st Training Set&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initial Guess - 2nd Training Example</span>
+<span class="c1">#a=a+deltaA</span>
+
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">)</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initial Guess 2nd Training Set&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+
+<span class="c1"># Next Guess - 2nd Training Example</span>
+<span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+
+<span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">)</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+<span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Update Guess 2nd Training Set&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initial Guess 1st Training Set
+Target value =  1.1
+ Model value =  0.75
+ Error value =  0.35
+ Slope value =  0.25
+Updated Guess 1st Training Set
+Target value =  1.1
+ Model value =  0.925
+ Error value =  0.175
+ Slope value =  0.308
+Initial Guess 2nd Training Set
+Target value =  2.9
+ Model value =  0.308
+ Error value =  2.592
+ Slope value =  0.308
+Update Guess 2nd Training Set
+Target value =  2.9
+ Model value =  1.604
+ Error value =  1.296
+ Slope value =  1.604
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now to try to get to a limit based on our pre-selected tolerance</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># MODERATED LEARNING </span>
+<span class="c1"># SEQUENCE, SELECTION, AND REPETITION</span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">learningrate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="c1"># Wrap the updates into a repetition structure</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="n">deltaA</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># initial value </span>
+<span class="k">for</span> <span class="n">iguess</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+<span class="c1"># Next Guess - 1st Training Example</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+    <span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+    <span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Updated Guess 1st Training Set&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trial Count  = &#39;</span><span class="p">,</span><span class="n">iguess</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+        
+<span class="n">deltaA</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">iguess</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+<span class="c1"># Next Guess - 2nd Training Example</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+    <span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">)</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+    <span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Update Guess 2nd Training Set&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trial Count  = &#39;</span><span class="p">,</span><span class="n">iguess</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Updated Guess 1st Training Set
+Trial Count  =  0
+Target value =  1.1
+ Model value =  0.75
+ Error value =  0.35
+ Slope value =  0.25
+Updated Guess 1st Training Set
+Trial Count  =  1
+Target value =  1.1
+ Model value =  0.925
+ Error value =  0.175
+ Slope value =  0.308
+Update Guess 2nd Training Set
+Trial Count  =  0
+Target value =  2.9
+ Model value =  0.308
+ Error value =  2.592
+ Slope value =  0.308
+Update Guess 2nd Training Set
+Trial Count  =  1
+Target value =  2.9
+ Model value =  1.604
+ Error value =  1.296
+ Slope value =  1.604
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># MODERATED LEARNING </span>
+<span class="c1"># SEQUENCE, SELECTION, AND REPETITION </span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="n">string</span><span class="p">):</span> <span class="c1"># note multiple returns</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=-</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;input not string&#39;</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+<span class="n">howmanytrials</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">howmanytests</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">learningrate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="c1"># Wrap the updates into a repetition structure</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytests</span><span class="p">):</span>
+    <span class="n">deltaA</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># initial value </span>
+    <span class="k">for</span> <span class="n">iguess</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytrials</span><span class="p">):</span>
+<span class="c1"># Next Guess - iset Training Example</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+        <span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+        <span class="n">nudge</span> <span class="o">=</span> <span class="n">offset</span><span class="p">(</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#use the truth table to offset the seperator</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">nudge</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+        <span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1">#print(&#39;Updated Guess Training Set&#39;,iset+1)</span>
+        <span class="c1">#print(&#39;Trial Count  = &#39;,iguess+1)</span>
+        <span class="c1">#print(&#39;Target value = &#39;,round(error+ymodel,3))</span>
+        <span class="c1">#print(&#39; Model value = &#39;,round(ymodel,3))</span>
+        <span class="c1">#print(&#39; Error value = &#39;,round(error,3))</span>
+        <span class="c1">#print(&#39; Slope value = &#39;,round(a,3))</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Updated Guess Training Set&#39;</span><span class="p">,</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trial Count  = &#39;</span><span class="p">,</span><span class="n">iguess</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>error smaller than tolerance, next training row
+Updated Guess Training Set 1
+Trial Count  =  10
+Target value =  1.1
+ Model value =  1.099
+ Error value =  0.001
+ Slope value =  0.366
+error smaller than tolerance, next training row
+Updated Guess Training Set 2
+Trial Count  =  13
+Target value =  2.9
+ Model value =  2.899
+ Error value =  0.001
+ Slope value =  2.899
+</pre></div>
+</div>
+</div>
+</div>
+<p>So now we have evolved our example into a fairly automated process to identify slopes that can discriminate between ladybirds and catapillars based on some measurements, kind of like papayas for instance.  Here we only had a sample size of two, and if we needed to use the classifier we would need an interface to take inputs, width and length. Then for a given width apply the two “models” to determine if</p>
+<ul class="simple">
+<li><p>ladybird</p></li>
+<li><p>catapillar</p></li>
+<li><p>not ladybird, not catapillar (the whole wedge between the two slopes, assuming we saved the two slopes)</p></li>
+</ul>
+<p>Clearly on the right track but not quite finished.</p>
+<p>Anticipating that the average slope might be useful, lets report that upon exit from each test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Classifier Example</span>
+<span class="c1"># MODERATED LEARNING </span>
+<span class="c1"># SEQUENCE, SELECTION, AND REPETITION </span>
+
+<span class="n">dataframe1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="c1"># a list of truth table values, L = ladybug, C = cat a pillar</span>
+<span class="c1"># seperator line hypothesis</span>
+<span class="k">def</span> <span class="nf">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">):</span> <span class="c1"># produce a y-value to test for seperation</span>
+    <span class="n">yAx</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">yAx</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="n">string</span><span class="p">):</span> <span class="c1"># note multiple returns</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">string</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+        <span class="n">offset</span><span class="o">=-</span><span class="mf">0.1</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;input not string&#39;</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters</span>
+<span class="n">howmanytrials</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">howmanytests</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">learningrate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">howclose</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="c1"># Wrap the updates into a repetition structure</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">abar</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="k">for</span> <span class="n">iset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytests</span><span class="p">):</span>
+    <span class="n">deltaA</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># initial value </span>
+    <span class="k">for</span> <span class="n">iguess</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanytrials</span><span class="p">):</span>
+<span class="c1"># Next Guess - iset Training Example</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">deltaA</span>
+        <span class="n">ymodel</span> <span class="o">=</span> <span class="n">yAx</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#note the adressing structure - we are sending the 1st training row [0],the first column[0]</span>
+        <span class="n">nudge</span> <span class="o">=</span> <span class="n">offset</span><span class="p">(</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#use the truth table to offset the seperator</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">nudge</span><span class="o">+</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ymodel</span>
+        <span class="n">deltaA</span> <span class="o">=</span> <span class="n">learningrate</span><span class="o">*</span><span class="p">(</span><span class="n">error</span><span class="o">/</span><span class="n">dataframe1</span><span class="p">[</span><span class="n">iset</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1">#print(&#39;Updated Guess Training Set&#39;,iset+1)</span>
+        <span class="c1">#print(&#39;Trial Count  = &#39;,iguess+1)</span>
+        <span class="c1">#print(&#39;Target value = &#39;,round(error+ymodel,3))</span>
+        <span class="c1">#print(&#39; Model value = &#39;,round(ymodel,3))</span>
+        <span class="c1">#print(&#39; Error value = &#39;,round(error,3))</span>
+        <span class="c1">#print(&#39; Slope value = &#39;,round(a,3))</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">howclose</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">iset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">abar</span><span class="o">=</span><span class="n">a</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">abar</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">abar</span><span class="o">+</span><span class="n">a</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error smaller than tolerance, next training row&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Updated Guess Training Set&#39;</span><span class="p">,</span><span class="n">iset</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Trial Count  = &#39;</span><span class="p">,</span><span class="n">iguess</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Target value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="o">+</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Model value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">ymodel</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Error value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">error</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Slope value = &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Average Slope =&#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">abar</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>error smaller than tolerance, next training row
+Updated Guess Training Set 1
+Trial Count  =  10
+Target value =  1.1
+ Model value =  1.099
+ Error value =  0.001
+ Slope value =  0.366
+Average Slope = 0.366
+error smaller than tolerance, next training row
+Updated Guess Training Set 2
+Trial Count  =  13
+Target value =  2.9
+ Model value =  2.899
+ Error value =  0.001
+ Slope value =  2.899
+Average Slope = 1.633
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have something of a learner - the meaningful output will be an average slope based on the training classifications, and will incorporate all the training inputs instead of just the most recent one.  Building a classification engine at this point is relatively simple.</p>
+<p>Take new inputs, <span class="math notranslate nohighlight">\(x_{new}\)</span> and <span class="math notranslate nohighlight">\(y_{new}\)</span>, compute a slope as <span class="math notranslate nohighlight">\(s_{new}=\frac{y_{new}}{x_{new}}\)</span>.  Test if the slope is smaller than the average slope then ladybird and if greater than average then catapillar.  Now of course a bigger training set would be in order, and if we had a third bug type that would complicate things a bit - but the idea is straight forward.</p>
+<p>Naturally, with images the problem is way more complex, but the underlying theme is the same.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xnew</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">ynew</span> <span class="o">=</span> <span class="mf">3.3</span>
+<span class="n">snew</span> <span class="o">=</span> <span class="n">ynew</span><span class="o">/</span><span class="n">xnew</span>
+<span class="k">if</span> <span class="n">snew</span> <span class="o">&lt;=</span> <span class="n">abar</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;You gots a ladybug!&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">snew</span> <span class="o">&gt;</span> <span class="n">abar</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its a catapillar! ... meow&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Its a catapillar! ... meow
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="learning-theory-concepts">
+<h2>Learning Theory Concepts<a class="headerlink" href="#learning-theory-concepts" title="Permalink to this headline">¶</a></h2>
+<p>Im just going to grow this list each chapter - maybe someday it will all come together.</p>
+<ul class="simple">
+<li><p><em>Learning in the limit</em> Given a continuous stream of examples where the learner predicts whether each one is a member of the concept or not and is then is told the correct answer, does the learner eventually converge to a correct concept and never make a mistake again.  One can think of this as if the learner has a big enough training set, then it eventually can achieve a “perfect” fit.  I am extrapolating a bit, but the idea is that in the limit perfection is achievable.</p></li>
+<li><p>By simple <em>enumeration</em> (what I called Grid Search), concepts from any known finite hypothesis space are learnable in the limit, although typically requires an exponential (or doubly exponential) number of examples and time.</p></li>
+</ul>
+<p>Definitions:</p>
+<ul class="simple">
+<li><p><em>Hypothesis</em> is a structural representation of predictor response relationship; <span class="math notranslate nohighlight">\(r=f(p)\)</span></p></li>
+<li><p><em>Model</em> is a <strong>fitted</strong> hypothesis. For instance <span class="math notranslate nohighlight">\(f(p) = \beta_1 p^{beta_2}\)</span> where <span class="math notranslate nohighlight">\(\beta_1\)</span> and <span class="math notranslate nohighlight">\(\beta_2\)</span> have been determined by application of a learner (i.e. they are known); <span class="math notranslate nohighlight">\(\beta_1\)</span> and <span class="math notranslate nohighlight">\(\beta_2\)</span> are <strong>parameters</strong> of the model (at least after fitting).  So all we do is supply predictor values and get a response.</p></li>
+<li><p><em>Learner</em> is an algorithm that fits a hypothesis to produce a data model.</p></li>
+<li><p><em>Moderator</em> or <em>Learning Rate</em> is a <strong>hyperparameter</strong> that controls the learning process.  It has to be set by the supervisor (human) to guide the learner and is not learnable from the data.</p></li>
+</ul>
+<p>Learners:</p>
+<ul class="simple">
+<li><p><em>Consistent Learner</em> A learner L using a hypothesis H and training data D is said to be a consistent learner if it always outputs a <strong>model</strong> with zero error on D whenever H contains such a hypothesis. By definition, a consistent learner must produce a <strong>model</strong> in the version space for H given D.</p></li>
+<li><p><em>Halving learner</em> I cannot find a simple translation, its the name given to a concept where the learner splits the training data space into a partion that produces <em>crappy models</em> and a partition that produces <em>good models</em> or even <em>consistent</em> models (using above definition).  I think the concept refers to the entire hypothesis,training,model process; obviously the ability to split the predictor space into the parts that are effective and not will be quite useful.</p></li>
+<li><p><em>Ellipsoid learner</em> Refers to a classification algorithm that searches an n-dimensional ellipsoid in the training domain to determine a classification scheme.</p></li>
+</ul>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
+<li><p><a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. Make Your Own Neural Network</a></p></li>
+</ol>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lessons/lesson4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="../lesson3/lesson3.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Prediction Engines</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../lesson4.1/filetransfer.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Transferring Data Files</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Theodore G. Cleveland<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
