@@ -383,6 +383,13 @@
   <a class="reference internal nav-link" href="#k-fold-cross-validation">
    K-Fold Cross Validation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configuration-of-k">
+     Configuration of k
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -425,9 +432,44 @@
 <div class="admonition-quote admonition">
 <p class="admonition-title">Quote</p>
 <p>“This approach involves randomly dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds.”</p>
-<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IntoductiontoStatisticalLearning.pdf">An Introduction to Statistical Learning: with Applications in R (2021)</a></p>
+<p>pp. 181 <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IntoductiontoStatisticalLearning.pdf">An Introduction to Statistical Learning: with Applications in R (2021)</a></p>
 </div>
-<p>It is also important that any preparation of the data prior to fitting the model occur on the CV-assigned training dataset within the loop rather than on the broader data set. This also applies to any tuning of hyperparameters. A failure to perform these operations within the loop may result in data leakage and an optimistic estimate of the model skill.</p>
+<p>It is also important that any preparation of the data prior to fitting the model occur on the CV-assigned training dataset within the loop rather than on the broader data set. This requirement also applies to any tuning of hyperparameters. A failure to perform these operations within the loop may result in data leakage and an optimistic estimate of the model skill.</p>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“Despite the best efforts of statistical methodologists, users frequently invalidate their results by inadvertently peeking at the test data.”</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/aima2010.pdf">Artificial Intelligence a Modern Approach (2020)</a></p>
+</div>
+<p>The results of a <strong>k-fold</strong> cross-validation run are often summarized with the mean of the model skill scores. It is also good practice to include a measure of the variance of the skill scores, such as the standard deviation or standard error.</p>
+<div class="section" id="configuration-of-k">
+<h3>Configuration of k<a class="headerlink" href="#configuration-of-k" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>k</strong> value must be chosen carefully for your data sample.</p>
+<p>A poorly chosen value for <strong>k</strong> may result in a misrepresentative idea of the skill of the model, such as a score with a high variance (that may change a lot based on the data used to fit the model), or a high bias, (such as an overestimate of the skill of the model).</p>
+<p>Three common tactics for choosing a value for k are as follows:</p>
+<ul class="simple">
+<li><p><strong>Representative</strong>: The value for k is chosen such that each train/test group of data samples is large enough to be statistically representative of the broader dataset.</p></li>
+<li><p><strong>k=5; or 10</strong>: The value for k is fixed to 5 or 10, a value that has been found through experimentation to generally result in a model skill estimate with low bias a modest variance.</p></li>
+<li><p><strong>k=n</strong>: The value for k is fixed to n, where n is the size of the dataset to give each test sample an opportunity to be used in the hold out dataset. This approach is called leave-one-out cross-validation.</p></li>
+</ul>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“The choice of k is usually 5 or 10, but there is no formal rule. As k gets larger, the difference in size between the training set and the resampling subsets gets smaller. As this difference decreases, the bias of the technique becomes smaller”</p>
+<p><a class="reference external" href="http://54.243.252.9ce-5319-webroot/3-Readings/applied-predictive-modeling-max-kuhn-kjell-johnson_1518.pdf">Applied Predictive Modeling (2018)</a></p>
+</div>
+<p>Values of k=5 or 10 are very common in the field of applied machine learning, and are recommended if you are struggling to choose a value for your dataset.</p>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“To summarize, there is a bias-variance trade-off associated with the choice of k in k-fold cross-validation. Typically, given these considerations, one performs k-fold cross-validation using k = 5 or k = 10, as these values have been shown empirically to yield test error rate estimates that suffer neither from excessively high bias nor from very high variance.”</p>
+<p>— Page 184, <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IntoductiontoStatisticalLearning.pdf">An Introduction to Statistical Learning, 2013</a></p>
+</div>
+<p>If a value for k is chosen that does not evenly split the data sample, then one group will contain a remainder of the examples. It is preferable to split the data sample into k groups with the same number of samples, such that the sample of model skill scores are all equivalent.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here is an example to illustrate the “folding” steps</p>
+<p><img alt="" src="../../_images/k-fold-example.png" /></p>
+</div>
+<p>For more on how to configure <strong>k-fold</strong> cross-validation, see the tutorial:<a class="reference external" href="https://machinelearningmastery.com/how-to-configure-k-fold-cross-validation/">how-to-configure-k-fold-cross-validation</a></p>
+</div>
 </div>
 </div>
 
