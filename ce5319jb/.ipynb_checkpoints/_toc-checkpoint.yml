@@ -51,3 +51,5 @@ chapters:
 - file: lessons/neuralnetworks/neuralnetworks  # neural networks
   sections:
   - file: lessons/neuralnetworks/deeplearners  # neural networks
+  
+- file: lessons/validation/validation
