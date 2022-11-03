@@ -48,6 +48,7 @@ chapters:
   - file: lessons/logisticregression/poisonmushroom
   
 - file: lessons/lesson14/lesson14 # KNN Classification
+
 - file: lessons/lesson15/lesson15 # Decision Tree Random Forests
 
 - file: lessons/neuralnetworks/neuralnetworks  # neural networks
