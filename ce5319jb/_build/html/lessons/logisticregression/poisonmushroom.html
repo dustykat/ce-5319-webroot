@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Poison Mushroom Model &#8212; Machine Learning for Civil Engineers</title>
+    <title>Multiple Logistic Regression (Poison Mushrooms) &#8212; Machine Learning for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -383,19 +383,11 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="poison-mushroom-model">
-<h1>Poison Mushroom Model<a class="headerlink" href="#poison-mushroom-model" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="multiple-logistic-regression-poison-mushrooms">
+<h1>Multiple Logistic Regression (Poison Mushrooms)<a class="headerlink" href="#multiple-logistic-regression-poison-mushrooms" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;&#39;cap-shape&#39;,&#39;cap-surface&#39;,&#39;cap-color&#39;,&#39;bruises&#39;,&#39;odor&#39;,&#39;gill-attachment&#39;,&#39;gill-spacing&#39;,&#39;gill-size&#39;,&#39;gill-color&#39;,&#39;stalk-shape&#39;,&#39;stalk-root&#39;,&#39;stalk-surface-above-ring&#39;,&#39;stalk-surface-below-ring&#39;,&#39;stalk-color-above-ring&#39;,&#39;stalk-color-below-ring&#39;,&#39;veil-type&#39;,&#39;veil-color&#39;,&#39;ring-number&#39;,&#39;ring-type&#39;,&#39;spore-print-color&#39;,&#39;population&#39;,&#39;habitat&#39;]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-1-03b786130c1c&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
-    <span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;&#39;cap-shape&#39;,&#39;cap-surface&#39;,&#39;cap-color&#39;,&#39;bruises&#39;,&#39;odor&#39;,&#39;gill-attachment&#39;,&#39;gill-spacing&#39;,&#39;gill-size&#39;,&#39;gill-color&#39;,&#39;stalk-shape&#39;,&#39;stalk-root&#39;,&#39;stalk-surface-above-ring&#39;,&#39;stalk-surface-below-ring&#39;,&#39;stalk-color-above-ring&#39;,&#39;stalk-color-below-ring&#39;,&#39;veil-type&#39;,&#39;veil-color&#39;,&#39;ring-number&#39;,&#39;ring-type&#39;,&#39;spore-print-color&#39;,&#39;population&#39;,&#39;habitat&#39;]</span>
-<span class="s1">                                                                                                                                                                                                                                                                                                                                                                    ^</span>
-<span class="ne">SyntaxError</span>: EOF while scanning triple-quoted string literal
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">,</span><span class="s1">&#39;cap-shape&#39;</span><span class="p">,</span><span class="s1">&#39;cap-surface&#39;</span><span class="p">,</span><span class="s1">&#39;cap-color&#39;</span><span class="p">,</span><span class="s1">&#39;bruises&#39;</span><span class="p">,</span><span class="s1">&#39;odor&#39;</span><span class="p">,</span><span class="s1">&#39;gill-attachment&#39;</span><span class="p">,</span><span class="s1">&#39;gill-spacing&#39;</span><span class="p">,</span><span class="s1">&#39;gill-size&#39;</span><span class="p">,</span><span class="s1">&#39;gill-color&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-shape&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-root&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">,</span><span class="s1">&#39;veil-type&#39;</span><span class="p">,</span><span class="s1">&#39;veil-color&#39;</span><span class="p">,</span><span class="s1">&#39;ring-number&#39;</span><span class="p">,</span><span class="s1">&#39;ring-type&#39;</span><span class="p">,</span><span class="s1">&#39;spore-print-color&#39;</span><span class="p">,</span><span class="s1">&#39;population&#39;</span><span class="p">,</span><span class="s1">&#39;habitat&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
