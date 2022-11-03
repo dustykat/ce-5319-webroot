@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Decision Trees and Random Forests" href="../lesson15/lesson15.html" />
-    <link rel="prev" title="Multiple Logistic Regression" href="../logisticregression/example3.html" />
+    <link rel="prev" title="Multiple Logistic Regression (Poison Mushrooms)" href="../logisticregression/poisonmushroom.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -272,6 +272,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../validation/validation.html">
+   Validation
+  </a>
  </li>
 </ul>
 
@@ -849,18 +854,18 @@ Hence, it is a multiclass classification problem and the number of observations 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[10  0  0]
- [ 0 10  0]
- [ 0  2  8]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 5  0  0]
+ [ 0 14  2]
+ [ 0  0  9]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        10
-Iris-versicolor       0.83      1.00      0.91        10
- Iris-virginica       1.00      0.80      0.89        10
+    Iris-setosa       1.00      1.00      1.00         5
+Iris-versicolor       1.00      0.88      0.93        16
+ Iris-virginica       0.82      1.00      0.90         9
 
        accuracy                           0.93        30
-      macro avg       0.94      0.93      0.93        30
-   weighted avg       0.94      0.93      0.93        30
+      macro avg       0.94      0.96      0.94        30
+   weighted avg       0.95      0.93      0.93        30
 </pre></div>
 </div>
 </div>
@@ -999,11 +1004,11 @@ Iris-versicolor       0.83      1.00      0.91        10
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../logisticregression/example3.html" title="previous page">
+        <a class="left-prev" href="../logisticregression/poisonmushroom.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Multiple Logistic Regression</p>
+                <p class="prevnext-title">Multiple Logistic Regression (Poison Mushrooms)</p>
             </div>
         </a>
     </div>

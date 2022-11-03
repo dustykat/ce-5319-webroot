@@ -17,14 +17,15 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-attributes=['''cap-shape','cap-surface','cap-color','bruises','odor','gill-attachment','gill-spacing','gill-size','gill-color','stalk-shape','stalk-root','stalk-surface-above-ring','stalk-surface-below-ring','stalk-color-above-ring','stalk-color-below-ring','veil-type','veil-color','ring-number','ring-type','spore-print-color','population','habitat']
-
+alphabet=['n','b','c','g','r','p','u','e','w','y']
+for i in range(len(alphabet)):
+    if alphabet[i]
 ------------------
 
-[0;36m  File [0;32m"<ipython-input-1-03b786130c1c>"[0;36m, line [0;32m1[0m
-[0;31m    attributes=['''cap-shape','cap-surface','cap-color','bruises','odor','gill-attachment','gill-spacing','gill-size','gill-color','stalk-shape','stalk-root','stalk-surface-above-ring','stalk-surface-below-ring','stalk-color-above-ring','stalk-color-below-ring','veil-type','veil-color','ring-number','ring-type','spore-print-color','population','habitat'][0m
-[0m                                                                                                                                                                                                                                                                                                                                                                    ^[0m
-[0;31mSyntaxError[0m[0;31m:[0m EOF while scanning triple-quoted string literal
+[0;36m  File [0;32m"<ipython-input-12-141382bd93ed>"[0;36m, line [0;32m3[0m
+[0;31m    if alphabet[i][0m
+[0m                  ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
 
-SyntaxError: EOF while scanning triple-quoted string literal (<ipython-input-1-03b786130c1c>, line 1)
+SyntaxError: invalid syntax (<ipython-input-12-141382bd93ed>, line 3)
 
