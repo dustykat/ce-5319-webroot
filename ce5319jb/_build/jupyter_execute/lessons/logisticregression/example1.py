@@ -214,6 +214,7 @@ y = numpy.array(result)
 # instantiate the model (using the default parameters)
 logreg = LogisticRegression(solver='lbfgs',max_iter=10000)
 # fit the model with data  -TRAIN the model
+#logreg.fit(X,y)
 logreg.fit(X.reshape(-1, 1),y)
 
 

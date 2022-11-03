@@ -273,6 +273,11 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../validation/validation.html">
+   Validation
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -641,6 +646,7 @@ The participants had varying amounts of experience measured in months as shown i
 <span class="c1"># instantiate the model (using the default parameters)</span>
 <span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 <span class="c1"># fit the model with data  -TRAIN the model</span>
+<span class="c1">#logreg.fit(X,y)</span>
 <span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
