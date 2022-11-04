@@ -1,0 +1,347 @@
+ '''
+     This is a direct python port of Mark G. Johnson's C implementation of the Hooke and Jeeves algorithm
+     
+     Sean R. Johnson, July 7, 2013
+     
+     immediately below is the original documentation
+     in the body, comments marked with ## are from the original,
+     other comments are my own
+ '''
+ '''
+ 11#/* Nonlinear Optimization using the algorithm of Hooke and Jeeves  */
+ 12#/*	12 February 1994	author: Mark G. Johnson 	   */
+ 13
+ 14
+ 15#/* Find a point X where the nonlinear function f(X) has a local    */
+ 16#/* minimum.  X is an n-vector and f(X) is a scalar.  In mathe-	   */
+ 17#/* matical notation  f: R^n -> R^1.  The objective function f()    */
+ 18#/* is not required to be continuous.  Nor does f() need to be	   */
+ 19#/* differentiable.  The program does not use or require 	   */
+ 20#/* derivatives of f().						   */
+ 21
+ 22#/* The software user supplies three things: a subroutine that	   */
+ 23#/* computes f(X), an initial "starting guess" of the minimum point */
+ 24#/* X, and values for the algorithm convergence parameters.  Then   */
+ 25#/* the program searches for a local minimum, beginning from the    */
+ 26#/* starting guess, using the Direct Search algorithm of Hooke and  */
+ 27#/* Jeeves.							   */
+ 28
+ 29#/* This C program is adapted from the Algol pseudocode found in    */
+ 30#/* "Algorithm 178: Direct Search" by Arthur F. Kaupe Jr., Commun-  */
+ 31#/* ications of the ACM, Vol 6. p.313 (June 1963).  It includes the */
+ 32#/* improvements suggested by Bell and Pike (CACM v.9, p. 684, Sept */
+ 33#/* 1966) and those of Tomlin and Smith, "Remark on Algorithm 178"  */
+ 34#/* (CACM v.12).  The original paper, which I don't recommend as    */
+ 35#/* highly as the one by A. Kaupe, is:  R. Hooke and T. A. Jeeves,  */
+ 36#/* "Direct Search Solution of Numerical and Statistical Problems", */
+ 37#/* Journal of the ACM, Vol. 8, April 1961, pp. 212-229. 	   */
+ 38
+ 39#/* Calling sequence:						   */
+ 40#/*  int hooke(nvars, startpt, endpt, rho, epsilon, itermax)	   */
+ 41#/*								   */
+ 42#/*     nvars	   {an integer}  This is the number of dimensions  */
+ 43#/*		   in the domain of f().  It is the number of	   */
+ 44#/*		   coordinates of the starting point (and the	   */
+ 45#/*		   minimum point.)				   */
+ 46#/*     startpt	   {an array of doubles}  This is the user-	   */
+ 47#/*		   supplied guess at the minimum.		   */
+ 48#/*     endpt	   {an array of doubles}  This is the location of  */
+ 49#/*		   the local minimum, calculated by the program    */
+ 50#/*     rho	   {a double}  This is a user-supplied convergence */
+ 51#/*		   parameter (more detail below), which should be  */
+ 52#/*		   set to a value between 0.0 and 1.0.	Larger	   */
+ 53#/*		   values of rho give greater probability of	   */
+ 54#/*		   convergence on highly nonlinear functions, at a */
+ 55#/*		   cost of more function evaluations.  Smaller	   */
+ 56#/*		   values of rho reduces the number of evaluations */
+ 57#/*		   (and the program running time), but increases   */
+ 58#/*		   the risk of nonconvergence.	See below.	   */
+ 59#/*     epsilon	   {a double}  This is the criterion for halting   */
+ 60#/*		   the search for a minimum.  When the algorithm   */
+ 61#/*		   begins to make less and less progress on each   */
+ 62#/*		   iteration, it checks the halting criterion: if  */
+ 63#/*		   the stepsize is below epsilon, terminate the    */
+ 64#/*		   iteration and return the current best estimate  */
+ 65#/*		   of the minimum.  Larger values of epsilon (such */
+ 66#/*		   as 1.0e-4) give quicker running time, but a	   */
+ 67#/*		   less accurate estimate of the minimum.  Smaller */
+ 68#/*		   values of epsilon (such as 1.0e-7) give longer  */
+ 69#/*		   running time, but a more accurate estimate of   */
+ 70#/*		   the minimum. 				   */
+ 71#/*     itermax	   {an integer}  A second, rarely used, halting    */
+ 72#/*		   criterion.  If the algorithm uses >= itermax    */
+ 73#/*		   iterations, halt.				   */
+ 74
+ 75
+ 76#/* The user-supplied objective function f(x,n) should return a C   */
+ 77#/* "double".  Its  arguments are  x -- an array of doubles, and    */
+ 78#/* n -- an integer.  x is the point at which f(x) should be	   */
+ 79#/* evaluated, and n is the number of coordinates of x.	That is,   */
+ 80#/* n is the number of coefficients being fitted.		   */
+ 81
+ 82#/* rho, the algorithm convergence control			   */
+ 83#/*	The algorithm works by taking "steps" from one estimate of */
+ 84#/*    a minimum, to another (hopefully better) estimate.  Taking   */
+ 85#/*    big steps gets to the minimum more quickly, at the risk of   */
+ 86#/*    "stepping right over" an excellent point.  The stepsize is   */
+ 87#/*    controlled by a user supplied parameter called rho.  At each */
+ 88#/*    iteration, the stepsize is multiplied by rho  (0 < rho < 1), */
+ 89#/*    so the stepsize is successively reduced.			   */
+ 90#/*	Small values of rho correspond to big stepsize changes,    */
+ 91#/*    which make the algorithm run more quickly.  However, there   */
+ 92#/*    is a chance (especially with highly nonlinear functions)	   */
+ 93#/*    that these big changes will accidentally overlook a	   */
+ 94#/*    promising search vector, leading to nonconvergence.	   */
+ 95#/*	Large values of rho correspond to small stepsize changes,  */
+ 96#/*    which force the algorithm to carefully examine nearby points */
+ 97#/*    instead of optimistically forging ahead.	This improves the  */
+ 98#/*    probability of convergence.				   */
+ 99#/*	The stepsize is reduced until it is equal to (or smaller   */
+100#/*    than) epsilon.  So the number of iterations performed by	   */
+101#/*    Hooke-Jeeves is determined by rho and epsilon:		   */
+102#/*	    rho**(number_of_iterations) = epsilon		   */
+103#/*	In general it is a good idea to set rho to an aggressively */
+104#/*    small value like 0.5 (hoping for fast convergence).  Then,   */
+105#/*    if the user suspects that the reported minimum is incorrect  */
+106#/*    (or perhaps not accurate enough), the program can be run	   */
+107#/*    again with a larger value of rho such as 0.85, using the	   */
+108#/*    result of the first minimization as the starting guess to    */
+109#/*    begin the second minimization.				   */
+110
+111#/* Normal use: (1) Code your function f() in the C language	   */
+112#/*	       (2) Install your starting guess {or read it in}	   */
+113#/*	       (3) Run the program				   */
+114#/*	       (4) {for the skeptical}: Use the computed minimum   */
+115#/*		      as the starting point for another run	   */
+116
+117#/* Data Fitting:						   */
+118#/*	Code your function f() to be the sum of the squares of the */
+119#/*	errors (differences) between the computed values and the   */
+120#/*	measured values.  Then minimize f() using Hooke-Jeeves.    */
+121#/*	EXAMPLE: you have 20 datapoints (ti, yi) and you want to   */
+122#/*	find A,B,C such that  (A*t*t) + (B*exp(t)) + (C*tan(t))    */
+123#/*	fits the data as closely as possible.  Then f() is just    */
+124#/*	f(x) = SUM (measured_y[i] - ((A*t[i]*t[i]) + (B*exp(t[i])) */
+125#/*				  + (C*tan(t[i]))))^2		   */
+126#/*	where x[] is a 3-vector consisting of {A, B, C}.	   */
+127
+128#/*								   */
+129#/*  The author of this software is M.G. Johnson.		   */
+130#/*  Permission to use, copy, modify, and distribute this software  */
+131#/*  for any purpose without fee is hereby granted, provided that   */
+132#/*  this entire notice is included in all copies of any software   */
+133#/*  which is or includes a copy or modification of this software   */
+134#/*  and in all copies of the supporting documentation for such	   */
+135#/*  software.  THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT    */
+136#/*  ANY EXPRESS OR IMPLIED WARRANTY.  IN PARTICULAR, NEITHER THE   */
+137#/*  AUTHOR NOR AT&T MAKE ANY REPRESENTATION OR WARRANTY OF ANY	   */
+138#/*  KIND CONCERNING THE MERCHANTABILITY OF THIS SOFTWARE OR ITS    */
+139#/*  FITNESS FOR ANY PARTICULAR PURPOSE. 			   */
+140#/*								   */
+141
+142'''
+143import sys
+144
+145def rosenbrock(x):
+146    '''
+147        ## Rosenbrocks classic parabolic valley ("banana") function
+148    '''
+149    a = x[0]
+150    b = x[1]
+151    return ((1.0 - a)**2) + (100.0 * (b - (a**2))**2)
+152
+153def _hooke_best_nearby(f, delta, point, prevbest, bounds=None, args=[]):
+154    '''
+155        ## given a point, look for a better one nearby
+156        one coord at a time
+157        
+158        f is a function that takes a list of floats (of the same length as point) as an input
+159        args is a dict of any additional arguments to pass to f
+160        delta, and point are same-length lists of floats
+161        prevbest is a float
+162        
+163        point and delta are both modified by the function
+164    '''
+165    z = [x for x in point]
+166    minf = prevbest
+167    ftmp = 0.0
+168    
+169    fev = 0
+170    
+171    for i in range(len(point)):
+172        #see if moving point in the positive delta direction decreases the 
+173        z[i] = _value_in_bounds(point[i] + delta[i], bounds[i][0], bounds[i][1])
+174        
+175        ftmp = f(z, *args)
+176        fev += 1
+177        if ftmp < minf:
+178            minf = ftmp
+179        else:
+180            #if not, try moving it in the other direction
+181            delta[i] = -delta[i]
+182            z[i] = _value_in_bounds(point[i] + delta[i], bounds[i][0], bounds[i][1])
+183            
+184            ftmp = f(z, *args)
+185            fev += 1
+186            if ftmp < minf:
+187                minf = ftmp
+188            else:
+#if moving the point in both delta directions result in no improvement, then just keep the point where it is
+190                z[i] = point[i]
+191
+192    for i in range(len(z)):
+193        point[i] = z[i]
+194    return (minf, fev)
+195                
+196def _point_in_bounds(point, bounds):
+197    '''
+198        shifts the point so it is within the given bounds
+199    '''
+200    for i in range(len(point)):
+201        if point[i] < bounds[i][0]:
+202            point[i] = bounds[i][0]
+203        elif point[i] > bounds[i][1]:
+204            point[i] = bounds[i][1]
+205def _is_point_in_bounds(point, bounds):
+206    '''
+207        true if the point is in the bounds, else false
+208    '''
+209    out = True
+210    for i in range(len(point)):
+211        if point[i] < bounds[i][0]:
+212            out = False
+213        elif point[i] > bounds[i][1]:
+214            out = False
+215    return out
+216
+217def _value_in_bounds(val, low, high):
+218    if val < low:
+219        return low
+220    elif val > high:
+221        return hight
+222    else:
+223        return val
+224            
+def hooke(f, startpt, bounds=None, rho=0.5, epsilon=1E-6, itermax=5000, args=[]):
+'''
+In this version of the Hooke and Jeeves algorithm, we coerce the function into staying within the given bounds.
+basically, any time the function tries to pick a point outside the bounds we shift the point to the boundary
+on whatever dimension it is out of bounds in. Implementing bounds this way may be questionable from a theory standpoint,
+but that's how COPASI does it, that's how I'll do it too.
+'''
+233    
+234    result = dict()
+235    result['success'] = True
+236    result['message'] = 'success'
+237    
+238    delta = [0.0] * len(startpt)
+239    endpt = [0.0] * len(startpt)
+240    if bounds is None:
+241        # if bounds is none, make it none for all (it will be converted to below)
+242        bounds = [[None,None] for x in startpt]
+243    else:
+244        bounds = [[x[0],x[1]] for x in bounds] #make it so it wont update the original
+245    startpt = [x for x in startpt] #make it so it wont update the original
+246    
+247    fmin = None
+248    nfev = 0
+249    iters = 0
+250    
+251    for bound in bounds:
+252        if bound[0] is None:
+253            bound[0] = float('-inf')
+254        else:
+255            bound[0] = float(bound[0])
+256        if bound[1] is None:
+257            bound[1] = float('inf')
+258        else:
+259            bound[1] = float(bound[1])
+260    try:
+261        # shift 
+262        _point_in_bounds(startpt, bounds) #shift startpt so it is within the bounds
+263        
+264        xbefore = [x for x in startpt]
+265        newx = [x for x in startpt]
+266        for i in range(len(startpt)):
+267            delta[i] = abs(startpt[i] * rho)
+268            if (delta[i] == 0.0):
+269                # we always want a non-zero delta because otherwise we'd just be checking the same point over and over
+270                # and wouldn't find a minimum
+271                delta[i] = rho
+272
+273        steplength = rho
+274
+275        fbefore = f(newx, *args)
+276        nfev += 1
+277        
+278        newf = fbefore
+279        fmin = newf
+280        while ((iters < itermax) and (steplength > epsilon)):
+281            iters += 1
+282            #print "after %5d , f(x) = %.4le at" % (funevals, fbefore)
+283            
+#        for j in range(len(startpt)):
+#            print "   x[%2d] = %4le" % (j, xbefore[j])
+#            pass
+287            
+###/* find best new point, one coord at a time */
+289            newx = [x for x in xbefore]
+290            (newf, evals) = _hooke_best_nearby(f, delta, newx, fbefore, bounds, args)
+291            
+292            nfev += evals
+###/* if we made some improvements, pursue that direction */
+294            keep = 1
+295            while ((newf < fbefore) and (keep == 1)):
+296                fmin = newf
+297                for i in range(len(startpt)):
+###/* firstly, arrange the sign of delta[] */
+299                    if newx[i] <= xbefore[i]:
+300                        delta[i] = -abs(delta[i])
+301                    else:
+302                        delta[i] = abs(delta[i])
+## #/* now, move further in this direction */
+304                    tmp = xbefore[i]
+305                    xbefore[i] = newx[i]
+306                    newx[i] = _value_in_bounds(newx[i] + newx[i] - tmp, bounds[i][0], bounds[i][1])
+307                fbefore = newf
+308                (newf, evals) = _hooke_best_nearby(f, delta, newx, fbefore, bounds, args)
+309                nfev += evals
+###/* if the further (optimistic) move was bad.... */
+311                if (newf >= fbefore):
+312                    break
+313                
+## #/* make sure that the differences between the new */
+## #/* and the old points are due to actual */
+## #/* displacements; beware of roundoff errors that */
+## #/* might cause newf < fbefore */
+318                keep = 0
+319                for i in range(len(startpt)):
+320                    keep = 1
+321                    if ( abs(newx[i] - xbefore[i]) > (0.5 * abs(delta[i])) ):
+322                        break
+323                    else:
+324                        keep = 0
+325            if ((steplength >= epsilon) and (newf >= fbefore)):
+326                steplength = steplength * rho
+327                delta = [x * rho for x in delta]
+328        for x in range(len(xbefore)):
+329            endpt[x] = xbefore[x]
+330    except Exception as e:
+331        exc_type, exc_obj, exc_tb = sys.exc_info()
+332        result['success'] = False
+333        result['message'] = str(e) + ". line number: " + str(exc_tb.tb_lineno)
+334    finally:
+335        result['nit'] = iters
+336        result['fevals'] = nfev
+337        result['fun'] = fmin
+338        result['x'] = endpt
+339    
+340    return result
+341    
+342def main():
+343    start = [-1.2,1.0]
+344    res = hooke(rosenbrock, start, bounds=((0,3),(0,10)), rho=0.5)
+345    #res = hooke(rosenbrock, start, rho=0.5)
+346    print res
+347if __name__ == "__main__":
+348    main()

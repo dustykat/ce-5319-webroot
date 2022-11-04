@@ -15,6 +15,11 @@ chapters:
 - file: chapters/datapreparation/datapreparation # data prep
 
 - file: chapters/optimization/optimization # optimization
+  sections:
+  - file: chapters/optimization/gridsearch
+  - file: chapters/optimization/nelderandmead
+  - file: chapters/optimization/hookeandjeeves
+  - file: chapters/optimization/powellsdirectionset
 
 - file: chapters/linearregression/linearregression # linear regression
 
