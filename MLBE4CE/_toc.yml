@@ -8,6 +8,8 @@ chapters:
   sections:
   - file: chapters/introduction/whatisml
   - file: chapters/introduction/learningtypes
+  - file: chapters/introduction/mlworkflow
+  - file: chapters/introduction/mlanatomy
   
   
 - file: chapters/exploratorydata/exploratorydata # EDA
