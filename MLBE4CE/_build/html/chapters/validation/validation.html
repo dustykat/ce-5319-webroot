@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Optimization Methods &#8212; Machine Learning for Civil Engineers</title>
+    <title>Validation &#8212; Machine Learning for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,6 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Grid Search" href="gridsearch.html" />
-    <link rel="prev" title="Data Preparation" href="../datapreparation/datapreparation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,7 +91,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../introduction/introduction.html">
    Introduction
@@ -126,33 +124,33 @@
    Data Preparation
   </a>
  </li>
- <li class="toctree-l1 current active has-children">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../optimization/optimization.html">
    Optimization Methods
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="gridsearch.html">
+    <a class="reference internal" href="../optimization/gridsearch.html">
      Grid Search
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="nelderandmead.html">
+    <a class="reference internal" href="../optimization/nelderandmead.html">
      Nelder and Mead Simplex Method
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="hookeandjeeves.html">
+    <a class="reference internal" href="../optimization/hookeandjeeves.html">
      Hooke and Jeeves Pattern Search
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="powellsdirectionset.html">
+    <a class="reference internal" href="../optimization/powellsdirectionset.html">
      Powell’s Direction Set Method
     </a>
    </li>
@@ -261,7 +259,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/optimization/optimization.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/validation/validation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -286,7 +284,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/chapters/optimization/optimization.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/chapters/validation/validation.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -303,6 +301,26 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#k-fold-cross-validation">
+   K-Fold Cross Validation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configuration-of-k">
+     Configuration of k
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -311,9 +329,74 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="optimization-methods">
-<h1>Optimization Methods<a class="headerlink" href="#optimization-methods" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="tex2jax_ignore mathjax_ignore section" id="validation">
+<h1>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
+<p>Once our model is built and trained, validation is the next phase (we called it testing in the examples).</p>
+<div class="section" id="k-fold-cross-validation">
+<h2>K-Fold Cross Validation<a class="headerlink" href="#k-fold-cross-validation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Cross-validation is a statistical method used to estimate the skill of machine learning models. It is commonly used in applied machine learning to compare and select a model for a given predictive modeling problem because it is easy to understand, easy to implement, and results in skill estimates that generally have a lower bias than other methods.</p>
+</div></blockquote>
+<p>Cross-validation is a resampling procedure used to evaluate machine learning models on a limited data sample.</p>
+<p>The procedure has a single parameter called <strong>k</strong> that refers to the number of groups that a given data sample is to be split into. As such, the procedure is often called <strong>k-fold cross-validation</strong>. When a specific value for <strong>k</strong> is chosen, it may be used in place of <strong>k</strong> in the reference to the model, such as <strong>k=10</strong> becoming <strong>10-fold cross-validation</strong>.</p>
+<p>Cross-validation is primarily used in applied machine learning to estimate the skill of a machine learning model on unseen data. That is, to use a limited sample in order to estimate how the model is expected to perform in general when used to make predictions on data that were not used during the training of the model.</p>
+<p>It is a popular method because it is simple to understand and because it generally results in a less biased or less optimistic estimate of the model skill than other methods, such as a simple train/test split.</p>
+<p>The general procedure is as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Shuffle the dataset randomly.</p></li>
+<li><p>Split the dataset into k groups</p></li>
+<li><p>For each unique group:
+- Take the group as a hold out or test data set
+- Take the remaining groups as a training data set
+- Fit a model on the training set and evaluate it on the test set
+- Retain the evaluation score and discard the model</p></li>
+<li><p>Summarize the skill of the model using the sample of model evaluation scores</p></li>
+</ul>
+</div></blockquote>
+<p>Importantly, each observation in the data sample is assigned to an individual group and stays in that group for the duration of the procedure. This means that each sample is given the opportunity to be used in the <strong>hold out</strong> set <strong>1</strong> time and used to train the model <strong>k-1</strong> times.</p>
+<p>Each of these hold outs is called a fold, hence the name of the method</p>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“This approach involves randomly dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds.”</p>
+<p>pp. 181 <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IntoductiontoStatisticalLearning.pdf">An Introduction to Statistical Learning: with Applications in R (2021)</a></p>
+</div>
+<p>It is also important that any preparation of the data prior to fitting the model occur on the CV-assigned training dataset within the loop rather than on the broader data set. This requirement also applies to any tuning of hyperparameters. A failure to perform these operations within the loop may result in data leakage and an optimistic estimate of the model skill.</p>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“Despite the best efforts of statistical methodologists, users frequently invalidate their results by inadvertently peeking at the test data.”</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/aima2010.pdf">Artificial Intelligence a Modern Approach (2020)</a></p>
+</div>
+<p>The results of a <strong>k-fold</strong> cross-validation run are often summarized with the mean of the model skill scores. It is also good practice to include a measure of the variance of the skill scores, such as the standard deviation or standard error.</p>
+<div class="section" id="configuration-of-k">
+<h3>Configuration of k<a class="headerlink" href="#configuration-of-k" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>k</strong> value must be chosen carefully for your data sample.</p>
+<p>A poorly chosen value for <strong>k</strong> may result in a misrepresentative idea of the skill of the model, such as a score with a high variance (that may change a lot based on the data used to fit the model), or a high bias, (such as an overestimate of the skill of the model).</p>
+<p>Three common tactics for choosing a value for k are as follows:</p>
+<ul class="simple">
+<li><p><strong>Representative</strong>: The value for k is chosen such that each train/test group of data samples is large enough to be statistically representative of the broader dataset.</p></li>
+<li><p><strong>k=5; or 10</strong>: The value for k is fixed to 5 or 10, a value that has been found through experimentation to generally result in a model skill estimate with low bias a modest variance.</p></li>
+<li><p><strong>k=n</strong>: The value for k is fixed to n, where n is the size of the dataset to give each test sample an opportunity to be used in the hold out dataset. This approach is called leave-one-out cross-validation.</p></li>
+</ul>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“The choice of k is usually 5 or 10, but there is no formal rule. As k gets larger, the difference in size between the training set and the resampling subsets gets smaller. As this difference decreases, the bias of the technique becomes smaller”</p>
+<p><a class="reference external" href="http://54.243.252.9ce-5319-webroot/3-Readings/applied-predictive-modeling-max-kuhn-kjell-johnson_1518.pdf">Applied Predictive Modeling (2018)</a></p>
+</div>
+<p>Values of k=5 or 10 are very common in the field of applied machine learning, and are recommended if you are struggling to choose a value for your dataset.</p>
+<div class="admonition-quote admonition">
+<p class="admonition-title">Quote</p>
+<p>“To summarize, there is a bias-variance trade-off associated with the choice of k in k-fold cross-validation. Typically, given these considerations, one performs k-fold cross-validation using k = 5 or k = 10, as these values have been shown empirically to yield test error rate estimates that suffer neither from excessively high bias nor from very high variance.”</p>
+<p>— Page 184, <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IntoductiontoStatisticalLearning.pdf">An Introduction to Statistical Learning, 2013</a></p>
+</div>
+<p>If a value for k is chosen that does not evenly split the data sample, then one group will contain a remainder of the examples. It is preferable to split the data sample into k groups with the same number of samples, such that the sample of model skill scores are all equivalent.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here is an example to illustrate the “folding” steps</p>
+<p><img alt="" src="../../_images/k-fold-example.png" /></p>
+</div>
+<p>For more on how to configure <strong>k-fold</strong> cross-validation, see the tutorial:<a class="reference external" href="https://machinelearningmastery.com/how-to-configure-k-fold-cross-validation/">how-to-configure-k-fold-cross-validation</a></p>
+</div>
 </div>
 </div>
 
@@ -330,7 +413,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters/optimization"
+            path: "./chapters/validation"
         },
         predefinedOutput: true
     }
@@ -346,24 +429,6 @@
 
 <div class='prev-next-bottom'>
     
-    <div id="prev">
-        <a class="left-prev" href="../datapreparation/datapreparation.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Data Preparation</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="gridsearch.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Grid Search</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
 </div>
         
