@@ -1,0 +1,1210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Processing Texas Database &#8212; Machine Learning for Civil Engineers</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="K Nearest Neigbor Classification" href="../lesson14/lesson14.html" />
+    <link rel="prev" title="Extract from NBI Database a specific state record" href="BridgeDatabase-BuildTexas.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/borgcube.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   Machine Learning for Civil Engineers
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson1/lesson1.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson2/lesson2.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson3/lesson3.html">
+   Prediction Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson4/lesson4.html">
+   Classification Engines
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson4.1/filetransfer.html">
+   Transferring Data Files
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/1filesystems.html">
+     File Systems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/2readwritecore.html">
+     Local Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson4.1/3readwriteweb.html">
+     Files from the Web (
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       requests.get
+      </span>
+      <span class="pre">
+       ...
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson5/lesson5.html">
+   Supervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson6/lesson6.html">
+   Unsupervised Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson7/lesson7.html">
+   Reinforcement Learning
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../lesson8/lesson8.html">
+   Exploratory Data Analysis
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/datatypes.html">
+     Common Data Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/downloading.html">
+     Downloading Remote Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/exploratorydataanalysis.html">
+     Exploratory Analysis using Data Summaries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../lesson8/exploratorydataanalysisvisual.html">
+     Exploratory Analysis using Visual Summaries
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson9/lesson9.html">
+   Probability Distributions
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../optimization/optimization.html">
+   Optimization Modeling
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/1topic.html">
+     Scheduling Example
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/2topic.html">
+     Grid Search Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../optimization/3topic.html">
+     Gradient Descent Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson11/lesson11.html">
+   Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson12/lesson12.html">
+   Non-Linear Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="logisticregression.html">
+   Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson14/lesson14.html">
+   K Nearest Neigbor Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lesson15/lesson15.html">
+   Decision Trees and Random Forests
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
+   Neural Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../validation/validation.html">
+   Validation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/lessons/logisticregression/TexasNBI_database.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flessons/logisticregression/TexasNBI_database.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/lessons/logisticregression/TexasNBI_database.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="processing-texas-database">
+<h1>Processing Texas Database<a class="headerlink" href="#processing-texas-database" title="Permalink to this headline">¶</a></h1>
+<p>Following the process described in <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/bridgeDatabase9797584.pdf">Prediction of Bridge Component Ratings Using Ordinal Logistic Regression Model</a> but for Texas data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Playing with Texas Data</span>
+<span class="n">local_file_name</span><span class="o">=</span><span class="s1">&#39;2021TexasNBIData.csv&#39;</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># Read the NBI Database</span>
+<span class="n">texasdb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">local_file_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/jupyterhub/lib/python3.8/site-packages/IPython/core/interactiveshell.py:3146: DtypeWarning: Columns (2,5,17,31,36,37,38,39,41,44,61,63,66,67,68,69,70,71,73,75,76,77,79,86,87,88,96,102,106,107,108,109,113,114,120,121) have mixed types.Specify dtype option on import or set low_memory=False.
+  has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verify the Structure</span>
+<span class="n">texasdb</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>STATE_CODE_001</th>
+      <th>STRUCTURE_NUMBER_008</th>
+      <th>RECORD_TYPE_005A</th>
+      <th>ROUTE_PREFIX_005B</th>
+      <th>SERVICE_LEVEL_005C</th>
+      <th>ROUTE_NUMBER_005D</th>
+      <th>DIRECTION_005E</th>
+      <th>HIGHWAY_DISTRICT_002</th>
+      <th>COUNTY_CODE_003</th>
+      <th>PLACE_CODE_004</th>
+      <th>...</th>
+      <th>BRIDGE_LEN_IND_112</th>
+      <th>SCOUR_CRITICAL_113</th>
+      <th>FUTURE_ADT_114</th>
+      <th>YEAR_OF_FUTURE_ADT_115</th>
+      <th>MIN_NAV_CLR_MT_116</th>
+      <th>FED_AGENCY</th>
+      <th>SUBMITTED_BY</th>
+      <th>BRIDGE_CONDITION</th>
+      <th>LOWEST_RATING</th>
+      <th>DECK_AREA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>48</td>
+      <td>0000000L2015318</td>
+      <td>1</td>
+      <td>6.0</td>
+      <td>4.0</td>
+      <td>00000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>375</td>
+      <td>0</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>7</td>
+      <td>200.0</td>
+      <td>2035.0</td>
+      <td>NaN</td>
+      <td>Y</td>
+      <td>68</td>
+      <td>G</td>
+      <td>7</td>
+      <td>180.42</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>48</td>
+      <td>000021521-00101</td>
+      <td>1</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>00000</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>71</td>
+      <td>0</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>8</td>
+      <td>1.0</td>
+      <td>2038.0</td>
+      <td>NaN</td>
+      <td>Y</td>
+      <td>63</td>
+      <td>G</td>
+      <td>7</td>
+      <td>150.72</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>48</td>
+      <td>000021521-00181</td>
+      <td>1</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>00000</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>71</td>
+      <td>0</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>8</td>
+      <td>1.0</td>
+      <td>2038.0</td>
+      <td>NaN</td>
+      <td>Y</td>
+      <td>63</td>
+      <td>G</td>
+      <td>7</td>
+      <td>74.40</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>48</td>
+      <td>000021521-TMP20</td>
+      <td>1</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>00000</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>71</td>
+      <td>0</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>8</td>
+      <td>150.0</td>
+      <td>2038.0</td>
+      <td>NaN</td>
+      <td>Y</td>
+      <td>63</td>
+      <td>G</td>
+      <td>8</td>
+      <td>91.91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>48</td>
+      <td>000021525-00012</td>
+      <td>1</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>00000</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>245</td>
+      <td>0</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>T</td>
+      <td>120.0</td>
+      <td>2040.0</td>
+      <td>NaN</td>
+      <td>Y</td>
+      <td>63</td>
+      <td>P</td>
+      <td>4</td>
+      <td>204.30</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 123 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rename The Index</span>
+<span class="c1">#texasdb = texasdb.rename_axis(&#39;Index&#39;)</span>
+<span class="c1">#texasdb.head()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span> <span class="o">=</span> <span class="n">texasdb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">texasdb</span><span class="p">[</span><span class="s1">&#39;STRUCTURE_TYPE_043B&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">19</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">texasdb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;STATE_CODE_001&#39;,
+ &#39;STRUCTURE_NUMBER_008&#39;,
+ &#39;RECORD_TYPE_005A&#39;,
+ &#39;ROUTE_PREFIX_005B&#39;,
+ &#39;SERVICE_LEVEL_005C&#39;,
+ &#39;ROUTE_NUMBER_005D&#39;,
+ &#39;DIRECTION_005E&#39;,
+ &#39;HIGHWAY_DISTRICT_002&#39;,
+ &#39;COUNTY_CODE_003&#39;,
+ &#39;PLACE_CODE_004&#39;,
+ &#39;FEATURES_DESC_006A&#39;,
+ &#39;CRITICAL_FACILITY_006B&#39;,
+ &#39;FACILITY_CARRIED_007&#39;,
+ &#39;LOCATION_009&#39;,
+ &#39;MIN_VERT_CLR_010&#39;,
+ &#39;KILOPOINT_011&#39;,
+ &#39;BASE_HWY_NETWORK_012&#39;,
+ &#39;LRS_INV_ROUTE_013A&#39;,
+ &#39;SUBROUTE_NO_013B&#39;,
+ &#39;LAT_016&#39;,
+ &#39;LONG_017&#39;,
+ &#39;DETOUR_KILOS_019&#39;,
+ &#39;TOLL_020&#39;,
+ &#39;MAINTENANCE_021&#39;,
+ &#39;OWNER_022&#39;,
+ &#39;FUNCTIONAL_CLASS_026&#39;,
+ &#39;YEAR_BUILT_027&#39;,
+ &#39;TRAFFIC_LANES_ON_028A&#39;,
+ &#39;TRAFFIC_LANES_UND_028B&#39;,
+ &#39;ADT_029&#39;,
+ &#39;YEAR_ADT_030&#39;,
+ &#39;DESIGN_LOAD_031&#39;,
+ &#39;APPR_WIDTH_MT_032&#39;,
+ &#39;MEDIAN_CODE_033&#39;,
+ &#39;DEGREES_SKEW_034&#39;,
+ &#39;STRUCTURE_FLARED_035&#39;,
+ &#39;RAILINGS_036A&#39;,
+ &#39;TRANSITIONS_036B&#39;,
+ &#39;APPR_RAIL_036C&#39;,
+ &#39;APPR_RAIL_END_036D&#39;,
+ &#39;HISTORY_037&#39;,
+ &#39;NAVIGATION_038&#39;,
+ &#39;NAV_VERT_CLR_MT_039&#39;,
+ &#39;NAV_HORR_CLR_MT_040&#39;,
+ &#39;OPEN_CLOSED_POSTED_041&#39;,
+ &#39;SERVICE_ON_042A&#39;,
+ &#39;SERVICE_UND_042B&#39;,
+ &#39;STRUCTURE_KIND_043A&#39;,
+ &#39;STRUCTURE_TYPE_043B&#39;,
+ &#39;APPR_KIND_044A&#39;,
+ &#39;APPR_TYPE_044B&#39;,
+ &#39;MAIN_UNIT_SPANS_045&#39;,
+ &#39;APPR_SPANS_046&#39;,
+ &#39;HORR_CLR_MT_047&#39;,
+ &#39;MAX_SPAN_LEN_MT_048&#39;,
+ &#39;STRUCTURE_LEN_MT_049&#39;,
+ &#39;LEFT_CURB_MT_050A&#39;,
+ &#39;RIGHT_CURB_MT_050B&#39;,
+ &#39;ROADWAY_WIDTH_MT_051&#39;,
+ &#39;DECK_WIDTH_MT_052&#39;,
+ &#39;VERT_CLR_OVER_MT_053&#39;,
+ &#39;VERT_CLR_UND_REF_054A&#39;,
+ &#39;VERT_CLR_UND_054B&#39;,
+ &#39;LAT_UND_REF_055A&#39;,
+ &#39;LAT_UND_MT_055B&#39;,
+ &#39;LEFT_LAT_UND_MT_056&#39;,
+ &#39;DECK_COND_058&#39;,
+ &#39;SUPERSTRUCTURE_COND_059&#39;,
+ &#39;SUBSTRUCTURE_COND_060&#39;,
+ &#39;CHANNEL_COND_061&#39;,
+ &#39;CULVERT_COND_062&#39;,
+ &#39;OPR_RATING_METH_063&#39;,
+ &#39;OPERATING_RATING_064&#39;,
+ &#39;INV_RATING_METH_065&#39;,
+ &#39;INVENTORY_RATING_066&#39;,
+ &#39;STRUCTURAL_EVAL_067&#39;,
+ &#39;DECK_GEOMETRY_EVAL_068&#39;,
+ &#39;UNDCLRENCE_EVAL_069&#39;,
+ &#39;POSTING_EVAL_070&#39;,
+ &#39;WATERWAY_EVAL_071&#39;,
+ &#39;APPR_ROAD_EVAL_072&#39;,
+ &#39;WORK_PROPOSED_075A&#39;,
+ &#39;WORK_DONE_BY_075B&#39;,
+ &#39;IMP_LEN_MT_076&#39;,
+ &#39;DATE_OF_INSPECT_090&#39;,
+ &#39;INSPECT_FREQ_MONTHS_091&#39;,
+ &#39;FRACTURE_092A&#39;,
+ &#39;UNDWATER_LOOK_SEE_092B&#39;,
+ &#39;SPEC_INSPECT_092C&#39;,
+ &#39;FRACTURE_LAST_DATE_093A&#39;,
+ &#39;UNDWATER_LAST_DATE_093B&#39;,
+ &#39;SPEC_LAST_DATE_093C&#39;,
+ &#39;BRIDGE_IMP_COST_094&#39;,
+ &#39;ROADWAY_IMP_COST_095&#39;,
+ &#39;TOTAL_IMP_COST_096&#39;,
+ &#39;YEAR_OF_IMP_097&#39;,
+ &#39;OTHER_STATE_CODE_098A&#39;,
+ &#39;OTHER_STATE_PCNT_098B&#39;,
+ &#39;OTHR_STATE_STRUC_NO_099&#39;,
+ &#39;STRAHNET_HIGHWAY_100&#39;,
+ &#39;PARALLEL_STRUCTURE_101&#39;,
+ &#39;TRAFFIC_DIRECTION_102&#39;,
+ &#39;TEMP_STRUCTURE_103&#39;,
+ &#39;HIGHWAY_SYSTEM_104&#39;,
+ &#39;FEDERAL_LANDS_105&#39;,
+ &#39;YEAR_RECONSTRUCTED_106&#39;,
+ &#39;DECK_STRUCTURE_TYPE_107&#39;,
+ &#39;SURFACE_TYPE_108A&#39;,
+ &#39;MEMBRANE_TYPE_108B&#39;,
+ &#39;DECK_PROTECTION_108C&#39;,
+ &#39;PERCENT_ADT_TRUCK_109&#39;,
+ &#39;NATIONAL_NETWORK_110&#39;,
+ &#39;PIER_PROTECTION_111&#39;,
+ &#39;BRIDGE_LEN_IND_112&#39;,
+ &#39;SCOUR_CRITICAL_113&#39;,
+ &#39;FUTURE_ADT_114&#39;,
+ &#39;YEAR_OF_FUTURE_ADT_115&#39;,
+ &#39;MIN_NAV_CLR_MT_116&#39;,
+ &#39;FED_AGENCY&#39;,
+ &#39;SUBMITTED_BY&#39;,
+ &#39;BRIDGE_CONDITION&#39;,
+ &#39;LOWEST_RATING&#39;,
+ &#39;DECK_AREA&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span> <span class="o">=</span> <span class="n">texasdb</span><span class="p">[[</span><span class="s1">&#39;CULVERT_COND_062&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">,</span><span class="s1">&#39;ADT_029&#39;</span><span class="p">,</span><span class="s1">&#39;DESIGN_LOAD_031&#39;</span><span class="p">,</span><span class="s1">&#39;OPERATING_RATING_064&#39;</span><span class="p">,</span><span class="s1">&#39;STRUCTURAL_EVAL_067&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CULVERT_COND_062</th>
+      <th>YEAR_BUILT_027</th>
+      <th>ADT_029</th>
+      <th>DESIGN_LOAD_031</th>
+      <th>OPERATING_RATING_064</th>
+      <th>STRUCTURAL_EVAL_067</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>2008</td>
+      <td>100.0</td>
+      <td>5</td>
+      <td>38.6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>N</td>
+      <td>2005</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>69.9</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>N</td>
+      <td>2005</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>69.9</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>N</td>
+      <td>2012</td>
+      <td>100.0</td>
+      <td>A</td>
+      <td>80.7</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>N</td>
+      <td>1950</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>29.0</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="mi">2022</span> <span class="o">-</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">]</span> <span class="c1"># age of culvert, surrogate for service life</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drat</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;OPERATING_RATING_064&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># operating rating (in tons), nan is 1</span>
+<span class="n">drat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">drat</span><span class="p">)</span> <span class="c1"># coerce to numeric</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">steval</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;STRUCTURAL_EVAL_067&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="c1"># structural eval, nan is 1 (not in original NBI coding tables)</span>
+<span class="n">steval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">steval</span><span class="p">)</span> <span class="c1"># coerce to numeric</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adt</span> <span class="o">=</span>  <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;ADT_029&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># </span>
+<span class="n">adt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">adt</span><span class="p">)</span> <span class="c1"># coerce to numeric</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;AGE&#39;</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;DRAT&#39;</span><span class="p">:</span> <span class="n">drat</span><span class="p">,</span> <span class="s2">&quot;ADT&quot;</span> <span class="p">:</span><span class="n">adt</span><span class="p">,</span> <span class="s2">&quot;STEVAL&quot;</span><span class="p">:</span><span class="n">steval</span><span class="p">}</span>
+<span class="c1">#frame = { &#39;AGE&#39;: age, &#39;DRAT&#39;: drat, &quot;STEVAL&quot;:steval}</span>
+<span class="c1">#Creating DataFrame by passing Dictionary</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>  <span class="c1"># our design matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now build our target</p>
+<p>Prepare the target variable, from the culvert condition. The series has NaN and we convert these to a goofy string</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre_target</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;CULVERT_COND_062&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="s1">&#39;10&#39;</span><span class="p">)</span> <span class="c1"># Nan to 11, &quot;N&quot; to 10 so all codes able to be numeric</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Type &quot;</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">pre_target</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type  &lt;class &#39;str&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>then convert from string to numeric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">pre_target</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Type &quot;</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">pre_target</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type  &lt;class &#39;numpy.int64&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Need a function to select the two conditions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">isok</span><span class="p">(</span><span class="n">value_int</span><span class="p">):</span> <span class="c1"># function to interpret condition rating and issue binary state 0 == fail 1 == OK</span>
+    <span class="n">cut</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="k">if</span> <span class="n">value_int</span> <span class="o">&gt;</span> <span class="n">cut</span><span class="p">:</span>
+        <span class="n">isok</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">value_int</span> <span class="o">&lt;=</span> <span class="n">cut</span><span class="p">:</span>
+        <span class="n">isok</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">isok</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">pre_target</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">isok</span><span class="p">)</span> <span class="c1"># our target vector</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now check that our design matrix and target vector have correct structure</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AGE</th>
+      <th>DRAT</th>
+      <th>ADT</th>
+      <th>STEVAL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>64864.000000</td>
+      <td>64864.000000</td>
+      <td>64864.000000</td>
+      <td>64864.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>42.494219</td>
+      <td>38.063393</td>
+      <td>13694.514846</td>
+      <td>5.471232</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>24.975545</td>
+      <td>18.533331</td>
+      <td>29829.816852</td>
+      <td>2.054243</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>20.000000</td>
+      <td>32.700000</td>
+      <td>500.000000</td>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>41.000000</td>
+      <td>44.400000</td>
+      <td>3440.000000</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>60.000000</td>
+      <td>54.400000</td>
+      <td>12820.000000</td>
+      <td>7.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>122.000000</td>
+      <td>99.900000</td>
+      <td>778093.000000</td>
+      <td>9.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    64864.000000
+mean         0.861695
+std          0.345222
+min          0.000000
+25%          1.000000
+50%          1.000000
+75%          1.000000
+max          1.000000
+Name: CULVERT_COND_062, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we can do some machine learning</span>
+<span class="c1"># split X and y into training and testing sets</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the class</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1"># instantiate the model (using the default parameters)</span>
+<span class="c1">#logreg = LogisticRegression()</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="c1"># fit the model with data</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="c1">#y.head()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.712584033432068
+[[-3.86564247e-02  3.92932201e-02  1.44732699e-06 -4.36968612e-01]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the metrics class</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">cnf_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># name  of classes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">tick_marks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="c1"># create heatmap</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cnf_matrix</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span> <span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion matrix&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual label&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/TexasNBI_database_25_0.png" src="../../_images/TexasNBI_database_25_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yrbld</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">yrbld</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy.int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#pre_target = txculv[&#39;CULVERT_COND_062&#39;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Structurally Deficient (SD): This term was previously defined in <a class="reference external" href="https://www.fhwa.dot.gov/bridge/0650dsup.cfm">https://www.fhwa.dot.gov/bridge/0650dsup.cfm</a> as having a condition rating of 4 or less for Item 58 (Deck), Item 59 (Superstructure), Item 60 (Substructure), or Item 62 (Culvert), OR having an appraisal rating of 2 or less for Item 67 (Structural Condition) or Item 71 (Waterway Adequacy) Beginning with the 2018 data archive, this term will be defined in accordance with the Pavement and Bridge Condition Performance Measures final rule, published in January of 2017, as a classification given to a bridge which has any component [Item 58, 59, 60, or 62] in Poor or worse condition [code of 4 or less].</p>
+<p>This capacity rating, referred to as the operating rating, will result
+in the absolute maximum permissible load level to which the structure
+may be subjected for the vehicle type used in the rating. Code the
+operating rating as a 3-digit number to represent the total mass in
+metric tons of the entire vehicle measured to the nearest tenth of a
+metric ton (with an assumed decimal point).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#type(pre_target[0])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Prepare the target variable, the culvert condition as above (not processing just yet).
+The series has NaN and we convert these to a goofy string
+then convert from string to numeric.</p>
+<p>Now make a proper target</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#target</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./lessons/logisticregression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="BridgeDatabase-BuildTexas.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Extract from NBI Database a specific state record</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../lesson14/lesson14.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">K Nearest Neigbor Classification</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Theodore G. Cleveland<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

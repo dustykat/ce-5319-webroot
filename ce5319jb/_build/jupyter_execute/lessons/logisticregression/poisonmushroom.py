@@ -433,6 +433,14 @@ plt.ylabel('Predicted label')
 plt.xlabel('Actual label');
 
 
+# In[13]:
+
+
+'''
+/* Nonlinear Optimization using the algorithm of Hooke and Jeeves  */
+'''
+
+
 # In[ ]:
 
 

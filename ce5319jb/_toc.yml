@@ -46,6 +46,8 @@ chapters:
   - file: lessons/logisticregression/example3
   - file: lessons/logisticregression/poissonregression
   - file: lessons/logisticregression/poisonmushroom
+  - file: lessons/logisticregression/BridgeDatabase-BuildTexas
+  - file: lessons/logisticregression/TexasNBI_database.ipynb
   
 - file: lessons/lesson14/lesson14 # KNN Classification
 
