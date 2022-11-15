@@ -51,7 +51,6 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="K Nearest Neigbor Classification" href="../lesson14/lesson14.html" />
     <link rel="prev" title="Extract from NBI Database a specific state record" href="BridgeDatabase-BuildTexas.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -244,16 +243,6 @@
    Logistic Regression
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lesson14/lesson14.html">
-   K Nearest Neigbor Classification
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lesson15/lesson15.html">
-   Decision Trees and Random Forests
-  </a>
- </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
    Neural Networks
@@ -388,7 +377,9 @@
 <p>Following the process described in <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/bridgeDatabase9797584.pdf">Prediction of Bridge Component Ratings Using Ordinal Logistic Regression Model</a> but for Texas data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Playing with Texas Data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="c1"># Playing with Texas Data</span>
 <span class="n">local_file_name</span><span class="o">=</span><span class="s1">&#39;2021TexasNBIData.csv&#39;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="c1"># Read the NBI Database</span>
@@ -396,17 +387,11 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/jupyterhub/lib/python3.8/site-packages/IPython/core/interactiveshell.py:3146: DtypeWarning: Columns (2,5,17,31,36,37,38,39,41,44,61,63,66,67,68,69,70,71,73,75,76,77,79,86,87,88,96,102,106,107,108,109,113,114,120,121) have mixed types.Specify dtype option on import or set low_memory=False.
-  has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verify the Structure</span>
-<span class="n">texasdb</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">texasdb</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -430,169 +415,480 @@
     <tr style="text-align: right;">
       <th></th>
       <th>STATE_CODE_001</th>
-      <th>STRUCTURE_NUMBER_008</th>
-      <th>RECORD_TYPE_005A</th>
       <th>ROUTE_PREFIX_005B</th>
       <th>SERVICE_LEVEL_005C</th>
-      <th>ROUTE_NUMBER_005D</th>
       <th>DIRECTION_005E</th>
       <th>HIGHWAY_DISTRICT_002</th>
       <th>COUNTY_CODE_003</th>
       <th>PLACE_CODE_004</th>
+      <th>CRITICAL_FACILITY_006B</th>
+      <th>MIN_VERT_CLR_010</th>
+      <th>KILOPOINT_011</th>
       <th>...</th>
-      <th>BRIDGE_LEN_IND_112</th>
-      <th>SCOUR_CRITICAL_113</th>
+      <th>FEDERAL_LANDS_105</th>
+      <th>YEAR_RECONSTRUCTED_106</th>
+      <th>PERCENT_ADT_TRUCK_109</th>
+      <th>NATIONAL_NETWORK_110</th>
+      <th>PIER_PROTECTION_111</th>
       <th>FUTURE_ADT_114</th>
       <th>YEAR_OF_FUTURE_ADT_115</th>
       <th>MIN_NAV_CLR_MT_116</th>
-      <th>FED_AGENCY</th>
       <th>SUBMITTED_BY</th>
-      <th>BRIDGE_CONDITION</th>
-      <th>LOWEST_RATING</th>
       <th>DECK_AREA</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>48</td>
-      <td>0000000L2015318</td>
-      <td>1</td>
-      <td>6.0</td>
-      <td>4.0</td>
-      <td>00000</td>
+      <th>count</th>
+      <td>64864.0</td>
+      <td>64861.000000</td>
+      <td>64863.000000</td>
+      <td>64802.000000</td>
+      <td>55179.000000</td>
+      <td>64864.000000</td>
+      <td>64864.000000</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>375</td>
-      <td>0</td>
+      <td>64864.000000</td>
+      <td>64627.000000</td>
       <td>...</td>
-      <td>Y</td>
-      <td>7</td>
-      <td>200.0</td>
-      <td>2035.0</td>
-      <td>NaN</td>
-      <td>Y</td>
-      <td>68</td>
-      <td>G</td>
-      <td>7</td>
-      <td>180.42</td>
+      <td>55179.000000</td>
+      <td>55134.000000</td>
+      <td>64570.000000</td>
+      <td>64794.000000</td>
+      <td>1332.000000</td>
+      <td>55179.000000</td>
+      <td>55179.000000</td>
+      <td>654.000000</td>
+      <td>64864.000000</td>
+      <td>55179.000000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>48</td>
-      <td>000021521-00101</td>
-      <td>1</td>
-      <td>6.0</td>
-      <td>0.0</td>
-      <td>00000</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>71</td>
-      <td>0</td>
-      <td>...</td>
-      <td>Y</td>
-      <td>8</td>
-      <td>1.0</td>
-      <td>2038.0</td>
+      <th>mean</th>
+      <td>48.0</td>
+      <td>3.308383</td>
+      <td>1.536192</td>
+      <td>0.055677</td>
+      <td>12.724932</td>
+      <td>241.292335</td>
+      <td>18365.083159</td>
       <td>NaN</td>
-      <td>Y</td>
-      <td>63</td>
-      <td>G</td>
-      <td>7</td>
-      <td>150.72</td>
+      <td>84.662018</td>
+      <td>14.325147</td>
+      <td>...</td>
+      <td>0.001287</td>
+      <td>387.471143</td>
+      <td>9.593604</td>
+      <td>0.151573</td>
+      <td>1.081832</td>
+      <td>14738.009768</td>
+      <td>2032.348049</td>
+      <td>5.944190</td>
+      <td>48.065815</td>
+      <td>964.955676</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>48</td>
-      <td>000021521-00181</td>
-      <td>1</td>
-      <td>6.0</td>
+      <th>std</th>
       <td>0.0</td>
-      <td>00000</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>71</td>
-      <td>0</td>
-      <td>...</td>
-      <td>Y</td>
-      <td>8</td>
-      <td>1.0</td>
-      <td>2038.0</td>
+      <td>1.524604</td>
+      <td>1.830507</td>
+      <td>0.409700</td>
+      <td>6.339940</td>
+      <td>148.401968</td>
+      <td>23984.559132</td>
       <td>NaN</td>
-      <td>Y</td>
-      <td>63</td>
-      <td>G</td>
-      <td>7</td>
-      <td>74.40</td>
+      <td>34.798024</td>
+      <td>81.534822</td>
+      <td>...</td>
+      <td>0.066350</td>
+      <td>786.827517</td>
+      <td>10.983355</td>
+      <td>0.358609</td>
+      <td>0.389648</td>
+      <td>33669.125288</td>
+      <td>10.215096</td>
+      <td>52.747722</td>
+      <td>1.226490</td>
+      <td>2706.771529</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>48</td>
-      <td>000021521-TMP20</td>
-      <td>1</td>
-      <td>6.0</td>
-      <td>1.0</td>
-      <td>00000</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>71</td>
-      <td>0</td>
-      <td>...</td>
-      <td>Y</td>
-      <td>8</td>
-      <td>150.0</td>
-      <td>2038.0</td>
+      <th>min</th>
+      <td>48.0</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
       <td>NaN</td>
-      <td>Y</td>
-      <td>63</td>
-      <td>G</td>
-      <td>8</td>
-      <td>91.91</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>1900.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>22.570000</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>48</td>
-      <td>000021525-00012</td>
-      <td>1</td>
-      <td>6.0</td>
-      <td>0.0</td>
-      <td>00000</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>245</td>
-      <td>0</td>
-      <td>...</td>
-      <td>Y</td>
-      <td>T</td>
-      <td>120.0</td>
-      <td>2040.0</td>
+      <th>25%</th>
+      <td>48.0</td>
+      <td>2.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>113.000000</td>
+      <td>0.000000</td>
       <td>NaN</td>
-      <td>Y</td>
-      <td>63</td>
-      <td>P</td>
-      <td>4</td>
-      <td>204.30</td>
+      <td>99.990000</td>
+      <td>1.448000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>500.000000</td>
+      <td>2033.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>135.150000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>48.0</td>
+      <td>3.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>13.000000</td>
+      <td>201.000000</td>
+      <td>1000.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>6.437000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>3510.000000</td>
+      <td>2033.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>313.600000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>48.0</td>
+      <td>4.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>18.000000</td>
+      <td>373.000000</td>
+      <td>35000.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>19.195500</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>14.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>14000.000000</td>
+      <td>2034.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>870.195000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>48.0</td>
+      <td>8.000000</td>
+      <td>8.000000</td>
+      <td>4.000000</td>
+      <td>48.000000</td>
+      <td>507.000000</td>
+      <td>99315.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>9999.999000</td>
+      <td>...</td>
+      <td>5.000000</td>
+      <td>2020.000000</td>
+      <td>99.000000</td>
+      <td>1.000000</td>
+      <td>5.000000</td>
+      <td>999999.000000</td>
+      <td>2086.000000</td>
+      <td>999.900000</td>
+      <td>75.000000</td>
+      <td>125732.720000</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 123 columns</p>
+<p>8 rows × 80 columns</p>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rename The Index</span>
-<span class="c1">#texasdb = texasdb.rename_axis(&#39;Index&#39;)</span>
-<span class="c1">#texasdb.head()</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Extract just culverts send to different object name (its probably just a <a class="reference external" href="https://www.tutorialspoint.com/data_structures_algorithms/hash_data_structure.htm">HASH</a></p>
+<p>We name our structure <code class="docutils literal notranslate"><span class="pre">txculv</span></code> (or whatever you want)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span> <span class="o">=</span> <span class="n">texasdb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">texasdb</span><span class="p">[</span><span class="s1">&#39;STRUCTURE_TYPE_043B&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">19</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>STATE_CODE_001</th>
+      <th>ROUTE_PREFIX_005B</th>
+      <th>SERVICE_LEVEL_005C</th>
+      <th>DIRECTION_005E</th>
+      <th>HIGHWAY_DISTRICT_002</th>
+      <th>COUNTY_CODE_003</th>
+      <th>PLACE_CODE_004</th>
+      <th>CRITICAL_FACILITY_006B</th>
+      <th>MIN_VERT_CLR_010</th>
+      <th>KILOPOINT_011</th>
+      <th>...</th>
+      <th>FEDERAL_LANDS_105</th>
+      <th>YEAR_RECONSTRUCTED_106</th>
+      <th>PERCENT_ADT_TRUCK_109</th>
+      <th>NATIONAL_NETWORK_110</th>
+      <th>PIER_PROTECTION_111</th>
+      <th>FUTURE_ADT_114</th>
+      <th>YEAR_OF_FUTURE_ADT_115</th>
+      <th>MIN_NAV_CLR_MT_116</th>
+      <th>SUBMITTED_BY</th>
+      <th>DECK_AREA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>20551.0</td>
+      <td>20551.00000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>20545.000000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>0.0</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>...</td>
+      <td>20545.000000</td>
+      <td>20520.000000</td>
+      <td>20498.000000</td>
+      <td>20551.000000</td>
+      <td>190.000000</td>
+      <td>20545.000000</td>
+      <td>20545.000000</td>
+      <td>111.000000</td>
+      <td>20551.000000</td>
+      <td>20545.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>48.0</td>
+      <td>3.25916</td>
+      <td>1.343390</td>
+      <td>0.019123</td>
+      <td>12.900949</td>
+      <td>248.910759</td>
+      <td>15100.965111</td>
+      <td>NaN</td>
+      <td>99.702754</td>
+      <td>13.756241</td>
+      <td>...</td>
+      <td>0.001898</td>
+      <td>583.425146</td>
+      <td>11.671675</td>
+      <td>0.077855</td>
+      <td>1.021053</td>
+      <td>11016.450961</td>
+      <td>2032.816938</td>
+      <td>6.052252</td>
+      <td>48.116247</td>
+      <td>219.712841</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.0</td>
+      <td>1.29903</td>
+      <td>1.492621</td>
+      <td>0.247959</td>
+      <td>6.490255</td>
+      <td>155.890098</td>
+      <td>23840.797409</td>
+      <td>NaN</td>
+      <td>5.223589</td>
+      <td>72.832328</td>
+      <td>...</td>
+      <td>0.080438</td>
+      <td>904.383997</td>
+      <td>12.044279</td>
+      <td>0.267950</td>
+      <td>0.204652</td>
+      <td>28829.037024</td>
+      <td>7.714370</td>
+      <td>41.045256</td>
+      <td>1.674647</td>
+      <td>284.001639</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>48.0</td>
+      <td>1.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1900.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>24.790000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>48.0</td>
+      <td>3.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>8.000000</td>
+      <td>113.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>1.529000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>530.000000</td>
+      <td>2033.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>95.950000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>48.0</td>
+      <td>3.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>14.000000</td>
+      <td>231.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>6.851000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>2450.000000</td>
+      <td>2033.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>149.410000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>48.0</td>
+      <td>4.00000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>18.000000</td>
+      <td>401.000000</td>
+      <td>27000.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>18.537000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>1961.000000</td>
+      <td>18.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>9030.000000</td>
+      <td>2033.000000</td>
+      <td>0.000000</td>
+      <td>48.000000</td>
+      <td>251.490000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>48.0</td>
+      <td>8.00000</td>
+      <td>8.000000</td>
+      <td>4.000000</td>
+      <td>25.000000</td>
+      <td>507.000000</td>
+      <td>83745.000000</td>
+      <td>NaN</td>
+      <td>99.990000</td>
+      <td>9999.999000</td>
+      <td>...</td>
+      <td>5.000000</td>
+      <td>2020.000000</td>
+      <td>90.000000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>656470.000000</td>
+      <td>2052.000000</td>
+      <td>304.500000</td>
+      <td>74.000000</td>
+      <td>19993.960000</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 80 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -730,7 +1026,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span> <span class="o">=</span> <span class="n">texasdb</span><span class="p">[[</span><span class="s1">&#39;CULVERT_COND_062&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">,</span><span class="s1">&#39;ADT_029&#39;</span><span class="p">,</span><span class="s1">&#39;DESIGN_LOAD_031&#39;</span><span class="p">,</span><span class="s1">&#39;OPERATING_RATING_064&#39;</span><span class="p">,</span><span class="s1">&#39;STRUCTURAL_EVAL_067&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[[</span><span class="s1">&#39;CULVERT_COND_062&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">,</span><span class="s1">&#39;ADT_029&#39;</span><span class="p">,</span><span class="s1">&#39;DESIGN_LOAD_031&#39;</span><span class="p">,</span><span class="s1">&#39;OPERATING_RATING_064&#39;</span><span class="p">,</span><span class="s1">&#39;STRUCTURAL_EVAL_067&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;PERCENT_ADT_TRUCK_109&#39;</span><span class="p">,</span><span class="s1">&#39;BRIDGE_CONDITION&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR_RECONSTRUCTED_106&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -766,6 +1063,9 @@
       <th>DESIGN_LOAD_031</th>
       <th>OPERATING_RATING_064</th>
       <th>STRUCTURAL_EVAL_067</th>
+      <th>PERCENT_ADT_TRUCK_109</th>
+      <th>BRIDGE_CONDITION</th>
+      <th>YEAR_RECONSTRUCTED_106</th>
     </tr>
   </thead>
   <tbody>
@@ -777,42 +1077,158 @@
       <td>5</td>
       <td>38.6</td>
       <td>7</td>
+      <td>10.0</td>
+      <td>G</td>
+      <td>0.0</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>N</td>
-      <td>2005</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>69.9</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>N</td>
-      <td>2005</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>69.9</td>
+      <th>5</th>
       <td>7</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>N</td>
-      <td>2012</td>
-      <td>100.0</td>
-      <td>A</td>
-      <td>80.7</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>N</td>
-      <td>1950</td>
-      <td>80.0</td>
+      <td>1990</td>
+      <td>15.0</td>
       <td>0</td>
-      <td>29.0</td>
-      <td>3</td>
+      <td>36.3</td>
+      <td>7</td>
+      <td>NaN</td>
+      <td>G</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>7</td>
+      <td>1930</td>
+      <td>5581.0</td>
+      <td>0</td>
+      <td>32.7</td>
+      <td>6</td>
+      <td>16.0</td>
+      <td>G</td>
+      <td>1962.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>6</td>
+      <td>1934</td>
+      <td>5104.0</td>
+      <td>2</td>
+      <td>40.8</td>
+      <td>6</td>
+      <td>17.0</td>
+      <td>F</td>
+      <td>1959.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>6</td>
+      <td>1967</td>
+      <td>4348.0</td>
+      <td>5</td>
+      <td>44.4</td>
+      <td>6</td>
+      <td>19.0</td>
+      <td>F</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">txculv</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>YEAR_BUILT_027</th>
+      <th>ADT_029</th>
+      <th>OPERATING_RATING_064</th>
+      <th>PERCENT_ADT_TRUCK_109</th>
+      <th>YEAR_RECONSTRUCTED_106</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>20476.000000</td>
+      <td>20498.000000</td>
+      <td>20520.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1969.900151</td>
+      <td>8578.712715</td>
+      <td>39.604732</td>
+      <td>11.671675</td>
+      <td>583.425146</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>25.511268</td>
+      <td>21636.892122</td>
+      <td>9.133697</td>
+      <td>12.044279</td>
+      <td>904.383997</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1914.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1951.000000</td>
+      <td>400.000000</td>
+      <td>32.700000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1967.000000</td>
+      <td>1950.000000</td>
+      <td>44.400000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1990.000000</td>
+      <td>7101.500000</td>
+      <td>44.400000</td>
+      <td>18.000000</td>
+      <td>1961.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2020.000000</td>
+      <td>313693.000000</td>
+      <td>99.900000</td>
+      <td>90.000000</td>
+      <td>2020.000000</td>
     </tr>
   </tbody>
 </table>
@@ -851,7 +1267,18 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;AGE&#39;</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;DRAT&#39;</span><span class="p">:</span> <span class="n">drat</span><span class="p">,</span> <span class="s2">&quot;ADT&quot;</span> <span class="p">:</span><span class="n">adt</span><span class="p">,</span> <span class="s2">&quot;STEVAL&quot;</span><span class="p">:</span><span class="n">steval</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pctrk</span> <span class="o">=</span>  <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;PERCENT_ADT_TRUCK_109&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;PERCENT_ADT_TRUCK_109&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="c1"># </span>
+<span class="n">pctrk</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">pctrk</span><span class="p">)</span> <span class="c1"># coerce to numeric</span>
+
+
+<span class="c1">#df_filled2 = df.fillna(df.mean())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frame</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;AGE&#39;</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="s1">&#39;DRAT&#39;</span><span class="p">:</span> <span class="n">drat</span><span class="p">,</span> <span class="s2">&quot;ADT&quot;</span> <span class="p">:</span><span class="n">adt</span><span class="p">,</span> <span class="s2">&quot;STEVAL&quot;</span><span class="p">:</span><span class="n">steval</span><span class="p">,</span> <span class="s2">&quot;PCTRK&quot;</span><span class="p">:</span><span class="n">pctrk</span><span class="p">}</span>
 <span class="c1">#frame = { &#39;AGE&#39;: age, &#39;DRAT&#39;: drat, &quot;STEVAL&quot;:steval}</span>
 <span class="c1">#Creating DataFrame by passing Dictionary</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>  <span class="c1"># our design matrix</span>
@@ -892,7 +1319,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">isok</span><span class="p">(</span><span class="n">value_int</span><span class="p">):</span> <span class="c1"># function to interpret condition rating and issue binary state 0 == fail 1 == OK</span>
-    <span class="n">cut</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">cut</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="k">if</span> <span class="n">value_int</span> <span class="o">&gt;</span> <span class="n">cut</span><span class="p">:</span>
         <span class="n">isok</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">elif</span> <span class="n">value_int</span> <span class="o">&lt;=</span> <span class="n">cut</span><span class="p">:</span>
@@ -934,29 +1361,33 @@
       <th>DRAT</th>
       <th>ADT</th>
       <th>STEVAL</th>
+      <th>PCTRK</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>64864.000000</td>
-      <td>64864.000000</td>
-      <td>64864.000000</td>
-      <td>64864.000000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
+      <td>20551.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>42.494219</td>
-      <td>38.063393</td>
-      <td>13694.514846</td>
-      <td>5.471232</td>
+      <td>52.099849</td>
+      <td>39.463846</td>
+      <td>8578.712715</td>
+      <td>6.164372</td>
+      <td>11.671675</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>24.975545</td>
-      <td>18.533331</td>
-      <td>29829.816852</td>
-      <td>2.054243</td>
+      <td>25.511268</td>
+      <td>9.409530</td>
+      <td>21636.892122</td>
+      <td>0.838454</td>
+      <td>12.028738</td>
     </tr>
     <tr>
       <th>min</th>
@@ -964,34 +1395,39 @@
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>20.000000</td>
+      <td>32.000000</td>
       <td>32.700000</td>
-      <td>500.000000</td>
-      <td>5.000000</td>
+      <td>400.000000</td>
+      <td>6.000000</td>
+      <td>1.000000</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>41.000000</td>
+      <td>55.000000</td>
       <td>44.400000</td>
-      <td>3440.000000</td>
+      <td>1950.000000</td>
       <td>6.000000</td>
+      <td>9.000000</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>60.000000</td>
-      <td>54.400000</td>
-      <td>12820.000000</td>
+      <td>71.000000</td>
+      <td>44.400000</td>
+      <td>7101.500000</td>
       <td>7.000000</td>
+      <td>18.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>122.000000</td>
+      <td>108.000000</td>
       <td>99.900000</td>
-      <td>778093.000000</td>
+      <td>313693.000000</td>
       <td>9.000000</td>
+      <td>90.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1004,9 +1440,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    64864.000000
-mean         0.861695
-std          0.345222
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    20551.000000
+mean         0.999465
+std          0.023130
 min          0.000000
 25%          1.000000
 50%          1.000000
@@ -1053,8 +1489,9 @@ Name: CULVERT_COND_062, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.712584033432068
-[[-3.86564247e-02  3.92932201e-02  1.44732699e-06 -4.36968612e-01]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.08278239586830166
+[[-1.03778439e-02 -1.30938676e-01  6.65067052e-05  2.17738437e+00
+   6.97735441e-01]]
 </pre></div>
 </div>
 </div>
@@ -1085,25 +1522,50 @@ Name: CULVERT_COND_062, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/TexasNBI_database_25_0.png" src="../../_images/TexasNBI_database_25_0.png" />
+<img alt="../../_images/TexasNBI_database_28_0.png" src="../../_images/TexasNBI_database_28_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yrbld</span> <span class="o">=</span> <span class="n">txculv</span><span class="p">[</span><span class="s1">&#39;YEAR_BUILT_027&#39;</span><span class="p">]</span>
-<span class="nb">type</span><span class="p">(</span><span class="n">yrbld</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the class</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">PoissonRegressor</span>
+
+<span class="c1"># instantiate the model (using the default parameters)</span>
+<span class="c1">#logreg = LogisticRegression()</span>
+<span class="n">posreg</span> <span class="o">=</span> <span class="n">PoissonRegressor</span><span class="p">()</span>
+<span class="c1"># fit the model with data</span>
+<span class="n">posreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">posreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">posreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">posreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="c1">#y.head()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy.int64
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.0005840932119201926
+[0. 0. 0. 0. 0.]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#pre_target = txculv[&#39;CULVERT_COND_062&#39;]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.99941608, 0.99941608, 0.99941608, ..., 0.99941608, 0.99941608,
+       0.99941608])
 </pre></div>
 </div>
 </div>
@@ -1173,15 +1635,6 @@ then convert from string to numeric.</p>
             </div>
         </a>
     </div>
-     <div id="next">
-        <a class="right-next" href="../lesson14/lesson14.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">K Nearest Neigbor Classification</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
 </div>
         

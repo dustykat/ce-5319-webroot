@@ -49,9 +49,9 @@ chapters:
   - file: lessons/logisticregression/BridgeDatabase-BuildTexas
   - file: lessons/logisticregression/TexasNBI_database.ipynb
   
-- file: lessons/lesson14/lesson14 # KNN Classification
+- file: lessons/nearestneighbor/lesson14 # KNN Classification
 
-- file: lessons/lesson15/lesson15 # Decision Tree Random Forests
+- file: lessons/randomforest/lesson15 # Decision Tree Random Forests
 
 - file: lessons/neuralnetworks/neuralnetworks  # neural networks
   sections:
