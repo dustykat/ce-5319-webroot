@@ -53,6 +53,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Decision Trees" href="../decisiontrees/decisiontrees.html" />
+    <link rel="prev" title="Multiple Logistic Regression" href="example3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,7 +95,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../introduction/introduction.html">
    Introduction
@@ -112,6 +114,16 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../introduction/learningtypes.html">
      Learning Types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../introduction/mlworkflow.html">
+     Machine Learning Workflow
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../introduction/mlanatomy.html">
+     Anatomy of a Machine Learning Algorithm
     </a>
    </li>
   </ul>
@@ -168,16 +180,16 @@
    Non-Linear Regression
   </a>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="logisticregression.html">
    Logistic Regression
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
   <label for="toctree-checkbox-3">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="example1.html">
      Simple Logistic Regression Examples
@@ -191,6 +203,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="example3.html">
      Multiple Logistic Regression
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Poisson Regression
     </a>
    </li>
   </ul>
@@ -218,6 +235,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../clustering/clustering.html">
    Clustering
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../validation/validation.html">
+   Validation
   </a>
  </li>
 </ul>
@@ -377,9 +399,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.25693056254786634
-0.25693056254786634
-5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1635172161810843
+1.1635172161810843
+6
 </pre></div>
 </div>
 </div>
@@ -417,7 +439,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>790602.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>791977.0
 </pre></div>
 </div>
 </div>
@@ -435,9 +457,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
-         Current function value: 1036.170500
+         Current function value: 1034.280956
          Iterations: 5
-         Function evaluations: 256
+         Function evaluations: 257
 </pre></div>
 </div>
 </div>
@@ -449,7 +471,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.93001073, 0.15609291, 0.52072904, 0.2082134 ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.9304384 , 0.15630513, 0.52149631, 0.20849293])
 </pre></div>
 </div>
 </div>
@@ -461,7 +483,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1036.1705001)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1034.28095611)
 </pre></div>
 </div>
 </div>
@@ -620,6 +642,24 @@ The final value for b = 1.9999653396018062
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="example3.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Multiple Logistic Regression</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../decisiontrees/decisiontrees.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Decision Trees</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
