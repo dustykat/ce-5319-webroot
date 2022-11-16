@@ -38,7 +38,7 @@ print("Policy Vector :",res['x'])
 # 
 # ```{admonition} Hooke and Jeeves Search in Python
 # 
-# 
+# ```python
 # # Hooke and Jeeves Search as python script for import into Jupyter
 # # Minimal Script.
 # #
@@ -380,9 +380,15 @@ print("Policy Vector :",res['x'])
 #         result['x'] = endpt
 #     
 #     return result
-# 
+# ```
 # ```
 # 
 # ## References
 # 
 # ## Videos
+
+# In[ ]:
+
+
+
+
