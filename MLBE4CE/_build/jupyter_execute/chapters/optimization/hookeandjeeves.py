@@ -9,23 +9,13 @@
 # ## `hookeNjeeves` module
 # 
 # A module built from a python code is stored in a python file named [hookeNjeeves.py](http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/optimization/hookeNjeeves.py).  The module listing is below in the references. We can use it like any module once we have the file.
-# 
-# 
+
+# ## Example 1
 
 # In[1]:
 
 
-import hookeNjeeves
-
-
-# In[2]:
-
-
-pwd
-
-
-# In[3]:
-
+import hookeNjeeves # import the script below from local file hookeNjeeves.py
 
 def rosenbrock(x):
     '''
@@ -35,25 +25,18 @@ def rosenbrock(x):
     b = x[1]
     return ((1.0 - a)**2) + (100.0 * (b - (a**2))**2)
 
-start = [-1.2,1.0]
-#res = hooke(rosenbrock, start, bounds=((0,3),(0,10)), rho=0.5)
-res = hookeNjeeves.hooke(rosenbrock, start, rho=0.5)
-print(res)
+start = [-1.2,1.0] # set the starting policy
+print("Initial Objective Value :",rosenbrock(start))
+#res = hooke(rosenbrock, start, bounds=((0,3),(0,10)), rho=0.5) # constrained 
+res = hookeNjeeves.hooke(rosenbrock, start, rho=0.5) # unconstrained 
+#print(res)
+print("Objective Function Value :",res['fun'])
+print("Policy Vector :",res['x'])
 
 
-# In[4]:
-
-
-hookeNjeeves._value_in_bounds(3, 1, 4)
-
-
-# ## References
-# 
-# ## Videos
-# 
 # ## Scripts
 # 
-# ```{admonition}Hooke and Jeeves Search in Python
+# ```{admonition} Hooke and Jeeves Search in Python
 # 
 # 
 # # Hooke and Jeeves Search as python script for import into Jupyter
@@ -399,3 +382,7 @@ hookeNjeeves._value_in_bounds(3, 1, 4)
 #     return result
 # 
 # ```
+# 
+# ## References
+# 
+# ## Videos
