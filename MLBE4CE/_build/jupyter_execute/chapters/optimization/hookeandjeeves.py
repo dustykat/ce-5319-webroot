@@ -382,10 +382,12 @@ print("Policy Vector :",res['x'])
 #     return result
 # ```
 # ```
-# 
+
 # ## References
 # 
 # ## Videos
+
+# 
 
 # In[ ]:
 
