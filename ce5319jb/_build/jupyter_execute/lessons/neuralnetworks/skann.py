@@ -2,8 +2,6 @@
 # coding: utf-8
 
 # # Artificial Neural Network using packages
-# 
-# 
 
 # ## References
 # 
