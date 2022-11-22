@@ -215,7 +215,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 
 from sklearn.neighbors import KNeighborsClassifier
-classifier = KNeighborsClassifier(n_neighbors=5)
+classifier = KNeighborsClassifier(n_neighbors=1)
 classifier.fit(X_train, y_train)
 
 
@@ -314,6 +314,7 @@ plt.ylabel('Mean Error')
 # 13. ["Using Random Forests in Python with Scikit-Learn"__ available at ](https://www.blopig.com/blog/2017/07/using-random-forests-in-python-with-scikit-learn/) <br>
 # 14. ["Random Forest Regression in Python"__ available at ](https://www.geeksforgeeks.org/random-forest-regression-in-python/) <br>
 # 15. ["Random Forest Algorithm with Python and Scikit-Learn"__ by __Usman Malik__ available at ](https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/) <br>
+# 16. [One Hundred Page Machine Learning Book Burkov (2019)](http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf)
 # 
 # 
 # *Here are some great videos on these topics:* 

@@ -271,6 +271,11 @@
      Deep Learners
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/myann.html">
+     Artifical Neural  Network (Homebrew)
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -825,13 +830,13 @@ Hence, it is a multiclass classification problem and the number of observations 
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier()
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier(n_neighbors=1)
 </pre></div>
 </div>
 </div>
@@ -854,18 +859,18 @@ Hence, it is a multiclass classification problem and the number of observations 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9  0  0]
- [ 0  7  0]
- [ 0  1 13]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[10  0  0]
+ [ 0 10  1]
+ [ 0  1  8]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00         9
-Iris-versicolor       0.88      1.00      0.93         7
- Iris-virginica       1.00      0.93      0.96        14
+    Iris-setosa       1.00      1.00      1.00        10
+Iris-versicolor       0.91      0.91      0.91        11
+ Iris-virginica       0.89      0.89      0.89         9
 
-       accuracy                           0.97        30
-      macro avg       0.96      0.98      0.97        30
-   weighted avg       0.97      0.97      0.97        30
+       accuracy                           0.93        30
+      macro avg       0.93      0.93      0.93        30
+   weighted avg       0.93      0.93      0.93        30
 </pre></div>
 </div>
 </div>
@@ -960,6 +965,7 @@ Iris-versicolor       0.88      1.00      0.93         7
 <li><p><a class="reference external" href="https://www.blopig.com/blog/2017/07/using-random-forests-in-python-with-scikit-learn/">“Using Random Forests in Python with Scikit-Learn”__ available at </a> <br></p></li>
 <li><p><a class="reference external" href="https://www.geeksforgeeks.org/random-forest-regression-in-python/">“Random Forest Regression in Python”__ available at </a> <br></p></li>
 <li><p><a class="reference external" href="https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/">“Random Forest Algorithm with Python and Scikit-Learn”__ by <strong>Usman Malik</strong> available at </a> <br></p></li>
+<li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">One Hundred Page Machine Learning Book Burkov (2019)</a></p></li>
 </ol>
 <p><em>Here are some great videos on these topics:</em></p>
 <ul class="simple">

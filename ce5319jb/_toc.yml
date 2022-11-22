@@ -56,5 +56,6 @@ chapters:
 - file: lessons/neuralnetworks/neuralnetworks  # neural networks
   sections:
   - file: lessons/neuralnetworks/deeplearners  # neural networks
+  - file: lessons/neuralnetworks/myann         # homebrew ANN
   
 - file: lessons/validation/validation
