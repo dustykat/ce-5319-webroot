@@ -58,5 +58,6 @@ chapters:
   - file: lessons/neuralnetworks/deeplearners  # neural networks
   - file: lessons/neuralnetworks/myann         # homebrew ANN
   - file: lessons/neuralnetworks/skann         # professional ANN
+  - file: lessons/neuralnetworks/materialANN   # image processing ANN
   
 - file: lessons/validation/validation
