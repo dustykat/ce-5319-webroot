@@ -1,0 +1,71 @@
+Traceback (most recent call last):
+  File "/opt/jupyterhub/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 1087, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 540, in async_execute
+    await self.async_execute_cell(
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 832, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/jupyterhub/lib/python3.8/site-packages/nbclient/client.py", line 740, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# load a training file
+# replace code here with a URL get
+## training_data_file = open("mnist_train_100.csv",'r') #connect the file#
+training_data_file = open("ut-881-train.csv",'r') #connect the file#
+training_data_list = training_data_file.readlines() #read entire contents of file into object: data_list#
+training_data_file.close() #disconnect the file#
+# print(len(training_data_list))   ## activate for debugging otherwise leave disabled
+# train the neural network
+howManyTrainingTimes = 0
+for times in range(0,1):  # added outer loop for repeat training same data set 
+    howManyTrainingRecords = 0
+    for record in training_data_list:
+    # split the values on the commas
+        all_values = record.split(',') # split datalist on commas - all records.  Is thing going to work? #
+        inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01
+#        inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01
+    # print(inputs)          ## activate for debugging otherwise leave disabled
+    # create target output values -- all 0.01 except for the label of 0.99
+        targets = numpy.zeros(output_nodes) + 0.01
+    # all_values[0] is the target for this record
+    #  print(int(numpy.asfarray(all_values[0])))
+        targets[int(numpy.asfarray(all_values[0]))] = 0.99
+#        print(targets)
+    # targets = numpy.asfarray(all_values[0])
+        n.train(inputs, targets)
+        howManyTrainingRecords += 1
+        pass
+    howManyTrainingTimes += 1
+    learning_rate *= 0.9
+    pass
+print ("training records processed   = ",howManyTrainingRecords)
+print ("training episodes            = ",howManyTrainingTimes)
+# load a production file
+test_data_file = open("ut-881-test.csv",'r') #connect the file#
+#test_data_file = open("mnist_test.csv",'r') #connect the file#
+test_data_list = test_data_file.readlines() #read entire contents of file into object: data_list#
+test_data_file.close() #disconnect the file#
+
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m<ipython-input-5-2bb4a1a724a3>[0m in [0;36m<module>[0;34m[0m
+[1;32m      2[0m [0;31m# replace code here with a URL get[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0;31m## training_data_file = open("mnist_train_100.csv",'r') #connect the file#[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 4[0;31m [0mtraining_data_file[0m [0;34m=[0m [0mopen[0m[0;34m([0m[0;34m"ut-881-train.csv"[0m[0;34m,[0m[0;34m'r'[0m[0;34m)[0m [0;31m#connect the file#[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      5[0m [0mtraining_data_list[0m [0;34m=[0m [0mtraining_data_file[0m[0;34m.[0m[0mreadlines[0m[0;34m([0m[0;34m)[0m [0;31m#read entire contents of file into object: data_list#[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0mtraining_data_file[0m[0;34m.[0m[0mclose[0m[0;34m([0m[0;34m)[0m [0;31m#disconnect the file#[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'ut-881-train.csv'
+FileNotFoundError: [Errno 2] No such file or directory: 'ut-881-train.csv'
+
