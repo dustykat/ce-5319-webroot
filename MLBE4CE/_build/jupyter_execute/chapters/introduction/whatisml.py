@@ -29,7 +29,7 @@
 # 
 # Your obvious question: are papayas tasty?
 # 
-# From your **prior** experience you recall that softness, and color are good indicators of tastiness, the goal is to generalize this experience into a prediction rule
+# From your **prior** experience you recall that softness, and color are good indicators of tastiness, the goal is to generalize this experience into a classification rule
 # 
 # <figure align="center">
 # <img src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson2/taste_class.png" width="800"> <figcaption>Figure 2.3. Taste classification engine </figcaption>
@@ -366,7 +366,7 @@ plt.show()
 # 
 # $$r=\frac{p_1 }{p_2}$$
 # 
-# A little soul searchng and we realize that $\beta_1 \cdot \beta_3$ is really a single parameter and not really two different ones.  If we knew that ahead of time, our seacrh region could be reduced.  At this point all we really wanted here is an example of ML to produce a prediction engine (exclusive of the symbolic representation).  We have done it the model is 
+# A little soul searching and we realize that $\beta_1 \cdot \beta_3$ is really a single parameter and not really two different ones.  If we knew that ahead of time, our seacrh region could be reduced.  At this point all we really wanted here is an example of ML to produce a prediction engine (exclusive of the symbolic representation).  We have done it the model is 
 # 
 # $$r=\frac{p_1 }{p_2}$$
 # 
@@ -381,6 +381,155 @@ newot = response(xbest[0],xbest[1],xbest[2],xbest[3],newp1,newp2)
 print('predicted response to predictor1 =',newp1,'and predictor2 =',newp2,' is :',round(newot,3))
 
 
+# ## heading title
+# 
+# Before we exit this section lets examine the last example a bit more.  We have a two-dimensional input structure, so we can conceivable plot the input space and the response into the 3-rd axis.  First just the observations.
+
+# In[10]:
+
+
+#!/usr/bin/python3
+
+import sys
+
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
+
+import numpy
+from numpy.random import randn
+from scipy import array, newaxis
+
+
+input1=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,]
+input2=[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,
+        2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,
+        6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0]
+output=[10.0,20.0,30.0,40.0,50.0,60.0,70.0,80.0,90.0,100.0,
+        5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0, 
+       1.6666833333333333, 3.3333666666666666, 5.00005, 6.666733333333333, 8.333416666666666, 10.0001, 11.666783333333331, 13.333466666666666, 15.00015, 16.666833333333333]
+
+points = [[0,0,0] for i in range(len(output))]
+
+for i in range(len(output)):
+    points[i] = [input1[i],input2[i],output[i]]
+
+DATA = numpy.array(points)
+
+Xs = DATA[:,0]
+Ys = DATA[:,1]
+Zs = DATA[:,2]
+
+#print(DATA)
+
+# Creating figure
+fig = plt.figure(figsize = (5, 5))
+ax = plt.axes(projection ="3d")
+ 
+# Creating plot
+ax.scatter3D(Xs, Ys, Zs, color = "green")
+plt.title("simple 3D scatter plot")
+ 
+# show plot
+plt.show()
+
+
+# Assuming the response is some smooth function of the input feature values, we could attempt a contour plot.
+# ======
+## plot:
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+surf = ax.plot_trisurf(Xs, Ys, Zs, cmap=cm.jet, linewidth=0)
+fig.colorbar(surf)
+
+ax.xaxis.set_major_locator(MaxNLocator(5))
+ax.yaxis.set_major_locator(MaxNLocator(6))
+ax.zaxis.set_major_locator(MaxNLocator(5))
+
+fig.tight_layout()
+
+plt.show() # or:
+# fig.savefig('3D.png')
+# In[11]:
+
+
+import pandas
+my_xyz = pandas.DataFrame(DATA) # convert into a data frame
+import numpy 
+import matplotlib.pyplot
+from scipy.interpolate import griddata
+# extract lists from the dataframe
+coord_x = my_xyz[0].values.tolist()
+coord_y = my_xyz[1].values.tolist()
+coord_z = my_xyz[2].values.tolist()
+coord_xy = numpy.column_stack((coord_x, coord_y))
+# Set plotting range in original data units
+lon = numpy.linspace(min(coord_x), max(coord_x), 300)
+lat = numpy.linspace(min(coord_y), max(coord_y), 300)
+X, Y = numpy.meshgrid(lon, lat)
+# Grid the data; use cubic spline interpolation (other choices are nearest and linear)
+Z = griddata(numpy.array(coord_xy), numpy.array(coord_z), (X, Y), method='cubic', fill_value = 'nan')
+# Build the map
+matplotlib.pyplot.rcParams["figure.figsize"] = [12.00, 6.00]
+matplotlib.pyplot.rcParams["figure.autolayout"] = True
+fig, ax = matplotlib.pyplot.subplots()
+levels=[5,10,15,20,25,30,35,40,45,50]
+CS = ax.contour(X, Y, Z, levels=20, linewidths=3)
+ax.plot([50,50],[0,7])
+ax.plot([10,100],[5,5])
+ax.plot(coord_x,coord_y,marker=".",linestyle="none",markersize=13)
+ax.clabel(CS, inline=2, fontsize=12)
+ax.set_title('Contour Plot from Gridded Data File')
+ax.set_xlim([0,120])
+ax.set_ylim([0,7])
+
+
+# Conceivably, could use this as the predcition engine - for instance the plot suggests that at (50,5) the response should be near 5 (based on the plotted contours); notice (50,5) is NOT in the observation set - so this is truely a prediction.
+
+# In[12]:
+
+
+newp1 = 50
+newp2 = 5
+newot = response(xbest[0],xbest[1],xbest[2],xbest[3],newp1,newp2)
+print('predicted response to predictor1 =',newp1,'and predictor2 =',newp2,' is :',round(newot,3))
+
+
+# So whats going on with the prediction?  The contour plot has an implied data model (probably inverse distance - we would need to look at the internals of the gridding tool); our ML model has a different implied data model - we really don't know which one is better until we get a new observation, then in either case we would rerun the "training step" to update the model.
+# 
+# Now notice something our ML model can do that our contour plot does not do (easily) - that is to extrapolate beyond the input ranges smoothly.
+# 
+# For instance at (110,3) the contour plot shows us nothing at best the response will be in the 20s to 30s if we mentally extend the contour lines.  To the ML model its just another input/response combination:
+
+# In[13]:
+
+
+newp1 = 110
+newp2 = 3
+newot = response(xbest[0],xbest[1],xbest[2],xbest[3],newp1,newp2)
+print('predicted response to predictor1 =',newp1,'and predictor2 =',newp2,' is :',round(newot,3))
+
+
 # ## References
 # 
 # 
+# 
+# 
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
