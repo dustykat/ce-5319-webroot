@@ -1,16 +1,14 @@
 # Welcome to your Jupyter Book
 
-This is a small sample book to give you a feel for how book content is
-structured.
+## Copyright 
+Copyright © 2023 Cleveland, T. G. *The contents of this book are licensed for free consumption under the following license: [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)* 
 
-:::{note}
-Here is a note!
-:::
 
-And here is a code block:
+## Citation
+Put suggested citation here.  Will have link to persistent URL or TDL doi
 
-```
-e = mc^2
-```
+## Syllabus
+Link to course syllabus here
 
-Check out the content pages bundled with this sample book to see more.
+## Institutional Users
+Instructions to others who may wish to replicate the webroot and modify content on own servers
