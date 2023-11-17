@@ -1,15 +1,17 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Machine Learning for Civil Engineers
+title: Machine Learning by Example for Civil Engineers
 author: Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
-copyright: "2022"  # Copyright year to be placed in the footer
+copyright: "2023"  # Copyright year to be placed in the footer
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+#  execute_notebooks: force
+  execute_notebooks: cache
+  timeout: -1
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -31,3 +33,6 @@ repository:
 html:
   use_issues_button: false
   use_repository_button: false
+
+nbsphinx: 
+  timeout: -1

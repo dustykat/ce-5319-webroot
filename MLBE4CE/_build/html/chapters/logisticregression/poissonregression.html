@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Poisson Regression &#8212; Machine Learning for Civil Engineers</title>
+    <title>Poisson Regression &#8212; Machine Learning by Example for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -80,7 +80,7 @@
       <img src="../../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
+      <h1 class="site-logo" id="site-title">Machine Learning by Example for Civil Engineers</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -222,10 +222,37 @@
    Support Vectors
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
    Neural Networks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/myann.html">
+     Artifical Neural  Network (Homebrew)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/materialANN.html">
+     Artifical Neural  Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/skann.html">
+     Artificial Neural Network using packages
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../nearestneighbors/nearestneighbors.html">
@@ -399,9 +426,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.5015635669920555
-1.5015635669920555
-11
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.6340532620588987
+-0.6340532620588987
+7
 </pre></div>
 </div>
 </div>
@@ -439,7 +466,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>808025.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>763735.0
 </pre></div>
 </div>
 </div>
@@ -457,9 +484,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
-         Current function value: 1069.659677
+         Current function value: 1027.178594
          Iterations: 5
-         Function evaluations: 259
+         Function evaluations: 258
 </pre></div>
 </div>
 </div>
@@ -471,7 +498,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.93073328, 0.15641137, 0.51993822, 0.20804594])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.9286735 , 0.15635242, 0.52252354, 0.20987231])
 </pre></div>
 </div>
 </div>
@@ -483,7 +510,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1069.65967663)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1027.17859352)
 </pre></div>
 </div>
 </div>
@@ -671,7 +698,7 @@ The final value for b = 1.9999653396018062
         
           By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI<br/>
         
-            &copy; Copyright 2022.<br/>
+            &copy; Copyright 2023.<br/>
       </p>
     </div>
   </footer>

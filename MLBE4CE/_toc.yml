@@ -38,6 +38,11 @@ chapters:
 - file: chapters/supportvectors/supportvectors # support vectors 
 
 - file: chapters/neuralnetworks/neuralnetworks # neural networks
+  sections:
+  - file: chapters/neuralnetworks/deeplearners
+  - file: chapters/neuralnetworks/myann
+  - file: chapters/neuralnetworks/materialANN
+  - file: chapters/neuralnetworks/skann
 
 - file: chapters/nearestneighbors/nearestneighbors # nearest neighbors
 

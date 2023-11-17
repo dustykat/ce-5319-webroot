@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>K-Nearest Neighbor &#8212; Machine Learning for Civil Engineers</title>
+    <title>K-Nearest Neighbor &#8212; Machine Learning by Example for Civil Engineers</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Clustering" href="../clustering/clustering.html" />
-    <link rel="prev" title="Neural Networks" href="../neuralnetworks/neuralnetworks.html" />
+    <link rel="prev" title="Artificial Neural Network using packages" href="../neuralnetworks/skann.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -80,7 +80,7 @@
       <img src="../../_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Machine Learning for Civil Engineers</h1>
+      <h1 class="site-logo" id="site-title">Machine Learning by Example for Civil Engineers</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -222,10 +222,37 @@
    Support Vectors
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../neuralnetworks/neuralnetworks.html">
    Neural Networks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/deeplearners.html">
+     Deep Learners
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/myann.html">
+     Artifical Neural  Network (Homebrew)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/materialANN.html">
+     Artifical Neural  Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../neuralnetworks/skann.html">
+     Artificial Neural Network using packages
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
@@ -770,18 +797,18 @@ Hence, it is a multiclass classification problem and the number of observations 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[12  0  0]
- [ 0 10  0]
- [ 0  0  8]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9  0  0]
+ [ 0 12  0]
+ [ 0  1  8]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        12
-Iris-versicolor       1.00      1.00      1.00        10
- Iris-virginica       1.00      1.00      1.00         8
+    Iris-setosa       1.00      1.00      1.00         9
+Iris-versicolor       0.92      1.00      0.96        12
+ Iris-virginica       1.00      0.89      0.94         9
 
-       accuracy                           1.00        30
-      macro avg       1.00      1.00      1.00        30
-   weighted avg       1.00      1.00      1.00        30
+       accuracy                           0.97        30
+      macro avg       0.97      0.96      0.97        30
+   weighted avg       0.97      0.97      0.97        30
 </pre></div>
 </div>
 </div>
@@ -912,11 +939,11 @@ Iris-versicolor       1.00      1.00      1.00        10
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../neuralnetworks/neuralnetworks.html" title="previous page">
+        <a class="left-prev" href="../neuralnetworks/skann.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Neural Networks</p>
+                <p class="prevnext-title">Artificial Neural Network using packages</p>
             </div>
         </a>
     </div>
@@ -940,7 +967,7 @@ Iris-versicolor       1.00      1.00      1.00        10
         
           By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI<br/>
         
-            &copy; Copyright 2022.<br/>
+            &copy; Copyright 2023.<br/>
       </p>
     </div>
   </footer>
