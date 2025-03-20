@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>13. Feature Engineering &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/13-featureengineering/featureengineering';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Neural Networks" href="../14-neuralnetworks/neuralnetworks.html" />
+    <link rel="prev" title="12. Dimension Reduction" href="../12-dimensionreduction/dimensionreduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">K-Nearest Neighbor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">13. Feature Engineering</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/deeplearners.html">Deep Learners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/myann.html">Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/materialANN.html">Artifical Neural  Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/skann.html">Artificial Neural Network using packages</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearch.html">Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/13-featureengineering/featureengineering.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>13. Feature Engineering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-in-machine-learning">Feature Engineering in Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-methods-by-data-type">Feature Engineering Methods by Data Type</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-data-continuous-or-discrete">Numeric Data (Continuous or Discrete)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction-projection-methods">Dimensionality Reduction &amp; Projection Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#transformation-scaling">Transformation &amp; Scaling</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-construction">Feature Extraction &amp; Construction</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-data-nominal-or-ordinal">Categorical Data (Nominal or Ordinal)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding-methods">Encoding Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-aggregation">Grouping &amp; Aggregation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-data">Text Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-text-feature-extraction">Traditional Text Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-nlp-feature-engineering">Advanced NLP Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-data">Image Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-feature-extraction">Traditional Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-based-feature-extraction">Deep Learning-Based Feature Extraction</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-data-networks-relationships">Graph-Based Data (Networks, Relationships)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-feature-extraction">Graph Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-embedding-methods">Graph Embedding Methods</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-data-types-multimodal-learning">Mixed Data Types (Multimodal Learning)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-fusion-approaches">Feature Fusion Approaches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="feature-engineering">
+<h1>13. Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading">#</a></h1>
+<div class="admonition-course-website admonition">
+<p class="admonition-title">Course Website</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
+</div>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book</a> - Required Textbook.</p></li>
+<li><p><a class="reference external" href="https://christophm.github.io/interpretable-ml-book/">Molnar, C. (2022). Interpretable Machine Learning: A Guide for Making Black Box Models Explainable.</a> This book provides insights into understanding AI-generated models and results, reinforcing the importance of interpretability in human-AI collaboration.</p></li>
+</ol>
+</section>
+<section id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+</section>
+<section id="feature-engineering-in-machine-learning">
+<h2>Feature Engineering in Machine Learning<a class="headerlink" href="#feature-engineering-in-machine-learning" title="Link to this heading">#</a></h2>
+<p>In traditional statistical modeling, particularly in regression analysis, the process of selecting explanatory variables was a crucial step. Analysts would identify relevant independent variables that best explained variability in the dependent variable, ensuring they met assumptions like linearity, independence, and minimal multicollinearity. This process—variable selection—focused on choosing and transforming numerical features to maximize predictive accuracy while maintaining interpretability.</p>
+<p>In Machine Learning (ML), the concept of feature engineering extends beyond traditional variable selection. ML models can handle diverse feature types, including:</p>
+<ul class="simple">
+<li><p>Real-valued variables (e.g., temperature, stock prices, rainfall)</p></li>
+<li><p>Categorical variables (e.g., country, product category, job title)</p></li>
+<li><p>Text features (e.g., words, phrases, document embeddings)</p></li>
+<li><p>Image features (e.g., pixel values, edge maps, deep learning embeddings)</p></li>
+<li><p>Time series data (e.g., sequences, lagged values)</p></li>
+<li><p>Graph-based features (e.g., social network connections, road network distances)</p></li>
+</ul>
+<p>In modern ML applications, features are not necessarily pre-defined by human experts; they can be automatically extracted, transformed, and optimized through computational techniques. This is particularly true for deep learning, where models learn hierarchical representations of raw data (e.g., convolutional layers for images or word embeddings for text).</p>
+<p>Regardless of the model type, the core goal of feature engineering remains the same: to create representations of input data that improve predictive performance. This involves:</p>
+<ul class="simple">
+<li><p>Feature Selection – Identifying the most relevant features.</p></li>
+<li><p>Feature Transformation – Encoding categorical variables, normalizing numerical variables, or applying polynomial expansions.</p></li>
+<li><p>Feature Extraction – Automatically learning new features, such as word embeddings for text or principal components for dimensionality reduction.</p></li>
+<li><p>Feature Construction – Combining raw variables into more meaningful representations, such as aggregating time-based trends or deriving interaction terms.</p></li>
+</ul>
+<p>The ability of ML models to process and integrate mixed data types (numbers, text, images, etc.) sets them apart from traditional statistical models. Ultimately, effective feature engineering can dramatically enhance model accuracy and efficiency, often proving to be more important than the choice of algorithm itself.</p>
+</section>
+<section id="feature-engineering-methods-by-data-type">
+<h2>Feature Engineering Methods by Data Type<a class="headerlink" href="#feature-engineering-methods-by-data-type" title="Link to this heading">#</a></h2>
+<section id="numeric-data-continuous-or-discrete">
+<h3>Numeric Data (Continuous or Discrete)<a class="headerlink" href="#numeric-data-continuous-or-discrete" title="Link to this heading">#</a></h3>
+<p>These methods are typically used for structured numerical data, reducing dimensionality, extracting patterns, or transforming raw features.</p>
+<section id="dimensionality-reduction-projection-methods">
+<h4>Dimensionality Reduction &amp; Projection Methods<a class="headerlink" href="#dimensionality-reduction-projection-methods" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Principal Component Analysis (PCA) – Projects data into uncorrelated principal components.</p></li>
+<li><p>Empirical Orthogonal Functions (EOF) – Similar to PCA, commonly used in climate and geospatial analysis.</p></li>
+<li><p>Independent Component Analysis (ICA) – Separates independent signals from mixed signals.</p></li>
+<li><p>Factor Analysis – Extracts latent variables that explain observed variance.</p></li>
+<li><p>t-SNE (t-Distributed Stochastic Neighbor Embedding) – Nonlinear dimensionality reduction for visualization.</p></li>
+<li><p>UMAP (Uniform Manifold Approximation and Projection) – Similar to t-SNE but preserves more global structure.</p></li>
+</ul>
+</section>
+<section id="transformation-scaling">
+<h4>Transformation &amp; Scaling<a class="headerlink" href="#transformation-scaling" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Log Transform – Helps stabilize variance and handle skewed distributions.</p></li>
+<li><p>Box-Cox Transform – Used for normalizing skewed data.</p></li>
+<li><p>Min-Max Scaling – Scales features to a specific range (e.g., [0,1]).</p></li>
+<li><p>Z-Score Normalization – Standardizes features to have mean 0 and standard deviation 1.</p></li>
+<li><p>Binning (Discretization) – Converts continuous variables into categorical bins (e.g., quantile bins).</p></li>
+</ul>
+</section>
+<section id="feature-extraction-construction">
+<h4>Feature Extraction &amp; Construction<a class="headerlink" href="#feature-extraction-construction" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Fourier Transform / Wavelet Transform – Used in signal processing to extract frequency components.</p></li>
+<li><p>Autoregressive Features (AR, MA, ARMA, ARIMA) – Common in time series modeling.</p></li>
+<li><p>Polynomial Features – Generates polynomial terms for regression models.</p></li>
+<li><p>Interaction Features – Combines two or more features multiplicatively or additively.</p></li>
+</ul>
+</section>
+</section>
+<section id="categorical-data-nominal-or-ordinal">
+<h3>Categorical Data (Nominal or Ordinal)<a class="headerlink" href="#categorical-data-nominal-or-ordinal" title="Link to this heading">#</a></h3>
+<p>Methods for converting categorical variables into numerical representations.</p>
+<section id="encoding-methods">
+<h4>Encoding Methods<a class="headerlink" href="#encoding-methods" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>One-Hot Encoding – Converts categorical variables into binary vectors.</p></li>
+<li><p>Ordinal Encoding – Assigns integer values based on category order.</p></li>
+<li><p>Target Encoding (Mean Encoding) – Replaces categories with their mean response variable value.</p></li>
+<li><p>Frequency Encoding – Replaces categories with their occurrence frequency.</p></li>
+<li><p>Embedding Representation – Uses dense vector representations (learned in deep learning models).</p></li>
+</ul>
+</section>
+<section id="grouping-aggregation">
+<h4>Grouping &amp; Aggregation<a class="headerlink" href="#grouping-aggregation" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Rare Category Grouping – Groups infrequent categories into an “Other” category.</p></li>
+<li><p>Domain-Specific Binning – Groups categorical variables based on meaningful criteria (e.g., age groups).</p></li>
+</ul>
+</section>
+</section>
+<section id="text-data">
+<h3>Text Data<a class="headerlink" href="#text-data" title="Link to this heading">#</a></h3>
+<p>Methods for extracting numerical features from text.</p>
+<section id="traditional-text-feature-extraction">
+<h4>Traditional Text Feature Extraction<a class="headerlink" href="#traditional-text-feature-extraction" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Bag of Words (BoW) – Represents text as a sparse count matrix.</p></li>
+<li><p>TF-IDF (Term Frequency-Inverse Document Frequency) – Weighs words by importance in a document corpus.</p></li>
+<li><p>N-grams – Extracts word sequences (bigrams, trigrams, etc.).</p></li>
+<li><p>Embedding &amp; Deep Learning-Based Methods</p></li>
+<li><p>Word2Vec (CBOW, Skip-Gram) – Learns word embeddings from text.</p></li>
+<li><p>GloVe (Global Vectors for Word Representation) – Generates word embeddings using co-occurrence statistics.</p></li>
+<li><p>FastText – A variation of Word2Vec that includes subword information.</p></li>
+<li><p>BERT (Bidirectional Encoder Representations from Transformers) – Context-aware deep learning embeddings.</p></li>
+<li><p>Sentence Transformers (SBERT, T5, etc.) – Generates sentence-level embeddings.</p></li>
+</ul>
+</section>
+<section id="advanced-nlp-feature-engineering">
+<h4>Advanced NLP Feature Engineering<a class="headerlink" href="#advanced-nlp-feature-engineering" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Topic Modeling (LDA, Latent Semantic Analysis) – Extracts underlying topics from a corpus.</p></li>
+<li><p>Sentiment Analysis Scores – Maps text to a sentiment scale.</p></li>
+<li><p>Named Entity Recognition (NER) – Identifies entities like names, locations, and organizations.</p></li>
+</ul>
+</section>
+</section>
+<section id="image-data">
+<h3>Image Data<a class="headerlink" href="#image-data" title="Link to this heading">#</a></h3>
+<p>Methods for feature extraction from image-based data.</p>
+<section id="traditional-feature-extraction">
+<h4>Traditional Feature Extraction<a class="headerlink" href="#traditional-feature-extraction" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Histogram of Oriented Gradients (HOG) – Captures edge directions and gradients.</p></li>
+<li><p>Scale-Invariant Feature Transform (SIFT) – Extracts keypoints for object recognition.</p></li>
+<li><p>Local Binary Patterns (LBP) – Captures texture patterns.</p></li>
+</ul>
+</section>
+<section id="deep-learning-based-feature-extraction">
+<h4>Deep Learning-Based Feature Extraction<a class="headerlink" href="#deep-learning-based-feature-extraction" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Convolutional Neural Networks (CNNs) – Extract hierarchical image features.</p></li>
+<li><p>Pretrained CNN Embeddings (ResNet, VGG, Inception, EfficientNet) – Uses deep models trained on large datasets to extract features.</p></li>
+<li><p>Autoencoders – Learns compressed latent representations of images.</p></li>
+<li><p>GAN-Based Feature Learning (StyleGAN, BigGAN) – Generates and modifies image features.</p></li>
+</ul>
+</section>
+</section>
+<section id="graph-based-data-networks-relationships">
+<h3>Graph-Based Data (Networks, Relationships)<a class="headerlink" href="#graph-based-data-networks-relationships" title="Link to this heading">#</a></h3>
+<p>Methods for encoding structured graph relationships.</p>
+<section id="graph-feature-extraction">
+<h4>Graph Feature Extraction<a class="headerlink" href="#graph-feature-extraction" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Node Degree, Betweenness Centrality, Closeness Centrality – Captures node importance in a graph.</p></li>
+<li><p>Eigenvector Centrality (PageRank) – Measures influence of a node in a network.</p></li>
+<li><p>Graph Kernels (Weisfeiler-Lehman, Shortest Path Kernel) – Measures graph similarity.</p></li>
+</ul>
+</section>
+<section id="graph-embedding-methods">
+<h4>Graph Embedding Methods<a class="headerlink" href="#graph-embedding-methods" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Node2Vec – Learns node representations via random walks.</p></li>
+<li><p>DeepWalk – Similar to Word2Vec but for graphs.</p></li>
+<li><p>Graph Convolutional Networks (GCNs) – Extends deep learning to graphs.</p></li>
+<li><p>Graph Attention Networks (GATs) – Uses attention mechanisms for node embeddings.</p></li>
+</ul>
+</section>
+</section>
+<section id="mixed-data-types-multimodal-learning">
+<h3>Mixed Data Types (Multimodal Learning)<a class="headerlink" href="#mixed-data-types-multimodal-learning" title="Link to this heading">#</a></h3>
+<p>Methods for combining heterogeneous data sources (text, images, structured data, etc.).</p>
+<section id="feature-fusion-approaches">
+<h4>Feature Fusion Approaches<a class="headerlink" href="#feature-fusion-approaches" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Concatenation-Based Fusion – Directly concatenates numerical, categorical, text, and image embeddings.</p></li>
+<li><p>Autoencoder-Based Fusion – Learns a unified representation from multiple modalities.</p></li>
+<li><p>Transformer-Based Multimodal Learning – Models like CLIP (Contrastive Language-Image Pretraining) combine vision and text.</p></li>
+<li><p>Graph Neural Networks (GNNs) for Multimodal Data – Represents heterogeneous data in a structured way.</p></li>
+</ul>
+<div class="admonition-importance-of-feature-engineering admonition">
+<p class="admonition-title">Importance of Feature Engineering</p>
+<p>Feature engineering a critical step in Machine Learning. Whether working with structured numerical data, categorical data, or unstructured data (text, images, graphs), choosing the right transformation, encoding, or embedding method can significantly improve predictive performance.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python-my-env",
+            path: "./chapters/13-featureengineering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python-my-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../12-dimensionreduction/dimensionreduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">12. Dimension Reduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../14-neuralnetworks/neuralnetworks.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Neural Networks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-in-machine-learning">Feature Engineering in Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-methods-by-data-type">Feature Engineering Methods by Data Type</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-data-continuous-or-discrete">Numeric Data (Continuous or Discrete)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction-projection-methods">Dimensionality Reduction &amp; Projection Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#transformation-scaling">Transformation &amp; Scaling</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction-construction">Feature Extraction &amp; Construction</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-data-nominal-or-ordinal">Categorical Data (Nominal or Ordinal)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encoding-methods">Encoding Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping-aggregation">Grouping &amp; Aggregation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-data">Text Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-text-feature-extraction">Traditional Text Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-nlp-feature-engineering">Advanced NLP Feature Engineering</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-data">Image Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-feature-extraction">Traditional Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-based-feature-extraction">Deep Learning-Based Feature Extraction</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-data-networks-relationships">Graph-Based Data (Networks, Relationships)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-feature-extraction">Graph Feature Extraction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-embedding-methods">Graph Embedding Methods</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-data-types-multimodal-learning">Mixed Data Types (Multimodal Learning)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-fusion-approaches">Feature Fusion Approaches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
