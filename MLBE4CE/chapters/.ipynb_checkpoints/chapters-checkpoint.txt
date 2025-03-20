@@ -1,0 +1,17 @@
+introduction
+exploratory data analysis (and visualization)
+data preparation
+clustering
+decision trees
+dimension reduction
+ensemble methods
+feature engineering
+linear regression
+logistic regression
+nearest neighbors
+neural networks
+non-linear regression
+optimization
+support vector machines
+time series
+validation

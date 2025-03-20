@@ -1,0 +1,110 @@
+introduction
+exploratory data analysis (and visualization)
+data preparation
+clustering
+decision trees
+dimension reduction
+ensemble methods
+feature engineering
+linear regression
+logistic regression
+nearest neighbors
+neural networks
+non-linear regression
+optimization
+support vector machines
+time series
+validation
+
+
+1. Introduction
+What is Machine Learning?
+Traditional vs. Data-Driven Approaches in Civil Engineering
+Supervised, Unsupervised, and Reinforcement Learning Overview
+Key Civil Engineering Applications
+Pavement Condition Prediction
+Structural Health Monitoring
+Hydrological Forecasting
+Case Study: Machine Learning for Bridge Inspection
+(JupyterBook Chapter: introduction)
+2. Exploratory Data Analysis and Preparation
+2.1 Exploratory Data Analysis (EDA)
+Understanding Data Types: Numerical vs. Categorical
+Descriptive Statistics & Summary Metrics
+Feature Distributions and Correlations
+Visualization Techniques for Civil Engineers
+Histograms, Boxplots, Scatterplots
+Heatmaps for Correlation Analysis
+Time Series Plots for Hydrological Data
+(JupyterBook Chapter: exploratory data analysis (and visualization))
+2.2 Data Preparation
+Handling Missing Data
+Imputation Strategies (Mean, Median, Interpolation)
+Removing Outliers and Noisy Data
+Data Transformation & Encoding
+One-Hot Encoding for Categorical Features
+Scaling & Normalization (Min-Max, Standardization)
+Data Splitting for Training & Testing
+(JupyterBook Chapter: data preparation)
+3. Supervised Learning: Regression and Classification
+3.1 Regression Models
+Linear Regression: Predicting Continuous Values
+Multiple Linear Regression: Civil Engineering Applications
+Non-Linear Regression: When Linear Models Fail
+Feature Selection & Model Complexity Tradeoff
+(JupyterBook Chapters: linear regression, non-linear regression)
+3.2 Classification Models
+Logistic Regression: Binary & Multi-Class Classification
+Decision Trees: Interpretable ML for Structural Assessment
+Nearest Neighbors (KNN): Instance-Based Learning for Soil Classification
+Support Vector Machines (SVM): Margin-Based Classification
+Model Evaluation Metrics: Accuracy, Precision, Recall, ROC Curves
+(JupyterBook Chapters: logistic regression, decision trees, nearest neighbors, support vector machines)
+3.3 Model Validation and Selection
+Bias-Variance Tradeoff
+Cross-Validation Strategies (k-Fold, Leave-One-Out)
+Hyperparameter Tuning
+(JupyterBook Chapter: validation)
+4. Unsupervised Learning: Clustering and Feature Reduction
+4.1 Clustering Methods
+K-Means Clustering: Traffic Flow Grouping
+Hierarchical Clustering: Geospatial Segmentation
+Density-Based Clustering (DBSCAN): Anomaly Detection
+(JupyterBook Chapter: clustering)
+4.2 Feature Engineering & Dimensionality Reduction
+Feature Selection Methods
+Removing Redundant or Irrelevant Features
+Principal Component Analysis (PCA): Reducing Data Complexity
+Autoencoders for Feature Learning
+(JupyterBook Chapters: dimension reduction, feature engineering)
+5. Advanced Learning Techniques
+5.1 Neural Networks
+Perceptron & Multi-Layer Perceptron (MLP)
+Convolutional Neural Networks (CNNs) for Image-Based Civil Engineering
+Recurrent Neural Networks (RNNs) for Time-Series Forecasting
+(JupyterBook Chapter: neural networks)
+5.2 Ensemble Methods
+Random Forests: Combining Decision Trees
+Boosting (AdaBoost, Gradient Boosting, XGBoost)
+(JupyterBook Chapter: ensemble methods)
+5.3 Time Series Analysis
+Understanding Temporal Dependencies in Data
+ARIMA & LSTMs for Hydrological Forecasting
+Civil Engineering Applications: Traffic, Climate, Water Systems
+(JupyterBook Chapter: time series)
+5.4 Optimization Techniques
+Gradient Descent & Stochastic Gradient Descent (SGD)
+Sequential Feature-wise Optimization (Coordinate Descent)
+Hyperparameter Search (Grid Search, Bayesian Optimization)
+(JupyterBook Chapter: optimization)
+6. Applications and Model Deployment
+6.1 How to Select the Right Model
+Tradeoffs Between Complexity, Accuracy, and Interpretability
+Comparing Model Performance Across Civil Engineering Use Cases
+6.2 Case Studies in Civil Engineering
+Real-Time Landslide Prediction Using ML
+Bridge Load Estimation with Deep Learning
+Smart Traffic Signal Control via Reinforcement Learning
+6.3 Model Deployment
+Deploying ML Models in Civil Engineering Systems
+Interfacing with APIs and Cloud-Based ML Services

@@ -1,0 +1,1142 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Artifical Neural Network (Homebrew) &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/myann';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Artifical Neural Network" href="materialANN.html" />
+    <link rel="prev" title="Deep Learners" href="deeplearners.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">K-Nearest Neighbor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">Clustering</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="neuralnetworks.html">Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materialANN.html">Artifical Neural  Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearch.html">Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/14-neuralnetworks/myann.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Artifical Neural  Network (Homebrew)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="artifical-neural-network-homebrew">
+<h1>Artifical Neural  Network (Homebrew)<a class="headerlink" href="#artifical-neural-network-homebrew" title="Link to this heading">#</a></h1>
+<p>This ANN is mostly working, there is more write-up and then convert into a project statement.</p>
+<p>the databases are too big for github</p>
+<p>get copies from</p>
+<p><a class="reference external" href="http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/">http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/</a></p>
+<p>You need</p>
+<p>mnist_train.csv and mnist_test.csv</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>              <span class="c1"># useful numerical routines</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>      <span class="c1"># special functions library</span>
+<span class="kn">import</span> <span class="nn">scipy.misc</span>         <span class="c1"># image processing code</span>
+<span class="kn">import</span> <span class="nn">imageio</span>           
+<span class="kn">import</span> <span class="nn">imageio.v2</span> <span class="k">as</span> <span class="nn">imageio</span> <span class="c1"># deprecated as typical</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span>  <span class="c1"># import plotting routines</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get data files</span>
+<span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># Module to process http/https requests</span>
+<span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_train.csv&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mnist_train.csv&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_test.csv&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mnist_test.csv&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/images.tar&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;images.tar&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="o">!</span><span class="w"> </span>tar<span class="w"> </span>-xvf<span class="w"> </span>images.tar<span class="w"> </span>#<span class="w"> </span>Extract<span class="w"> </span>some<span class="w"> </span>images
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>image_src/
+image_src/tree.png
+image_src/MyOne.png
+image_src/tree784.png
+image_src/cat.png
+image_src/MyEight.png
+image_src/pictures.png
+image_src/MySix.png
+image_src/MyZero.png
+image_src/people.png
+image_src/MyFive.png
+image_src/MyThree.png
+image_src/people784.png
+image_src/MyFour.png
+image_src/MySeven.png
+image_src/.ipynb_checkpoints/
+image_src/MyNine.png
+image_src/MyTwo.png
+image_src/cat784.png
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">neuralNetwork</span><span class="p">:</span>  <span class="c1"># Class Definitions </span>
+
+    <span class="c1"># initialize the neural network</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputnodes</span><span class="p">,</span> <span class="n">hiddennodes</span><span class="p">,</span> <span class="n">outputnodes</span><span class="p">,</span> <span class="n">learningrate</span><span class="p">):</span>
+        <span class="c1"># set number of nodes in input, hidden, and output layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inodes</span> <span class="o">=</span> <span class="n">inputnodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hnodes</span> <span class="o">=</span> <span class="n">hiddennodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onodes</span> <span class="o">=</span> <span class="n">outputnodes</span>
+
+        <span class="c1"># learning rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">learningrate</span>
+        
+        <span class="c1"># initalize weight matrices</span>
+        <span class="c1">#</span>
+        <span class="c1"># link weight matrices, wih (input to hidden) and</span>
+        <span class="c1">#                       who (hidden to output)</span>
+        <span class="c1"># weights inside the arrays are w_i_j where link is from node i</span>
+        <span class="c1"># to node j in next layer</span>
+        <span class="c1">#</span>
+        <span class="c1"># w11 w21</span>
+        <span class="c1"># w12 w22 etc.</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">wih</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hnodes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inodes</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">who</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onodes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hnodes</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1"># activation function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">expit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># train the neural network</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs_list</span><span class="p">,</span> <span class="n">targets_list</span><span class="p">):</span>
+        <span class="c1"># convert input list into 2D array</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">inputs_list</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># convert target list into 2D array</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">targets_list</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        
+        <span class="c1"># calculate signals into hidden layer</span>
+        <span class="n">hidden_inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wih</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals from hidden layer</span>
+        <span class="n">hidden_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">hidden_inputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals into output layer</span>
+        <span class="n">final_inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">who</span><span class="p">,</span> <span class="n">hidden_outputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals from output layer</span>
+        <span class="n">final_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">final_inputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate output errors (target - model)</span>
+        <span class="n">output_errors</span> <span class="o">=</span> <span class="n">targets</span> <span class="o">-</span> <span class="n">final_outputs</span>
+
+        <span class="c1"># calculate hidden layer errors (split by weigths recombined in hidden layer)</span>
+        <span class="n">hidden_errors</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">who</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">output_errors</span><span class="p">)</span>
+
+        <span class="c1"># update the weights for the links from hidden to output layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">who</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">output_errors</span> <span class="o">*</span> <span class="n">final_outputs</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">final_outputs</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">hidden_outputs</span><span class="p">))</span>
+
+        <span class="c1"># update the weights for the links from input to hidden layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wih</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">hidden_errors</span> <span class="o">*</span> <span class="n">hidden_outputs</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">hidden_outputs</span><span class="p">)),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">inputs</span><span class="p">))</span>                                       
+        
+        <span class="k">pass</span>
+
+    <span class="c1"># query the neural network</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs_list</span><span class="p">):</span>
+        <span class="c1"># convert input list into 2D array</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">inputs_list</span><span class="p">,</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># calculate signals into hidden layer</span>
+        <span class="n">hidden_inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wih</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals from hidden layer</span>
+        <span class="n">hidden_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">hidden_inputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals into output layer</span>
+        <span class="n">final_inputs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">who</span><span class="p">,</span> <span class="n">hidden_outputs</span><span class="p">)</span>
+
+        <span class="c1"># calculate signals from output layer</span>
+        <span class="n">final_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">final_inputs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">final_outputs</span>
+
+        <span class="k">pass</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;neuralNetwork Class Loads OK&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>neuralNetwork Class Loads OK
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test case 1 p130 MYONN</span>
+<span class="c1"># number of input, hidden, and output nodes</span>
+<span class="n">input_nodes</span>  <span class="o">=</span> <span class="mi">784</span>    <span class="c1"># 28X28 Pixel Image </span>
+<span class="n">hidden_nodes</span> <span class="o">=</span> <span class="mi">110</span>    <span class="c1"># Should be smaller than input count (or kind of useless)</span>
+<span class="n">output_nodes</span> <span class="o">=</span>  <span class="mi">10</span>    <span class="c1"># Classifications</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>   <span class="c1"># set learning rate</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">neuralNetwork</span><span class="p">(</span><span class="n">input_nodes</span><span class="p">,</span><span class="n">hidden_nodes</span><span class="p">,</span><span class="n">output_nodes</span><span class="p">,</span><span class="n">learning_rate</span><span class="p">)</span> <span class="c1"># create an instance</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Instance n Created&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Instance n Created
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load a training file</span>
+<span class="c1"># replace code here with a URL get</span>
+<span class="c1">## training_data_file = open(&quot;mnist_train_100.csv&quot;,&#39;r&#39;) #connect the file#</span>
+<span class="n">training_data_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;mnist_train.csv&quot;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="c1">#connect the file#</span>
+<span class="n">training_data_list</span> <span class="o">=</span> <span class="n">training_data_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span> <span class="c1">#read entire contents of file into object: data_list#</span>
+<span class="n">training_data_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1">#disconnect the file#</span>
+<span class="c1"># print(len(training_data_list))   ## activate for debugging otherwise leave disabled</span>
+<span class="c1"># train the neural network</span>
+<span class="n">howManyTrainingTimes</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">times</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># added outer loop for repeat training same data set</span>
+    <span class="n">howManyTrainingRecords</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">training_data_list</span><span class="p">:</span>
+    <span class="c1"># split the values on the commas</span>
+        <span class="n">all_values</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># split datalist on commas - all records.  Is thing going to work? #</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#        inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01</span>
+<span class="c1">#        inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01</span>
+    <span class="c1"># print(inputs)          ## activate for debugging otherwise leave disabled</span>
+    <span class="c1"># create target output values -- all 0.01 except for the label of 0.99</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+    <span class="c1"># all_values[0] is the target for this record</span>
+        <span class="n">targets</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="mf">0.99</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+        <span class="n">howManyTrainingRecords</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">pass</span>
+    <span class="n">howManyTrainingTimes</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">learning_rate</span> <span class="o">*=</span> <span class="mf">0.9</span>
+    <span class="k">pass</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;training records processed   = &quot;</span><span class="p">,</span><span class="n">howManyTrainingRecords</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;training episodes            = &quot;</span><span class="p">,</span><span class="n">howManyTrainingTimes</span><span class="p">)</span>
+<span class="c1"># load a production file</span>
+<span class="c1">## test_data_file = open(&quot;mnist_test_10.csv&quot;,&#39;r&#39;) #connect the file#</span>
+<span class="n">test_data_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;mnist_test.csv&quot;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="c1">#connect the file#</span>
+<span class="n">test_data_list</span> <span class="o">=</span> <span class="n">test_data_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span> <span class="c1">#read entire contents of file into object: data_list#</span>
+<span class="n">test_data_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1">#disconnect the file#</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training records processed   =  60000
+training episodes            =  1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test the neural network</span>
+<span class="n">scorecard</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># empty array for keeping score</span>
+
+<span class="c1"># run through the records in test_data_list</span>
+<span class="n">howManyTestRecords</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">test_data_list</span><span class="p">:</span>
+    <span class="c1"># split the values on the commas</span>
+    <span class="n">all_values</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># split datalist on commas - all records #</span>
+    <span class="n">correct_label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># correct answer is first element of all_values</span>
+    <span class="c1"># scale and shift the inputs</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#    inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01</span>
+    <span class="c1"># query the neural network</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">predict_label</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+    <span class="c1">##    print &quot;predict =&quot;,predict_label,correct_label,&quot;= correct&quot; # activate for small test sets only!</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">predict_label</span> <span class="o">==</span> <span class="n">correct_label</span><span class="p">):</span>
+        <span class="n">scorecard</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scorecard</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">pass</span>
+    <span class="n">howManyTestRecords</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">pass</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;production records processed =&quot;</span><span class="p">,</span> <span class="n">howManyTestRecords</span><span class="p">)</span>
+<span class="c1">## print scorecard   # activate for small test sets only!</span>
+<span class="c1"># calculate performance score, fraction of correct answers</span>
+<span class="n">scorecard_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">scorecard</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span> <span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;performance = &quot;</span><span class="p">,</span><span class="n">scorecard_array</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">scorecard_array</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>production records processed = 10000
+performance =  0.9472
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
+<span class="c1"># first read and render</span>
+<span class="c1">#img_array = scipy.misc.imread(&quot;MyZero.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyZero.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyZero.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
+<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 0 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7e3c3e090675969ea9e1b4a6f9a9f74da8c1bfe7343ebcd2332ec86ef8cf9944.png" src="../../_images/7e3c3e090675969ea9e1b4a6f9a9f74da8c1bfe7343ebcd2332ec86ef8cf9944.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 0  my network thinks its =  0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyOne.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyOne.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m1</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v1</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 1 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f27e903cde0f6cdd274ae68e221e5734431155c0d6b754876775c5407aa45f26.png" src="../../_images/f27e903cde0f6cdd274ae68e221e5734431155c0d6b754876775c5407aa45f26.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 1  my network thinks its =  1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyTwo.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyTwo.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m2</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v2</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 2 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7ed515fe26668b8c20e0f00ad7e8d9e1fd59ecae7d6d1a7f6a8f68bcbc1faa3e.png" src="../../_images/7ed515fe26668b8c20e0f00ad7e8d9e1fd59ecae7d6d1a7f6a8f68bcbc1faa3e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 2  my network thinks its =  2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyThree.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyThree.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m3</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v3</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 3 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/583ec9c5e540fd4be6c6bb60e334aa727f577b72fc36f92087d55f15fd3e97ef.png" src="../../_images/583ec9c5e540fd4be6c6bb60e334aa727f577b72fc36f92087d55f15fd3e97ef.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 3  my network thinks its =  3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyFour.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyFour.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m4</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v4</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 4 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4d941e5ecbc78335f2885ddd1ace4077f6b12dd1e5dfa2430287839a6af638b9.png" src="../../_images/4d941e5ecbc78335f2885ddd1ace4077f6b12dd1e5dfa2430287839a6af638b9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 4  my network thinks its =  4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyFive.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyFive.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m5</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v5</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 5 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1392b36a03405cb09dc429a6169de9aff662400a36b77e1cde7317c8858ecc31.png" src="../../_images/1392b36a03405cb09dc429a6169de9aff662400a36b77e1cde7317c8858ecc31.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 5  my network thinks its =  5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MySix.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MySix.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m6</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v6</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 6 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/893a12102ed00dedf0c0cd7875d8e2876da97eeb583c3f4d72e7c9772c89be8d.png" src="../../_images/893a12102ed00dedf0c0cd7875d8e2876da97eeb583c3f4d72e7c9772c89be8d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 6  my network thinks its =  5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MySeven.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MySeven.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m7</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v7</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 7 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/de7f1a0238380d7a0a596a53057b8aeefce3a49b57a8c15b0c3bbb8d406f37d3.png" src="../../_images/de7f1a0238380d7a0a596a53057b8aeefce3a49b57a8c15b0c3bbb8d406f37d3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 7  my network thinks its =  1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyEight.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyEight.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m8</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v8</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 8 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2bc8c9f6f221556aa8bbda7ce49d22e2c84f16ebfcb2d06d93763ea4052ae332.png" src="../../_images/2bc8c9f6f221556aa8bbda7ce49d22e2c84f16ebfcb2d06d93763ea4052ae332.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 8  my network thinks its =  9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/MyNine.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/MyNine.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m9</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">v9</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = 9 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+<span class="k">pass</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/21ba707175afd3fec5b6ef3cfa9d9512db141e740e9d3faf0cf361fb48d741f5.png" src="../../_images/21ba707175afd3fec5b6ef3cfa9d9512db141e740e9d3faf0cf361fb48d741f5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = 9  my network thinks its =  9
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 0 statistics : &quot;</span><span class="p">,</span><span class="n">m0</span><span class="p">,</span><span class="n">v0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 1 statistics : &quot;</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">v1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 2 statistics : &quot;</span><span class="p">,</span><span class="n">m2</span><span class="p">,</span><span class="n">v2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 3 statistics : &quot;</span><span class="p">,</span><span class="n">m3</span><span class="p">,</span><span class="n">v3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 4 statistics : &quot;</span><span class="p">,</span><span class="n">m4</span><span class="p">,</span><span class="n">v4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 5 statistics : &quot;</span><span class="p">,</span><span class="n">m5</span><span class="p">,</span><span class="n">v5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 6 statistics : &quot;</span><span class="p">,</span><span class="n">m6</span><span class="p">,</span><span class="n">v6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 7 statistics : &quot;</span><span class="p">,</span><span class="n">m7</span><span class="p">,</span><span class="n">v7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 8 statistics : &quot;</span><span class="p">,</span><span class="n">m8</span><span class="p">,</span><span class="n">v8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my 9 statistics : &quot;</span><span class="p">,</span><span class="n">m9</span><span class="p">,</span><span class="n">v9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my 0 statistics :  0.10840576230492197 0.07128458254994675
+my 1 statistics :  0.06914150660264105 0.04574784884107456
+my 2 statistics :  0.10085894357743097 0.06906257575311037
+my 3 statistics :  0.15961914765906363 0.0712855672599472
+my 4 statistics :  0.13138295318127252 0.0636436872922038
+my 5 statistics :  0.11012905162064825 0.07498276958958852
+my 6 statistics :  0.18414135654261704 0.09940878599954388
+my 7 statistics :  0.11909213685474189 0.05663173432557299
+my 8 statistics :  0.12214255702280911 0.08051320649763508
+my 9 statistics :  0.12318742496998798 0.07515884736605476
+</pre></div>
+</div>
+</div>
+</div>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning">an-introduction-to-machine-learning</a></p></li>
+<li><p><a class="reference external" href="http://myselph.de/neuralNet.html">Neural Network Digit Recognizer</a>  An online mimic using same dataset</p></li>
+<li><p>LazyProgrammer. Unsupervised Machine Learning in Python: Master Data Science and Machine Learning with Cluster Analysis, Gaussian Mixture Models, and Principal Components Analysis . Kindle Edition.</p></li>
+<li><p>Rashid, Tariq. Make Your Own Neural Network. Kindle Edition.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#first read and render</span>
+<span class="c1">#img_array = imageio.imread(&quot;image_src/cat784.png&quot;, as_gray = True)</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;image_src/cat784.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">784</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#matplotlib.pyplot.imshow(numpy.asfarray(img_data).reshape((28,28)),cmap = &#39;Greys&#39;) # construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">mX</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">vX</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;my number = cat784 &quot;</span><span class="p">,</span><span class="s2">&quot;my network thinks its = &quot;</span><span class="p">,</span><span class="n">mylabel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5146fc2cc7e311b360adb8bca8d164814a9b15666084f4420f96845c226a8005.png" src="../../_images/5146fc2cc7e311b360adb8bca8d164814a9b15666084f4420f96845c226a8005.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my number = cat784  my network thinks its =  3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my X statistics : &quot;</span><span class="p">,</span><span class="n">mX</span><span class="p">,</span><span class="n">vX</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my X statistics :  0.6035642256902761 0.02326481359626684
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/14-neuralnetworks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="deeplearners.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Deep Learners</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="materialANN.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Artifical Neural  Network</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

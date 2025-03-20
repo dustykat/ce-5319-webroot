@@ -1,0 +1,80 @@
+1. What is the primary goal of machine learning in the context of civil engineering?
+
+A. To eliminate the need for engineers in decision-making
+B. To replace traditional statistical methods with new tools
+C. To model nonlinear phenomena and extract information not feasible through traditional methods
+D. To automate all engineering processes
+
+Answer: C
+2. Which of the following best describes the Feynman Technique for learning?
+
+A. Memorizing complex concepts through repetition
+B. Simplifying and self-explaining concepts to identify knowledge gaps
+C. Using advanced algorithms to teach oneself new skills
+D. Learning through incremental hands-on practice
+
+Answer: B
+3. How does the U.S. Army’s Crawl-Walk-Run method differ from the Feynman Technique?
+
+A. It focuses on conceptual clarity through self-explanation.
+B. It emphasizes structured, action-based learning through progressive phases.
+C. It is best for mastering theoretical knowledge.
+D. It does not include feedback during the learning process.
+
+Answer: B
+4. What is the key distinction between human and machine learning?
+
+A. Humans rely on raw data, while machines rely on intuition.
+B. Humans excel at processing large datasets, while machines thrive at conceptual thinking.
+C. Humans adapt intuitively, while machines require explicit data and predefined algorithms.
+D. Machines are faster learners than humans in all contexts.
+
+Answer: C
+5. In supervised learning, the algorithm learns to:
+
+A. Identify patterns in unlabeled data.
+B. Interact with its environment to maximize cumulative rewards.
+C. Map inputs to outputs using labeled training data.
+D. Automatically generate training labels from raw data.
+
+Answer: C
+6. What is the goal of unsupervised learning?
+
+A. To classify data based on labeled examples.
+B. To maximize rewards through environmental interaction.
+C. To identify hidden structures or patterns in data without labeled outputs.
+D. To deploy models to real-world applications.
+
+Answer: C
+7. In reinforcement learning, an agent learns by:
+
+A. Using labeled data to improve predictions.
+B. Identifying patterns and clusters in data.
+C. Interacting with the environment and receiving rewards or penalties.
+D. Minimizing error in predictions using predefined loss functions.
+
+Answer: C
+8. What is the main advantage of using Jupyter Notebooks in machine learning projects?
+
+A. They are exclusively designed for statistical analysis.
+B. They combine code, text, and visualizations in an interactive environment.
+C. They are faster than all other programming environments.
+D. They require no prior programming experience.
+
+Answer: B
+9. Which of the following best describes the concept of literate programming in the context of machine learning?
+
+A. Writing programs in simple language for non-programmers to understand
+B. Combining code and documentation to explain logic and methods in a cohesive format
+C. Using natural language to teach a machine to code
+D. Writing machine learning algorithms in literary prose
+
+Answer: B
+10. What is a significant ethical concern mentioned in the lesson about testing machine learning models?
+
+A. The inability to deploy models efficiently.
+B. Reusing the test set for training compromises its purpose.
+C. Failing to automate testing processes effectively.
+D. Testing models on small datasets leads to biased results.
+
+Answer: B

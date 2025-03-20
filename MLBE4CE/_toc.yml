@@ -4,48 +4,70 @@
 format: jb-book
 root: intro
 chapters:
-- file: chapters/introduction/introduction # introduction
+- file: chapters/01-introduction/introduction # introduction
   sections:
-  - file: chapters/introduction/whatisml
-  - file: chapters/introduction/learningtypes
-  - file: chapters/introduction/mlworkflow
-  - file: chapters/introduction/mlanatomy
+  - file: chapters/01-introduction/programming # introduction
+#  sections:
+#  - file: chapters/introduction/whatisml
+#  - file: chapters/introduction/learningtypes
+#  - file: chapters/introduction/mlworkflow
+#  - file: chapters/introduction/mlanatomy
   
-- file: chapters/exploratorydata/exploratorydata # EDA
+- file: chapters/02-exploratorydata/exploratorydata # EDA
 
-- file: chapters/datapreparation/datapreparation # data prep
+- file: chapters/03-datapreparation/datapreparation # data prep
 
-- file: chapters/optimization/optimization # optimization
+- file: chapters/04-linearregression/linearregression # linear regression
+
+- file: chapters/05-nonlinearregression/nonlinearregression # non-linear regression
+
+- file: chapters/06-logisticregression/logisticregression # logistic regression 
   sections:
-  - file: chapters/optimization/gridsearch
-  - file: chapters/optimization/nelderandmead
-  - file: chapters/optimization/hookeandjeeves
-  - file: chapters/optimization/powellsdirectionset
+  - file: chapters/06-logisticregression/example1
+  - file: chapters/06-logisticregression/example2
+  - file: chapters/06-logisticregression/example3
+  - file: chapters/06-logisticregression/poissonregression
 
-- file: chapters/linearregression/linearregression # linear regression
+- file: chapters/07-decisiontrees/decisiontrees # decision trees
 
-- file: chapters/nonlinearregression/nonlinearregression # non-linear regression
-
-- file: chapters/logisticregression/logisticregression # logistic regression 
-  sections:
-  - file: chapters/logisticregression/example1
-  - file: chapters/logisticregression/example2
-  - file: chapters/logisticregression/example3
-  - file: chapters/logisticregression/poissonregression
+- file: chapters/08-nearestneighbors/nearestneighbors # nearest neighbors
   
-- file: chapters/decisiontrees/decisiontrees # decision trees
+- file: chapters/09-supportvectors/supportvectors # support vectors 
 
-- file: chapters/supportvectors/supportvectors # support vectors 
+- file: chapters/10-validation/validation # validation methods
 
-- file: chapters/neuralnetworks/neuralnetworks # neural networks
+- file: chapters/11-clustering/clustering # clustering
+
+- file: chapters/12-dimensionreduction/dimensionreduction # dimensionreduction
+
+- file: chapters/13-featureengineering/featureengineering # featureengineering
+
+- file: chapters/14-neuralnetworks/neuralnetworks # neural networks
   sections:
-  - file: chapters/neuralnetworks/deeplearners
-  - file: chapters/neuralnetworks/myann
-  - file: chapters/neuralnetworks/materialANN
-  - file: chapters/neuralnetworks/skann
+  - file: chapters/14-neuralnetworks/deeplearners
+  - file: chapters/14-neuralnetworks/myann
+  - file: chapters/14-neuralnetworks/materialANN
+  - file: chapters/14-neuralnetworks/skann
 
-- file: chapters/nearestneighbors/nearestneighbors # nearest neighbors
+- file: chapters/15-ensemblemethods/ensemblemethods # ensemblemethods
 
-- file: chapters/clustering/clustering # clustering
+- file: chapters/16-timeseries/timeseries # timeseries
 
-- file: chapters/validation/validation # validation methods
+- file: chapters/17-optimization/optimization # optimization
+  sections:
+  - file: chapters/17-optimization/gridsearch
+  - file: chapters/17-optimization/nelderandmead
+  - file: chapters/17-optimization/hookeandjeeves
+  - file: chapters/17-optimization/powellsdirectionset
+
+  
+
+
+
+
+
+
+
+
+
+

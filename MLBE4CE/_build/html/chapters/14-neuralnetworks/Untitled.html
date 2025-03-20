@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Neural Networks — Machine Learning by Example for Civil Engineers &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/Untitled';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">K-Nearest Neighbor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">Clustering</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="neuralnetworks.html">Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myann.html">Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materialANN.html">Artifical Neural  Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearch.html">Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/14-neuralnetworks/Untitled.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Neural Networks — Machine Learning by Example for Civil Engineers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-neural-networks">Introduction to Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-neural-networks-ann">Feedforward Neural Networks (ANN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-neural-networks-cnn">Convolutional Neural Networks (CNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent-neural-networks-rnn">Recurrent Neural Networks (RNN)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-components">Neural Network Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neurons-and-activation-functions">1. Neurons and Activation Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weights-biases-and-learning">2. Weights, Biases, and Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-functions">3. Loss Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-neural-networks">Training Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-propagation">1. Forward Propagation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backpropagation">2. Backpropagation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters">3. Hyperparameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-in-civil-engineering">Applications in Civil Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-revisions-improvements"><strong>Key Revisions &amp; Improvements</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="neural-networks-machine-learning-by-example-for-civil-engineers">
+<h1>Neural Networks — Machine Learning by Example for Civil Engineers<a class="headerlink" href="#neural-networks-machine-learning-by-example-for-civil-engineers" title="Link to this heading">#</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Introduction to Neural Networks</p></li>
+<li><p>Types of Neural Networks</p></li>
+<li><p>Neural Network Components</p></li>
+<li><p>Training Neural Networks</p></li>
+<li><p>Applications in Civil Engineering</p></li>
+<li><p>References</p></li>
+</ul>
+</section>
+<section id="introduction-to-neural-networks">
+<h2>Introduction to Neural Networks<a class="headerlink" href="#introduction-to-neural-networks" title="Link to this heading">#</a></h2>
+<p>Neural networks, inspired by biological neural systems, are computational models designed to recognize patterns and relationships in data. They consist of interconnected artificial neurons that process information in a layered structure.</p>
+<p>In civil engineering, neural networks can be applied to problems such as hydrological modeling, structural health monitoring, and material classification. This chapter provides an overview of neural network classification, with examples and applications relevant to engineering problems.</p>
+</section>
+<section id="types-of-neural-networks">
+<h2>Types of Neural Networks<a class="headerlink" href="#types-of-neural-networks" title="Link to this heading">#</a></h2>
+<p>Neural networks can be broadly categorized into three main types:</p>
+<ol class="arabic simple">
+<li><p><strong>Artificial Neural Networks (ANN)</strong> – Traditional multi-layer perceptron (MLP) models used for classification and regression tasks.</p></li>
+<li><p><strong>Convolutional Neural Networks (CNN)</strong> – Specialized for image and spatial data processing.</p></li>
+<li><p><strong>Recurrent Neural Networks (RNN)</strong> – Designed for sequential data and time series predictions.</p></li>
+</ol>
+<section id="feedforward-neural-networks-ann">
+<h3>Feedforward Neural Networks (ANN)<a class="headerlink" href="#feedforward-neural-networks-ann" title="Link to this heading">#</a></h3>
+<p>A <strong>feedforward neural network (FNN)</strong> is the simplest form of ANN, where data flows in one direction—from input to output—without cycles. The <strong>multi-layer perceptron (MLP)</strong>, a common type of FNN, consists of multiple layers: an <strong>input layer</strong>, one or more <strong>hidden layers</strong>, and an <strong>output layer</strong>. Each neuron in a layer is connected to neurons in the next layer via weighted connections.</p>
+<p>Training involves adjusting these weights using <strong>backpropagation</strong>, a method that minimizes error by propagating corrections backward through the network.</p>
+<blockquote>
+<div><p><strong>Key Reference:</strong> Upadhyay, Y. (2019). <em>Deep Learning Models for Civil Engineering Applications</em>.</p>
+</div></blockquote>
+</section>
+<section id="convolutional-neural-networks-cnn">
+<h3>Convolutional Neural Networks (CNN)<a class="headerlink" href="#convolutional-neural-networks-cnn" title="Link to this heading">#</a></h3>
+<p><strong>CNNs</strong> are widely used in image processing tasks, including structural damage detection and remote sensing. They consist of <strong>convolutional layers</strong> that apply filters to detect features, followed by <strong>pooling layers</strong> that downsample the data to reduce dimensionality.</p>
+<p>CNNs share weights across neurons, making them highly efficient for spatial data analysis. Their architecture includes:</p>
+<ul class="simple">
+<li><p><strong>Convolutional layers</strong> – Extract feature representations.</p></li>
+<li><p><strong>Pooling layers</strong> – Reduce complexity and improve generalization.</p></li>
+<li><p><strong>Fully connected layers</strong> – Interpret extracted features for classification or regression.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Key Applications:</strong></p>
+<ul class="simple">
+<li><p>Crack detection in concrete structures (Sharma, P., 2021).</p></li>
+<li><p>Satellite image-based flood prediction (Tang, Y. et al., 2022).</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="recurrent-neural-networks-rnn">
+<h3>Recurrent Neural Networks (RNN)<a class="headerlink" href="#recurrent-neural-networks-rnn" title="Link to this heading">#</a></h3>
+<p>RNNs are designed for sequential data and are commonly used for hydrological modeling, rainfall-runoff forecasting, and time-series analysis. <strong>Long Short-Term Memory (LSTM)</strong> and <strong>Gated Recurrent Units (GRU)</strong> are advanced RNN architectures that can capture dependencies over long time intervals.</p>
+<blockquote>
+<div><p><strong>Example Application:</strong> Runoff forecasting using a hybrid <strong>CNN-GBDT</strong> model, which integrates convolutional layers with decision trees to improve prediction accuracy (Tang et al., 2022).</p>
+</div></blockquote>
+</section>
+</section>
+<section id="neural-network-components">
+<h2>Neural Network Components<a class="headerlink" href="#neural-network-components" title="Link to this heading">#</a></h2>
+<section id="neurons-and-activation-functions">
+<h3>1. Neurons and Activation Functions<a class="headerlink" href="#neurons-and-activation-functions" title="Link to this heading">#</a></h3>
+<p>Each neuron receives weighted inputs and applies an <strong>activation function</strong> to introduce non-linearity. Common activation functions include:</p>
+<ul class="simple">
+<li><p><strong>Sigmoid</strong>: Outputs values between (0,1), useful for probability-based models but suffers from <strong>vanishing gradients</strong>.</p></li>
+<li><p><strong>Tanh</strong>: Outputs values in (-1,1), mitigating some vanishing gradient issues.</p></li>
+<li><p><strong>ReLU (Rectified Linear Unit)</strong>: Outputs zero for negative values and identity for positive values, improving training efficiency.</p></li>
+<li><p><strong>Leaky ReLU</strong>: A variant of ReLU that allows small gradients for negative values, preventing “dead neurons.”</p></li>
+<li><p><strong>Softmax</strong>: Used in classification tasks, converting logits into probability distributions.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Reference:</strong> Baheti, (2022). <em>Neural Network Activation Functions: A Comparative Study</em>.</p>
+</div></blockquote>
+</section>
+<section id="weights-biases-and-learning">
+<h3>2. Weights, Biases, and Learning<a class="headerlink" href="#weights-biases-and-learning" title="Link to this heading">#</a></h3>
+<p>Neural networks adjust <strong>weights and biases</strong> during training using <strong>gradient descent</strong>. The most common optimization technique is <strong>stochastic gradient descent (SGD)</strong>, often improved with momentum-based methods such as <strong>Adam (Adaptive Moment Estimation)</strong>.</p>
+</section>
+<section id="loss-functions">
+<h3>3. Loss Functions<a class="headerlink" href="#loss-functions" title="Link to this heading">#</a></h3>
+<p>Loss functions evaluate how well a network performs. Common choices include:</p>
+<ul class="simple">
+<li><p><strong>Mean Squared Error (MSE)</strong> – For regression tasks.</p></li>
+<li><p><strong>Cross-Entropy Loss</strong> – For classification tasks.</p></li>
+</ul>
+</section>
+</section>
+<section id="training-neural-networks">
+<h2>Training Neural Networks<a class="headerlink" href="#training-neural-networks" title="Link to this heading">#</a></h2>
+<section id="forward-propagation">
+<h3>1. Forward Propagation<a class="headerlink" href="#forward-propagation" title="Link to this heading">#</a></h3>
+<p>In <strong>forward propagation</strong>, inputs pass through the network layers, applying weight transformations and activation functions.</p>
+</section>
+<section id="backpropagation">
+<h3>2. Backpropagation<a class="headerlink" href="#backpropagation" title="Link to this heading">#</a></h3>
+<p>Using <strong>gradient descent</strong>, the <strong>error</strong> between predicted and actual outputs is propagated backward to update weights.</p>
+</section>
+<section id="hyperparameters">
+<h3>3. Hyperparameters<a class="headerlink" href="#hyperparameters" title="Link to this heading">#</a></h3>
+<p>Neural networks require tuning of hyperparameters such as:</p>
+<ul class="simple">
+<li><p><strong>Learning rate</strong> – Controls the step size in gradient descent.</p></li>
+<li><p><strong>Batch size</strong> – Number of training examples per update.</p></li>
+<li><p><strong>Number of hidden layers</strong> – Determines model complexity.</p></li>
+</ul>
+</section>
+</section>
+<section id="applications-in-civil-engineering">
+<h2>Applications in Civil Engineering<a class="headerlink" href="#applications-in-civil-engineering" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Structural Health Monitoring</strong></p>
+<ul class="simple">
+<li><p>CNN-based models detect cracks and material degradation in infrastructure.</p></li>
+<li><p>Example: Image-based crack detection using deep learning (Sharma, P., 2021).</p></li>
+</ul>
+</li>
+<li><p><strong>Flood Prediction &amp; Hydrological Modeling</strong></p>
+<ul class="simple">
+<li><p>ANN and RNNs improve rainfall-runoff modeling.</p></li>
+<li><p>Example: Precipitation forecasting using CNN-GBDT (Tang et al., 2022).</p></li>
+</ul>
+</li>
+<li><p><strong>Traffic Flow Prediction</strong></p>
+<ul class="simple">
+<li><p>RNNs and LSTMs analyze sequential traffic data.</p></li>
+<li><p>Example: Neural network-based traffic congestion forecasting.</p></li>
+</ul>
+</li>
+<li><p><strong>Construction Material Classification</strong></p>
+<ul class="simple">
+<li><p>CNNs classify construction materials from images.</p></li>
+<li><p>Example: AI-based material identification in automated construction systems.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Aljaaf, A. J., Mohsin, T. M., &amp; Al-Jumeily, D. (2021).</strong> “COVID-19 outbreak forecasting using feed-forward neural networks.” <em>Journal of Biomedical Informatics, 118</em>, 103766.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1016/j.jbi.2021.103766">DOI:10.1016/j.jbi.2021.103766</a></p></li>
+</ul>
+</li>
+<li><p><strong>Haldorai, A., &amp; Ramu, A. (2021).</strong> “Hyper Basis Feedforward Neural Network for Urban Sustainability.” <em>Neural Processing Letters, 53</em>, 2385–2401.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1007/s11063-020-10327-3">DOI:10.1007/s11063-020-10327-3</a></p></li>
+</ul>
+</li>
+<li><p><strong>Olmedilla, M., Martínez-Torres, M. R., &amp; Toral, S. (2022).</strong> “Predicting online review helpfulness using 1D CNN.” <em>Expert Systems with Applications, 198</em>, 116787.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1016/j.eswa.2022.116787">DOI:10.1016/j.eswa.2022.116787</a></p></li>
+</ul>
+</li>
+<li><p><strong>Tang, Y., Wu, Q., &amp; Soomro, S. (2022).</strong> “Runoff forecasting using CNN-GBDT models.” <em>Acta Geophysica.</em></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1007/s11600-022-00877-6">DOI:10.1007/s11600-022-00877-6</a></p></li>
+</ul>
+</li>
+<li><p><strong>Sharma, P. (2021).</strong> “Deep learning for structural damage detection.” <em>Journal of Structural Engineering</em>.</p></li>
+</ol>
+<hr class="docutils" />
+<section id="key-revisions-improvements">
+<h3><strong>Key Revisions &amp; Improvements</strong><a class="headerlink" href="#key-revisions-improvements" title="Link to this heading">#</a></h3>
+<p>✔ <strong>Concise &amp; structured format</strong><br />
+✔ <strong>Added engineering-specific applications</strong><br />
+✔ <strong>Improved clarity in explanations</strong><br />
+✔ <strong>Included additional citations</strong><br />
+✔ <strong>Formatted for Jupyter Book in Markdown</strong></p>
+<p>This version enhances readability and aligns better with an engineering audience. Let me know if you’d like further refinements! 🚀</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python-my-env",
+            path: "./chapters/14-neuralnetworks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python-my-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-neural-networks">Introduction to Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-neural-networks">Types of Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-neural-networks-ann">Feedforward Neural Networks (ANN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-neural-networks-cnn">Convolutional Neural Networks (CNN)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent-neural-networks-rnn">Recurrent Neural Networks (RNN)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-components">Neural Network Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neurons-and-activation-functions">1. Neurons and Activation Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#weights-biases-and-learning">2. Weights, Biases, and Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-functions">3. Loss Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-neural-networks">Training Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-propagation">1. Forward Propagation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backpropagation">2. Backpropagation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters">3. Hyperparameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-in-civil-engineering">Applications in Civil Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-revisions-improvements"><strong>Key Revisions &amp; Improvements</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
