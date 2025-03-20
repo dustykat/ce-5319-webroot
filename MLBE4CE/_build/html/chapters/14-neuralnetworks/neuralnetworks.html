@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Neural Networks &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>14. Neural Networks &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Deep Learners" href="deeplearners.html" />
-    <link rel="prev" title="Clustering" href="../11-clustering/clustering.html" />
+    <link rel="prev" title="13. Feature Engineering" href="../13-featureengineering/featureengineering.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -199,18 +199,22 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">K-Nearest Neighbor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">Support Vectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">Validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">Clustering</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">14. Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
 <li class="toctree-l2"><a class="reference internal" href="myann.html">Artifical Neural  Network (Homebrew)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="materialANN.html">Artifical Neural  Network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">17. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearch.html">Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
@@ -355,7 +359,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Neural Networks</h1>
+    <h1>14. Neural Networks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -379,7 +383,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="neural-networks">
-<h1>Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h1>
+<h1>14. Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h1>
 <section id="an-introduction-to-neural-network-classification">
 <h2>An Introduction to Neural Network Classification<a class="headerlink" href="#an-introduction-to-neural-network-classification" title="Link to this heading">#</a></h2>
 <div class="admonition note">
@@ -530,13 +534,13 @@ Since ANN has been previously tested for streamflow prediction I want to explore
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            name: "python-my-env",
             path: "./chapters/14-neuralnetworks"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python-my-env'</script>
 
                 </article>
               
@@ -549,12 +553,12 @@ Since ANN has been previously tested for streamflow prediction I want to explore
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../11-clustering/clustering.html"
+       href="../13-featureengineering/featureengineering.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Clustering</p>
+        <p class="prev-next-title">13. Feature Engineering</p>
       </div>
     </a>
     <a class="right-next"
