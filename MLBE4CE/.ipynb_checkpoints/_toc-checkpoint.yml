@@ -6,8 +6,8 @@ root: intro
 chapters:
 - file: chapters/01-introduction/introduction # introduction
   sections:
-  - file: chapters/01-introduction/programming # introduction
-#  sections:
+  - file: chapters/01-introduction/programming
+  
 #  - file: chapters/introduction/whatisml
 #  - file: chapters/introduction/learningtypes
 #  - file: chapters/introduction/mlworkflow
