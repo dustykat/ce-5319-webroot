@@ -441,9 +441,15 @@ document.write(`
 <p>Here we wish to define the objective function, which in this example is net revenue</p>
 <p><span class="math notranslate nohighlight">\(y(x_1,x_2) = [120 - (5 \times 12)]x_1 + [80 - (3 \times 12)]x_2\)</span><br></p>
 <p>In a Jupyter Notebook it would be something like:</p>
-<p>def myobj(x1,x2):
-myobj = (120-5*12)<em>x1 + (80-3</em>12)*x2
-return myobj</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myobj</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
+    <span class="n">myobj</span> <span class="o">=</span> <span class="p">(</span><span class="mi">120</span><span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">80</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span><span class="o">*</span><span class="n">x2</span>
+    <span class="k">return</span> <span class="n">myobj</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="constraints">
 <h4>Constraints<a class="headerlink" href="#constraints" title="Link to this heading">#</a></h4>
@@ -500,20 +506,12 @@ return myobj</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">18</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">x1</span><span class="o">=</span><span class="mi">500</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">x2</span><span class="o">=</span><span class="mi">500</span>
-<span class="ne">---&gt; </span><span class="mi">18</span> <span class="n">mymodel</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
-
-<span class="nn">Cell In[2], line 2,</span> in <span class="ni">mymodel</span><span class="nt">(x1, x2)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">mymodel</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
-<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">objvalue</span> <span class="o">=</span> <span class="n">myobj</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">constraint1</span> <span class="o">=</span> <span class="n">con1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">constraint2</span> <span class="o">=</span> <span class="n">con2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;myobj&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Substance A produced =  500
+Substance B produced =  500
+Objective Function Value =  52000
+Minimun Production Constraint =  0
+Maximum Labor Budget =  4000
+Solution is FEASIBLE
 </pre></div>
 </div>
 </div>
