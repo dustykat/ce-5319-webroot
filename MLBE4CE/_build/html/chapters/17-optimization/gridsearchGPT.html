@@ -1057,6 +1057,19 @@ Solution is FEASIBLE
 </div>
 </div>
 </div>
+<p>Integer programs are a class of optimization problems called NP-Hard</p>
+<div class="admonition-integer-programs-and-np-hard admonition">
+<p class="admonition-title">Integer Programs and NP-Hard</p>
+<p>Integer programming problems — where some or all decision variables are constrained to take on integer values — belong to a class of computational problems known as NP-Hard. This means there is no known algorithm that can solve all instances efficiently (i.e., in polynomial time), and the solution space often grows exponentially with problem size. Even seemingly simple problems like the 0-1 knapsack problem or traveling salesman problem (TSP) are NP-Hard when cast as integer programs.</p>
+<p><img alt="" src="../../_images/nphard.png" /></p>
+<p>Learn more:</p>
+<ol class="arabic simple">
+<li><p>Garey &amp; Johnson, <em>Computers and Intractability: A Guide to the Theory of NP-Completeness</em>, W.H. Freeman, 1979.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/NP-hardness">NP-Hardness – Wikipedia</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Knapsack_problem">Knapsack Problem – Wikipedia</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling Salesman Problem - Wikipedia</a></p></li>
+</ol>
+</div>
 </section>
 <section id="enumeration-methods-method-of-darts">
 <h2>Enumeration Methods: Method of Darts<a class="headerlink" href="#enumeration-methods-method-of-darts" title="Link to this heading">#</a></h2>
@@ -1076,6 +1089,338 @@ Solution is FEASIBLE
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A military equivalent to Method of Darts is <strong>Reconissance by Fire</strong> :::</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">generate_random_pairs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span>
+                          <span class="n">x0_low</span><span class="p">,</span> <span class="n">x0_high</span><span class="p">,</span>
+                          <span class="n">x1_low</span><span class="p">,</span> <span class="n">x1_high</span><span class="p">,</span>
+                          <span class="n">x0_target</span><span class="p">,</span> <span class="n">x1_target</span><span class="p">,</span>
+                          <span class="n">dispersion_1</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="p">,</span>
+                          <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+                          <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate n 2D points with specified target, dispersion, and distribution.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        n (int): Number of points</span>
+<span class="sd">        x0_low, x0_high: Bounds for x0</span>
+<span class="sd">        x1_low, x1_high: Bounds for x1</span>
+<span class="sd">        x0_target, x1_target: Mean or mode for each variable</span>
+<span class="sd">        dispersion_1, dispersion_2: Std dev (for normal), range half-width (for uniform), or std dev (for gamma)</span>
+<span class="sd">        distribution (str): &#39;uniform&#39;, &#39;normal&#39;, or &#39;gamma&#39;</span>
+<span class="sd">        seed (int or None): Optional seed for reproducibility</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list of [x0, x1] pairs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
+        <span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x0_target</span> <span class="o">-</span> <span class="n">dispersion_1</span><span class="p">,</span> <span class="n">x0_target</span> <span class="o">+</span> <span class="n">dispersion_1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">x1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x1_target</span> <span class="o">-</span> <span class="n">dispersion_2</span><span class="p">,</span> <span class="n">x1_target</span> <span class="o">+</span> <span class="n">dispersion_2</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+        <span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x0_target</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">dispersion_1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">x1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">x1_target</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">dispersion_2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">distribution</span> <span class="o">==</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span>
+        <span class="c1"># Convert mean and std to shape and scale: mean = shape * scale, std = sqrt(shape * scale^2)</span>
+        <span class="c1"># Solve for shape and scale given mean (target) and std (dispersion)</span>
+        <span class="k">def</span> <span class="nf">gamma_params</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean</span> <span class="o">/</span> <span class="n">std</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">std</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">mean</span>
+            <span class="k">return</span> <span class="n">shape</span><span class="p">,</span> <span class="n">scale</span>
+
+        <span class="n">shape0</span><span class="p">,</span> <span class="n">scale0</span> <span class="o">=</span> <span class="n">gamma_params</span><span class="p">(</span><span class="n">x0_target</span><span class="p">,</span> <span class="n">dispersion_1</span><span class="p">)</span>
+        <span class="n">shape1</span><span class="p">,</span> <span class="n">scale1</span> <span class="o">=</span> <span class="n">gamma_params</span><span class="p">(</span><span class="n">x1_target</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="p">)</span>
+
+        <span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">x1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported distribution type. Choose from &#39;uniform&#39;, &#39;normal&#39;, &#39;gamma&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Clip to bounds</span>
+    <span class="n">x0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">x0s</span><span class="p">,</span> <span class="n">x0_low</span><span class="p">,</span> <span class="n">x0_high</span><span class="p">)</span>
+    <span class="n">x1s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">x1s</span><span class="p">,</span> <span class="n">x1_low</span><span class="p">,</span> <span class="n">x1_high</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">x1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x0s</span><span class="p">,</span> <span class="n">x1s</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">x0_low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x0_high</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">x1_low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x1_high</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">x0_target</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">x1_target</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span>
+    <span class="n">dispersion_1</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.8973713224089863, 3.0365823071875377]
+[2.389388559063052, 3.034270246429743]
+[3.018150830480554, 3.741962271566034]
+[3.7184238851264206, 1.586719755342202]
+[2.3126773002213312, 1.7750821674869672]
+[2.3126904344406554, 2.937712470759027]
+[3.763370252405913, 2.4871688796655764]
+[3.113947783322327, 3.814247332595274]
+[2.1244204912520384, 2.591975924478789]
+[2.9340480348687716, 2.0876962986647083]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rosen</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># coerce lists to arrays</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rosen</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># method of darts</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">x0_low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">x0_high</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">x1_low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x1_high</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">x0_target</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">x1_target</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span>
+    <span class="n">dispersion_1</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># First Set of Darts</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">best</span> <span class="o">=</span> <span class="mf">1e12</span>
+<span class="n">best_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">rosen</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">best</span><span class="p">:</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="n">best_guess</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="c1">#    print(samples[i],res)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_guess</span><span class="p">,</span><span class="n">best</span><span class="p">)</span>
+
+<span class="c1"># Next Set of Darts</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">x0_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x0_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x1_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x0_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">dispersion_1</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="c1">#best = 1e12</span>
+<span class="c1">#best_guess = [0,0]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">rosen</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">best</span><span class="p">:</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="n">best_guess</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="c1">#    print(samples[i],res)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_guess</span><span class="p">,</span><span class="n">best</span><span class="p">)</span>
+
+<span class="c1"># Next Set of Darts</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">x0_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x0_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x1_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x0_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">dispersion_1</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="c1">#best = 1e12</span>
+<span class="c1">#best_guess = [0,0]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">rosen</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">best</span><span class="p">:</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="n">best_guess</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="c1">#    print(samples[i],res)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_guess</span><span class="p">,</span><span class="n">best</span><span class="p">)</span>
+
+<span class="c1"># Next Set of Darts</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">x0_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x0_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x1_low</span><span class="o">=</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_high</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">x0_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">dispersion_1</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="c1">#best = 1e12</span>
+<span class="c1">#best_guess = [0,0]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">rosen</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">best</span><span class="p">:</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="n">best_guess</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="c1">#    print(samples[i],res)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_guess</span><span class="p">,</span><span class="n">best</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.1244204912520384, 2.591975924478789] 370.3600779015173
+[1.7488409825040767, 1.6839518489575784] 189.48384513902653
+[0.8744204912520384, 0.8744204912520384] 1.221578355902027
+[0.6930687840229477, 0.4372102456260192] 0.2802617757996684
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">rosen</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Rosenbrock function&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dart_search</span><span class="p">(</span><span class="n">n_darts</span><span class="p">,</span> <span class="n">x0_bounds</span><span class="p">,</span> <span class="n">x1_bounds</span><span class="p">,</span> <span class="n">x0_target</span><span class="p">,</span> <span class="n">x1_target</span><span class="p">,</span>
+                <span class="n">dispersion_1</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate random samples and evaluate them using the Rosenbrock function.&quot;&quot;&quot;</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">generate_random_pairs</span><span class="p">(</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">n_darts</span><span class="p">,</span>
+        <span class="n">x0_low</span><span class="o">=</span><span class="n">x0_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x0_high</span><span class="o">=</span><span class="n">x0_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">x1_low</span><span class="o">=</span><span class="n">x1_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1_high</span><span class="o">=</span><span class="n">x1_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">x0_target</span><span class="o">=</span><span class="n">x0_target</span><span class="p">,</span> <span class="n">x1_target</span><span class="o">=</span><span class="n">x1_target</span><span class="p">,</span>
+        <span class="n">dispersion_1</span><span class="o">=</span><span class="n">dispersion_1</span><span class="p">,</span> <span class="n">dispersion_2</span><span class="o">=</span><span class="n">dispersion_2</span><span class="p">,</span>
+        <span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
+    <span class="p">)</span>
+
+    <span class="n">best_val</span> <span class="o">=</span> <span class="mf">1e12</span>
+<span class="c1">#    best_point = [0, 0]</span>
+    <span class="n">best_point</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0_target</span><span class="p">,</span> <span class="n">x1_target</span><span class="p">]</span>
+    <span class="n">worst_point</span> <span class="o">=</span> <span class="n">best_point</span>
+    <span class="n">worst_val</span> <span class="o">=</span> <span class="mf">1e-9</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">rosen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;</span> <span class="n">best_val</span><span class="p">:</span>
+            <span class="n">best_val</span> <span class="o">=</span> <span class="n">res</span>
+            <span class="n">best_point</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="n">worst_val</span><span class="p">:</span>
+            <span class="n">worst_val</span> <span class="o">=</span> <span class="n">res</span>
+            <span class="n">worst_point</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="k">return</span> <span class="n">best_point</span><span class="p">,</span> <span class="n">best_val</span><span class="p">,</span> <span class="n">worst_point</span><span class="p">,</span> <span class="n">worst_val</span>
+
+<span class="k">def</span> <span class="nf">repeat_dart_cycles</span><span class="p">(</span><span class="n">n_cycles</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">darts_per_cycle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                       <span class="n">initial_bounds</span><span class="o">=</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+                       <span class="n">initial_target</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span>
+                       <span class="n">initial_dispersion</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                       <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+                       <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Repeat dart throws and refine the guess with each cycle.&quot;&quot;&quot;</span>
+    <span class="n">best_guess</span> <span class="o">=</span> <span class="n">initial_target</span>
+    <span class="n">best_value</span> <span class="o">=</span> <span class="mf">1e12</span>
+    <span class="n">worst_guess</span> <span class="o">=</span> <span class="n">initial_target</span>
+    <span class="n">worst_value</span> <span class="o">=</span> <span class="mf">1e-9</span>
+
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cycles</span><span class="p">):</span>
+        <span class="n">x0_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">x1_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">dispersion_1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">x0_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">dispersion_2</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">x1_bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x1_bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">best_guess</span><span class="p">,</span> <span class="n">best_value</span><span class="p">,</span> <span class="n">worst_guess</span><span class="p">,</span> <span class="n">worst_val</span> <span class="o">=</span> <span class="n">dart_search</span><span class="p">(</span>
+            <span class="n">n_darts</span><span class="o">=</span><span class="n">darts_per_cycle</span><span class="p">,</span>
+            <span class="n">x0_bounds</span><span class="o">=</span><span class="n">x0_bounds</span><span class="p">,</span>
+            <span class="n">x1_bounds</span><span class="o">=</span><span class="n">x1_bounds</span><span class="p">,</span>
+            <span class="n">x0_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">x1_target</span><span class="o">=</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">dispersion_1</span><span class="o">=</span><span class="n">dispersion_1</span><span class="p">,</span>
+            <span class="n">dispersion_2</span><span class="o">=</span><span class="n">dispersion_2</span><span class="p">,</span>
+            <span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cycle </span><span class="si">{</span><span class="n">cycle</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Best guess = </span><span class="si">{</span><span class="n">best_guess</span><span class="si">}</span><span class="s2">, Best value = </span><span class="si">{</span><span class="n">best_value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, Bounds = </span><span class="si">{</span><span class="n">x0_bounds</span><span class="si">}</span><span class="s2">, Bounds = </span><span class="si">{</span><span class="n">x1_bounds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">best_guess</span><span class="p">,</span> <span class="n">best_value</span><span class="p">,</span> <span class="n">worst_guess</span><span class="p">,</span> <span class="n">worst_val</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_pt</span><span class="p">,</span> <span class="n">best_val</span> <span class="p">,</span> <span class="n">worst_pt</span><span class="p">,</span> <span class="n">worst_val</span> <span class="o">=</span> <span class="n">repeat_dart_cycles</span><span class="p">(</span>
+    <span class="n">n_cycles</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">darts_per_cycle</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">initial_bounds</span><span class="o">=</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+    <span class="n">initial_target</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">initial_dispersion</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cycle 1: Best guess = [1.0122554395138992, 1.0266202914546536], Best value = 0.000534, Bounds = (0.9, 1.1), Bounds = (0.9, 1.1)
+Cycle 2: Best guess = [1.0246610748254772, 1.053949222826438], Best value = 0.002223, Bounds = (0.9110298955625092, 1.1134809834652892), Bounds = (0.9239582623091883, 1.129282320600119)
+Cycle 3: Best guess = [1.0287736588554124, 1.0545139337164364], Best value = 0.002319, Bounds = (0.9221949673429295, 1.127127182308025), Bounds = (0.9485543005437942, 1.1593441451090818)
+Cycle 4: Best guess = [0.9836998976558388, 0.968104904463678], Best value = 0.000285, Bounds = (0.9258962929698712, 1.1316510247409537), Bounds = (0.9490625403447928, 1.15996532708808)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">worst_pt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.1254598344435927, 0.9830645591090024]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">worst_val</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(8.058368444629714)
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
