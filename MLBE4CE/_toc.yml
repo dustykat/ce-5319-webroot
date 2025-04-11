@@ -19,6 +19,13 @@ chapters:
 
 - file: chapters/04-linearregression/linearregression # linear regression
 
+- file: chapters/17-optimization/optimization # optimization
+  sections:
+  - file: chapters/17-optimization/gridsearchGPT
+  - file: chapters/17-optimization/nelderandmead
+  - file: chapters/17-optimization/hookeandjeevesGPT
+  - file: chapters/17-optimization/powellsdirectionset
+
 - file: chapters/05-nonlinearregression/nonlinearregression # non-linear regression
 
 - file: chapters/06-logisticregression/logisticregression # logistic regression 
@@ -53,12 +60,6 @@ chapters:
 
 - file: chapters/16-timeseries/timeseries # timeseries
 
-- file: chapters/17-optimization/optimization # optimization
-  sections:
-  - file: chapters/17-optimization/gridsearch
-  - file: chapters/17-optimization/nelderandmead
-  - file: chapters/17-optimization/hookeandjeeves
-  - file: chapters/17-optimization/powellsdirectionset
 
   
 

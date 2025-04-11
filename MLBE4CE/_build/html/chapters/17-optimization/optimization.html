@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17. Optimization Methods &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>4.9. Optimization Methods &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -57,11 +57,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/17-optimization/optimization';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Grid Search" href="gridsearch.html" />
-    <link rel="prev" title="16. Time Series Tools" href="../16-timeseries/timeseries.html" />
+    <link rel="next" title="Grid-Search Examples" href="gridsearchGPT.html" />
+    <link rel="prev" title="4. Linear Regression" href="../04-linearregression/linearregression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -190,6 +192,13 @@
 
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">4.9. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="gridsearchGPT.html">Grid-Search Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
@@ -205,7 +214,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/deeplearners.html">Deep Learners</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/myann.html">Artifical Neural  Network (Homebrew)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/materialANN.html">Artifical Neural  Network</a></li>
@@ -214,13 +223,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">17. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="gridsearch.html">Grid Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Simplex Method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
-</ul>
-</details></li>
 </ul>
 
     </div>
@@ -346,7 +348,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -357,11 +361,48 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>17. Optimization Methods</h1>
+    <h1>4.9. Optimization Methods</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-modeling">Optimization Modeling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-problem-characteristics">Optimization Problem Characteristics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-optimization-jargon">Useful Optimization Jargon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optima">Optima</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex">Convex</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concave">Concave</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local-optima">Global vs. Local Optima</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-optimization-problems">Types of Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-advice-for-modeling-optimization-problems">Practical Advice for Modeling Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-optimization-algorithms">Common Optimization Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-based-methods">Gradient-Based Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-free-methods">Derivative-Free Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-optimization-techniques">Constrained Optimization Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-optimization-metaheuristics">Global Optimization &amp; Metaheuristics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods">Enumeration Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-grid-search">Enumeration Methods: Grid Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-in-machine-learning-training">Optimization in Machine Learning Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-optimization-method-selection">Quick Reference: Optimization Method Selection</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -372,7 +413,299 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="optimization-methods">
-<h1>17. Optimization Methods<a class="headerlink" href="#optimization-methods" title="Link to this heading">#</a></h1>
+<h1>4.9. Optimization Methods<a class="headerlink" href="#optimization-methods" title="Link to this heading">#</a></h1>
+<p>Funny numbering because notes reorganized</p>
+<p>Optimization is a fundamental component of Machine Learning training. While this section may seem out of place, it is in fact tightly connected to much of what we do in model calibration and training processes.</p>
+<p>This will be a very brief introduction to optimization methods, from an Operations Research perspective — which was my minor field during my doctoral studies (back in the 1980s). While the software tools have advanced considerably since then, the underlying conceptual framework remains remarkably stable.</p>
+<section id="optimization-modeling">
+<h2>Optimization Modeling<a class="headerlink" href="#optimization-modeling" title="Link to this heading">#</a></h2>
+<p>Most engineering problems have many feasible solutions — outcomes that satisfy all technical and logical requirements. Among those feasible options, we often want to identify the best solution using a performance metric such as cost, weight, efficiency, yield, or some weighted combination of such factors.</p>
+<p>We express this goal using two core components:</p>
+<p>An objective function — a mathematical expression that quantifies performance or fitness.</p>
+<p>A set of constraints — mathematical expressions that enforce design limits, technical requirements, or physical laws.</p>
+<blockquote>
+<div><p>If a particular design requires time travel, it’s infeasible (circa 2022) and would be excluded before evaluating how “good” it is on other criteria.</p>
+</div></blockquote>
+<p>Optimization is the process of selecting values for the design variables that:</p>
+<p>Minimize or maximize the objective function,</p>
+<p>While satisfying all constraints.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Our earlier work on least-squares regression is an example of optimization. The objective function was the sum of squared errors (SSE), and the only constraints were that the <span class="math notranslate nohighlight">\(\beta_i\)</span> coefficients were real numbers — making it an example of unconstrained optimization. :::</p>
+<p>Example: Suppose we want the lightest possible bridge that meets all design criteria. The bridge’s weight is the objective function, expressed in terms of the sizes and materials of its components. The constraints are the force and moment balance equations — we still want the bridge to work!</p>
+<p>This kind of problem is solved using techniques from mathematical programming.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In optimization, problem formulation is everything. A poorly formulated problem may produce no solution or misleading results, even when a real-world solution exists. As in engineering problem-solving generally, abstraction and precision in setup are essential — and often learned through experience. :::</p>
+<p>Most engineering problems have multiple workable solutions (called feasible solutions).  Usually we apply some metric (measurement) of fitness (such as cost, weight, yield, <span class="math notranslate nohighlight">\(\dots\)</span> , or a linear or nonlinear combination of multiple measures) that distinguish one solution from another.  If a particular solution requires time-travel, that would be infeasible (circa 2022) and removed from consideration without bothering to determine its fitness in the other measures.</p>
+<p>The mathematical expression of fitness is called the <em>objective function</em> (also <em>merit function</em>, <em>cost function</em>, <em>performance function</em> are some other frequently appearing names for the same thing - a measure of how “good” the solution is!).  The supporting conditions, conservation laws, capacity restrictions, or other technical limitations that must be satisfied are called <em>constraints</em> (or <em>design requirements</em>, <em>feasibility conditions</em>, <em>auxiliary conditions</em>)</p>
+<p>When selecting an optimal solution (or non-inferior solution) we seek design values that minimize or maximize the <em>objective function</em> while simultaneously satisfying all the <em>constraints</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Our least-squares regression analysis that led to the normal equations in line fitting is an example of an optimization problem.  The objective function was the SSE, the constraints were mostly that the <span class="math notranslate nohighlight">\(\beta_i\)</span>’s are real valued numbers.  This is an example of unconstrained optimization - a valuable subset of the overall optimization process.</p>
+</div>
+</div>
+</div>
+<p>For example, suppose we want to determine the lightest weight bridge that will satisfy a given set of design requirements.  The objective function is the bridge weight expressed in terms of the dimensions of the structural elements.  The constraints will be various force and moment relationships that must be satisfied (we want the bridge to actually work!). A typical problem is to determine the dimensions of the structural elements that will minimize the weight of the bridge, subject to the appliciable constraints.  Such problems are known as optimization problems and solutions are found using mathematical programming.</p>
+<p>Generally speaking solving linear and non-linear programming problems is relatively straightforward (given the right packages) but the formulation of the problem requires considerable care.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Recall in our problem solving process, the problem statement was a first step to success - in mathematical programming it is a vital step, and if done haphazardly the program will fail, when the actual problem has a solution. Development of the skill to deal with such an outcome is largely experience based - the abstraction process is also vital here.</p>
+</div>
+<section id="optimization-problem-characteristics">
+<h3>Optimization Problem Characteristics<a class="headerlink" href="#optimization-problem-characteristics" title="Link to this heading">#</a></h3>
+<p>An optimization problem is written using the following logic.</p>
+<p>Find values of the independent (<em>design, policy, or decision are other common names for these variables</em>) variables <span class="math notranslate nohighlight">\(x_1,x_2,\dots,x_n\)</span> that will minimize (or maximize) the objective function <span class="math notranslate nohighlight">\(y=f(x_1,x_2,\dots,x_n)\)</span>.</p>
+<p>The resulting solutions must also satisfy one or more constraint conditions usually expressed as equations or inequalities as:</p>
+<p><span class="math notranslate nohighlight">\(g_{eq;j}(x_1,x_2,\dots,x_n) = 0\)</span> <br>
+<span class="math notranslate nohighlight">\(g_{le;j}(x_1,x_2,\dots,x_n) \le 0\)</span> <br>
+<span class="math notranslate nohighlight">\(g_{ge;j}(x_1,x_2,\dots,x_n) \ge 0\)</span> <br></p>
+<p>for <span class="math notranslate nohighlight">\(j=1,2,\dots,m\)</span> where <span class="math notranslate nohighlight">\(m\)</span> is the total number of constraints.</p>
+<p>In addition, the permissible values of the independent variables are usually restricted to be non-negative as,</p>
+<p><span class="math notranslate nohighlight">\(x_i \ge 0~\text{for}~~i=1,2,\dots,n\)</span></p>
+<p>A further constraint, common in logistics problems is that the independent variables are integer.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Optimization problems that are integer constrained are difficult to solve elegantly.  Don’t be fooled into thinking that a real-valued solution rounded to the nearest integer is “optimal”; it might not even be feasible. It is a reasonable hack to get started, and often is a good enough approximation - just check that the result is at least feasible before commiting to the solution.</p>
+</div>
+</section>
+</section>
+<section id="useful-optimization-jargon">
+<h2>Useful Optimization Jargon<a class="headerlink" href="#useful-optimization-jargon" title="Link to this heading">#</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<p>Functions map a relationship between input(s) and output(s)</p>
+<p>Functions can be of many types:</p>
+<ul class="simple">
+<li><p>Mathematical, logical, rule-based</p></li>
+<li><p>The mapping of inputs =&gt; outputs can be linear or nonlinear</p></li>
+<li><p>The function can be one-dimensional or multi-dimensional; the inputs can similarily be univariate (one dimension) or multivariate (many dimensions)</p></li>
+</ul>
+</section>
+<section id="optima">
+<h3>Optima<a class="headerlink" href="#optima" title="Link to this heading">#</a></h3>
+<p>Optimization means finding either a ‘maximum’ or a ‘minimum’ of a function. The optimum value is typically defined over a <strong>range of interest</strong>.</p>
+<p><img alt="" src="../../_images/optima.png" /></p>
+<p>A local maximum occurs when its value is higher than other values in the vicinity; A local minimum occurs when its value is lower than other values in the vicinity. The global maximum is the largest value in the range (a,b); The global minimum is the smallest value in the range (a,b).  A Saddle Point Occurs when the value of the function is higher on one side and lower on the other (the slope and curvature are zero at the point)</p>
+</section>
+<section id="convex">
+<h3>Convex<a class="headerlink" href="#convex" title="Link to this heading">#</a></h3>
+<p>A function is said to be strictly convex when a line connecting any two points of the function lies strictly above the function</p>
+<p><img alt="" src="../../_images/convex.png" /></p>
+<p>A function is convex if the second derivative is greater than or equal 0</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x^2} \ge 0\]</div>
+<p>Strictly convex if greater than</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x^2} \gt 0\]</div>
+</section>
+<section id="concave">
+<h3>Concave<a class="headerlink" href="#concave" title="Link to this heading">#</a></h3>
+<p>A function is concave function when a line joining any two points lies below the function
+The second derivative of a concave</p>
+<p><img alt="" src="../../_images/concave.png" /></p>
+<p>A function is concave if the second derivative is greater than or equal 0</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x^2} \le 0\]</div>
+<p>Strictly concave if less than</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial ^2 f}{\partial x^2} \lt 0\]</div>
+</section>
+<section id="global-vs-local-optima">
+<h3>Global vs. Local Optima<a class="headerlink" href="#global-vs-local-optima" title="Link to this heading">#</a></h3>
+<p>Understanding the difference between global and local optima is essential in real-world optimization.</p>
+<ul class="simple">
+<li><p>Global optimum: The best possible value of the objective function over the entire feasible domain.</p></li>
+<li><p>Local optimum: The best value within a small neighborhood, but possibly worse than the global optimum.</p></li>
+</ul>
+<p>In non-convex problems, local optima may trap search algorithms (e.g., gradient descent). Many techniques in machine learning (like stochasticity or momentum) are designed to help escape poor local optima.</p>
+<!--![](localglobal.png)-->
+</section>
+</section>
+<section id="types-of-optimization-problems">
+<h2>Types of Optimization Problems<a class="headerlink" href="#types-of-optimization-problems" title="Link to this heading">#</a></h2>
+<p>Optimization problems can be classified based on characteristics of the objective function and constraints.</p>
+<ul class="simple">
+<li><p><strong>Linear Programming (LP)</strong>: Both the objective function and all constraints are linear.</p></li>
+<li><p><strong>Nonlinear Programming (NLP)</strong>: The objective or one or more constraints are nonlinear.</p></li>
+<li><p><strong>Integer Programming (IP)</strong>: Some or all variables are restricted to integer values.</p></li>
+<li><p><strong>Mixed-Integer Programming (MIP)</strong>: Combines integer and continuous decision variables.</p></li>
+<li><p><strong>Convex Programming</strong>: A special case of NLP where the objective is convex and the feasible region is a convex set. These are easier to solve and have guaranteed global optima.</p></li>
+<li><p><strong>Dynamic Programming</strong>: Problems broken into stages, each with a decision, especially useful for sequential decision problems.</p></li>
+<li><p><strong>Stochastic Programming</strong>: Incorporates uncertainty in the form of probabilistic constraints or random variables.</p></li>
+<li><p><strong>Multi-objective Optimization</strong>: Optimizes two or more conflicting objectives simultaneously, leading to Pareto-optimal solutions.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In practice, real-world engineering design problems often fall into the nonlinear, mixed-integer, or multi-objective categories.</p>
+</div>
+</section>
+<section id="practical-advice-for-modeling-optimization-problems">
+<h2>Practical Advice for Modeling Optimization Problems<a class="headerlink" href="#practical-advice-for-modeling-optimization-problems" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Start simple</strong>: Try unconstrained, low-dimensional problems first.</p></li>
+<li><p><strong>Scale variables</strong>: Normalizing helps numerical stability and faster convergence.</p></li>
+<li><p><strong>Inspect the objective</strong>: Is it smooth? Convex? Differentiable? If not, consider derivative-free methods.</p></li>
+<li><p><strong>Constraint debugging</strong>: If the problem appears unsolvable, check for contradictory constraints or infeasible regions.</p></li>
+<li><p><strong>Plot your function (if you can)</strong>: Visualization is a great way to build intuition, especially for 1D or 2D problems.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>“Black-box” optimization solvers can give wrong answers if you feed them a poorly posed problem. Always validate feasibility and sanity of the solution!</p>
+</div>
+</section>
+<section id="common-optimization-algorithms">
+<h2>Common Optimization Algorithms<a class="headerlink" href="#common-optimization-algorithms" title="Link to this heading">#</a></h2>
+<p>Here’s a brief overview of optimization techniques you’ll encounter (and script!):</p>
+<section id="gradient-based-methods">
+<h3>Gradient-Based Methods<a class="headerlink" href="#gradient-based-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Gradient Descent / Ascent</strong>: Uses first-order derivatives to move in direction of steepest descent/ascent.</p></li>
+<li><p><strong>Newton’s Method</strong>: Uses second derivatives (Hessian) for faster convergence near optima.</p></li>
+<li><p><strong>Quasi-Newton Methods (e.g., BFGS)</strong>: Approximates second-order information to improve efficiency.</p></li>
+</ul>
+</section>
+<section id="derivative-free-methods">
+<h3>Derivative-Free Methods<a class="headerlink" href="#derivative-free-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Nelder-Mead Simplex Method</strong>: Explores the solution space using a simplex of n+1 points.</p></li>
+<li><p><strong>Powell’s Method</strong>: Iteratively refines search directions without gradients.</p></li>
+<li><p><strong>Hooke and Jeeves</strong>: Pattern search method alternating exploratory and pattern moves.</p></li>
+</ul>
+</section>
+<section id="constrained-optimization-techniques">
+<h3>Constrained Optimization Techniques<a class="headerlink" href="#constrained-optimization-techniques" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Penalty and Barrier Methods</strong>: Add terms to the objective function to penalize constraint violations.</p></li>
+<li><p><strong>Lagrange Multipliers / KKT Conditions</strong>: Transform constraints into solvable equalities (useful in theory and symbolic solutions).</p></li>
+</ul>
+</section>
+<section id="global-optimization-metaheuristics">
+<h3>Global Optimization &amp; Metaheuristics<a class="headerlink" href="#global-optimization-metaheuristics" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Simulated Annealing</strong>: Mimics thermodynamic cooling to escape local minima.</p></li>
+<li><p><strong>Genetic Algorithms</strong>: Population-based search using crossover, mutation, and selection.</p></li>
+<li><p><strong>Particle Swarm Optimization (PSO)</strong>: Models collective behavior to explore solution space.</p></li>
+</ul>
+</section>
+<section id="enumeration-methods">
+<h3>Enumeration Methods<a class="headerlink" href="#enumeration-methods" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Grid Search</strong>: Brute-force; It discretizes the search space and evaluates the objective function at every point in the grid.</p></li>
+<li><p><strong>Method of Darts</strong>: The Method of Darts is a simple but effective stochastic search technique that bears some resemblance to genetic algorithms. It involves throwing “random darts” — that is, sampling points randomly within the search space — and using the outcomes to guide subsequent throws.</p></li>
+</ul>
+<p>A lightweight, implementation-flexible approach is preferred</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You don’t need to master all these, but knowing when to use which class of method is critical. Start simple, and escalate as needed.</p>
+</div>
+</section>
+</section>
+<section id="enumeration-methods-grid-search">
+<h2>Enumeration Methods: Grid Search<a class="headerlink" href="#enumeration-methods-grid-search" title="Link to this heading">#</a></h2>
+<p><strong>Grid Search</strong> is a brute-force method for global optimization. It discretizes the search space and evaluates the objective function at every point in the grid. It’s easy to implement and guarantees that the best solution in the discretized domain is found — but at the cost of <strong>high computational expense</strong>, especially in multiple dimensions or tight step sizes.</p>
+<section id="when-to-use-grid-search">
+<h3>When to Use Grid Search:<a class="headerlink" href="#when-to-use-grid-search" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When the problem has a small number of variables (low dimensionality).</p></li>
+<li><p>When you want a <strong>quick first pass</strong> to identify promising regions for more refined search.</p></li>
+<li><p>When derivative information is unavailable or unreliable.</p></li>
+</ul>
+</section>
+<section id="steps">
+<h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Define bounds for each variable.</p></li>
+<li><p>Choose step sizes (resolution).</p></li>
+<li><p>Loop over combinations of variable values.</p></li>
+<li><p>Compute the objective and constraints.</p></li>
+<li><p>Keep the best <strong>feasible</strong> solution found.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your notebook implements <strong>coarse-to-fine grid search</strong>, where a broad sweep identifies regions of interest, and then local refinement improves solution quality.</p>
+</div>
+</section>
+</section>
+<section id="enumeration-methods-method-of-darts">
+<h2>Enumeration Methods: Method of Darts<a class="headerlink" href="#enumeration-methods-method-of-darts" title="Link to this heading">#</a></h2>
+<p>The <strong>Method of Darts</strong> is a simple but effective stochastic search technique that bears some resemblance to genetic algorithms. It involves throwing “random darts” — that is, sampling points randomly within the search space — and using the outcomes to guide subsequent throws.</p>
+<ul class="simple">
+<li><p>The method begins with a broad scatter of random points across the feasible domain.</p></li>
+<li><p>Points that yield productive (high-fitness or low-cost) values are retained.</p></li>
+<li><p>The next round of darts is thrown closer to these productive regions, typically by reducing the variance of the sampling distribution.</p></li>
+<li><p>Over time, the search becomes more focused, homing in on promising areas of the space.</p></li>
+</ul>
+<p>This adaptive narrowing of the search region makes the Method of Darts a primitive but intuitive global optimization strategy — especially useful when:</p>
+<ul class="simple">
+<li><p>The objective function is noisy or discontinuous</p></li>
+<li><p>Gradients are not available</p></li>
+<li><p>A lightweight, implementation-flexible approach is preferred</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A military equivalent to Method of Darts is <strong>Reconissance by Fire</strong> :::</p>
+</div>
+</section>
+<section id="optimization-in-machine-learning-training">
+<h2>Optimization in Machine Learning Training<a class="headerlink" href="#optimization-in-machine-learning-training" title="Link to this heading">#</a></h2>
+<p>In supervised learning, training a model typically means minimizing a <strong>loss function</strong>:</p>
+<ul class="simple">
+<li><p>For regression: Mean squared error (MSE)</p></li>
+<li><p>For classification: Cross-entropy loss</p></li>
+</ul>
+<p>This minimization is often an unconstrained optimization problem solved using variants of <strong>stochastic gradient descent (SGD)</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The difference between training accuracy and generalization performance relates to the optimization landscape and how the model parameters traverse it.</p>
+</div>
+<p>Modern optimizers used in ML training:</p>
+<ul class="simple">
+<li><p><strong>SGD</strong></p></li>
+<li><p><strong>Adam</strong></p></li>
+<li><p><strong>RMSProp</strong></p></li>
+<li><p><strong>Adagrad</strong></p></li>
+</ul>
+<p>These are specialized gradient-based methods adapted for high-dimensional, noisy, sparse-gradient landscapes.</p>
+</section>
+<section id="quick-reference-optimization-method-selection">
+<h2>Quick Reference: Optimization Method Selection<a class="headerlink" href="#quick-reference-optimization-method-selection" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Problem Type</p></th>
+<th class="head"><p>Suggested Method</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Linear + Continuous</p></td>
+<td><p>Simplex, Interior-Point</p></td>
+<td><p>Fast and robust</p></td>
+</tr>
+<tr class="row-odd"><td><p>Nonlinear + Smooth</p></td>
+<td><p>Gradient-Based</p></td>
+<td><p>Requires derivatives</p></td>
+</tr>
+<tr class="row-even"><td><p>Noisy / Black-box</p></td>
+<td><p>Derivative-Free (e.g., NM)</p></td>
+<td><p>Use when derivatives unavailable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Integer Variables</p></td>
+<td><p>Branch and Bound, MIP</p></td>
+<td><p>Often slow for large problems</p></td>
+</tr>
+<tr class="row-even"><td><p>Global Search</p></td>
+<td><p>Genetic Algorithm, PSO</p></td>
+<td><p>Computationally expensive</p></td>
+</tr>
+<tr class="row-odd"><td><p>ML Training</p></td>
+<td><p>SGD, Adam</p></td>
+<td><p>Scalable to high dimensions</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -408,20 +741,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../16-timeseries/timeseries.html"
+       href="../04-linearregression/linearregression.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">16. Time Series Tools</p>
+        <p class="prev-next-title">4. Linear Regression</p>
       </div>
     </a>
     <a class="right-next"
-       href="gridsearch.html"
+       href="gridsearchGPT.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Grid Search</p>
+        <p class="prev-next-title">Grid-Search Examples</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -431,6 +764,50 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-modeling">Optimization Modeling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-problem-characteristics">Optimization Problem Characteristics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-optimization-jargon">Useful Optimization Jargon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optima">Optima</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex">Convex</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concave">Concave</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-vs-local-optima">Global vs. Local Optima</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-optimization-problems">Types of Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-advice-for-modeling-optimization-problems">Practical Advice for Modeling Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-optimization-algorithms">Common Optimization Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-based-methods">Gradient-Based Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-free-methods">Derivative-Free Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-optimization-techniques">Constrained Optimization Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-optimization-metaheuristics">Global Optimization &amp; Metaheuristics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods">Enumeration Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-grid-search">Enumeration Methods: Grid Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-in-machine-learning-training">Optimization in Machine Learning Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-optimization-method-selection">Quick Reference: Optimization Method Selection</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

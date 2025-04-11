@@ -1,0 +1,852 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Grid-Search Examples\n",
+    "\n",
+    "Grid search methods are simple to conceptualize and can provide useful starting values for more elaborate tools.  The substance manufacturing example used a simplistic grid search method that implicitly searched integer space only, here another example will use sequential searches - a first to get close to a region where good solutions exist, and a second refinement search.\n",
+    "\n",
+    "## Pharmaceuticals for Fun and Profit\n",
+    "\n",
+    "Suppose you are manufacturing two substances in your dorm room, $\\textbf{A}$ and $\\textbf{B}$, which can be sold for $\\$$120 per unit for substance $\\textbf{A}$ and $\\$$80 for substance $\\textbf{B}$.  Big Pharma (the cartel) requires that at least 1000 total units be manufactured each month.  Product $\\textbf{A}$ requires five hours of labor, product $\\textbf{B}$ requires three hours of labor per unit.  The cost of your labor is $\\$$12 per hour, and a total of 8000 hours per month of labor is available (basically your whole floor). Determine a production schedule that will maximize the net revenue.  \n",
+    "\n",
+    "The conversion of this description into a mathematical program is the next important step \n",
+    "\n",
+    "## Decision Variables\n",
+    "\n",
+    "First we define decision variables (sadly we already made a bad decision working for the cartel, but let's make the best of our remaining time on Earth!)\n",
+    "\n",
+    "$x_1 = \\text{units of }A\\text{ per month}$ <br>\n",
+    "$x_1 = \\text{units of }B\\text{ per month}$ <br>\n",
+    "\n",
+    "## Objective Function\n",
+    "\n",
+    "Here we wish to define the objective function, which in this example is net revenue\n",
+    "\n",
+    "$y(x_1,x_2) = [120 - (5 \\times 12)]x_1 + [80 - (3 \\times 12)]x_2$<br>\n",
+    "\n",
+    "In a Jupyter Notebook it would be something like:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def myobj(x1,x2):\n",
+    "    myobj = (120-5*12)*x1 + (80-3*12)*x2\n",
+    "    return myobj"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Constraints\n",
+    "\n",
+    "Next we need to define constraints.  The specific way will depend on the minimization package you choose, we will examine that later on.  Here we will list them and create functions to simply evaluate the constraints.\n",
+    "\n",
+    "### Minimium Required Production\n",
+    "\n",
+    "$x_1 + x_2 \\ge 1000$<br>\n",
+    "\n",
+    "### Maximum Available Budget for Labrador\n",
+    "\n",
+    "$5 x_1 + 3 x_2 \\le 8000$<br>\n",
+    "\n",
+    "### Non-Negativity\n",
+    "\n",
+    "$x_1 \\ge 0; x_2 \\ge 0$<br>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def con1(x1,x2):\n",
+    "    # con1 >= 0 is feasible\n",
+    "    con1 = x1+x2 - 1000\n",
+    "    return con1\n",
+    "def con2(x1,x2):\n",
+    "    # con2 >=0 is feasible\n",
+    "    con2 = 8000 - 5*x1 -3*x2\n",
+    "    return con2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "At this point we can build a model of the problem (no solution technique just yet).  The problem as stated is integer, but we will pretend that real-valued (fractional) units are OK.  \n",
+    "\n",
+    "Our program is below, we can even supply code to test for feasibility."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Substance A produced =  500\n",
+      "Substance B produced =  500\n",
+      "Objective Function Value =  52000\n",
+      "Minimun Production Constraint =  0\n",
+      "Maximum Labor Budget =  4000\n",
+      "Solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "def mymodel(x1,x2):\n",
+    "    objvalue = myobj(x1,x2)\n",
+    "    constraint1 = con1(x1,x2)\n",
+    "    constraint2 = con2(x1,x2)\n",
+    "# print current results\n",
+    "    print(\"Substance A produced = \",x1)\n",
+    "    print(\"Substance B produced = \",x2)\n",
+    "    print(\"Objective Function Value = \",objvalue)\n",
+    "    print(\"Minimun Production Constraint = \",constraint1)\n",
+    "    print(\"Maximum Labor Budget = \",constraint2)\n",
+    "    if constraint1 < 0 or constraint2 < 0 or x1 < 0 or x2 <0:\n",
+    "        print(\"Solution is INFEASIBLE\")\n",
+    "    else:\n",
+    "        print(\"Solution is FEASIBLE\")\n",
+    "    return\n",
+    "x1=500\n",
+    "x2=500\n",
+    "mymodel(x1,x2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Observe our labor budget is still available, so we can increase production and improve our revenue; lets try more $\\textbf{B}$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Substance A produced =  500\n",
+      "Substance B produced =  1833\n",
+      "Objective Function Value =  110652\n",
+      "Minimun Production Constraint =  1333\n",
+      "Maximum Labor Budget =  1\n",
+      "Solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "x1=500\n",
+    "x2=1833\n",
+    "mymodel(x1,x2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now our revenue is over 2 times bigger that our initial guess.  Our next task is to automate the quest for a bestest solution.  \n",
+    "\n",
+    "### Grid Search Method\n",
+    "\n",
+    "The easiest approach (but computationally very expensive and incredibly slow) is a grid search - we simply specify values of $\\textbf{A}$ and $\\textbf{B}$ in a repetition structure, and compute the objective value and whether the solution is feasible, and just save the best.  The script below implements a crude search.\n",
+    "\n",
+    "First suppress all the output in the function "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def mymodel(x1,x2):\n",
+    "    objvalue = myobj(x1,x2)\n",
+    "    constraint1 = con1(x1,x2)\n",
+    "    constraint2 = con2(x1,x2)\n",
+    "# print current results\n",
+    "#    print(\"Substance A produced = \",x1)\n",
+    "#    print(\"Substance B produced = \",x2)\n",
+    "#    print(\"Objective Function Value = \",objvalue)\n",
+    "#    print(\"Minimun Production Constraint = \",constraint1)\n",
+    "#    print(\"Maximum Labor Budget = \",constraint2)\n",
+    "    if constraint1 < 0 or constraint2 < 0 or x1 < 0 or x2 < 0:\n",
+    "#        print(\"Solution is INFEASIBLE\")\n",
+    "        returncode = 0\n",
+    "    else:\n",
+    "#       print(\"Solution is FEASIBLE\")\n",
+    "        returncode = 1\n",
+    "    return (objvalue,returncode) # return a tuple"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now a search code to search all combinations of $x_1$ and $x_2$ in the range [0,3000] (the range is an educated guess of the values to search)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Search complete  9000000  Total Combinations\n",
+      "Found  1668 feasible solutions \n",
+      " --- Best Solution ---\n",
+      "Substance A produced =  1.0\n",
+      "Substance B produced =  2665.0\n",
+      "Objective Function Value =  117320.0\n",
+      "Production Above Minimum =  1666.0\n",
+      "Labor Budget Remaining =  0.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "Avector = [] # empty list to store values of A\n",
+    "Bvector = [] # empty list to store values of B\n",
+    "howmany = 0\n",
+    "for i in range(3000):\n",
+    "    Avector.append(float(i))\n",
+    "    Bvector.append(float(i))\n",
+    "# now the actual search\n",
+    "big = -1 # a negative value, revenue needs to be positive\n",
+    "xbest = -1 # variables to store our best solution\n",
+    "ybest = -1\n",
+    "feasible = 0\n",
+    "for ix1 in range(3000):\n",
+    "    for ix2 in range(3000):\n",
+    "        howmany = howmany+1\n",
+    "        result = mymodel(Avector[ix1],Bvector[ix2])\n",
+    "        if result[1] == 1:\n",
+    "            if result[0] > big:\n",
+    "                feasible = feasible + 1\n",
+    "                big = result[0]\n",
+    "                xbest = Avector[ix1]\n",
+    "                ybest = Bvector[ix2]\n",
+    "\n",
+    "print(\"Search complete \",howmany,\" Total Combinations\")\n",
+    "print(\"Found \",feasible, \"feasible solutions \\n --- Best Solution ---\")\n",
+    "print(\"Substance A produced = \",xbest)\n",
+    "print(\"Substance B produced = \",ybest)\n",
+    "print(\"Objective Function Value = \",big)\n",
+    "print(\"Production Above Minimum = \",con1(xbest,ybest))\n",
+    "print(\"Labor Budget Remaining = \",con2(xbest,ybest))        "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Minimum-Weight Structure\n",
+    "\n",
+    "Consider a structure that is comprised of two cylindrical load bearing columns whose diameter in feet are $r_1$ and $r_2$.  The weight of the structure in pounds is given by the expression:\n",
+    "\n",
+    "$ y = 1000*(10+(r_1 - 0.5)^2+(r_2-0.5)^2 ~)$<br>\n",
+    "\n",
+    "In contrast to our drug making problem, this problem is non-linear in the objective function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def weight(r1,r2):\n",
+    "    weight = 1000*(10 + (r1-0.5)**2 + (r2-0.5)**2)\n",
+    "    return weight"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The goal is to determine the values of $r_1$ and $r_2$ that minimize the weight and satisfy the additional constraints below:\n",
+    "\n",
+    "1. The combined cross-sectional area of the two columns must be at least 10 square feet;<br>$\\pi (r_1^2 + r_2^2) \\ge 10$\n",
+    "2. The radius of one column may not exceed 1.25 the radius of the other column;<br>\n",
+    "$r_1 \\le 1.25r_2$\n",
+    "3. Nonnegativity; <br>$r_1 \\ge 0; r_2 \\ge 0$\n",
+    "\n",
+    "Expressed as scripted functions (which are to be larger than zero if feasible)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def con1(r1,r2):\n",
+    "    import math\n",
+    "    con1 = math.pi*(r1**2 + r2**2)-10\n",
+    "    return con1\n",
+    "\n",
+    "def con2(r1,r2):\n",
+    "    con2 = 1.25*r2-r1\n",
+    "    return con2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As before we make a test script to convert into our optimization model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Current Solution r1 =  1.262  r2 =  1.262\n",
+      "Objective Value =  11161.287999999999\n",
+      "Constraint 1 Value =  0.0068773803677242284\n",
+      "Constraint 2 Value =  0.3155000000000001\n",
+      "All constraints satisfied solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "r1=1.262\n",
+    "r2=1.262\n",
+    "objective = weight(r1,r2)\n",
+    "constraint1 = con1(r1,r2)\n",
+    "constraint2 = con2(r1,r2)\n",
+    "print(\"Current Solution r1 = \",r1,\" r2 = \",r2)\n",
+    "print(\"Objective Value = \",objective)\n",
+    "print(\"Constraint 1 Value = \",constraint1)\n",
+    "print(\"Constraint 2 Value = \",constraint2)\n",
+    "if constraint1 >= 0 and constraint2 >=0 and r1 >=0 and r2 >= 0:\n",
+    "    print(\"All constraints satisfied solution is FEASIBLE\")\n",
+    "else:\n",
+    "    print(\"One or more constraints violated solution is INFEASIBLE\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now put it into a model function that computes the objective value and a feasibility code (0=feasible, 1=not feasible) and put remaining logic into the search algorithm."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def mymodel(r1,r2):\n",
+    "    objective = weight(r1,r2)\n",
+    "    constraint1 = con1(r1,r2)\n",
+    "    constraint2 = con2(r1,r2)\n",
+    "    if constraint1 >= 0 and constraint2 >=0 and r1 >=0 and r2 >= 0:\n",
+    "        returncode = 0\n",
+    "    else:\n",
+    "        returncode = 1\n",
+    "    return (objective,returncode) # return a tuple"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here we make the search, notice is practically the same code as before, with only some minor changes in variable names, and repetition counting."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Search Complete  1000000  Total Combinations Examined\n",
+      "Found  11 Feasible Solutions \n",
+      " --- Best Solution ---\n",
+      "Radius 1 =  1.1900000000000002\n",
+      "Radius 2 =  1.3300000000000003\n",
+      "Objective Function Value =  11165.000000000002\n",
+      "Constraint 1 Value =  0.005972601683495782\n",
+      "Constraint 2 Value =  0.47250000000000014\n"
+     ]
+    }
+   ],
+   "source": [
+    "Avector = [] # empty list to store values of r1\n",
+    "Bvector = [] # empty list to store values of r2\n",
+    "stepsize = 0.01 # coarse step size\n",
+    "r1value = 1.0-stepsize\n",
+    "r2value = 1.0-stepsize\n",
+    "howmanysteps = 1000\n",
+    "for i in range(howmanysteps):\n",
+    "    r1value = r1value+stepsize #rescales the region from 0 to 3 in steps of 0.001\n",
+    "    r2value = r2value+stepsize\n",
+    "    Avector.append(r1value)\n",
+    "    Bvector.append(r2value)\n",
+    "# now the actual search\n",
+    "howmany = 0 # keep count of how many combinations\n",
+    "small   = 1e99 # a big value, we are minimizing\n",
+    "xbest   = -1 # variables to store our best solution\n",
+    "ybest   = -1\n",
+    "feasible = 0 #keep count of feasible combinations\n",
+    "for ix1 in range(howmanysteps):\n",
+    "    for ix2 in range(howmanysteps):\n",
+    "        howmany = howmany+1\n",
+    "        result = mymodel(Avector[ix1],Bvector[ix2])\n",
+    "        if result[1] == 0:\n",
+    "            if result[0] < small:\n",
+    "                feasible = feasible + 1\n",
+    "                small = result[0]\n",
+    "                xbest = Avector[ix1]\n",
+    "                ybest = Bvector[ix2]\n",
+    "\n",
+    "print(\"Search Complete \",howmany,\" Total Combinations Examined\")\n",
+    "print(\"Found \",feasible, \"Feasible Solutions \\n --- Best Solution ---\")\n",
+    "print(\"Radius 1 = \",xbest)\n",
+    "print(\"Radius 2 = \",ybest)\n",
+    "print(\"Objective Function Value = \",small)\n",
+    "print(\"Constraint 1 Value = \",con1(xbest,ybest))\n",
+    "print(\"Constraint 2 Value = \",con2(xbest,ybest))   "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "And we now have an initial guess to work with, we can make another search over a smaller region starting from here"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Search Complete  1000000  Total Combinations Examined\n",
+      "Found  70 Feasible Solutions \n",
+      " --- Best Solution ---\n",
+      "Radius 1 =  1.2479999999999838\n",
+      "Radius 2 =  1.2749999999999808\n",
+      "Objective Function Value =  11160.128999999946\n",
+      "Constraint 1 Value =  9.468182834382333e-05\n",
+      "Constraint 2 Value =  0.34574999999999223\n"
+     ]
+    }
+   ],
+   "source": [
+    "Avector = [] # empty list to store values of r1\n",
+    "Bvector = [] # empty list to store values of r2\n",
+    "stepsize = 0.001 # fine stepsize, start near last solution\n",
+    "r1value = 1.1-stepsize\n",
+    "r2value = 1.1-stepsize\n",
+    "howmanysteps = 1000\n",
+    "for i in range(howmanysteps):\n",
+    "    r1value = r1value+stepsize #rescales the region from 0 to 3 in steps of 0.001\n",
+    "    r2value = r2value+stepsize\n",
+    "    Avector.append(r1value)\n",
+    "    Bvector.append(r2value)\n",
+    "# now the actual search\n",
+    "howmany = 0 # keep count of how many combinations\n",
+    "small   = 1e99 # a big value, we are minimizing\n",
+    "xbest   = -1 # variables to store our best solution\n",
+    "ybest   = -1\n",
+    "feasible = 0 #keep count of feasible combinations\n",
+    "for ix1 in range(howmanysteps):\n",
+    "    for ix2 in range(howmanysteps):\n",
+    "        howmany = howmany+1\n",
+    "        result = mymodel(Avector[ix1],Bvector[ix2])\n",
+    "        if result[1] == 0:\n",
+    "            if result[0] < small:\n",
+    "                feasible = feasible + 1\n",
+    "                small = result[0]\n",
+    "                xbest = Avector[ix1]\n",
+    "                ybest = Bvector[ix2]\n",
+    "\n",
+    "print(\"Search Complete \",howmany,\" Total Combinations Examined\")\n",
+    "print(\"Found \",feasible, \"Feasible Solutions \\n --- Best Solution ---\")\n",
+    "print(\"Radius 1 = \",xbest)\n",
+    "print(\"Radius 2 = \",ybest)\n",
+    "print(\"Objective Function Value = \",small)\n",
+    "print(\"Constraint 1 Value = \",con1(xbest,ybest))\n",
+    "print(\"Constraint 2 Value = \",con2(xbest,ybest)) "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "From here we could refine further to try to get closer to an optimal solution, but given that we are close to constraint 1 ($\\ge 0$) we could probably stop, also observe we only have 70 feasible solutions out of 1 million combinations. But because its easy in this problem, lest trys a finer search just cause."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Search Complete  1000000  Total Combinations Examined\n",
+      "Found  116 Feasible Solutions \n",
+      " --- Best Solution ---\n",
+      "Radius 1 =  1.2550999999999972\n",
+      "Radius 2 =  1.2679999999999991\n",
+      "Objective Function Value =  11160.000009999994\n",
+      "Constraint 1 Value =  3.6070575681890205e-06\n",
+      "Constraint 2 Value =  0.32990000000000164\n"
+     ]
+    }
+   ],
+   "source": [
+    "Avector = [] # empty list to store values of r1\n",
+    "Bvector = [] # empty list to store values of r2\n",
+    "stepsize = 0.0001 # really fine stepsize, start near last solution\n",
+    "r1value = 1.23-stepsize\n",
+    "r2value = 1.26-stepsize\n",
+    "howmanysteps = 1000\n",
+    "for i in range(howmanysteps):\n",
+    "    r1value = r1value+stepsize #rescales the region from 0 to 3 in steps of 0.001\n",
+    "    r2value = r2value+stepsize\n",
+    "    Avector.append(r1value)\n",
+    "    Bvector.append(r2value)\n",
+    "# now the actual search\n",
+    "howmany = 0 # keep count of how many combinations\n",
+    "small   = 1e99 # a big value, we are minimizing\n",
+    "xbest   = -1 # variables to store our best solution\n",
+    "ybest   = -1\n",
+    "feasible = 0 #keep count of feasible combinations\n",
+    "for ix1 in range(howmanysteps):\n",
+    "    for ix2 in range(howmanysteps):\n",
+    "        howmany = howmany+1\n",
+    "        result = mymodel(Avector[ix1],Bvector[ix2])\n",
+    "        if result[1] == 0:\n",
+    "            if result[0] < small:\n",
+    "                feasible = feasible + 1\n",
+    "                small = result[0]\n",
+    "                xbest = Avector[ix1]\n",
+    "                ybest = Bvector[ix2]\n",
+    "\n",
+    "print(\"Search Complete \",howmany,\" Total Combinations Examined\")\n",
+    "print(\"Found \",feasible, \"Feasible Solutions \\n --- Best Solution ---\")\n",
+    "print(\"Radius 1 = \",xbest)\n",
+    "print(\"Radius 2 = \",ybest)\n",
+    "print(\"Objective Function Value = \",small)\n",
+    "print(\"Constraint 1 Value = \",con1(xbest,ybest))\n",
+    "print(\"Constraint 2 Value = \",con2(xbest,ybest)) "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here we should just stop, we are at the constraint 1 limit, and have a workable solution.\n",
+    "\n",
+    "## Classical Grid Search\n",
+    "\n",
+    "To summarize a classical grid search process requires:\n",
+    "\n",
+    "1. A model function that determines the objective value and feasibility when supplied with design variables\n",
+    "2. An algorithm that identifies values of design variables to search, if you imagine each variable as an axis in an orthogonal hyperplane, then we are secrhing a pre-selected region.\n",
+    "3. A tabulating algorithm that only records feasible, non-inferior (improving objective value).\n",
+    "4. Clock cycles.  This technique is quite slow and makes a lot of function calls.  It is not elegant, but might be valuable for initial conditions, or crude estimates.  Notice in the last example we made 3 million function evaluations - if each evaluation takes a second to complete, the process would take almost 35 days to find a whopping 197 feasible solutions!\n",
+    "\n",
+    ":::{admonition} Get Started\n",
+    ":class: tip\n",
+    "\n",
+    "Even though grid search is slow, its robust.  It is a good place to start because you may be able to get a code up and running in a week.  You can then set it on its hopeless search while you pursue more elegant methods.  If these methods fail, you always have the grid search running in the background guarenteeing (hopefully) at least one feasible solution.  \n",
+    "\n",
+    "Don't let elegance get in the way of getting things done!\n",
+    ":::\n",
+    "\n",
+    "<!-- ## Method-of-Darts (Future) -->"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The two examples above are constrained minimization problems.  The examples are repeated below using `scipy` packages."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Minimum Weight Truss using `scipy`\n",
+    "\n",
+    "Setting up the same problem in scipy requires some reading of the [scipy.optimization](https://docs.scipy.org/doc/scipy/tutorial/optimize.html#sequential-least-squares-programming-slsqp-algorithm-method-slsqp) documentation.  Here I wanted to avoid having to define the derivatives, Jacobian, and Hessian.  The method that seems to fit this problem is called the *Sequential Least SQuares Programming (SLSQP) Algorithm (method=`SLSQP`)*  Below is the same problem setup using the package.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Return Code  0\n",
+      " Function Evaluations  30\n",
+      " Jacobian Evaluations  8\n",
+      " --- Objective Function Value --- \n",
+      "    11159.97  pounds\n",
+      " Current Solution Vector \n",
+      "   [1.26156624 1.26156628]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "from scipy.optimize import minimize\n",
+    "from scipy.optimize import Bounds\n",
+    "import math\n",
+    "\n",
+    "def objfn(x):\n",
+    "    return 1000*(10 + (x[0]-0.5)**2 + (x[1]-0.5)**2) # our objective function\n",
+    "bounds = Bounds([0.0, 0.0], [3.0, 3.0]) # define the search region\n",
+    "ineq_cons = {'type': 'ineq','fun' : lambda x: np.array([(math.pi*(x[0]**2 + x[1]**2)-10),(1.25*x[1]-x[0])])} # set the inequality constraints\n",
+    "eq_cons = {'type': 'eq',} # null equality constraints - not used this example\n",
+    "x0 = np.array([1.0, 1.0]) # initial guess\n",
+    "res = minimize(objfn, x0, method='SLSQP', jac=\"2-point\", constraints=[ineq_cons], options={'ftol': 1e-9},bounds=bounds)\n",
+    "# report results\n",
+    "print(\"Return Code \",res[\"status\"])\n",
+    "print(\" Function Evaluations \",res[\"nfev\"])\n",
+    "print(\" Jacobian Evaluations \",res[\"njev\"])\n",
+    "print(\" --- Objective Function Value --- \\n   \",round(res[\"fun\"],2),\" pounds\")\n",
+    "print(\" Current Solution Vector \\n  \",res[\"x\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Observe in this case far quicker and fewer function evaluations (62 if we assume the Jacobian needs 4 evaluations per its evaluation + the 30 in the linesearch).  Still way fewer than 3 million.  Now lets check the solution using our code:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Current Solution r1 =  1.261567  r2 =  1.261567\n",
+      "Objective Value =  11159.968590978\n",
+      "Constraint 1 Value =  1.1715439123705096e-05\n",
+      "Constraint 2 Value =  0.3153917500000001\n",
+      "All constraints satisfied solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "r1=1.261567\n",
+    "r2=1.261567\n",
+    "objective = weight(r1,r2)\n",
+    "constraint1 = con1(r1,r2)\n",
+    "constraint2 = con2(r1,r2)\n",
+    "print(\"Current Solution r1 = \",r1,\" r2 = \",r2)\n",
+    "print(\"Objective Value = \",objective)\n",
+    "print(\"Constraint 1 Value = \",constraint1)\n",
+    "print(\"Constraint 2 Value = \",constraint2)\n",
+    "if constraint1 >= 0 and constraint2 >=0 and r1 >=0 and r2 >= 0:\n",
+    "    print(\"All constraints satisfied solution is FEASIBLE\")\n",
+    "else:\n",
+    "    print(\"One or more constraints violated solution is INFEASIBLE\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Yep, the 'scipy' solution is correct and better than our best from a grid search.  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Labor allocation using `scipy`\n",
+    "\n",
+    "Lets revisit the labor allocation problem using the same tool with a caveat.  The labor allocation is an integer problem, and `SLSQP` is a real number solver, so we may not get the exact same answer, but partial substance is encouraged by the cartel, after all we are making illegal substances, so what if we cheat our customers a little bit (it is the Amazonian way!)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Return Code  False\n",
+      "Message  Positive directional derivative for linesearch\n",
+      " Function Evaluations  24\n",
+      " Jacobian Evaluations  8\n",
+      " --- Objective Function Value --- \n",
+      "    117333.33  dollars\n",
+      " Current Solution Vector \n",
+      "   [   0.        2666.6666729]\n"
+     ]
+    }
+   ],
+   "source": [
+    "def con1(x1,x2):\n",
+    "    # con1 >= 0 is feasible\n",
+    "    con1 = x1+x2 - 1000\n",
+    "    return con1\n",
+    "def con2(x1,x2):\n",
+    "    # con2 >=0 is feasible\n",
+    "    con2 = 8000.0 - 5.0*x1 -3.0*x2\n",
+    "    return con2\n",
+    "def myobj(xvec):\n",
+    "    myobj = ((5*12-120)*xvec[0] + (3*12-80)*xvec[1]) # change sense for minimization\n",
+    "    return myobj\n",
+    "\n",
+    "import numpy as np\n",
+    "from scipy.optimize import minimize\n",
+    "from scipy.optimize import Bounds\n",
+    "import math\n",
+    "\n",
+    "bounds = Bounds([0.0, 0.0], [3000.0, 3000.0]) # define the search region\n",
+    "ineq_cons = {'type': 'ineq','fun' : lambda x: np.array([con1(x[0],x[1]),con2(x[0],x[1])])} # set the inequality constraints\n",
+    "eq_cons = {'type': 'eq',} # null equality constraints - not used this example\n",
+    "x0 = np.array([500, 1500]) # initial guess\n",
+    "res = minimize(myobj, x0, method='SLSQP', jac=\"2-point\", constraints=[ineq_cons], options={'ftol': 1e-9},bounds=bounds)\n",
+    "# report results\n",
+    "print(\"Return Code \",res[\"success\"])\n",
+    "print(\"Message \",res[\"message\"])\n",
+    "print(\" Function Evaluations \",res[\"nfev\"])\n",
+    "print(\" Jacobian Evaluations \",res[\"njev\"])\n",
+    "print(\" --- Objective Function Value --- \\n   \",-1*round(res[\"fun\"],2),\" dollars\")\n",
+    "print(\" Current Solution Vector \\n  \",res[\"x\"])\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here we have typical result for an integer model solved in continuous real space.  The program exited in a failed linesearch, but did return its last best value, which if we round down and apply in our own script we discover the answer is close to our lineseacrh result.  Further if we use the `scipy` result to inform our homebrew we can quickly experiment to find an integer solution that is better than the `scipy` solution."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Substance A produced =  0\n",
+      "Substance B produced =  2666\n",
+      "Objective Function Value =  117304\n",
+      "Minimum Production Constraint =  1666\n",
+      "Maximum Labor Budget =  2.0\n",
+      "Solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "def mymodel(x1,x2):\n",
+    "    xvec=[x1,x2]\n",
+    "    objvalue = myobj(xvec)\n",
+    "    constraint1 = con1(x1,x2)\n",
+    "    constraint2 = con2(x1,x2)\n",
+    "# print current results\n",
+    "    print(\"Substance A produced = \",x1)\n",
+    "    print(\"Substance B produced = \",x2)\n",
+    "    print(\"Objective Function Value = \",-1*objvalue)\n",
+    "    print(\"Minimum Production Constraint = \",constraint1)\n",
+    "    print(\"Maximum Labor Budget = \",constraint2)\n",
+    "    if constraint1 < 0 or constraint2 < 0 or x1 < 0 or x2 <0:\n",
+    "        print(\"Solution is INFEASIBLE\")\n",
+    "    else:\n",
+    "        print(\"Solution is FEASIBLE\")\n",
+    "    return\n",
+    "x1=0\n",
+    "x2=2666\n",
+    "mymodel(x1,x2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Substance A produced =  1\n",
+      "Substance B produced =  2665\n",
+      "Objective Function Value =  117320\n",
+      "Minimum Production Constraint =  1666\n",
+      "Maximum Labor Budget =  0.0\n",
+      "Solution is FEASIBLE\n"
+     ]
+    }
+   ],
+   "source": [
+    "mymodel(1,2665)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
