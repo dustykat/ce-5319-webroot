@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/17-optimization/optimization';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Grid-Search Examples" href="gridsearchGPT.html" />
+    <link rel="next" title="Enumeration Methods: Grid Search" href="gridsearchGPT.html" />
     <link rel="prev" title="4. Linear Regression" href="../04-linearregression/linearregression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -193,7 +193,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">4.9. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="gridsearchGPT.html">Grid-Search Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
@@ -393,12 +393,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods">Enumeration Methods</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-grid-search">Enumeration Methods: Grid Search</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-in-machine-learning-training">Optimization in Machine Learning Training</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-optimization-method-selection">Quick Reference: Optimization Method Selection</a></li>
 </ul>
@@ -599,53 +593,42 @@ The second derivative of a concave</p>
 <p class="admonition-title">Tip</p>
 <p>You don’t need to master all these, but knowing when to use which class of method is critical. Start simple, and escalate as needed.</p>
 </div>
-</section>
-</section>
-<section id="enumeration-methods-grid-search">
-<h2>Enumeration Methods: Grid Search<a class="headerlink" href="#enumeration-methods-grid-search" title="Link to this heading">#</a></h2>
-<p><strong>Grid Search</strong> is a brute-force method for global optimization. It discretizes the search space and evaluates the objective function at every point in the grid. It’s easy to implement and guarantees that the best solution in the discretized domain is found — but at the cost of <strong>high computational expense</strong>, especially in multiple dimensions or tight step sizes.</p>
-<section id="when-to-use-grid-search">
-<h3>When to Use Grid Search:<a class="headerlink" href="#when-to-use-grid-search" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>When the problem has a small number of variables (low dimensionality).</p></li>
-<li><p>When you want a <strong>quick first pass</strong> to identify promising regions for more refined search.</p></li>
-<li><p>When derivative information is unavailable or unreliable.</p></li>
-</ul>
-</section>
-<section id="steps">
-<h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p>Define bounds for each variable.</p></li>
-<li><p>Choose step sizes (resolution).</p></li>
-<li><p>Loop over combinations of variable values.</p></li>
-<li><p>Compute the objective and constraints.</p></li>
-<li><p>Keep the best <strong>feasible</strong> solution found.</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Your notebook implements <strong>coarse-to-fine grid search</strong>, where a broad sweep identifies regions of interest, and then local refinement improves solution quality.</p>
-</div>
-</section>
-</section>
-<section id="enumeration-methods-method-of-darts">
-<h2>Enumeration Methods: Method of Darts<a class="headerlink" href="#enumeration-methods-method-of-darts" title="Link to this heading">#</a></h2>
-<p>The <strong>Method of Darts</strong> is a simple but effective stochastic search technique that bears some resemblance to genetic algorithms. It involves throwing “random darts” — that is, sampling points randomly within the search space — and using the outcomes to guide subsequent throws.</p>
-<ul class="simple">
-<li><p>The method begins with a broad scatter of random points across the feasible domain.</p></li>
-<li><p>Points that yield productive (high-fitness or low-cost) values are retained.</p></li>
-<li><p>The next round of darts is thrown closer to these productive regions, typically by reducing the variance of the sampling distribution.</p></li>
-<li><p>Over time, the search becomes more focused, homing in on promising areas of the space.</p></li>
-</ul>
-<p>This adaptive narrowing of the search region makes the Method of Darts a primitive but intuitive global optimization strategy — especially useful when:</p>
-<ul class="simple">
-<li><p>The objective function is noisy or discontinuous</p></li>
-<li><p>Gradients are not available</p></li>
-<li><p>A lightweight, implementation-flexible approach is preferred</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A military equivalent to Method of Darts is <strong>Reconissance by Fire</strong> :::</p>
-</div>
+<!--## Enumeration Methods: Grid Search
+
+**Grid Search** is a brute-force method for global optimization. It discretizes the search space and evaluates the objective function at every point in the grid. It’s easy to implement and guarantees that the best solution in the discretized domain is found — but at the cost of **high computational expense**, especially in multiple dimensions or tight step sizes.
+
+### When to Use Grid Search:
+- When the problem has a small number of variables (low dimensionality).
+- When you want a **quick first pass** to identify promising regions for more refined search.
+- When derivative information is unavailable or unreliable.
+
+### Steps:
+1. Define bounds for each variable.
+2. Choose step sizes (resolution).
+3. Loop over combinations of variable values.
+4. Compute the objective and constraints.
+5. Keep the best **feasible** solution found.
+
+:::{note}
+Your notebook implements **coarse-to-fine grid search**, where a broad sweep identifies regions of interest, and then local refinement improves solution quality.
+:::
+
+## Enumeration Methods: Method of Darts
+
+The **Method of Darts** is a simple but effective stochastic search technique that bears some resemblance to genetic algorithms. It involves throwing “random darts” — that is, sampling points randomly within the search space — and using the outcomes to guide subsequent throws.
+
+- The method begins with a broad scatter of random points across the feasible domain.
+- Points that yield productive (high-fitness or low-cost) values are retained.
+- The next round of darts is thrown closer to these productive regions, typically by reducing the variance of the sampling distribution.
+- Over time, the search becomes more focused, homing in on promising areas of the space.
+
+This adaptive narrowing of the search region makes the Method of Darts a primitive but intuitive global optimization strategy — especially useful when:
+
+- The objective function is noisy or discontinuous
+- Gradients are not available
+- A lightweight, implementation-flexible approach is preferred
+
+:::{note} A military equivalent to Method of Darts is **Reconissance by Fire** :::--></section>
 </section>
 <section id="optimization-in-machine-learning-training">
 <h2>Optimization in Machine Learning Training<a class="headerlink" href="#optimization-in-machine-learning-training" title="Link to this heading">#</a></h2>
@@ -754,7 +737,7 @@ The second derivative of a concave</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Grid-Search Examples</p>
+        <p class="prev-next-title">Enumeration Methods: Grid Search</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -796,12 +779,6 @@ The second derivative of a concave</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods">Enumeration Methods</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-grid-search">Enumeration Methods: Grid Search</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-in-machine-learning-training">Optimization in Machine Learning Training</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference-optimization-method-selection">Quick Reference: Optimization Method Selection</a></li>
 </ul>

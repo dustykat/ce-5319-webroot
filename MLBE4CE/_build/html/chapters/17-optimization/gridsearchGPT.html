@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Grid-Search Examples &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>Enumeration Methods: Grid Search &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/17-optimization/gridsearchGPT';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Nelder and Mead Simplex Method" href="nelderandmead.html" />
+    <link rel="next" title="Nelder and Mead Downhill Simplex Method" href="nelderandmead.html" />
     <link rel="prev" title="4.9. Optimization Methods" href="optimization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -193,8 +193,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="optimization.html">4.9. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Grid-Search Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Enumeration Methods: Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
@@ -361,7 +361,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Grid-Search Examples</h1>
+    <h1>Enumeration Methods: Grid Search</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -371,20 +371,25 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pharmaceuticals-for-fun-and-profit">Pharmaceuticals for Fun and Profit</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-variables">Decision Variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints">Constraints</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimium-required-production">Minimium Required Production</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-available-budget-for-labrador">Maximum Available Budget for Labrador</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negativity">Non-Negativity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-method">Grid Search Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-pharmaceuticals-for-fun-and-profit">Example: Pharmaceuticals for Fun and Profit</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-variables">Decision Variables</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective Function</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints">Constraints</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minimium-required-production">Minimium Required Production</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-available-budget-for-labor">Maximum Available Budget for Labor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negativity">Non-Negativity</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-weight-structure">Minimum-Weight Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-grid-search">Classical Grid Search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-method-implementation">Grid Search Method Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-design-a-minimum-weight-structure">Example: Design a Minimum-Weight Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-grid-search">Classical Grid Search</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-weight-truss-using-scipy">Minimum Weight Truss using <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labor-allocation-using-scipy">Labor allocation using <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
 </ul>
             </nav>
         </div>
@@ -396,48 +401,64 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="grid-search-examples">
-<h1>Grid-Search Examples<a class="headerlink" href="#grid-search-examples" title="Link to this heading">#</a></h1>
-<p>Grid search methods are simple to conceptualize and can provide useful starting values for more elaborate tools.  The substance manufacturing example used a simplistic grid search method that implicitly searched integer space only, here another example will use sequential searches - a first to get close to a region where good solutions exist, and a second refinement search.</p>
-<section id="pharmaceuticals-for-fun-and-profit">
-<h2>Pharmaceuticals for Fun and Profit<a class="headerlink" href="#pharmaceuticals-for-fun-and-profit" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="enumeration-methods-grid-search">
+<h1>Enumeration Methods: Grid Search<a class="headerlink" href="#enumeration-methods-grid-search" title="Link to this heading">#</a></h1>
+<p>Grid search methods are simple to conceptualize and can provide useful starting values for more elaborate tools.  A substance manufacturing example below uses a simplistic grid search method that implicitly searched integer space only, here another example will use sequential searches - a first to get close to a region where good solutions exist, and a second refinement search.</p>
+<p><strong>Grid Search</strong> is a brute-force method for global optimization. It discretizes the search space and evaluates the objective function at every point in the grid. It’s easy to implement and guarantees that the best solution in the discretized domain is found — but at the cost of <strong>high computational expense</strong>, especially in multiple dimensions or tight step sizes.</p>
+<section id="when-to-use-grid-search">
+<h2>When to Use Grid Search:<a class="headerlink" href="#when-to-use-grid-search" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>When the problem has a small number of variables (low dimensionality).</p></li>
+<li><p>When you want a <strong>quick first pass</strong> to identify promising regions for more refined search.</p></li>
+<li><p>When derivative information is unavailable or unreliable.</p></li>
+</ul>
+</section>
+<section id="steps">
+<h2>Steps:<a class="headerlink" href="#steps" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Define bounds for each variable.</p></li>
+<li><p>Choose step sizes (resolution).</p></li>
+<li><p>Loop over combinations of variable values.</p></li>
+<li><p>Compute the objective and constraints.</p></li>
+<li><p>Keep the best <strong>feasible</strong> solution found.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Typically one implements a <strong>coarse-to-fine grid search</strong>, where a broad sweep identifies regions of interest, and then local refinement improves solution quality.</p>
+</div>
+<section id="example-pharmaceuticals-for-fun-and-profit">
+<h3>Example: Pharmaceuticals for Fun and Profit<a class="headerlink" href="#example-pharmaceuticals-for-fun-and-profit" title="Link to this heading">#</a></h3>
 <p>Suppose you are manufacturing two substances in your dorm room, <span class="math notranslate nohighlight">\(\textbf{A}\)</span> and <span class="math notranslate nohighlight">\(\textbf{B}\)</span>, which can be sold for <span class="math notranslate nohighlight">\(\$\)</span>120 per unit for substance <span class="math notranslate nohighlight">\(\textbf{A}\)</span> and <span class="math notranslate nohighlight">\(\$\)</span>80 for substance <span class="math notranslate nohighlight">\(\textbf{B}\)</span>.  Big Pharma (the cartel) requires that at least 1000 total units be manufactured each month.  Product <span class="math notranslate nohighlight">\(\textbf{A}\)</span> requires five hours of labor, product <span class="math notranslate nohighlight">\(\textbf{B}\)</span> requires three hours of labor per unit.  The cost of your labor is <span class="math notranslate nohighlight">\(\$\)</span>12 per hour, and a total of 8000 hours per month of labor is available (basically your whole floor). Determine a production schedule that will maximize the net revenue.</p>
 <p>The conversion of this description into a mathematical program is the next important step</p>
-</section>
 <section id="decision-variables">
-<h2>Decision Variables<a class="headerlink" href="#decision-variables" title="Link to this heading">#</a></h2>
+<h4>Decision Variables<a class="headerlink" href="#decision-variables" title="Link to this heading">#</a></h4>
 <p>First we define decision variables (sadly we already made a bad decision working for the cartel, but let’s make the best of our remaining time on Earth!)</p>
 <p><span class="math notranslate nohighlight">\(x_1 = \text{units of }A\text{ per month}\)</span> <br>
 <span class="math notranslate nohighlight">\(x_1 = \text{units of }B\text{ per month}\)</span> <br></p>
 </section>
 <section id="objective-function">
-<h2>Objective Function<a class="headerlink" href="#objective-function" title="Link to this heading">#</a></h2>
+<h4>Objective Function<a class="headerlink" href="#objective-function" title="Link to this heading">#</a></h4>
 <p>Here we wish to define the objective function, which in this example is net revenue</p>
 <p><span class="math notranslate nohighlight">\(y(x_1,x_2) = [120 - (5 \times 12)]x_1 + [80 - (3 \times 12)]x_2\)</span><br></p>
 <p>In a Jupyter Notebook it would be something like:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myobj</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
-    <span class="n">myobj</span> <span class="o">=</span> <span class="p">(</span><span class="mi">120</span><span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">80</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span><span class="o">*</span><span class="n">x2</span>
-    <span class="k">return</span> <span class="n">myobj</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>def myobj(x1,x2):
+myobj = (120-5*12)<em>x1 + (80-3</em>12)*x2
+return myobj</p>
 </section>
 <section id="constraints">
-<h2>Constraints<a class="headerlink" href="#constraints" title="Link to this heading">#</a></h2>
+<h4>Constraints<a class="headerlink" href="#constraints" title="Link to this heading">#</a></h4>
 <p>Next we need to define constraints.  The specific way will depend on the minimization package you choose, we will examine that later on.  Here we will list them and create functions to simply evaluate the constraints.</p>
+</section>
 <section id="minimium-required-production">
-<h3>Minimium Required Production<a class="headerlink" href="#minimium-required-production" title="Link to this heading">#</a></h3>
+<h4>Minimium Required Production<a class="headerlink" href="#minimium-required-production" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(x_1 + x_2 \ge 1000\)</span><br></p>
 </section>
-<section id="maximum-available-budget-for-labrador">
-<h3>Maximum Available Budget for Labrador<a class="headerlink" href="#maximum-available-budget-for-labrador" title="Link to this heading">#</a></h3>
+<section id="maximum-available-budget-for-labor">
+<h4>Maximum Available Budget for Labor<a class="headerlink" href="#maximum-available-budget-for-labor" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(5 x_1 + 3 x_2 \le 8000\)</span><br></p>
 </section>
 <section id="non-negativity">
-<h3>Non-Negativity<a class="headerlink" href="#non-negativity" title="Link to this heading">#</a></h3>
+<h4>Non-Negativity<a class="headerlink" href="#non-negativity" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(x_1 \ge 0; x_2 \ge 0\)</span><br></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -479,12 +500,20 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Substance A produced =  500
-Substance B produced =  500
-Objective Function Value =  52000
-Minimun Production Constraint =  0
-Maximum Labor Budget =  4000
-Solution is FEASIBLE
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">18</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">x1</span><span class="o">=</span><span class="mi">500</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">x2</span><span class="o">=</span><span class="mi">500</span>
+<span class="ne">---&gt; </span><span class="mi">18</span> <span class="n">mymodel</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="nn">Cell In[2], line 2,</span> in <span class="ni">mymodel</span><span class="nt">(x1, x2)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">mymodel</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">objvalue</span> <span class="o">=</span> <span class="n">myobj</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">constraint1</span> <span class="o">=</span> <span class="n">con1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">constraint2</span> <span class="o">=</span> <span class="n">con2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;myobj&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -511,8 +540,9 @@ Solution is FEASIBLE
 </div>
 <p>Now our revenue is over 2 times bigger that our initial guess.  Our next task is to automate the quest for a bestest solution.</p>
 </section>
-<section id="grid-search-method">
-<h3>Grid Search Method<a class="headerlink" href="#grid-search-method" title="Link to this heading">#</a></h3>
+</section>
+<section id="grid-search-method-implementation">
+<h3>Grid Search Method Implementation<a class="headerlink" href="#grid-search-method-implementation" title="Link to this heading">#</a></h3>
 <p>The easiest approach (but computationally very expensive and incredibly slow) is a grid search - we simply specify values of <span class="math notranslate nohighlight">\(\textbf{A}\)</span> and <span class="math notranslate nohighlight">\(\textbf{B}\)</span> in a repetition structure, and compute the objective value and whether the solution is feasible, and just save the best.  The script below implements a crude search.</p>
 <p>First suppress all the output in the function</p>
 <div class="cell docutils container">
@@ -587,9 +617,8 @@ Labor Budget Remaining =  0.0
 </div>
 </div>
 </section>
-</section>
-<section id="minimum-weight-structure">
-<h2>Minimum-Weight Structure<a class="headerlink" href="#minimum-weight-structure" title="Link to this heading">#</a></h2>
+<section id="example-design-a-minimum-weight-structure">
+<h3>Example: Design a Minimum-Weight Structure<a class="headerlink" href="#example-design-a-minimum-weight-structure" title="Link to this heading">#</a></h3>
 <p>Consider a structure that is comprised of two cylindrical load bearing columns whose diameter in feet are <span class="math notranslate nohighlight">\(r_1\)</span> and <span class="math notranslate nohighlight">\(r_2\)</span>.  The weight of the structure in pounds is given by the expression:</p>
 <p><span class="math notranslate nohighlight">\( y = 1000*(10+(r_1 - 0.5)^2+(r_2-0.5)^2 ~)\)</span><br></p>
 <p>In contrast to our drug making problem, this problem is non-linear in the objective function.</p>
@@ -834,7 +863,7 @@ Constraint 2 Value =  0.32990000000000164
 <p>Here we should just stop, we are at the constraint 1 limit, and have a workable solution.</p>
 </section>
 <section id="classical-grid-search">
-<h2>Classical Grid Search<a class="headerlink" href="#classical-grid-search" title="Link to this heading">#</a></h2>
+<h3>Classical Grid Search<a class="headerlink" href="#classical-grid-search" title="Link to this heading">#</a></h3>
 <p>To summarize a classical grid search process requires:</p>
 <ol class="arabic simple">
 <li><p>A model function that determines the objective value and feasibility when supplied with design variables</p></li>
@@ -847,7 +876,13 @@ Constraint 2 Value =  0.32990000000000164
 <p>Even though grid search is slow, its robust.  It is a good place to start because you may be able to get a code up and running in a week.  You can then set it on its hopeless search while you pursue more elegant methods.  If these methods fail, you always have the grid search running in the background guarenteeing (hopefully) at least one feasible solution.</p>
 <p>Don’t let elegance get in the way of getting things done!</p>
 </div>
-<!-- ## Method-of-Darts (Future) --><p>The two examples above are constrained minimization problems.  The examples are repeated below using <code class="docutils literal notranslate"><span class="pre">scipy</span></code> packages.</p>
+<!-- ## Method-of-Darts (Future) --><p>The two examples above are constrained minimization problems.</p>
+<p>Below we repeat the examples using <code class="docutils literal notranslate"><span class="pre">scipy</span></code> packages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no inherent advantage in using a package, except its often easier to make readers believe a result if it came from the mighty internet.  Often there is considerable advantage in that packages already have good API structures, and useful error trapping, which your homebrew stuff may not have.  It also relieves you of explaining an algorithm, simply incorporate the citation and move onward.</p>
+</div>
+</section>
 </section>
 <section id="minimum-weight-truss-using-scipy">
 <h2>Minimum Weight Truss using <code class="docutils literal notranslate"><span class="pre">scipy</span></code><a class="headerlink" href="#minimum-weight-truss-using-scipy" title="Link to this heading">#</a></h2>
@@ -923,17 +958,20 @@ All constraints satisfied solution is FEASIBLE
 <p>Lets revisit the labor allocation problem using the same tool with a caveat.  The labor allocation is an integer problem, and <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code> is a real number solver, so we may not get the exact same answer, but partial substance is encouraged by the cartel, after all we are making illegal substances, so what if we cheat our customers a little bit (it is the Amazonian way!)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">con1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myobj</span><span class="p">(</span><span class="n">xvec</span><span class="p">):</span>
+    <span class="n">myobj</span> <span class="o">=</span> <span class="p">((</span><span class="mi">5</span><span class="o">*</span><span class="mi">12</span><span class="o">-</span><span class="mi">120</span><span class="p">)</span><span class="o">*</span><span class="n">xvec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="o">-</span><span class="mi">80</span><span class="p">)</span><span class="o">*</span><span class="n">xvec</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># change sense for minimization</span>
+    <span class="k">return</span> <span class="n">myobj</span>
+    
+<span class="k">def</span> <span class="nf">con1</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
     <span class="c1"># con1 &gt;= 0 is feasible</span>
     <span class="n">con1</span> <span class="o">=</span> <span class="n">x1</span><span class="o">+</span><span class="n">x2</span> <span class="o">-</span> <span class="mi">1000</span>
     <span class="k">return</span> <span class="n">con1</span>
+    
 <span class="k">def</span> <span class="nf">con2</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
     <span class="c1"># con2 &gt;=0 is feasible</span>
     <span class="n">con2</span> <span class="o">=</span> <span class="mf">8000.0</span> <span class="o">-</span> <span class="mf">5.0</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span><span class="mf">3.0</span><span class="o">*</span><span class="n">x2</span>
     <span class="k">return</span> <span class="n">con2</span>
-<span class="k">def</span> <span class="nf">myobj</span><span class="p">(</span><span class="n">xvec</span><span class="p">):</span>
-    <span class="n">myobj</span> <span class="o">=</span> <span class="p">((</span><span class="mi">5</span><span class="o">*</span><span class="mi">12</span><span class="o">-</span><span class="mi">120</span><span class="p">)</span><span class="o">*</span><span class="n">xvec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="o">-</span><span class="mi">80</span><span class="p">)</span><span class="o">*</span><span class="n">xvec</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># change sense for minimization</span>
-    <span class="k">return</span> <span class="n">myobj</span>
+
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
@@ -1022,6 +1060,26 @@ Solution is FEASIBLE
 </div>
 </div>
 </section>
+<section id="enumeration-methods-method-of-darts">
+<h2>Enumeration Methods: Method of Darts<a class="headerlink" href="#enumeration-methods-method-of-darts" title="Link to this heading">#</a></h2>
+<p>The <strong>Method of Darts</strong> is a simple but effective stochastic search technique that bears some resemblance to genetic algorithms. It involves throwing “random darts” — that is, sampling points randomly within the search space — and using the outcomes to guide subsequent throws.</p>
+<ul class="simple">
+<li><p>The method begins with a broad scatter of random points across the feasible domain.</p></li>
+<li><p>Points that yield productive (high-fitness or low-cost) values are retained.</p></li>
+<li><p>The next round of darts is thrown closer to these productive regions, typically by reducing the variance of the sampling distribution.</p></li>
+<li><p>Over time, the search becomes more focused, homing in on promising areas of the space.</p></li>
+</ul>
+<p>This adaptive narrowing of the search region makes the Method of Darts a primitive but intuitive global optimization strategy — especially useful when:</p>
+<ul class="simple">
+<li><p>The objective function is noisy or discontinuous</p></li>
+<li><p>Gradients are not available</p></li>
+<li><p>A lightweight, implementation-flexible approach is preferred</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A military equivalent to Method of Darts is <strong>Reconissance by Fire</strong> :::</p>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1068,7 +1126,7 @@ Solution is FEASIBLE
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Nelder and Mead Simplex Method</p>
+        <p class="prev-next-title">Nelder and Mead Downhill Simplex Method</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1088,20 +1146,25 @@ Solution is FEASIBLE
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pharmaceuticals-for-fun-and-profit">Pharmaceuticals for Fun and Profit</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-variables">Decision Variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints">Constraints</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimium-required-production">Minimium Required Production</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-available-budget-for-labrador">Maximum Available Budget for Labrador</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negativity">Non-Negativity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-method">Grid Search Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-grid-search">When to Use Grid Search:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps">Steps:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-pharmaceuticals-for-fun-and-profit">Example: Pharmaceuticals for Fun and Profit</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-variables">Decision Variables</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">Objective Function</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints">Constraints</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minimium-required-production">Minimium Required Production</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-available-budget-for-labor">Maximum Available Budget for Labor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-negativity">Non-Negativity</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-weight-structure">Minimum-Weight Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-grid-search">Classical Grid Search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-search-method-implementation">Grid Search Method Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-design-a-minimum-weight-structure">Example: Design a Minimum-Weight Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-grid-search">Classical Grid Search</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-weight-truss-using-scipy">Minimum Weight Truss using <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labor-allocation-using-scipy">Labor allocation using <code class="docutils literal notranslate"><span class="pre">scipy</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration-methods-method-of-darts">Enumeration Methods: Method of Darts</a></li>
 </ul>
   </nav></div>
 

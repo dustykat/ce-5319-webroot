@@ -733,7 +733,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [
     {
@@ -742,12 +742,12 @@
      "text": [
       "Return Code  False\n",
       "Message  Positive directional derivative for linesearch\n",
-      " Function Evaluations  24\n",
-      " Jacobian Evaluations  8\n",
+      " Function Evaluations  40\n",
+      " Jacobian Evaluations  10\n",
       " --- Objective Function Value --- \n",
       "    117333.33  dollars\n",
       " Current Solution Vector \n",
-      "   [   0.        2666.6666729]\n"
+      "   [1.50696248e-15 2.66666667e+03]\n"
      ]
     }
    ],
