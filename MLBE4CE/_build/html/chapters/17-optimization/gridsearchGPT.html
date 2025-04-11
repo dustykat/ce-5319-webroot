@@ -1351,6 +1351,8 @@ Solution is FEASIBLE
     <span class="n">worst_guess</span> <span class="o">=</span> <span class="n">initial_target</span>
     <span class="n">worst_value</span> <span class="o">=</span> <span class="mf">1e-9</span>
 
+    <span class="n">string_of_darts</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_cycles</span><span class="p">):</span>
         <span class="n">x0_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">x1_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -1369,43 +1371,52 @@ Solution is FEASIBLE
             <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cycle </span><span class="si">{</span><span class="n">cycle</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: Best guess = </span><span class="si">{</span><span class="n">best_guess</span><span class="si">}</span><span class="s2">, Best value = </span><span class="si">{</span><span class="n">best_value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, Bounds = </span><span class="si">{</span><span class="n">x0_bounds</span><span class="si">}</span><span class="s2">, Bounds = </span><span class="si">{</span><span class="n">x1_bounds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">best_guess</span><span class="p">,</span> <span class="n">best_value</span><span class="p">,</span> <span class="n">worst_guess</span><span class="p">,</span> <span class="n">worst_val</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cycle </span><span class="si">{</span><span class="n">cycle</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: best_guess = [ </span><span class="si">{</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">],  best_value = </span><span class="si">{</span><span class="n">best_value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">string_of_darts</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">best_guess</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">best_value</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">best_guess</span><span class="p">,</span> <span class="n">best_value</span><span class="p">,</span> <span class="n">worst_guess</span><span class="p">,</span> <span class="n">worst_val</span><span class="p">,</span> <span class="n">string_of_darts</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_pt</span><span class="p">,</span> <span class="n">best_val</span> <span class="p">,</span> <span class="n">worst_pt</span><span class="p">,</span> <span class="n">worst_val</span> <span class="o">=</span> <span class="n">repeat_dart_cycles</span><span class="p">(</span>
-    <span class="n">n_cycles</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-    <span class="n">darts_per_cycle</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">initial_bounds</span><span class="o">=</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
-    <span class="n">initial_target</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">initial_dispersion</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_pt</span><span class="p">,</span> <span class="n">best_val</span> <span class="p">,</span> <span class="n">worst_pt</span><span class="p">,</span> <span class="n">worst_val</span> <span class="p">,</span> <span class="n">string_of_darts</span> <span class="o">=</span> <span class="n">repeat_dart_cycles</span><span class="p">(</span>
+    <span class="n">n_cycles</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">darts_per_cycle</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">initial_bounds</span><span class="o">=</span><span class="p">((</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+    <span class="n">initial_target</span><span class="o">=</span><span class="p">(</span><span class="mf">0.999621</span><span class="p">,</span> <span class="mf">0.999134</span><span class="p">),</span>
+    <span class="n">initial_dispersion</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;gamma&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cycle 1: Best guess = [1.0122554395138992, 1.0266202914546536], Best value = 0.000534, Bounds = (0.9, 1.1), Bounds = (0.9, 1.1)
-Cycle 2: Best guess = [1.0246610748254772, 1.053949222826438], Best value = 0.002223, Bounds = (0.9110298955625092, 1.1134809834652892), Bounds = (0.9239582623091883, 1.129282320600119)
-Cycle 3: Best guess = [1.0287736588554124, 1.0545139337164364], Best value = 0.002319, Bounds = (0.9221949673429295, 1.127127182308025), Bounds = (0.9485543005437942, 1.1593441451090818)
-Cycle 4: Best guess = [0.9836998976558388, 0.968104904463678], Best value = 0.000285, Bounds = (0.9258962929698712, 1.1316510247409537), Bounds = (0.9490625403447928, 1.15996532708808)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cycle 1: best_guess = [ 1.002252, 1.004188],  best_value = 0.000015
+Cycle 2: best_guess = [ 1.004889, 1.009268],  best_value = 0.000052
+Cycle 3: best_guess = [ 1.007534, 1.014374],  best_value = 0.000113
+Cycle 4: best_guess = [ 0.991979, 0.984131],  best_value = 0.000066
+Cycle 5: best_guess = [ 0.994589, 0.989109],  best_value = 0.000030
+Cycle 6: best_guess = [ 0.997207, 0.994113],  best_value = 0.000017
+Cycle 7: best_guess = [ 0.999831, 0.999142],  best_value = 0.000027
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cycle 8: best_guess = [ 1.002462, 1.004196],  best_value = 0.000060
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cycle 9: best_guess = [ 1.005100, 1.009276],  best_value = 0.000116
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">worst_pt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">string_of_darts</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.1254598344435927, 0.9830645591090024]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1.0022516200544278, 1.0041884106440682, np.float64(1.5303346374449118e-05)], [1.004889162894462, 1.009268390498031, np.float64(5.2402343456230996e-05)], [1.0075336467382263, 1.0143740689111922, np.float64(0.00011300289298032522)], [0.991978904279407, 0.9841307727517556, np.float64(6.551794204747527e-05)], [0.994589413261478, 0.9891092851964847, np.float64(3.0250904600404742e-05)], [0.9972067921045068, 0.9941129828979383, np.float64(1.7313271213906414e-05)], [0.9998310588873391, 0.9991419932630805, np.float64(2.708446092258635e-05)], [1.0024622317363978, 1.0041964443434008, np.float64(5.995018148276627e-05)], [1.005100328825807, 1.0092764648381742, np.float64(0.00011630253022035773)]]
 </pre></div>
 </div>
 </div>
@@ -1417,7 +1428,7 @@ Cycle 4: Best guess = [0.9836998976558388, 0.968104904463678], Best value = 0.00
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(8.058368444629714)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(9.756754729127907)
 </pre></div>
 </div>
 </div>
