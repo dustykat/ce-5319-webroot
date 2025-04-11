@@ -194,7 +194,7 @@
 
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">4.9. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="gridsearchGPT.html">Grid-Search Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
@@ -484,8 +484,8 @@ document.write(`
 </section>
 <section id="optima">
 <h3>Optima<a class="headerlink" href="#optima" title="Link to this heading">#</a></h3>
-<p>Optimization means finding either a ‘maximum’ or a ‘minimum’ of a function. The optimum value is typically defined over a <strong>range of interest</strong>.</p>
-<p><img alt="" src="../../_images/optima.png" /></p>
+<p>Optimization means finding either a ‘maximum’ or a ‘minimum’ of a function. The optimum value is typically defined over a <strong>range of interest</strong>.  The figure below is taken from <a class="reference external" href="http://54.243.252.9/engr-1330-webroot/3-Readings/NumericalRecipesinF77.pdf">Press, William H.; Teukolsky, Saul A.; Vetterling, William T.; Flannery, Brian P. (1986). <em>Numerical Recipes: The Art of Scientific Computing.</em> 1ed. New York: Cambridge University Press. p. 388 ISBN 0-521-30811-9.</a></p>
+<p><img alt="" src="../../_images/minmax.png" /></p>
 <p>A local maximum occurs when its value is higher than other values in the vicinity; A local minimum occurs when its value is lower than other values in the vicinity. The global maximum is the largest value in the range (a,b); The global minimum is the smallest value in the range (a,b).  A Saddle Point Occurs when the value of the function is higher on one side and lower on the other (the slope and curvature are zero at the point)</p>
 </section>
 <section id="convex">

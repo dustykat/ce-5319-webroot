@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Nelder and Mead Simplex Method &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>Nelder and Mead Downhill Simplex Method &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -57,11 +57,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/17-optimization/nelderandmead';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Hooke and Jeeves Pattern Search" href="hookeandjeeves.html" />
-    <link rel="prev" title="Grid Search" href="gridsearch.html" />
+    <link rel="next" title="Hooke and Jeeves Pattern Search" href="hookeandjeevesGPT.html" />
+    <link rel="prev" title="Grid-Search Examples" href="gridsearchGPT.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -191,9 +193,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="optimization.html">4.9. Optimization Methods</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="gridsearch.html">Grid Search</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Nelder and Mead Simplex Method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hookeandjeeves.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridsearchGPT.html">Grid-Search Examples</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Nelder and Mead Downhill Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
 </details></li>
@@ -346,7 +348,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -357,11 +361,29 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Nelder and Mead Simplex Method</h1>
+    <h1>Nelder and Mead Downhill Simplex Method</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#narrative-description">Narrative Description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nelder-mead-minimizer-module">The nelder_mead_minimizer Module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-rosenbrock-function">Example 1: Rosenbrock Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-2d-example-optional-visualization">Plotting 2D Example (Optional Visualization)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modify-2d-plot-to-show-path">Modify 2D Plot to Show Path</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-questions">Discussion Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#try-it">Try It!</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -371,8 +393,290 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="nelder-and-mead-simplex-method">
-<h1>Nelder and Mead Simplex Method<a class="headerlink" href="#nelder-and-mead-simplex-method" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="nelder-and-mead-downhill-simplex-method">
+<h1>Nelder and Mead Downhill Simplex Method<a class="headerlink" href="#nelder-and-mead-downhill-simplex-method" title="Link to this heading">#</a></h1>
+<p>The Nelder and Mead simplex method is a derivative-free optimization technique introduced in 1965. It is especially useful when gradients of the objective function are unavailable or unreliable, and when the goal is to quickly find a working solution rather than a highly efficient one.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://doi.org/10.1093/comjnl/7.4.308">Nelder, J.A., and Mead, R. (1965). A simplex method for function minimization. <em>The Computer Journal</em>, 7(4), 308–313. </a></p></li>
+<li><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/17-optimization/NumericalRecipesinF77-NelderMead.pdf"> Press, William H.; Teukolsky, Saul A.; Vetterling, William T.; Flannery, Brian P. (1986). <em>Numerical Recipes: The Art of Scientific Computing.</em> 1ed. New York: Cambridge University Press. pp. 402-406 ISBN 0-521-30811-9.</a></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">SciPy Optimize Documentation: </a></p></li>
+</ol>
+</section>
+<section id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>none</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="narrative-description">
+<h2>Narrative Description<a class="headerlink" href="#narrative-description" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The narrative that follows is largely paraphrased from Press et. al. (1986).:::</p>
+<p>At its core, the method operates on a geometric structure called a <strong>simplex</strong> — a set of <span class="math notranslate nohighlight">\(N+1\)</span> points in an <span class="math notranslate nohighlight">\(N\)</span>-dimensional space. For example, a simplex in 2D is a triangle; in 3D, it becomes a tetrahedron. Unlike the linear programming simplex method (which shares the name but not the algorithm), this <strong>downhill simplex</strong> method explores the space by reshaping and repositioning the simplex as it seeks a minimum.</p>
+<h3 class="rubric" id="how-it-works">How It Works</h3>
+<p>The algorithm begins with an initial simplex — a group of <span class="math notranslate nohighlight">\(N+1\)</span> points, often generated by taking an initial guess and perturbing it slightly in each coordinate direction:</p>
+<div class="math notranslate nohighlight">
+\[
+P_i = P_0 + \lambda e_i
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(e_i\)</span> is a unit vector in the <span class="math notranslate nohighlight">\(i\)</span>-th direction and <span class="math notranslate nohighlight">\(\lambda\)</span> is a user-defined scaling parameter.</p>
+<p>The method then repeatedly adjusts the simplex using geometrically intuitive operations:</p>
+<ul class="simple">
+<li><p><strong>Reflection</strong>: Move the worst-performing vertex across the opposite face to probe a potentially better direction.</p></li>
+<li><p><strong>Expansion</strong>: If reflection leads to a strong improvement, stretch the simplex further in that direction.</p></li>
+<li><p><strong>Contraction</strong>: If reflection doesn’t improve much, try a smaller step inward.</p></li>
+<li><p><strong>Shrinkage</strong>: If all else fails, collapse the simplex toward its best point and try again in a more focused region.</p></li>
+</ul>
+<p>This sequence of moves mimics an <strong>amoeba-like behavior</strong>, squeezing and stretching through the topology of the objective function in search of a minimum.</p>
+<h3 class="rubric" id="stopping-criteria-and-restarts">Stopping Criteria and Restarts</h3>
+<p>In multidimensional optimization, there is no simple way to “bracket” a minimum as in one dimension. The algorithm usually stops when:</p>
+<ul class="simple">
+<li><p>The size of the simplex becomes very small (based on distance moved).</p></li>
+<li><p>The improvement in objective function value becomes negligible.</p></li>
+</ul>
+<p>However, these criteria can be fooled by anomalies — a single bad step might make it <em>seem</em> like convergence. Therefore, it’s usually a good idea to <strong>restart the algorithm from the claimed minimum</strong>, reinitializing the simplex with small perturbations. This helps confirm that the found solution is robust and not an artifact of the initial simplex shape.</p>
+<ul class="simple">
+<li><p>Function calls only</p></li>
+<li><p>Needs a starting vector that is non-degenerate</p></li>
+</ul>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+
+
+<span class="k">def</span> <span class="nf">rosen</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Rosenbrock function&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">rosen</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span><span class="p">,</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.000066
+         Iterations: 141
+         Function evaluations: 243
+[0.99910115 0.99820923 0.99646346 0.99297555 0.98600385]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-nelder-mead-minimizer-module">
+<h2>The nelder_mead_minimizer Module<a class="headerlink" href="#the-nelder-mead-minimizer-module" title="Link to this heading">#</a></h2>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize</span></code> interface with method=’Nelder-Mead’.</p>
+<p>Nelder-Mead is a derivative-free optimization method that uses a simplex (a geometric figure of n+1 vertices in n dimensions) to search for a minimum.</p>
+<p>Advantages:</p>
+<ul class="simple">
+<li><p>Simple to use, no gradient required</p></li>
+<li><p>Robust to noise and discontinuities in many cases</p></li>
+</ul>
+<p>Disadvantages:</p>
+<ul class="simple">
+<li><p>May be slower than gradient-based methods</p></li>
+<li><p>Not guaranteed to converge for non-smooth functions</p></li>
+<li><p>Needs a starting vector that is non-degenerate (you need an initial guess of a simplex that has non-zero hypervolume, and non-infinite function values.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="example-1-rosenbrock-function">
+<h2>Example 1: Rosenbrock Function<a class="headerlink" href="#example-1-rosenbrock-function" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define Rosenbrock Function</span>
+<span class="k">def</span> <span class="nf">rosen</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Rosenbrock function: a standard test for optimization algorithms.</span>
+<span class="sd">    f(x) = sum(100*(x[i+1] - x[i]**2)**2 + (1 - x[i])**2 for i in range(n-1))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="c1"># Initial guess (non-degenerate simplex)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+
+<span class="c1"># Optimization call</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">rosen</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="c1"># Display results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum Value        :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimum at           :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Function evaluations :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of Iterations :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.000066
+         Iterations: 141
+         Function evaluations: 243
+Minimum Value        : 6.617481708884532e-05
+Optimum at           : [0.99910115 0.99820923 0.99646346 0.99297555 0.98600385]
+Function evaluations : 243
+Number of Iterations : 141
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="plotting-2d-example-optional-visualization">
+<h2>Plotting 2D Example (Optional Visualization)<a class="headerlink" href="#plotting-2d-example-optional-visualization" title="Link to this heading">#</a></h2>
+<p>To visualize the method’s behavior in 2D:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a 2D Rosenbrock for contour plot</span>
+<span class="k">def</span> <span class="nf">rosen2</span><span class="p">(</span><span class="n">xy</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xy</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">rosen2</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Minimum&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Nelder-Mead Optimization of Rosenbrock Function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/addb75d0d3a86a31692a35dbf2b8ad8aafcd7c1a33d00974fbd1b51f652b0b36.png" src="../../_images/addb75d0d3a86a31692a35dbf2b8ad8aafcd7c1a33d00974fbd1b51f652b0b36.png" />
+</div>
+</div>
+<p>An obvious pedagogical improvement would be to modify both the search code and the plotting code so the coordinates of the intermediate “coordinates” are captured as a list and plotted, to show progression from starting guess to the minimum.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a perfect instance of using AI assistant to try the modification for us.  The actual prompt is the above sentance posed as a question: “Can you modify the attached script to …..”.  Below are the suggested code modifications :::</p>
+<h3 class="rubric" id="modify-search-code-to-capture-path">Modify Search Code to Capture Path</h3>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">callback</span></code> argument in <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code> to record each new point visited by the optimizer.  Make sure path is a list defined outside the callback so it accumulates steps. The xk passed to record_path is the current best point.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1 - Modified to record guess for each step</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define Rosenbrock Function</span>
+<span class="k">def</span> <span class="nf">rosen</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Rosenbrock function: a standard test for optimization algorithms.</span>
+<span class="sd">    f(x) = sum(100*(x[i+1] - x[i]**2)**2 + (1 - x[i])**2 for i in range(n-1))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="c1"># Define a storage list for the path</span>
+<span class="n">rpath</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">record_path</span><span class="p">(</span><span class="n">xk</span><span class="p">):</span>
+    <span class="c1"># Each intermediate guess is appended to path</span>
+    <span class="n">rpath</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">xk</span><span class="p">))</span>
+
+<span class="c1"># Initial guess (non-degenerate simplex)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+
+<span class="c1"># Optimization call</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">rosen</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nelder-mead&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">callback</span><span class="o">=</span><span class="n">record_path</span><span class="p">)</span>
+
+<span class="c1"># Display results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum Value        :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimum at           :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Function evaluations :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">nfev</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of Iterations :&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">nit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.000066
+         Iterations: 141
+         Function evaluations: 243
+Minimum Value        : 6.617481708884532e-05
+Optimum at           : [0.99910115 0.99820923 0.99646346 0.99297555 0.98600385]
+Function evaluations : 243
+Number of Iterations : 141
+</pre></div>
+</div>
+</div>
+</div>
+<section id="modify-2d-plot-to-show-path">
+<h3>Modify 2D Plot to Show Path<a class="headerlink" href="#modify-2d-plot-to-show-path" title="Link to this heading">#</a></h3>
+<p>Let’s adapt the plot section to use this path list, assuming we’re doing a 2D case (i.e., len(x0)==2):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a 2D Rosenbrock for contour plot</span>
+<span class="k">def</span> <span class="nf">rosen2</span><span class="p">(</span><span class="n">xy</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xy</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">rosen2</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">])</span>
+
+<span class="c1"># Only keep first two dimensions of each path entry</span>
+<span class="n">path2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">rpath</span><span class="p">])</span>  <span class="c1"># Adjust if higher dimensions</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot path</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">path2d</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;ro-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimization Path&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Minimum&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Nelder-Mead Optimization of Rosenbrock Function (2D projection)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/36e843c1d8aa1fbe95c8f3f77e94ab80a513dbe77fc855fec78d2672c7042762.png" src="../../_images/36e843c1d8aa1fbe95c8f3f77e94ab80a513dbe77fc855fec78d2672c7042762.png" />
+</div>
+</div>
+<p>Thus we can visualize the progression from initial guess, to the optimizers “solution”.  Naturally in higher dimensions, this visualization becomes much harder (anything beyond 4 dimensions is hard to visualize).  But for feature engineering even subsets of 3-4 dimensions can be very useful.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="discussion-questions">
+<h2>Discussion Questions<a class="headerlink" href="#discussion-questions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How did the Nelder-Mead method perform in terms of iterations and function evaluations?</p></li>
+<li><p>What happens if we change the starting guess?</p></li>
+<li><p>Which types of civil engineering models could benefit from derivative-free methods like Nelder-Mead?</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="try-it">
+<h2>Try It!<a class="headerlink" href="#try-it" title="Link to this heading">#</a></h2>
+<p>Try replacing the Rosenbrock function with a model from your field, such as a calibration function for inflow-outflow data, or another surrogate objective in hydrology or transport analysis.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -406,16 +710,16 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="gridsearch.html"
+       href="gridsearchGPT.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Grid Search</p>
+        <p class="prev-next-title">Grid-Search Examples</p>
       </div>
     </a>
     <a class="right-next"
-       href="hookeandjeeves.html"
+       href="hookeandjeevesGPT.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -429,6 +733,31 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#narrative-description">Narrative Description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nelder-mead-minimizer-module">The nelder_mead_minimizer Module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-rosenbrock-function">Example 1: Rosenbrock Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-2d-example-optional-visualization">Plotting 2D Example (Optional Visualization)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modify-2d-plot-to-show-path">Modify 2D Plot to Show Path</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-questions">Discussion Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#try-it">Try It!</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
