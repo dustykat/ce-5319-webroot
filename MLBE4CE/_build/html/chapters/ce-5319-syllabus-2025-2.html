@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CE 5319 Machine Learning for Civil Engineers &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/ce-5319-syllabus-2025-2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Introduction" href="01-introduction/introduction.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CE 5319 Machine Learning for Civil Engineers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06-logisticregression/example2.html">Designed Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06-logisticregression/poissonregression.html">Poisson Regression</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-validation/validation.html">10. Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-clustering/clustering.html">11. Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="14-neuralnetworks/deeplearners.html">Deep Learners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14-neuralnetworks/myann.html">Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14-neuralnetworks/materialANN.html">Artifical Neural  Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14-neuralnetworks/skann.html">Artificial Neural Network using packages</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/ce-5319-syllabus-2025-2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CE 5319 Machine Learning for Civil Engineers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-catalog-description">Course Catalog Description:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-sections">Course Sections</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-instructor">Course Instructor:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#textbooks">Textbooks:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class-server">Class Server:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructor-s-notes">Instructor’s Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-schedule-tentative">Course Schedule (Tentative):</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ce-5319-machine-learning-for-civil-engineers">
+<h1>CE 5319 Machine Learning for Civil Engineers<a class="headerlink" href="#ce-5319-machine-learning-for-civil-engineers" title="Link to this heading">#</a></h1>
+<section id="course-catalog-description">
+<h2>Course Catalog Description:<a class="headerlink" href="#course-catalog-description" title="Link to this heading">#</a></h2>
+<p>CE 5319: Machine Learning for Civil Engineers (3:3:0). Application of machine learning concepts and algorithms in Civil Engineering.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites:<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<p>ENGR 1330 or equivalent <br>
+Graduate Standing (any discipline)<br>
+CE 5315 or instructor permission <br></p>
+</section>
+<section id="course-sections">
+<h2>Course Sections<a class="headerlink" href="#course-sections" title="Link to this heading">#</a></h2>
+<p>Lesson time, days, and location:</p>
+<ol class="arabic simple">
+<li><p>Section 001; CRN 76930; <strong>1230-1420</strong> T,Th ; Mechanical Engineering North Room 146 (F2F On campus students)</p></li>
+<li><p>Section D01; CRN 76931; <strong>1230-1420</strong> T,Th ; ASYNC distance (Off campus <strong>Not in Lubbock</strong>)</p></li>
+</ol>
+</section>
+<section id="course-instructor">
+<h2>Course Instructor:<a class="headerlink" href="#course-instructor" title="Link to this heading">#</a></h2>
+<p>Instructor: Theodore G. Cleveland, Ph.D., P.E., M. ASCE, F. EWRI</p>
+<p>Email: <a class="reference external" href="mailto:theodore&#46;cleveland&#37;&#52;&#48;ttu&#46;edu">theodore<span>&#46;</span>cleveland<span>&#64;</span>ttu<span>&#46;</span>edu</a>  (put CE 5319 into the subject line for email related to this class)</p>
+<p>Office location: CECE 203F</p>
+<p>Office hours: TBD M,T,W,Th,F ; CE 203F</p>
+</section>
+<section id="textbooks">
+<h2>Textbooks:<a class="headerlink" href="#textbooks" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/199957950X">Andriy Burkov (2019), The Hundred-Page Machine Learning Book, Kindle Direct Publishing}
+</a>  The link is to Amazon to buy a copy.  The book is available free on-line with some searching; but the author should be compensated - its not very expensive, so buy the book.</p></li>
+<li><p><a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016), Make Your Own Neural Network. Kindle Edition. </a>. The book is available on Amazon, its not too expensive, so buy the book.  Most of the Neural Network part of the course is derived from this book, its worth having.</p></li>
+</ol>
+</section>
+<section id="class-server">
+<h2>Class Server:<a class="headerlink" href="#class-server" title="Link to this heading">#</a></h2>
+<p>Nearly all the course content is stored on the course server; the landing page is <strong><a class="reference external" href="http://54.243.252.9/ce-5319-webroot">http://54.243.252.9/ce-5319-webroot</a></strong>.  Nearly all the scripts demonstrated are run on an identical server that has a non-persistent URL - changes if meaningful are transmitted to the class server as needed.  This structure is to protect the static content and allow recovery if we break something.</p>
+</section>
+<section id="instructor-s-notes">
+<h2>Instructor’s Notes<a class="headerlink" href="#instructor-s-notes" title="Link to this heading">#</a></h2>
+<p>The lecture notes developed by the instructor are in a JupyterBook housed on the class server, the URL to the book is <strong><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/intro.html">http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/intro.html</a></strong>
+<br>
+<br></p>
+<!--|date|[topic](link)|[readings](link)|[homework](link)|-->
+</section>
+<section id="course-schedule-tentative">
+<h2>Course Schedule (Tentative):<a class="headerlink" href="#course-schedule-tentative" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Date</p></th>
+<th class="head"><p>Lesson</p></th>
+<th class="head"><p>Readings</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/chapters/01-introduction/introduction.html#end-of-section">Introduction</a> <br> - What is Machine Learing <br> - Computational environment <br> - AI assisted programming</p></td>
+<td><p>- <a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book pp. XX-XX</a> <br> - <a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016) Make Your Own Neural Network. Kindle Edition. pp XX-XX</a><br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/understanding-machine-learning-theory-algorithms.pdf">Machine Learning Theory and Algorithms pp 19-22</a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/MachineLearningTechniquesforCivilEngineeringProblems.pdf">Machine Learning Techniques for Civil Engineering Problems</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://13.218.19.225/ce-5319-webroot/MLBE4CE/_build/html/chapters/02-exploratorydata/exploratorydata.html">Exploratory Data Analysis</a></p></td>
+<td><p>- <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/102_05_01_Tukey-Exploratory-Data-Analysis-1977.pdf">Tukey, J (1977). Exploratory Data Analysis. Addison-Wessley (Copy)</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/chapters/03-datapreparation/datapreparation.html">Data Preparation</a></p></td>
+<td><p>- <a class="reference external" href="https://www.amazon.com/Python-2nd-Beginners-Hands-Project-ebook/dp/B071Z2Q6TQ/ref=sr_1_3?dchild=1&amp;amp;keywords=learn+python+in+a+day&amp;amp;qid=1611108340&amp;amp;sr=8-3">Chan, J. “Learn Python in One Day and Learn It Well. Python for Beginners with Hands-on Projects.”</a> <br> - <a class="reference external" href="https://www.geeksforgeeks.org/read-a-file-line-by-line-in-python/">Read a file line by line</a>  <br> - <a class="reference external" href="https://www.pythonforbeginners.com/files/4-ways-to-read-a-text-file-line-by-line-in-python">Read a file line by line (PLR approach)</a>  <br> - <a class="reference external" href="https://www.pythonforbeginners.com/files/reading-and-writing-files-in-python">Reading and writing files</a>  <br> - <a class="reference external" href="https://www.tutorialspoint.com/python/python_files_io.htm">Python Files I/O</a>  <br> - <a class="reference external" href="https://realpython.com/working-with-files-in-python/">Working with files in Python</a>  <br> - <a class="reference external" href="https://www.geeksforgeeks.org/file-handling-python/">File handling in Python</a>  <br> - <a class="reference external" href="https://www.programiz.com/python-programming/file-operation">File operations in Python</a>  <br> - <a class="reference external" href="https://www.kite.com/python/answers/how-to-read-a-text-file-from-a-url-in-python">How to read a text file from a URL in Python</a> <br> - <a class="reference external" href="https://www.tutorialspoint.com/downloading-files-from-web-using-python">Downloading files from web using Python</a> <br> - <a class="reference external" href="https://towardsdatascience.com/an-efficient-way-to-read-data-from-the-web-directly-into-python-a526a0b4f4cb">An Efficient Way to Read Data from the Web Directly into Python without having to download it to your hard drive</a> <br> - <a class="reference external" href="https://www.pluralsight.com/guides/web-scraping-with-request-python">Web Requests with Python (using http and/or https) </a> <br> - <a class="reference external" href="https://stackoverflow.com/questions/27835619/urllib-and-ssl-certificate-verify-failed-error">Troubleshooting certificate errors (really common with https requests)</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/chapters/04-linearregression/linearregression.html">Linear Regression</a> <br> - Ordinary Least Squares</p></td>
+<td><p>- <a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book pp. 21-25</a> <br> - <a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016) Make Your Own Neural Network. Kindle Edition. pp XX-XX</a><br> - <a class="reference external" href="https://www.amazon.com/Machine-Learning-Python-Beginners-Hands-ebook/dp/B09BNYDH5F/ref=sr_1_1?crid=2AWC6H5O8OTXX&amp;amp;amp&amp;amp;dib=eyJ2IjoiMSJ9.lb1DU4Hg5eM1dTpip0RqZQ.FB7zPx86H30WvSkCwGQrxSos7pXT20BjOeJwlfa0m78&amp;amp;amp&amp;amp;dib_tag=se&amp;amp;amp&amp;amp;keywords=Chan%2C+Jamie.+Machine+Learning+With+Python+For+Beginners%3A+A+Step-By-Step+Guide+with+Hands-On+Projects+%28Learn+Coding+Fast+with+Hands-On+Project+Book+7%29&amp;amp;amp&amp;amp;qid=1741388116&amp;amp;amp&amp;amp;sprefix=%2Caps%2C465&amp;amp;amp&amp;amp;sr=8-1">Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects pp. 106-118.</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/chapters/04-linearregression/linearregression.html">Linear Regression</a> <br> - topic <br> - topic</p></td>
+<td><p>- <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/EERIPaper1805Final.pdf">StructuraL Response Prediction Engine to Support Advanced Seismic Risk Assessment</a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/5876299.pdf">Two-Stage Degradation Assessment and Prediction Method for Aircraft Engines…</a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/understanding-machine-learning-theory-algorithms.pdf">Machine Learning Theory and Algorithms pp 22-27</a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/IWCCE2013-ApplyingRegressionAnalysistoPredictandClassifyConstructionCycleTime-Francis.pdf">Applying Regression Analysis to Predict and Classify Construction Cycle Time</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/_build/html/chapters/17-optimization/optimization.html">Optimization Methods</a> <br> - Search Methods <br> - Gradient Methods</p></td>
+<td><p>- <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/R352.pdf">Applied Dynamic Programming Bellman and Dreyfus (1962) pp. 1-21</a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/17-optimization/hookeandjeevespaper.pdf">Hooke, R., &amp; Jeeves, T. A. (1961). “Direct Search” Solution of Numerical and Statistical Problems. <em>Journal of the ACM</em>, 8(2), 212–229.</a> <br> - <a class="reference external" href="https://www.springer.com/gp/book/9780387303031">Numerical Optimization by Nocedal &amp; Wright</a> – Chapter 9 <br> - <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">Scipy Optimize Documentation</a> <br> - <a class="reference external" href="https://doi.org/10.1093/comjnl/7.2.155">Powell, M. J. D. (1964). An efficient method for finding the minimum of a function of several variables without calculating derivatives. <em>The Computer Journal</em>, 7(2), 155–162.</a><br> - <a class="reference external" href="https://doi.org/10.1093/comjnl/7.4.308">Nelder, J.A., and Mead, R. (1965). A simplex method for function minimization. <em>The Computer Journal</em>, 7(4), 308–313. </a> <br> - <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/17-optimization/NumericalRecipesinF77-NelderMead.pdf"> Press, William H.; Teukolsky, Saul A.; Vetterling, William T.; Flannery, Brian P. (1986). <em>Numerical Recipes: The Art of Scientific Computing.</em> 1ed. New York: Cambridge University Press. pp. 402-406 ISBN 0-521-30811-9.</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Non-Linear Regression <br> - Low Dimensional Methods</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Non-Linear Regression <br> - High Dimensional Methods</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Logistic Regression <br> - Logit Regression (binary classes) <br> - Multiple logistic regression <br> - Poisson Regression</p></td>
+<td><p>- <a class="reference external" href="https://realpython.com/logistic-regression-python/">Stojiljković, M.”Logistic Regression in Python”</a> <br> - <a class="reference external" href="https://www.datacamp.com/community/tutorials/understanding-logistic-regression-python">Navlani, A. “Understanding Logistic Regression in Python”</a> <br> - <a class="reference external" href="https://datascience.foundation/sciencewhitepaper/understanding-logistic-regression-with-python-practical-guide-1">Tripathi, M. “Understanding Logistic Regression with Python: Practical Guide 1”</a> <br> - <a class="reference external" href="https://towardsdatascience.com/understanding-data-science-classification-metrics-in-scikit-learn-in-python-3bc336865019">Long, A. “Understanding Data Science Classification Metrics in Scikit-Learn in Python”</a> <br> - <a class="reference external" href="https://datatofish.com/logistic-regression-python/">“Example of Logistic Regression in Python”</a> <br> - <a class="reference external" href="https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8">Li, S. “Building A Logistic Regression in Python, Step by Step”</a> <br> - <a class="reference external" href="https://www.edureka.co/blog/logistic-regression-in-python/">Waseem, M. “How To Perform Logistic Regression In Python?”</a> <br> - <a class="reference external" href="https://heartbeat.fritz.ai/logistic-regression-in-python-using-scikit-learn-d34e882eebb1">Dhiraj, K. “Logistic Regression in Python Using Scikit-learn”</a> <br> - <a class="reference external" href="https://www.geeksforgeeks.org/ml-logistic-regression-using-python/">“ML : Logistic Regression using Python”</a> <br></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Decision Trees <br> -  Classification And Regression Trees  <br> - Random Forests (CART Bagging)</p></td>
+<td><p>- <a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html">Decision Trees and Random Forests</a> <br> - <a class="reference external" href="https://www.analyticsvidhya.com/blog/2015/09/random-forest-algorithm-multiple-challenges/?utm_source=blog">Powerful Guide to learn Random Forest (with codes in R &amp; Python)</a> <br> - <a class="reference external" href="https://www.analyticsvidhya.com/blog/2014/06/introduction-random-forest-simplified/">Simplified Introduction to Random Forests</a> <br> - <a class="reference external" href="https://www.blopig.com/blog/2017/07/using-random-forests-in-python-with-scikit-learn/">Using Random Forests in Python with Scikit-Learn</a> <br> - <a class="reference external" href="https://www.geeksforgeeks.org/random-forest-regression-in-python/">Random Forest Regression in Python</a> <br> - <a class="reference external" href="https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/">Random Forest Algorithm with Python and Scikit-Learn</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Nearest Neighbor Methods <br> - Distance Measures <br> K-nearest neighbor</p></td>
+<td><p>- <a class="reference external" href="https://stackabuse.com/k-nearest-neighbors-algorithm-in-python-and-scikit-learn/">Robinson, S. “K-Nearest Neighbors Algorithm in Python and Scikit-Learn”</a> <br> - <a class="reference external" href="https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/">Brownlee, J. “Develop k-Nearest Neighbors in Python From Scratch” </a><br> - <a class="reference external" href="https://machinelearningmastery.com/distance-measures-for-machine-learning/">Brownlee, J. “Four Distance Measures for Machine Learning”</a> <br> - <a class="reference external" href="https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learn">Navlani, A. “KNN Classification using Scikit-learn”</a> <br> - <a class="reference external" href="https://towardsdatascience.com/knn-in-python-835643e2fb53">Zoltan, C. “KNN in Python”</a> <br> - <a class="reference external" href="https://towardsdatascience.com/k-nearest-neighbor-python-2fccc47d2a55">Maklin, C. “K Nearest Neighbor Algorithm In Python”</a> <br> - <a class="reference external" href="https://www.geeksforgeeks.org/k-nearest-neighbor-algorithm-in-python/">“k-nearest neighbor algorithm in Python”</a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Support Vector Methods <br> - Maximum Margin Classification <br> - Kernel Trick and Common Kernels <br> - Support Vector Regression</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Validation Methods <br> - Train/Test Split and Holdout Sets <br> - k-Fold Cross-Validation <br> - Information Metrics</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Clustering Methods <br> - K-Means and Variants <br> - Hierarchical Clustering <br> - Density-Based Clustering</p></td>
+<td><p>- <a class="reference external" href="https://www.ibm.com/cloud/learn/unsupervised-learning">IBM “Clustering” in Unsupervised Learning</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Dimension Reduction Methods <br> - Principal Components <br> - Stochastic Embedding <br> - Discriminant Analysis</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Classification Feature Engineering <br> - one-hot <br> - ordinal <br> - embeddings</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Predictive Feature Engineering <br> - Scaling  <br> - Normalization <br> - Interaction(s)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Neural Networks <br> - Deep Learners <br> - Image Analysis (Flat)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Neural Networks <br> - Convolutional Masking <br> - Image Classification</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Neural Networks <br> - Stand-alone Packages</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Ensemble Methods <br> - Solution stacking <br> - Solution Blending <br></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Ensemble Methods  <br> - Bagging <br> - Boosting</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Time Series Tools <br> - Stationarity and Differencing <br> - Auto/Serial correlation  <br> - ARIMA and SARIMA Models</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>01_MMM</p></td>
+<td><p>Time Series Tools <br> - Seasonal Decomposition <br> - Exponential Smoothing <br> - TS Feature Engineering</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01-introduction/introduction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">1. Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-catalog-description">Course Catalog Description:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-sections">Course Sections</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-instructor">Course Instructor:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#textbooks">Textbooks:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#class-server">Class Server:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructor-s-notes">Instructor’s Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-schedule-tentative">Course Schedule (Tentative):</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

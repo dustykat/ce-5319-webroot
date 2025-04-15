@@ -4,6 +4,7 @@
 format: jb-book
 root: intro
 chapters:
+- file: chapters/ce-5319-syllabus-2025-2
 - file: chapters/01-introduction/introduction # introduction
   sections:
   - file: chapters/01-introduction/programming
