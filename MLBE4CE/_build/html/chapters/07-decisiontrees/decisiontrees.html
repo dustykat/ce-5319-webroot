@@ -211,6 +211,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -372,6 +373,23 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-random-forest">What is Random Forest?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-random-forest-algorithm-works">How Random Forest algorithm works?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart1-based-on-age-as-predictor">CART1 : Based on “Age” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart2-based-on-gender-as-predictor">CART2 : Based on “Gender” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart3-based-on-education-as-predictor">CART3 : Based on “Education” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart4-based-on-residence-as-predictor">CART4 : Based on “Residence” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart5-based-on-industry-as-predictor">CART5 : Based on “Industry” as predictor:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-re-using-the-iris-plants-classification">Example Re-using the Iris Plants Classification <br/></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engineering-application-s-examples">Engineering Application(s) Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-observations-regarding-random-forests">General Observations Regarding Random Forests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons">Cons:</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -395,10 +413,247 @@ document.write(`
 <ol class="arabic simple">
 <li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book</a> Required Textbook</p></li>
 <li><p><a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016) Make Your Own Neural Network. Kindle Edition. </a> Required Textbook</p></li>
+<li><p><a class="reference external" href="https://nextlevelmedic.com/wp-content/uploads/2022/03/ADTMC-MEDCOM-Pam-40-7-21.pdf">United States Army Medical Command (MEDCOM) Algorithm Directed Troop Medical Care (ADTMC) manual</a></p></li>
+<li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
+<li><p><a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/05.08-random-forests.html">In-Depth: Decision Trees and Random Forests” by Jake VanderPlas</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2015/09/random-forest-algorithm-multiple-challenges/?utm_source=blog">Powerful Guide to learn Random Forest (with codes in R &amp; Python)” by SUNIL RAY</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2014/06/introduction-random-forest-simplified/">Introduction to Random forest – Simplified” by TAVISH SRIVASTAVA</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.blopig.com/blog/2017/07/using-random-forests-in-python-with-scikit-learn/">“Using Random Forests in Python with Scikit-Learn”</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/random-forest-regression-in-python/">“Random Forest Regression in Python”</a> <br></p></li>
+<li><p><a class="reference external" href="https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/">“Random Forest Algorithm with Python and Scikit-Learn” by Usman Malik</a> <br></p></li>
 </ol>
 </section>
 <section id="videos">
 <h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=DCZ3tsQIoGU">“Decision Tree (CART) - Machine Learning Fun and Easy” by Augmented Startups</a></p></li>
+<li><p>2.<a class="reference external" href="https://www.youtube.com/watch?v=J4Wdy0Wc_xQ">”StatQuest: Random Forests Part 1 - Building, Using and Evaluating” by StatQuest with Josh Starmer</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=sQ870aTKqiM">“StatQuest: Random Forests Part 2: Missing data and clustering” by StatQuest with Josh Starmer</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=D_2LkhMJcfY">“Random Forest - Fun and Easy Machine Learning” by Augmented Startups</a></p></li>
+</ol>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Classification And Regression Tree (CART) models, are intuitive ways to classify or label objects: you simply ask a series of questions designed to zero-in on the classification. For example, if you wanted to build a decision tree to classify an animal you come across while on a hike, you might construct the one shown here: <br></p>
+<p><img alt="" src="https://jakevdp.github.io/PythonDataScienceHandbook/figures/05.08-decision-tree.png" /> <br></p>
+<p>The binary splitting makes this extremely efficient: in a well-constructed tree, each question will cut the number of options by approximately half, very quickly narrowing the options even among a large number of classes. The trick, of course, comes in deciding which questions to ask at each step. In machine learning implementations of decision trees, the questions generally take the form of axis-aligned splits in the data: that is, each node in the tree splits the data into two groups using a cutoff value within one of the features. Let’s now look at an example of this. <br></p>
+<p><img alt="" src="../../_images/mixedcolors.png" /></p>
+<p>A simple decision tree built on this data will iteratively split the data along one or the other axis according to some quantitative criterion, and at each level assign the label of the new region according to a majority vote of points within it. This figure presents a visualization of the first four levels of a decision tree classifier for this data: <br></p>
+<p><img alt="" src="https://jakevdp.github.io/PythonDataScienceHandbook/figures/05.08-decision-tree-levels.png" /> <br></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After the first split, every point in the upper branch remains unchanged, so there is no need to further subdivide this branch. Except for nodes that contain all of one color, at each level every region is again split along one of the two features.</p>
+</div>
+<p><img alt="" src="../../_images/1stsplit.png" /></p>
+<p>Notice that as the depth increases, we tend to get very strangely shaped classification regions; for example, at a depth of five, there is a tall and skinny purple region between the yellow and blue regions. It’s clear that this is less a result of the true, intrinsic data distribution, and more a result of the particular sampling or noise properties of the data. That is, this decision tree, even at only five levels deep, is clearly over-fitting our data, as evident in the pecular shapes of the classification regions below.</p>
+<p><img alt="" src="../../_images/2ndsplit.png" /></p>
+<p>Such over-fitting turns out to be a general drawback of decision trees: it is very easy to go too deep in the tree, and thus to fit details of the particular data rather than the overall properties of the distributions they are drawn from. Another way to see this over-fitting is to look at models trained on different subsets of the data—for example, in this figure we train two different trees, each on half of the original data:</p>
+<p><img alt="" src="https://jakevdp.github.io/PythonDataScienceHandbook/figures/05.08-decision-tree-overfitting.png" /> <br></p>
+<p>It is clear that in some places, the two trees produce consistent results (e.g., in the four corners), while in other places, the two trees give very different classifications (e.g., in the regions between any two clusters). The key observation is that the inconsistencies tend to happen where the classification is less certain, and thus by using information from both of these trees, we might come up with a better result!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In signal processing a similar concept called solution stacking is employed to improve instrument resolution “after the fact.”  Synthetic Arpature Radar (SAR) is a good example of solution stacking (a kind of regression tree) to improve apparent signal resolution&gt;</p>
+</div>
+<p>Just as using information from two trees improves our results, we might expect that using information from many trees would improve our results even further. AND WHAT WOULD WE HAVE IF WE HAD MANY TREES?</p>
+<p>YES! A FOREST! (If we had many Ents (smart trees ;) ), we could have Fangorn Forest!)</p>
+<p><img alt="" src="https://i.pinimg.com/originals/d7/2f/40/d72f40b11a148ce40d538cde0a8c8898.gif" /> <br></p>
+<p>This notion—that multiple overfitting estimators can be combined to reduce the effect of this overfitting—is what underlies an ensemble method called <strong>bagging</strong>. Bagging makes use of an ensemble (a grab bag, perhaps) of parallel estimators, each of which over-fits the data, and averages the results to find a better classification. An ensemble of randomized decision trees is known as a random forest.</p>
+</section>
+<section id="what-is-random-forest">
+<h2>What is Random Forest?<a class="headerlink" href="#what-is-random-forest" title="Link to this heading">#</a></h2>
+<p>Random Forest is a versatile machine learning method capable of performing both regression and classification tasks. It also undertakes dimensional reduction methods, treats missing values, outlier values and other essential steps of data exploration, and does a fairly good job. It is a type of ensemble learning method, where a group of weak models combine to form a powerful model.</p>
+<p>In Random Forest, we grow multiple trees. To classify a new object based on attributes, each tree gives a classification and we say the tree “votes” for that class. The forest chooses the classification having the most votes (over all the trees in the forest) and in case of regression, it takes the average of outputs by different trees.</p>
+<p><img alt="" src="https://aigraduate.com/content/images/downloaded_images/Building-Intuition-for-Random-Forests/1-bYGSIgMlmVdedFJaE6PuBg.gif" /> <br></p>
+</section>
+<section id="how-random-forest-algorithm-works">
+<h2>How Random Forest algorithm works?<a class="headerlink" href="#how-random-forest-algorithm-works" title="Link to this heading">#</a></h2>
+<p>Random forest is like bootstrapping algorithm with Decision tree (CART) model. Say, we have 1000 observation in the complete population with 10 variables. Random forest tries to build multiple CART models with different samples and different initial variables. For instance, it will take a random sample of 100 observation and 5 randomly chosen initial variables to build a CART model. It will repeat the process (say) 10 times and then make a final prediction on each observation. Final prediction is a function of each prediction. This final prediction can simply be the mean of each prediction. Let’s consider an imaginary example:</p>
+<p>Out of a large population, Say, the algorithm Random forest picks up 10k observation with only one variable (for simplicity) to build each CART model. In total, we are looking at 5 CART model being built with different variables. In a real life problem, you will have more number of population sample and different combinations of  input variables. The target variable is the salary bands:</p>
+<ul class="simple">
+<li><p>Band1 : Below 40000 <br></p></li>
+<li><p>Band2 : 40000 - 150000 <br></p></li>
+<li><p>Band3 : Above 150000 <br></p></li>
+</ul>
+<p>Following are the outputs of the 5 different CART model:</p>
+<section id="cart1-based-on-age-as-predictor">
+<h3>CART1 : Based on “Age” as predictor:<a class="headerlink" href="#cart1-based-on-age-as-predictor" title="Link to this heading">#</a></h3>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/rf1.png" /> <br></p>
+</section>
+<section id="cart2-based-on-gender-as-predictor">
+<h3>CART2 : Based on “Gender” as predictor:<a class="headerlink" href="#cart2-based-on-gender-as-predictor" title="Link to this heading">#</a></h3>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/rf2.png" /> <br></p>
+</section>
+<section id="cart3-based-on-education-as-predictor">
+<h3>CART3 : Based on “Education” as predictor:<a class="headerlink" href="#cart3-based-on-education-as-predictor" title="Link to this heading">#</a></h3>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/rf3.png" /> <br></p>
+</section>
+<section id="cart4-based-on-residence-as-predictor">
+<h3>CART4 : Based on “Residence” as predictor:<a class="headerlink" href="#cart4-based-on-residence-as-predictor" title="Link to this heading">#</a></h3>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/rf4.png" /> <br></p>
+</section>
+<section id="cart5-based-on-industry-as-predictor">
+<h3>CART5 : Based on “Industry” as predictor:<a class="headerlink" href="#cart5-based-on-industry-as-predictor" title="Link to this heading">#</a></h3>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/rf5.png" /> <br></p>
+<p>Using these 5 CART models, we need to come up with single set of probability to belong to each of the salary classes. For simplicity, we will just take a mean of probabilities in this case study. Other than simple mean, we also consider vote method to come up with the final prediction. To come up with the final prediction let’s locate the following profile in each CART model:</p>
+<ul class="simple">
+<li><p>Age : 35 years</p></li>
+<li><p>Gender : Male</p></li>
+<li><p>Highest Educational Qualification : Diploma holder</p></li>
+<li><p>Industry : Manufacturing</p></li>
+<li><p>Residence : Metro</p></li>
+</ul>
+<p>For each of these CART model, following is the distribution across salary bands :</p>
+<p><img alt="" src="https://www.analyticsvidhya.com/wp-content/uploads/2014/06/DF.png" /> <br></p>
+<p>The final probability is simply the average of the probability in the same salary bands in different CART models. As you can see from this analysis, that there is 70% chance of this individual falling in class 1 (less than 40,000) and around 24% chance of the individual falling in class 2.</p>
+</section>
+</section>
+<section id="example-re-using-the-iris-plants-classification">
+<h2>Example Re-using the Iris Plants Classification <br><a class="headerlink" href="#example-re-using-the-iris-plants-classification" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://gardenerspath.com/plants/flowers/grow-iris/">Iris Flower</a> <br></p>
+<p>The Iris Flower Dataset involves predicting the flower species given measurements of iris flowers. The Iris Data Set contains information on sepal length, sepal width, petal length, petal width all in cm, and class of iris plants. The data set contains 3 classes of 50 instances each.</p>
+<p><img alt="" src="https://miro.medium.com/max/1000/1*lFC_U5j_Y8IXF4Ga87KNVg.png" /> <br></p>
+<p>Let’s use Random Forest in Python and see if we can classifity iris plants based on the four given predictors.</p>
+<hr>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Iris classification example that follows is largely sourced from:</p>
+<ol class="arabic simple">
+<li><p><em>Fisher,R.A. “The use of multiple measurements in taxonomic problems” Annual Eugenics, 7, Part II, 179-188 (1936); also in “Contributions to Mathematical Statistics” (John Wiley, NY, 1950).</em></p></li>
+<li><p><em>Duda,R.O., &amp; Hart,P.E. (1973) Pattern Classification and Scene Analysis. (Q327.D83) John Wiley &amp; Sons.  ISBN 0-471-22361-1.  See page 218.</em></p></li>
+<li><p><em>Dasarathy, B.V. (1980) “Nosing Around the Neighborhood: A New System Structure and Classification Rule for Recognition in Partially Exposed Environments”.  IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-2, No. 1, 67-71.</em></p></li>
+<li><p><em>Gates, G.W. (1972) “The Reduced Nearest Neighbor Rule”.  IEEE Transactions on Information Theory, May 1972, 431-433.</em></p></li>
+<li><p><em>See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al’s AUTOCLASS II conceptual clustering system finds 3 classes in the data.</em></p></li>
+</ol>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the remote database directly from its url (Jupyter):</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&quot;</span>
+<span class="c1"># Assign colum names to the dataset</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal-length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal-width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal-length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal-width&#39;</span><span class="p">,</span> <span class="s1">&#39;Class&#39;</span><span class="p">]</span>
+<span class="c1"># Read dataset to pandas dataframe</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Class&#39;</span><span class="p">)</span> <span class="c1">#A very cool plot to explore a dataset</span>
+<span class="c1"># Notice that iris-setosa is easily identifiable by petal length and petal width, </span>
+<span class="c1"># while the other two species are much more difficult to distinguish.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7b129d796b90&gt;
+</pre></div>
+</div>
+<img alt="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" src="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">oob_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predicted</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[36  0  0]
+ [ 0 36  3]
+ [ 0  1 37]]
+                 precision    recall  f1-score   support
+
+    Iris-setosa       1.00      1.00      1.00        36
+Iris-versicolor       0.97      0.92      0.95        39
+ Iris-virginica       0.93      0.97      0.95        38
+
+       accuracy                           0.96       113
+      macro avg       0.97      0.97      0.97       113
+   weighted avg       0.97      0.96      0.96       113
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#This lets us know that our model correctly separates the setosa examples, </span>
+<span class="c1">#but exhibits a small amount of confusion when attempting to distinguish between versicolor and virginica.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../../_images/68dad853ff697f444a196e1358a1ea543418795a50df3aba73e5936b3797e940.png" src="../../_images/68dad853ff697f444a196e1358a1ea543418795a50df3aba73e5936b3797e940.png" />
+</div>
+</div>
+</section>
+<section id="engineering-application-s-examples">
+<h2>Engineering Application(s) Examples<a class="headerlink" href="#engineering-application-s-examples" title="Link to this heading">#</a></h2>
+</section>
+<section id="general-observations-regarding-random-forests">
+<h2>General Observations Regarding Random Forests<a class="headerlink" href="#general-observations-regarding-random-forests" title="Link to this heading">#</a></h2>
+<section id="pros">
+<h3>Pros:<a class="headerlink" href="#pros" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>this algorithm can solve both type of problems i.e. classification and regression and does a decent estimation at both fronts.</p></li>
+<li><p>It is effective in high dimensional spaces.</p></li>
+<li><p>One of the most essential benefits of Random forest is, the power to handle large data sets with higher dimensionality. It can handle thousands of input variables and identify most significant variables so it is considered as one of the dimensionality reduction methods. Further, the model outputs Importance of variable, which can be a very handy feature.</p></li>
+<li><p>It has an effective method for estimating missing data and maintains accuracy when a large proportion of the data are missing.</p></li>
+<li><p>It has methods for balancing errors in datasets where classes are imbalanced.</p></li>
+<li><p>The capabilities of the above can be extended to unlabeled data, leading to unsupervised clustering, data views and outlier detection.</p></li>
+<li><p>Both training and prediction are very fast, because of the simplicity of the underlying decision trees. In addition, both tasks can be straightforwardly parallelized, because the individual trees are entirely independent entities.**</p></li>
+<li><p>The nonparametric model is extremely flexible, and can thus perform well on tasks that are under-fit by other estimators.</p></li>
+</ul>
+</section>
+<section id="cons">
+<h3>Cons:<a class="headerlink" href="#cons" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>It surely does a good job at classification but not as good as for regression problem as it does not give continuous output. In case of regression, it doesn’t predict beyond the range in the training data, and that they may over-fit data sets that are particularly noisy.</p></li>
+<li><p>Random Forest can feel like a black box approach for statistical modelers – you have very little control on what the model does. You can at best – try different parameters and random seeds!</p></li>
+</ul>
+<!--![](https://cms.qz.com/wp-content/uploads/2018/04/random-forest-animated-final-2.gif?quality=75&strip=all&w=1900&h=1252) <br>-->
+</section>
 </section>
 </section>
 
@@ -468,6 +723,23 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-random-forest">What is Random Forest?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-random-forest-algorithm-works">How Random Forest algorithm works?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart1-based-on-age-as-predictor">CART1 : Based on “Age” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart2-based-on-gender-as-predictor">CART2 : Based on “Gender” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart3-based-on-education-as-predictor">CART3 : Based on “Education” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart4-based-on-residence-as-predictor">CART4 : Based on “Residence” as predictor:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart5-based-on-industry-as-predictor">CART5 : Based on “Industry” as predictor:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-re-using-the-iris-plants-classification">Example Re-using the Iris Plants Classification <br/></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engineering-application-s-examples">Engineering Application(s) Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-observations-regarding-random-forests">General Observations Regarding Random Forests</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons">Cons:</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

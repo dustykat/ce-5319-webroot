@@ -211,6 +211,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -347,7 +348,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -363,6 +366,42 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">11. Clustering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-analysis">Cluster Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-cluster">What Is a Cluster?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-clustering">Applications of Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-s">Distance(s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-vs-indirect-proximities">Direct vs Indirect Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-categorical-data">Proximities for Categorical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-variables">Binary Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-level-categorical-variables">Multi-level Categorical Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-continuous-data">Proximities for Continuous Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-measures">Distance Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-based-measures">Correlation-based Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-type-data">Mixed-Type Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-repeated-measures-data">Structured / Repeated Measures Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-to-group-proximities">Group-to-Group Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-to-euclidean-distance">Transforming to Euclidean Distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software-notes">Software Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#illustrative-annotated-example">11.1 Illustrative Annotated Example</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -378,7 +417,1463 @@ document.write(`
 <p class="admonition-title">Course Website</p>
 <p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
 </div>
-<p>lorem ipsum</p>
+<p>Clustering is one of the tools used in classification schemes.  It mimics ??? from nature.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Clustering reflects a deeply natural behavior — the human and animal tendency to group things based on perceived similarity, even without explicit labels. While KNN and decision trees learn from labeled examples to make predictions, clustering works in the absence of such guidance. It asks: <strong>what patterns or groupings emerge purely from the structure of the data itself?</strong> In this way, clustering functions as an exploratory method that can suggest structure, inform future supervised learning, or stand alone in tasks where labels do not exist.</p>
+</div>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://cicerocq.wordpress.com/wp-content/uploads/2019/05/cluster-analysis_5ed_everitt.pdf">Everitt, B. S., Landau, S., Leese, M., &amp; Stahl, D. (2011). Cluster Analysis (5th ed.). John Wiley &amp; Sons.</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=rsRjQDrDnY8">Sesame Street “One of these things …”</a></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Clustering is like sorting puzzle pieces without the picture on the box — you don’t know what the groups are in advance, but you try to assemble pieces that seem to belong together. It contrasts with methods like decision trees or KNN, where you’re told what the picture is and asked to sort accordingly. Clustering helps us discover <strong>latent structure</strong> in the data — the kinds of groupings that nature might present to us, unlabelled and unfiltered.</p>
+</div>
+<section id="classification">
+<h2>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
+<p>Classification is a fundamental cognitive process, allowing both humans and animals to recognize patterns and group similar things.  Early humans likely classified objects as edible, dangerous, etc., forming the basis for survival and language.</p>
+<p>In science, classification organizes knowledge—e.g., taxonomy in biology, the periodic table in chemistry, or star classes in astronomy. Classifications are not just labels—they carry useful information when well-chosen (e.g., “man/woman” conveys more than just biology).</p>
+<p>Reasons we classify are:</p>
+<ol class="arabic simple">
+<li><p>To simplify complex data: Grouping similar objects makes large datasets easier to understand and analyze.</p></li>
+<li><p>To improve decision-making: In medicine, classifying diseases helps with treatment and research.</p></li>
+<li><p>To summarize patterns: In data mining or web analysis, clustering can reveal hidden structures.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not all classifications are equally useful. Grouping by hair length may be trivial; grouping by behavior or need may have practical importance.</p>
+</div>
+</section>
+<section id="cluster-analysis">
+<h2>Cluster Analysis<a class="headerlink" href="#cluster-analysis" title="Link to this heading">#</a></h2>
+<p>Cluster analysis is a statistical technique in which algorithms group a set of objects or data points based on their similarity. The result of cluster analysis is a set of clusters, each distinct from the others but largely similar to the objects or data points within them.  The purpose of cluster analysis is to help reveal patterns and structures within a dataset that may provide insights into underlying relationships and associations.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cluster analysis is one tool that is used to clasify data.  It is comprosed of <strong>methods</strong> for grouping similar objects <em>without predefined labels</em>.</p>
+<p>Also known as:</p>
+<ul class="simple">
+<li><p><em>Numerical taxonomy</em></p></li>
+<li><p><em>Q analysis</em></p></li>
+<li><p><em>Market segmentation</em></p></li>
+</ul>
+<p>Core steps include:</p>
+<ul class="simple">
+<li><p>Constructing a <strong>data matrix</strong></p></li>
+<li><p>Computing a <strong>similarity or distance matrix</strong></p></li>
+<li><p>Identifying <strong>clusters</strong> with internal similarity and external dissimilarity</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<section id="what-is-a-cluster">
+<h3>What Is a Cluster?<a class="headerlink" href="#what-is-a-cluster" title="Link to this heading">#</a></h3>
+<p>No universal definition, but generally:</p>
+<ul class="simple">
+<li><p><strong>High internal cohesion</strong></p></li>
+<li><p><strong>High external separation</strong></p></li>
+</ul>
+<p>Visual data may suggest natural clusters, but not always.</p>
+<ul class="simple">
+<li><p><strong>Clustering should not be forced</strong>—some data do not naturally group.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="applications-of-clustering">
+<h2>Applications of Clustering<a class="headerlink" href="#applications-of-clustering" title="Link to this heading">#</a></h2>
+<p>Cluster analysis has a broad range of real-world applications — spanning everything from astrophysics to advertising. Below are some key domains where clustering is routinely applied:</p>
+<ul class="simple">
+<li><p><strong>Image Processing:</strong> Grouping pixels with similar color, texture, or spatial features allows automated object detection, segmentation, and classification — critical in fields like remote sensing, autonomous driving, and medical imaging.</p></li>
+<li><p><strong>Anomaly Detection:</strong> Clustering can identify unusual or outlier behaviors in data — useful for spotting credit card fraud, detecting network intrusions, or flagging broken sensors in engineering systems.</p></li>
+<li><p>Market Research: Segmenting customers by purchasing behavior, lifestyle preferences, or location allows for targeted advertising and product design.</p></li>
+<li><p><strong>Weather and Climate Analysis:</strong> Clustering can reveal recurring patterns in temperature, pressure, or precipitation — such as identifying storm types or regional climate zones.</p></li>
+<li><p>Astronomy: Helps categorize stars, galaxies, and other celestial bodies based on spectral and physical properties — and even identify rare objects.</p></li>
+<li><p>Medical and Biological Sciences: Used to group patients with similar symptoms, classify gene expression profiles, and identify disease subtypes.</p></li>
+<li><p>Social Network Analysis: Reveals clusters of friends, influencers, or subnetworks based on connection density and shared behaviors.</p></li>
+<li><p>Psychiatry and Psychology: Supports classification of mental health profiles or behavioral archetypes.</p></li>
+<li><p>Archaeology: Differentiates artifact types or cultural layers at excavation sites.</p></li>
+<li><p>Bioinformatics: Clusters genes or proteins with similar functions, revealing pathways or mutations.</p></li>
+</ul>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You’ll notice a few of these entries are <strong>bolded</strong> — those are the ones that, in my opinion, most closely align with <em>engineering</em> practice and offer the <strong>highest return on your cognitive investment</strong>. These include things like image segmentation for infrastructure inspection, anomaly detection in monitoring systems, or climate clustering for hydrologic modeling.</p>
+<p>Of course, that’s a <strong>subjective classification</strong> — and ironically, one we’ve made using an informal clustering process. So yes, even here, we <em>never really escape classification</em>, do we?</p>
+<p>Let this serve as a reminder that clustering isn’t just a technical method — it’s a lens through which we understand structure, make predictions, and decide what matters.</p>
+</div>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Classification and clustering help us <strong>structure, simplify, and interpret</strong> data.</p>
+<ul class="simple">
+<li><p>Cluster analysis is a <strong>powerful unsupervised learning technique</strong>.</p></li>
+<li><p>Results must be <strong>validated carefully</strong>—not all clusters are meaningful.</p></li>
+</ul>
+</div>
+</section>
+<section id="distance-s">
+<h2>Distance(s)<a class="headerlink" href="#distance-s" title="Link to this heading">#</a></h2>
+<p>Recall from nearest neighbor algorithme, the concept of distance is important in how we define “near.” Clustering uses the terminology of “proximity” as a surrogate for “near.” Clustering depends heavily on how we define the “closeness” of individuals—called <strong>proximity</strong>. Proximity can be expressed as:</p>
+<ul class="simple">
+<li><p><strong>Dissimilarity</strong> or <strong>distance</strong> (higher = more different)</p></li>
+<li><p><strong>Similarity</strong> (higher = more alike)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="direct-vs-indirect-proximities">
+<h2>Direct vs Indirect Proximities<a class="headerlink" href="#direct-vs-indirect-proximities" title="Link to this heading">#</a></h2>
+<p><strong>Direct</strong>: Obtained from subjective evaluations (e.g., taste testing).  A measurable property like temperature would certainly be a direct metric.
+<strong>Indirect</strong>: Derived from variable data using mathematical formulas (most common).</p>
+<ul class="simple">
+<li><p>Example: Crime rate data used to compute Euclidean distances between cities.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="proximities-for-categorical-data">
+<h2>Proximities for Categorical Data<a class="headerlink" href="#proximities-for-categorical-data" title="Link to this heading">#</a></h2>
+<section id="binary-variables">
+<h3>Binary Variables<a class="headerlink" href="#binary-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Match types: a (1–1), b (1–0), c (0–1), d (0–0)</p></li>
+<li><p>Several coefficients exist:</p>
+<ul>
+<li><p><strong>Matching coefficient</strong> (S1): includes co-absences</p></li>
+<li><p><strong>Jaccard coefficient</strong> (S2): ignores co-absences</p></li>
+<li><p><strong>Rogers–Tanimoto</strong>, <strong>Sneath–Sokal</strong>, <strong>Gower–Legendre</strong> variants</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Choice of similarity measure depends on the data context (e.g., presence/absence, symmetric variables).</p>
+</div>
+</section>
+<section id="multi-level-categorical-variables">
+<h3>Multi-level Categorical Variables<a class="headerlink" href="#multi-level-categorical-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>One-hot encoding not preferred due to excessive 0–0 matches.</p></li>
+<li><p>Instead, use per-variable match scoring (1 for same, 0 for different).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="proximities-for-continuous-data">
+<h2>Proximities for Continuous Data<a class="headerlink" href="#proximities-for-continuous-data" title="Link to this heading">#</a></h2>
+<section id="distance-measures">
+<h3>Distance Measures<a class="headerlink" href="#distance-measures" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Euclidean (D1)</strong>: Physical geometric distance</p></li>
+<li><p><strong>City Block / Manhattan (D2)</strong>: Sum of absolute differences</p></li>
+<li><p><strong>Minkowski (D3)</strong>: Generalized form of D1 and D2</p></li>
+<li><p><strong>Canberra (D4)</strong>: Sensitive to small values</p></li>
+</ul>
+</section>
+<section id="correlation-based-measures">
+<h3>Correlation-based Measures<a class="headerlink" href="#correlation-based-measures" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Pearson (D5)</strong>: Similarity of profiles (ignores magnitude)</p></li>
+<li><p><strong>Angular Separation (D6)</strong>: Cosine similarity</p></li>
+</ul>
+<blockquote>
+<div><p>Note: Correlation-based measures may mislead if scale matters.</p>
+</div></blockquote>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mixed-type-data">
+<h2>Mixed-Type Data<a class="headerlink" href="#mixed-type-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Gower’s coefficient</strong> (1971) is preferred.</p></li>
+<li><p>Handles binary, categorical, and continuous data with custom similarity scores.</p></li>
+<li><p>Common in survey data and bioinformatics.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="structured-repeated-measures-data">
+<h2>Structured / Repeated Measures Data<a class="headerlink" href="#structured-repeated-measures-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Includes repeated observations over time, conditions, or spatial locations.</p></li>
+<li><p>Strategies:</p>
+<ul>
+<li><p>Summarize time series (e.g., slope and intercept from regression)</p></li>
+<li><p>Compute similarities on per-condition means</p></li>
+<li><p>Use <strong>Levenshtein (edit) distance</strong> or <strong>Jaro similarity</strong> for sequence data</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="group-to-group-proximities">
+<h2>Group-to-Group Proximities<a class="headerlink" href="#group-to-group-proximities" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Needed in hierarchical clustering.</p></li>
+<li><p>Approaches:</p>
+<ul>
+<li><p><strong>Single linkage</strong>: minimum distance (nearest neighbor)</p></li>
+<li><p><strong>Complete linkage</strong>: maximum distance (farthest neighbor)</p></li>
+<li><p><strong>Group average</strong>: mean pairwise distance</p></li>
+<li><p><strong>Centroid / Mahalanobis distance</strong>: takes into account shape and spread</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="transforming-to-euclidean-distance">
+<h2>Transforming to Euclidean Distance<a class="headerlink" href="#transforming-to-euclidean-distance" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Some dissimilarity matrices are not Euclidean.</p></li>
+<li><p>Techniques exist (e.g., <strong>Gower’s transformation</strong>, <strong>Lingoes</strong>, <strong>Cailliez</strong>) to convert them.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="software-notes">
+<h2>Software Notes<a class="headerlink" href="#software-notes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Most modern tools (R, Stata, SPSS, SAS) support the proximity measures discussed.</p></li>
+<li><p><strong>R packages</strong>: <code class="docutils literal notranslate"><span class="pre">cluster</span></code>, <code class="docutils literal notranslate"><span class="pre">proxy</span></code>, <code class="docutils literal notranslate"><span class="pre">clusterSim</span></code></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-takeaways">
+<h2>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Always match the proximity measure to your <strong>data type</strong> and <strong>clustering goal</strong>.</p></li>
+<li><p>Misusing a similarity or distance metric can drastically distort your results.</p></li>
+<li><p>Be cautious with correlation-based measures and ensure scale compatibility.</p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="illustrative-annotated-example">
+<h1>11.1 Illustrative Annotated Example<a class="headerlink" href="#illustrative-annotated-example" title="Link to this heading">#</a></h1>
+<p>Cluster analysis is an exploratory, descriptive, bottom-up approach used to uncover structure within heterogeneous datasets. It falls under the category of unsupervised learning, making no use of predefined labels. From a data mining perspective, it seeks to discover natural groupings (or clusters) among observations based on their measured attributes.</p>
+<p>A central assumption of cluster analysis is that the population is not homogeneous — that is, meaningful subgroups or “latent types” exist within the data. The goal is to identify groups of observations that are:</p>
+<ol class="arabic simple">
+<li><p>Internally cohesive — members of the same group are similar to one another, and</p></li>
+<li><p>Externally distinct — members differ from those in other groups.</p></li>
+</ol>
+<p>This makes cluster analysis a individual-oriented approach: it seeks to identify types of individuals (or cases, or sites) that differ meaningfully across a set of measured variables. This contrasts with variable-oriented approaches such as regression or factor analysis, which aim to understand how variables relate to each other across all individuals.</p>
+<p>A helpful way to distinguish the two perspectives is by considering how they operate on a typical persons × variables data matrix:</p>
+<p>Variable-oriented approaches analyze columns — looking for relationships between variables.</p>
+<p>Individual-oriented approaches analyze rows — grouping similar individuals.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Variable-oriented:</strong> “How do variables relate to one another across all individuals?”</p>
+<p><strong>Individual-oriented:</strong> “What types of individuals exist based on how they score across variables?”</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Note: Clustering and the Darker Arts of Machine Learning</p>
+<p>It’s worth pausing to consider that cluster analysis — like all tools in machine learning — is agnostic to how it is used. Its strength lies in identifying groups of similar individuals, even when those groups have no clear external labels.</p>
+<p>This is precisely what makes it attractive in controversial applications, such as security screening or surveillance. For example, airport security systems may use clustering-like algorithms to group passengers based on traits (e.g., travel history, ticket purchase behavior, biometric cues). Some of these clusters may correlate with “high risk” designations — even in the absence of any prior criminal record.</p>
+<p>From a machine learning standpoint, this is a classic unsupervised classification task. From a human standpoint, it’s <strong>profiling</strong> — and it raises serious questions about bias, fairness, and the ethics of inference in high-stakes decisions.</p>
+<p>The algorithm doesn’t care. But we should.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fetch data using requests</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># File Fetch Helper Function</span>
+<span class="k">def</span> <span class="nf">fetch_remote_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a CSV file from a URL to a local path if not already present.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✔ Local copy found: </span><span class="si">{</span><span class="n">local_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">local_path</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⬇ Downloading: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Saved to: </span><span class="si">{</span><span class="n">local_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">local_path</span>
+
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Failed to download file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+<span class="c1"># Disable only the SSL warning </span>
+<span class="kn">import</span> <span class="nn">urllib3</span>
+<span class="n">urllib3</span><span class="o">.</span><span class="n">disable_warnings</span><span class="p">(</span><span class="n">urllib3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InsecureRequestWarning</span><span class="p">)</span>
+
+<span class="c1"># Dataframe Description Function</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurtosis</span>
+
+<span class="k">def</span> <span class="nf">psych_like_describe</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Produces a descriptive statistics summary similar to R&#39;s psych::describe().</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: Summary with count, mean, std, min, 25%, 50%, 75%, max, skew, and kurtosis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;skew&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">skew</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s1">&#39;omit&#39;</span><span class="p">)</span>
+    <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;kurtosis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">kurtosis</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s1">&#39;omit&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">desc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: Set the file path (URL)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://quantdev.ssri.psu.edu/sites/qdev/files/AMIBbrief_raw_daily1.csv&quot;</span>
+<span class="n">local_file</span> <span class="o">=</span> <span class="s2">&quot;AMIBbrief_raw_daily1.csv&quot;</span>
+<span class="c1"># Step 2.0: Attempt to Download the Remote File</span>
+<span class="n">csv_path</span> <span class="o">=</span> <span class="n">fetch_remote_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_file</span><span class="p">)</span>
+<span class="c1"># Step 2.1: Load the CSV data into a dataframe</span>
+<span class="k">if</span> <span class="n">csv_path</span><span class="p">:</span>
+    <span class="n">daily</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✔ Local copy found: AMIBbrief_raw_daily1.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 3: Clean column names to lowercase</span>
+<span class="n">daily</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">daily</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 4: Create a new &#39;id&#39; variable (same logic as R: id = id * 10 + day)</span>
+<span class="n">daily</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">daily</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">daily</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 5: Reduce dataset to key variables</span>
+<span class="n">columns_to_keep</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;slphrs&quot;</span><span class="p">,</span> <span class="s2">&quot;weath&quot;</span><span class="p">,</span> <span class="s2">&quot;lteq&quot;</span><span class="p">,</span> <span class="s2">&quot;pss&quot;</span><span class="p">,</span> <span class="s2">&quot;se&quot;</span><span class="p">,</span> <span class="s2">&quot;swls&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;evalday&quot;</span><span class="p">,</span> <span class="s2">&quot;posaff&quot;</span><span class="p">,</span> <span class="s2">&quot;negaff&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;hum&quot;</span><span class="p">,</span> <span class="s2">&quot;wind&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;prec&quot;</span>
+<span class="p">]</span>
+<span class="n">daily</span> <span class="o">=</span> <span class="n">daily</span><span class="p">[</span><span class="n">columns_to_keep</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 6: Preview first 10 rows</span>
+<span class="n">daily</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>slphrs</th>
+      <th>weath</th>
+      <th>lteq</th>
+      <th>pss</th>
+      <th>se</th>
+      <th>swls</th>
+      <th>evalday</th>
+      <th>posaff</th>
+      <th>negaff</th>
+      <th>temp</th>
+      <th>hum</th>
+      <th>wind</th>
+      <th>bar</th>
+      <th>prec</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1010</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>2.50</td>
+      <td>2.0</td>
+      <td>3.8</td>
+      <td>1.0</td>
+      <td>3.9</td>
+      <td>3.0</td>
+      <td>28.0</td>
+      <td>0.79</td>
+      <td>11.0</td>
+      <td>29.40</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1011</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>10.0</td>
+      <td>2.75</td>
+      <td>3.0</td>
+      <td>4.2</td>
+      <td>0.0</td>
+      <td>3.8</td>
+      <td>2.3</td>
+      <td>20.8</td>
+      <td>0.62</td>
+      <td>3.6</td>
+      <td>30.17</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1012</td>
+      <td>9.0</td>
+      <td>3.0</td>
+      <td>10.0</td>
+      <td>3.50</td>
+      <td>4.0</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>5.1</td>
+      <td>1.0</td>
+      <td>29.1</td>
+      <td>0.51</td>
+      <td>1.9</td>
+      <td>30.35</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1013</td>
+      <td>7.5</td>
+      <td>2.0</td>
+      <td>9.0</td>
+      <td>3.00</td>
+      <td>4.0</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>5.6</td>
+      <td>1.3</td>
+      <td>30.2</td>
+      <td>0.58</td>
+      <td>2.7</td>
+      <td>30.23</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1014</td>
+      <td>8.0</td>
+      <td>1.0</td>
+      <td>18.0</td>
+      <td>2.75</td>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>4.3</td>
+      <td>1.1</td>
+      <td>22.7</td>
+      <td>0.55</td>
+      <td>2.4</td>
+      <td>30.46</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1015</td>
+      <td>8.0</td>
+      <td>2.0</td>
+      <td>19.0</td>
+      <td>2.75</td>
+      <td>3.0</td>
+      <td>4.2</td>
+      <td>1.0</td>
+      <td>3.9</td>
+      <td>1.0</td>
+      <td>21.4</td>
+      <td>0.54</td>
+      <td>0.7</td>
+      <td>30.54</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1016</td>
+      <td>8.0</td>
+      <td>3.0</td>
+      <td>21.0</td>
+      <td>3.50</td>
+      <td>4.0</td>
+      <td>4.6</td>
+      <td>1.0</td>
+      <td>5.1</td>
+      <td>1.2</td>
+      <td>31.4</td>
+      <td>0.49</td>
+      <td>1.0</td>
+      <td>30.51</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1017</td>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>14.0</td>
+      <td>2.75</td>
+      <td>3.0</td>
+      <td>4.6</td>
+      <td>1.0</td>
+      <td>4.8</td>
+      <td>1.1</td>
+      <td>45.3</td>
+      <td>0.52</td>
+      <td>1.1</td>
+      <td>30.30</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1020</td>
+      <td>7.0</td>
+      <td>0.0</td>
+      <td>12.0</td>
+      <td>3.50</td>
+      <td>5.0</td>
+      <td>5.6</td>
+      <td>0.0</td>
+      <td>6.3</td>
+      <td>1.4</td>
+      <td>28.0</td>
+      <td>0.79</td>
+      <td>11.0</td>
+      <td>29.40</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1021</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>20.0</td>
+      <td>4.00</td>
+      <td>5.0</td>
+      <td>6.6</td>
+      <td>0.0</td>
+      <td>7.0</td>
+      <td>1.6</td>
+      <td>20.8</td>
+      <td>0.62</td>
+      <td>3.6</td>
+      <td>30.17</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 7: Remove rows with any NA values</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="n">dailysub</span> <span class="o">=</span> <span class="n">daily</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="c1"># Basic descriptive statistics (mean, SD, 5-number summary, skew and kurtosis)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">psych_like_describe</span><span class="p">(</span><span class="n">dailysub</span><span class="p">)</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>skew</th>
+      <th>kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>id</th>
+      <td>1376.0</td>
+      <td>3276.281977</td>
+      <td>1279.876385</td>
+      <td>1010.0</td>
+      <td>2255.75</td>
+      <td>3271.50</td>
+      <td>4275.25</td>
+      <td>5327.0</td>
+      <td>-0.102484</td>
+      <td>-1.037369</td>
+    </tr>
+    <tr>
+      <th>slphrs</th>
+      <td>1376.0</td>
+      <td>7.196076</td>
+      <td>1.805812</td>
+      <td>0.0</td>
+      <td>6.00</td>
+      <td>7.00</td>
+      <td>8.00</td>
+      <td>18.0</td>
+      <td>0.120854</td>
+      <td>1.939598</td>
+    </tr>
+    <tr>
+      <th>weath</th>
+      <td>1376.0</td>
+      <td>2.000727</td>
+      <td>1.294183</td>
+      <td>0.0</td>
+      <td>1.00</td>
+      <td>2.00</td>
+      <td>3.00</td>
+      <td>4.0</td>
+      <td>-0.055723</td>
+      <td>-1.060590</td>
+    </tr>
+    <tr>
+      <th>lteq</th>
+      <td>1376.0</td>
+      <td>12.500727</td>
+      <td>10.421446</td>
+      <td>0.0</td>
+      <td>3.00</td>
+      <td>9.00</td>
+      <td>18.00</td>
+      <td>58.0</td>
+      <td>1.073622</td>
+      <td>0.952144</td>
+    </tr>
+    <tr>
+      <th>pss</th>
+      <td>1376.0</td>
+      <td>2.618459</td>
+      <td>0.683926</td>
+      <td>0.0</td>
+      <td>2.25</td>
+      <td>2.75</td>
+      <td>3.00</td>
+      <td>4.0</td>
+      <td>-0.369673</td>
+      <td>0.175979</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Step 1: Preserve &#39;id&#39; and scale the rest</span>
+<span class="n">id_col</span> <span class="o">=</span> <span class="n">dailysub</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span>  <span class="c1"># Keep as DataFrame to preserve shape</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">dailysub</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Scale features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaled_features</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Reconstruct DataFrame with id</span>
+<span class="n">dailyscale</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaled_features</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">dailyscale</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Check that &#39;id&#39; was not scaled</span>
+<span class="n">dailyscale</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;int64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reassign the unscaled id column to the scaled DataFrame</span>
+<span class="n">dailyscale</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dailysub</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+<span class="c1"># Check type and basic structure</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dailyscale</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dailyscale</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>float64
+0    1010.0
+1    1011.0
+2    1012.0
+3    1013.0
+4    1014.0
+Name: id, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psych_like_describe</span><span class="p">(</span><span class="n">dailyscale</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>skew</th>
+      <th>kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>id</th>
+      <td>1296.0</td>
+      <td>3.153549e+03</td>
+      <td>1216.506737</td>
+      <td>1010.000000</td>
+      <td>2230.750000</td>
+      <td>3212.500000</td>
+      <td>4200.250000</td>
+      <td>5194.000000</td>
+      <td>-0.093061</td>
+      <td>-0.987723</td>
+    </tr>
+    <tr>
+      <th>slphrs</th>
+      <td>1376.0</td>
+      <td>2.911108e-16</td>
+      <td>1.000364</td>
+      <td>-3.986403</td>
+      <td>-0.662589</td>
+      <td>-0.108620</td>
+      <td>0.445349</td>
+      <td>5.985039</td>
+      <td>0.120854</td>
+      <td>1.939598</td>
+    </tr>
+    <tr>
+      <th>weath</th>
+      <td>1376.0</td>
+      <td>1.574968e-16</td>
+      <td>1.000364</td>
+      <td>-1.546501</td>
+      <td>-0.773531</td>
+      <td>-0.000562</td>
+      <td>0.772408</td>
+      <td>1.545377</td>
+      <td>-0.055723</td>
+      <td>-1.060590</td>
+    </tr>
+    <tr>
+      <th>lteq</th>
+      <td>1376.0</td>
+      <td>3.614680e-17</td>
+      <td>1.000364</td>
+      <td>-1.199955</td>
+      <td>-0.911983</td>
+      <td>-0.336038</td>
+      <td>0.527880</td>
+      <td>4.367514</td>
+      <td>1.073622</td>
+      <td>0.952144</td>
+    </tr>
+    <tr>
+      <th>pss</th>
+      <td>1376.0</td>
+      <td>-2.091350e-16</td>
+      <td>1.000364</td>
+      <td>-3.829961</td>
+      <td>-0.538937</td>
+      <td>0.192402</td>
+      <td>0.558071</td>
+      <td>2.020748</td>
+      <td>-0.369673</td>
+      <td>0.175979</td>
+    </tr>
+    <tr>
+      <th>se</th>
+      <td>1376.0</td>
+      <td>-2.478637e-16</td>
+      <td>1.000364</td>
+      <td>-2.447509</td>
+      <td>-0.432086</td>
+      <td>-0.432086</td>
+      <td>0.575626</td>
+      <td>1.583338</td>
+      <td>-0.402696</td>
+      <td>-0.113625</td>
+    </tr>
+    <tr>
+      <th>swls</th>
+      <td>1376.0</td>
+      <td>-5.060551e-16</td>
+      <td>1.000364</td>
+      <td>-2.446490</td>
+      <td>-0.559776</td>
+      <td>0.069129</td>
+      <td>0.698034</td>
+      <td>2.270296</td>
+      <td>-0.277913</td>
+      <td>-0.215555</td>
+    </tr>
+    <tr>
+      <th>evalday</th>
+      <td>1376.0</td>
+      <td>3.356488e-17</td>
+      <td>1.000364</td>
+      <td>-1.473264</td>
+      <td>-1.473264</td>
+      <td>0.678765</td>
+      <td>0.678765</td>
+      <td>0.678765</td>
+      <td>-0.794499</td>
+      <td>-1.368771</td>
+    </tr>
+    <tr>
+      <th>posaff</th>
+      <td>1376.0</td>
+      <td>1.032766e-17</td>
+      <td>1.000364</td>
+      <td>-2.825564</td>
+      <td>-0.643568</td>
+      <td>0.083764</td>
+      <td>0.720180</td>
+      <td>2.629427</td>
+      <td>-0.243362</td>
+      <td>-0.363318</td>
+    </tr>
+    <tr>
+      <th>negaff</th>
+      <td>1376.0</td>
+      <td>-5.680211e-17</td>
+      <td>1.000364</td>
+      <td>-1.397508</td>
+      <td>-0.771447</td>
+      <td>-0.241703</td>
+      <td>0.552913</td>
+      <td>4.285200</td>
+      <td>0.950089</td>
+      <td>0.678684</td>
+    </tr>
+    <tr>
+      <th>temp</th>
+      <td>1376.0</td>
+      <td>-4.131062e-17</td>
+      <td>1.000364</td>
+      <td>-2.461797</td>
+      <td>-0.658174</td>
+      <td>0.230936</td>
+      <td>0.866015</td>
+      <td>2.009156</td>
+      <td>-0.368996</td>
+      <td>-0.231805</td>
+    </tr>
+    <tr>
+      <th>hum</th>
+      <td>1376.0</td>
+      <td>-2.065531e-16</td>
+      <td>1.000364</td>
+      <td>-1.938813</td>
+      <td>-0.817693</td>
+      <td>0.201507</td>
+      <td>0.863987</td>
+      <td>1.424547</td>
+      <td>-0.364779</td>
+      <td>-1.098979</td>
+    </tr>
+    <tr>
+      <th>wind</th>
+      <td>1376.0</td>
+      <td>1.239319e-16</td>
+      <td>1.000364</td>
+      <td>-1.495579</td>
+      <td>-0.978836</td>
+      <td>-0.080153</td>
+      <td>0.593859</td>
+      <td>2.840567</td>
+      <td>0.974701</td>
+      <td>0.865974</td>
+    </tr>
+    <tr>
+      <th>bar</th>
+      <td>1376.0</td>
+      <td>7.311980e-15</td>
+      <td>1.000364</td>
+      <td>-2.090835</td>
+      <td>-0.833122</td>
+      <td>-0.054537</td>
+      <td>0.993557</td>
+      <td>1.562522</td>
+      <td>-0.389378</td>
+      <td>-0.893390</td>
+    </tr>
+    <tr>
+      <th>prec</th>
+      <td>1376.0</td>
+      <td>3.098297e-17</td>
+      <td>1.000364</td>
+      <td>-0.528302</td>
+      <td>-0.528302</td>
+      <td>-0.528302</td>
+      <td>-0.099995</td>
+      <td>2.684000</td>
+      <td>1.855949</td>
+      <td>1.982619</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Set style for aesthetics</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Scatterplot (equivalent to ggplot + geom_point)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dailyscale</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;lteq&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;posaff&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scatterplot of LTEQ vs POSAFF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;LTEQ (Scaled)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;POSAFF (Scaled)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/439a15cf63f5835037129d227d3b6d2305421826132d4b1f735135ee6858d6a7.png" src="../../_images/439a15cf63f5835037129d227d3b6d2305421826132d4b1f735135ee6858d6a7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assign labels manually</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="n">dailyscale</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data1</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]</span>
+
+<span class="c1"># Begin plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Draw filled polygon</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">data1</span><span class="p">[</span><span class="s1">&#39;lteq&#39;</span><span class="p">],</span> <span class="n">data1</span><span class="p">[</span><span class="s1">&#39;posaff&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Triangle&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot points</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;posaff&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add labels offset slightly left</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data1</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lteq&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;posaff&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set fixed limits</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Polygon Visualization of Selected Points&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;LTEQ&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;POSAFF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>  <span class="c1"># Optional: keep aspect ratio square</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/877826e2685351c91475361136f82e48bb0d6e3e86aa83fda529cfa055f96db6.png" src="../../_images/877826e2685351c91475361136f82e48bb0d6e3e86aa83fda529cfa055f96db6.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">squareform</span>
+
+<span class="c1"># Select only the lteq and posaff columns from data1</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Compute pairwise Manhattan distances</span>
+<span class="n">dist_matrix</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;cityblock&#39;</span><span class="p">))</span>
+
+<span class="c1"># Display as a labeled DataFrame</span>
+<span class="n">dist_abc2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">data1</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">data1</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+<span class="n">dist_abc2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>label</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+    <tr>
+      <th>label</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.000000</td>
+      <td>1.090998</td>
+      <td>0.919314</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>1.090998</td>
+      <td>0.000000</td>
+      <td>0.555648</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.919314</td>
+      <td>0.555648</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c1"># Reproducibility</span>
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">1234</span>
+
+<span class="c1"># Select the variables for clustering</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dailyscale</span><span class="p">[[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Run k-means clustering with 4 centers</span>
+<span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">kmeans_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># View basic cluster result summary</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cluster Centers:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Labels:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster Centers:
+ [[-0.66618813 -1.01182586]
+ [-0.43133804  0.73342477]
+ [ 1.74095122  0.74615589]
+ [ 0.77182366 -0.59050209]]
+Labels:
+ [0 0 1 ... 3 1 1]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c1"># Step 1: Select features and run k-means</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dailyscale</span><span class="p">[[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span>
+<span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">kmeans_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Add cluster assignments to DataFrame</span>
+<span class="n">dailyscale</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">labels_</span>
+
+<span class="c1"># Step 3: Convert centers to DataFrame for plotting</span>
+<span class="n">centroids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">])</span>
+
+<span class="c1"># Step 4: Plot using seaborn</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot points colored by cluster</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dailyscale</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;posaff&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;deep&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Plot cluster centers</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="s1">&#39;lteq&#39;</span><span class="p">],</span> <span class="n">centroids</span><span class="p">[</span><span class="s1">&#39;posaff&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroids&#39;</span><span class="p">)</span>
+
+<span class="c1"># Styling</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;K-Means Clustering (k=4) on LTEQ vs POSAFF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;LTEQ&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;POSAFF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/55d06853240409509a1242cbd45c9dcd858bab7b9f0595415b0865500102f084.png" src="../../_images/55d06853240409509a1242cbd45c9dcd858bab7b9f0595415b0865500102f084.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">Voronoi</span><span class="p">,</span> <span class="n">voronoi_plot_2d</span>
+
+<span class="c1"># Step 1: Prepare centroids</span>
+<span class="n">centers</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="c1"># Step 2: Build Voronoi diagram</span>
+<span class="n">vor</span> <span class="o">=</span> <span class="n">Voronoi</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Base plot with data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dailyscale</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;posaff&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;deep&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centers</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">centers</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroids&#39;</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Overlay Voronoi diagram (only regions, not points)</span>
+<span class="n">voronoi_plot_2d</span><span class="p">(</span><span class="n">vor</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">(),</span> <span class="n">show_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">line_colors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">line_alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">point_size</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Labels and style</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;K-Means Clustering with Voronoi Cells&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;LTEQ&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;POSAFF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/908adbd7ca82feeee42d6b825c819414e6554725e942b996d4f2e5938203e163.png" src="../../_images/908adbd7ca82feeee42d6b825c819414e6554725e942b996d4f2e5938203e163.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c1"># Extract features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dailyscale</span><span class="p">[[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">n_init</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">1234</span>
+
+<span class="c1"># Fit model with tracking</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="n">n_init</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+<span class="n">centroids</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Safe initialization</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+<span class="n">initial_centers</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+<span class="n">centroids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_centers</span><span class="p">)</span>
+
+<span class="c1"># Manual iteration</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="n">centroids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+    <span class="n">centroids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">))</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+
+<span class="c1"># Set up figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">scat</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="p">[],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">cent</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;K-Means Clustering Animation&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;LTEQ&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;POSAFF&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">scat</span><span class="p">,</span> <span class="n">cent</span>
+
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+    <span class="n">scat</span><span class="o">.</span><span class="n">set_offsets</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">scat</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">frame</span><span class="p">]))</span>
+    <span class="n">cent</span><span class="o">.</span><span class="n">set_offsets</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">frame</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">scat</span><span class="p">,</span> <span class="n">cent</span>
+
+<span class="n">ani</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="n">init_func</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+                              <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># Prevent static display</span>
+
+<span class="n">ani</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;kmeans_animation.gif&quot;</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="s2">&quot;pillow&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">kmeans_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Total Sum of Squares (TSS ≈ Total Inertia)</span>
+<span class="n">tss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># Within-Cluster Sum of Squares (WSS)</span>
+<span class="n">wss</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">inertia_</span>  <span class="c1"># aka .inertia_ in sklearn</span>
+<span class="c1"># Between-Cluster Sum of Squares (BSS)</span>
+<span class="n">bss</span> <span class="o">=</span> <span class="n">tss</span> <span class="o">-</span> <span class="n">wss</span>
+<span class="c1"># Per-Cluster Within-Cluster SS</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cdist</span>
+
+<span class="c1"># Assign points to clusters</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">centers</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="c1"># Compute per-cluster within sum of squares</span>
+<span class="n">withinss</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kmeans_model</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+    <span class="n">cluster_points</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">cluster_points</span><span class="p">,</span> <span class="p">[</span><span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+    <span class="n">withinss</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">distances</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="n">withinss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">withinss</span><span class="p">)</span>
+<span class="c1"># Summary Printout (Optional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total SS:      </span><span class="si">{</span><span class="n">tss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Within SS:     </span><span class="si">{</span><span class="n">wss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Between SS:    </span><span class="si">{</span><span class="n">bss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Within SS per cluster: </span><span class="si">{</span><span class="n">withinss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total SS:      2752.00
+Within SS:     886.81
+Between SS:    1865.19
+Within SS per cluster: [217.98339251 308.40587463 181.03862114 179.37905999]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Range of k values</span>
+<span class="n">nk</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+
+<span class="c1"># List to collect metrics</span>
+<span class="n">criteria</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Recalculate TSS once (since it doesn&#39;t change with k)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dailyscale</span><span class="p">[[</span><span class="s1">&#39;lteq&#39;</span><span class="p">,</span> <span class="s1">&#39;posaff&#39;</span><span class="p">]]</span>
+<span class="c1">#tss = np.sum((X - X.mean(axis=0))**2)</span>
+<span class="n">centered</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">tss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">centered</span><span class="o">.</span><span class="n">values</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Loop over cluster counts</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">nk</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">wss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">inertia_</span>
+    <span class="n">bss</span> <span class="o">=</span> <span class="n">tss</span> <span class="o">-</span> <span class="n">wss</span>
+    <span class="n">criteria</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">k</span><span class="p">,</span> <span class="n">wss</span><span class="p">,</span> <span class="n">bss</span><span class="p">,</span> <span class="n">tss</span><span class="p">])</span>
+
+<span class="c1"># Convert to DataFrame</span>
+<span class="n">criteria_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">criteria</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="s2">&quot;tot_withinss&quot;</span><span class="p">,</span> <span class="s2">&quot;betweenss&quot;</span><span class="p">,</span> <span class="s2">&quot;totalss&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2751.999999999999
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criteria_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>k</th>
+      <th>tot_withinss</th>
+      <th>betweenss</th>
+      <th>totalss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2752.000000</td>
+      <td>-4.092726e-12</td>
+      <td>2752.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1790.645242</td>
+      <td>9.613548e+02</td>
+      <td>2752.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1083.627845</td>
+      <td>1.668372e+03</td>
+      <td>2752.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>886.806948</td>
+      <td>1.865193e+03</td>
+      <td>2752.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>715.741035</td>
+      <td>2.036259e+03</td>
+      <td>2752.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">criteria_df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">criteria_df</span><span class="p">[</span><span class="s1">&#39;tot_withinss&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Within SS&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">criteria_df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">],</span> <span class="n">criteria_df</span><span class="p">[</span><span class="s1">&#39;betweenss&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Between SS&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scree Plot (Total Within-Cluster SS vs. Number of Clusters)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Clusters (k)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Total Within-Cluster SS&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">criteria_df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>  <span class="c1"># Set integer x-axis labels alt: plt.xticks(range(1, 21))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b20cb9837dfa2d6dc9e42110fa65aac90fc690cda3555a351ba2e4b2ce667a5c.png" src="../../_images/b20cb9837dfa2d6dc9e42110fa65aac90fc690cda3555a351ba2e4b2ce667a5c.png" />
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -435,6 +1930,49 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">11. Clustering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-analysis">Cluster Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-cluster">What Is a Cluster?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-clustering">Applications of Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-s">Distance(s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-vs-indirect-proximities">Direct vs Indirect Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-categorical-data">Proximities for Categorical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-variables">Binary Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-level-categorical-variables">Multi-level Categorical Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-continuous-data">Proximities for Continuous Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-measures">Distance Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-based-measures">Correlation-based Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-type-data">Mixed-Type Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-repeated-measures-data">Structured / Repeated Measures Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-to-group-proximities">Group-to-Group Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-to-euclidean-distance">Transforming to Euclidean Distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software-notes">Software Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#illustrative-annotated-example">11.1 Illustrative Annotated Example</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

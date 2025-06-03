@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>📘 Chapter 3 Summary – Measurement of Proximity &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/11-clustering/cluster_analysis_ch3_summary';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Machine Learning by Example for Civil Engineers
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ce-5319-syllabus-2025-2.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">11. Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/deeplearners.html">Deep Learners</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/myann.html">Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/materialANN.html">Artifical Neural  Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../14-neuralnetworks/skann.html">Artificial Neural Network using packages</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/11-clustering/cluster_analysis_ch3_summary.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>📘 Chapter 3 Summary – Measurement of Proximity</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">📌 Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-vs-indirect-proximities">3.1 Direct vs Indirect Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-categorical-data">3.2 Proximities for Categorical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-variables">Binary Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-level-categorical-variables">Multi-level Categorical Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-continuous-data">3.3 Proximities for Continuous Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-measures">Distance Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-based-measures">Correlation-based Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-type-data">3.4 Mixed-Type Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-repeated-measures-data">3.5 Structured / Repeated Measures Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-to-group-proximities">3.6 Group-to-Group Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-to-euclidean-distance">🔁 Transforming to Euclidean Distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software-notes">📦 Software Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">🧠 Key Takeaways</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-3-summary-measurement-of-proximity">
+<h1>📘 Chapter 3 Summary – <em>Measurement of Proximity</em><a class="headerlink" href="#chapter-3-summary-measurement-of-proximity" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>Adapted from: Everitt, B. S., Landau, S., Leese, M., &amp; Stahl, D. (2011). <strong>Cluster Analysis</strong> (5th ed.). John Wiley &amp; Sons.</em><br />
+<em>Link to source: <a class="reference external" href="https://www.wiley.com/en-us/Cluster+Analysis%2C+5th+Edition-p-9780470749913">Wiley Online Library</a></em></p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="overview">
+<h2>📌 Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>Clustering depends heavily on how we define the “closeness” of individuals—called <strong>proximity</strong>. Proximity can be expressed as:</p>
+<ul class="simple">
+<li><p><strong>Dissimilarity</strong> or <strong>distance</strong> (higher = more different)</p></li>
+<li><p><strong>Similarity</strong> (higher = more alike)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="direct-vs-indirect-proximities">
+<h2>3.1 Direct vs Indirect Proximities<a class="headerlink" href="#direct-vs-indirect-proximities" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Direct</strong>: Obtained from subjective evaluations (e.g., taste testing).</p></li>
+<li><p><strong>Indirect</strong>: Derived from variable data using mathematical formulas (most common).</p></li>
+<li><p>Example: Crime rate data used to compute Euclidean distances between cities.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="proximities-for-categorical-data">
+<h2>3.2 Proximities for Categorical Data<a class="headerlink" href="#proximities-for-categorical-data" title="Link to this heading">#</a></h2>
+<section id="binary-variables">
+<h3>Binary Variables<a class="headerlink" href="#binary-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Match types: a (1–1), b (1–0), c (0–1), d (0–0)</p></li>
+<li><p>Several coefficients exist:</p>
+<ul>
+<li><p><strong>Matching coefficient</strong> (S1): includes co-absences</p></li>
+<li><p><strong>Jaccard coefficient</strong> (S2): ignores co-absences</p></li>
+<li><p><strong>Rogers–Tanimoto</strong>, <strong>Sneath–Sokal</strong>, <strong>Gower–Legendre</strong> variants</p></li>
+</ul>
+</li>
+</ul>
+<p>⚠️ Choice of similarity measure depends on the data context (e.g., presence/absence, symmetric variables).</p>
+</section>
+<section id="multi-level-categorical-variables">
+<h3>Multi-level Categorical Variables<a class="headerlink" href="#multi-level-categorical-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>One-hot encoding not preferred due to excessive 0–0 matches.</p></li>
+<li><p>Instead, use per-variable match scoring (1 for same, 0 for different).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="proximities-for-continuous-data">
+<h2>3.3 Proximities for Continuous Data<a class="headerlink" href="#proximities-for-continuous-data" title="Link to this heading">#</a></h2>
+<section id="distance-measures">
+<h3>Distance Measures<a class="headerlink" href="#distance-measures" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Euclidean (D1)</strong>: Physical geometric distance</p></li>
+<li><p><strong>City Block / Manhattan (D2)</strong>: Sum of absolute differences</p></li>
+<li><p><strong>Minkowski (D3)</strong>: Generalized form of D1 and D2</p></li>
+<li><p><strong>Canberra (D4)</strong>: Sensitive to small values</p></li>
+</ul>
+</section>
+<section id="correlation-based-measures">
+<h3>Correlation-based Measures<a class="headerlink" href="#correlation-based-measures" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Pearson (D5)</strong>: Similarity of profiles (ignores magnitude)</p></li>
+<li><p><strong>Angular Separation (D6)</strong>: Cosine similarity</p></li>
+</ul>
+<p>📎 Note: Correlation-based measures may mislead if scale matters.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="mixed-type-data">
+<h2>3.4 Mixed-Type Data<a class="headerlink" href="#mixed-type-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Gower’s coefficient</strong> (1971) is preferred.</p></li>
+<li><p>Handles binary, categorical, and continuous data with custom similarity scores.</p></li>
+<li><p>Common in survey data and bioinformatics.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="structured-repeated-measures-data">
+<h2>3.5 Structured / Repeated Measures Data<a class="headerlink" href="#structured-repeated-measures-data" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Includes repeated observations over time, conditions, or spatial locations.</p></li>
+<li><p>Strategies:</p>
+<ul>
+<li><p>Summarize time series (e.g., slope and intercept from regression)</p></li>
+<li><p>Compute similarities on per-condition means</p></li>
+<li><p>Use <strong>Levenshtein (edit) distance</strong> or <strong>Jaro similarity</strong> for sequence data</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="group-to-group-proximities">
+<h2>3.6 Group-to-Group Proximities<a class="headerlink" href="#group-to-group-proximities" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Needed in hierarchical clustering.</p></li>
+<li><p>Approaches:</p>
+<ul>
+<li><p><strong>Single linkage</strong>: minimum distance (nearest neighbor)</p></li>
+<li><p><strong>Complete linkage</strong>: maximum distance (farthest neighbor)</p></li>
+<li><p><strong>Group average</strong>: mean pairwise distance</p></li>
+<li><p><strong>Centroid / Mahalanobis distance</strong>: takes into account shape and spread</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="transforming-to-euclidean-distance">
+<h2>🔁 Transforming to Euclidean Distance<a class="headerlink" href="#transforming-to-euclidean-distance" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Some dissimilarity matrices are not Euclidean.</p></li>
+<li><p>Techniques exist (e.g., <strong>Gower’s transformation</strong>, <strong>Lingoes</strong>, <strong>Cailliez</strong>) to convert them.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="software-notes">
+<h2>📦 Software Notes<a class="headerlink" href="#software-notes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Most modern tools (R, Stata, SPSS, SAS) support the proximity measures discussed.</p></li>
+<li><p><strong>R packages</strong>: <code class="docutils literal notranslate"><span class="pre">cluster</span></code>, <code class="docutils literal notranslate"><span class="pre">proxy</span></code>, <code class="docutils literal notranslate"><span class="pre">clusterSim</span></code></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-takeaways">
+<h2>🧠 Key Takeaways<a class="headerlink" href="#key-takeaways" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Always match the proximity measure to your <strong>data type</strong> and <strong>clustering goal</strong>.</p></li>
+<li><p>Misusing a similarity or distance metric can drastically distort your results.</p></li>
+<li><p>Be cautious with correlation-based measures and ensure scale compatibility.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/11-clustering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">📌 Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-vs-indirect-proximities">3.1 Direct vs Indirect Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-categorical-data">3.2 Proximities for Categorical Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-variables">Binary Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-level-categorical-variables">Multi-level Categorical Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proximities-for-continuous-data">3.3 Proximities for Continuous Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-measures">Distance Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-based-measures">Correlation-based Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixed-type-data">3.4 Mixed-Type Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structured-repeated-measures-data">3.5 Structured / Repeated Measures Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-to-group-proximities">3.6 Group-to-Group Proximities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transforming-to-euclidean-distance">🔁 Transforming to Euclidean Distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software-notes">📦 Software Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">🧠 Key Takeaways</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
