@@ -213,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -383,7 +384,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-mean">Geometric Mean</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-or-geometric-or-harmonic">Arithmetic or Geometric or Harmonic?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-most-frequent-value">Mode: Most Frequent Value</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
@@ -539,16 +540,82 @@ document.write(`
 <p>A fundamental part of working with data is <strong>describing</strong> it.
 Descriptive statistics help simplify and summarize large amounts of data in a sensible manner. Herein, we will discuss <strong>descriptive statistics</strong> and cover a variety of methods for summarizing, describing, and representing datasets to ultimately support our machine learning efforts.</p>
 <p>Initially consider we are discussing single variables, think like a column in a spreadsheet as the variable.  Its easily extended to collections of related columns, but generally we summarize each column.</p>
-<p>Here is diagram of some more commonly employed descriptive measures:
-<img alt="" src="https://slideplayer.com/slide/2346765/8/images/2/Summary+Measures+Describing+Data+Numerically+Central+Tendency.jpg" /></p>
+<p>Here is table of some numerical descriptive measures:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p>Some Numerical Data Measures</p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Location</strong></p></td>
+<td><p><strong>Dispersion</strong></p></td>
+<td><p><strong>Symmetry</strong></p></td>
+<td><p><strong>Shape</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Arithmetic Mean</p></td>
+<td><p>Range</p></td>
+<td><p>Skewness (3rd moment) and Pearson’s Skewness</p></td>
+<td><p>Kurtosis</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Median</p></td>
+<td><p>Interquartile Range (IQR)</p></td>
+<td><p>Bowley’s Skewness (based on quartiles)</p></td>
+<td><p>L-Kurtosis (τ₄)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Mode</p></td>
+<td><p>Variance</p></td>
+<td><p>MedCouple</p></td>
+<td><p>Tail Index (Hill Estimator)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Geometric Mean</p></td>
+<td><p>Standard Deviation</p></td>
+<td><p>Groeneveld and Meeden’s Skewness</p></td>
+<td><p>Entropy-Based Measures</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Quantile(s)</p></td>
+<td><p>Coefficient of Variation</p></td>
+<td><p>L-moment Skewness (τ₃)</p></td>
+<td><p>Modality Measures (Number of Peaks)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--![](EDA-image.png)-->
+<!-- ![](https://slideplayer.com/slide/2346765/8/images/2/Summary+Measures+Describing+Data+Numerically+Central+Tendency.jpg) -->
 <section id="measures-of-location">
 <h3>Measures of Location<a class="headerlink" href="#measures-of-location" title="Link to this heading">#</a></h3>
 <p>Location measures give us an estimate of the location of a data distribution in the numberbet (like the alphabet, but a buttload more letters) and a sense of a typical value we would expect to see.</p>
 <p>The three major measures of location are the mean, median, and mode.  Naturally because mathematicians were involved there are a buttload of diferent kinds of mean (that’s mean!)</p>
 <section id="arithmetic-mean">
 <h4>Arithmetic Mean<a class="headerlink" href="#arithmetic-mean" title="Link to this heading">#</a></h4>
-<p>The arithmetic mean or average is the sum of all the values, divided by the number of values. The mean represents a typical value that acts as a yardstick for all observations.  For discrete data it is quite possible the mean value lies between reportable values.</p>
-<p><img alt="" src="https://x-engineer.org/wp-content/uploads/2016/10/Arithmetic-mean-formula-244x142.jpg?a43cfa&amp;a43cfa" /></p>
+<!--The arithmetic mean or average is the sum of all the values, divided by the number of values. The mean represents a typical value that acts as a yardstick for all observations.  -->
+<div class="math notranslate nohighlight">
+\[\bar x_{arith} = \frac{1}{n} \sum_{i=1}^{n} x_i\]</div>
+<!--![](https://x-engineer.org/wp-content/uploads/2016/10/Arithmetic-mean-formula-244x142.jpg?a43cfa&a43cfa)-->
+<ul class="simple">
+<li><p>The most familiar and intuitive mean.</p></li>
+<li><p><strong>Additive:</strong> Total sum divided by count.</p></li>
+<li><p>Assumes equal weighting per difference across the range.</p></li>
+<li><p>For discrete data the computed mean value may lies between reportable values.</p></li>
+<li><p>Use it when:</p>
+<ul>
+<li><p>All values have the same units.</p></li>
+<li><p>You’re interested in total quantities (e.g., total rainfall, total income, average height).</p></li>
+</ul>
+</li>
+</ul>
+<p>Illustrative example (python practice)</p>
+<p>We could write our own functions using for loops, or while loops, but these functions are available in a variety of packages in the examples below <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> and <code class="docutils literal notranslate"><span class="pre">statistics</span></code> are reasonable high-level packages frequently used for such work.</p>
 <p>Let’s calculate the average budget of the Top10 highest-grossing films.  First we have to get the data, we will study this in more datail later in this chapter, but the simple code below should suffice</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -626,8 +693,20 @@ Descriptive statistics help simplify and summarize large amounts of data in a se
 <section id="harmonic-mean">
 <h4>Harmonic Mean<a class="headerlink" href="#harmonic-mean" title="Link to this heading">#</a></h4>
 <p>The harmonic mean is the reciprocal of the mean of the reciprocals of all items in the dataset.</p>
-<p><img alt="" src="https://www.onlinemath4all.com/images/harmonicmean1.png" /></p>
-<p>Let’s calculate the harmonic mean for the same dataset:</p>
+<div class="math notranslate nohighlight">
+\[ \bar x_{harm} = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}} \]</div>
+<!--![](https://www.onlinemath4all.com/images/harmonicmean1.png)-->
+<ul class="simple">
+<li><p>Use it when:</p>
+<ul>
+<li><p>You are averaging rates, such as speed, density, or price per unit.</p></li>
+<li><p>You want to give more weight to smaller values.</p></li>
+<li><p>Units are of the form “something per something” (e.g., km/h, $/kg).</p></li>
+</ul>
+</li>
+</ul>
+<p>Example: If you drive 60 km at 30 km/h and return the same 60 km at 60 km/h, your total travel time is 3 hours to cover the 120 kilometers; your average speed is not 45 km/h—it’s 40 km/h, the harmonic mean.</p>
+<p>Let’s calculate the harmonic mean for the same movie dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Harmonic Mean Budget $ &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">statistics</span><span class="o">.</span><span class="n">harmonic_mean</span><span class="p">(</span><span class="n">Budget</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span><span class="s2">&quot;million USD&quot;</span><span class="p">)</span> <span class="c1"># via the Statistics library:</span>
@@ -656,8 +735,22 @@ Descriptive statistics help simplify and summarize large amounts of data in a se
 <section id="geometric-mean">
 <h4>Geometric Mean<a class="headerlink" href="#geometric-mean" title="Link to this heading">#</a></h4>
 <p>The geometric mean is the <span class="math notranslate nohighlight">\(n-\)</span>th root of the product of all <span class="math notranslate nohighlight">\(n\)</span> elements <span class="math notranslate nohighlight">\(a_i\)</span> in a dataset.</p>
-<p><img alt="" src="https://ncalculators.com/images/formulas/geometric-mean.jpg" /></p>
-<p>Let’s calculate the geometric mean for the same set of numbers:</p>
+<div class="math notranslate nohighlight">
+\[\bar x_{geom} =  (\prod_{i=1}^{n} x_i)^{ \frac{1}{n}} = \sqrt[n]{x_1 x_2 \dots x_n}\]</div>
+<!--![](https://ncalculators.com/images/formulas/geometric-mean.jpg)-->
+<ul class="simple">
+<li><p>Represents the multiplicative average.</p></li>
+<li><p>Use it when:</p>
+<ul>
+<li><p>You’re averaging ratios or percentages.</p></li>
+<li><p>The values have different units, or represent relative change.</p></li>
+<li><p>Common for compound growth rates: population, investment returns, ecological indices.</p></li>
+<li><p>Important: All values must be positive.</p></li>
+</ul>
+</li>
+</ul>
+<p>Example: A population that grows 10%, then shrinks 10% doesn’t return to the original size—geometric mean reflects this more accurately than the arithmetic mean.</p>
+<p>Let’s calculate the geometric mean for the movie database:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geometric Mean Budget $ &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">statistics</span><span class="o">.</span><span class="n">geometric_mean</span><span class="p">(</span><span class="n">Budget</span><span class="p">),</span><span class="mi">2</span><span class="p">),</span><span class="s2">&quot;million USD&quot;</span><span class="p">)</span> <span class="c1"># via the Statistics library:</span>
@@ -685,14 +778,46 @@ Descriptive statistics help simplify and summarize large amounts of data in a se
 </section>
 <section id="arithmetic-or-geometric-or-harmonic">
 <h4>Arithmetic or Geometric or Harmonic?<a class="headerlink" href="#arithmetic-or-geometric-or-harmonic" title="Link to this heading">#</a></h4>
-<p>Naturally we are concerned with which to use,  the useless figure below clarifies the issue (not!)</p>
+<p>When summarizing a set of numbers with a single representative value, we often turn to one of the classic means: arithmetic, geometric, or harmonic. While they all describe central tendency, each has a distinct interpretation and appropriate context.</p>
+<p>The figure below helps visualize the relationship among them, particularly when the data consists of only two positive values:</p>
 <p><img alt="" src="https://pbs.twimg.com/media/Dm2BdG2V4AE36xP.jpg" /></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Mean Type</p></th>
+<th class="head"><p>Use Case</p></th>
+<th class="head"><p>Formula</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Arithmetic</p></td>
+<td><p>Same-unit quantities, totals</p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n} \sum x_i\)</span></p></td>
+<td><p>Most common</p></td>
+</tr>
+<tr class="row-odd"><td><p>Geometric</p></td>
+<td><p>Growth rates, ratios, % changes</p></td>
+<td><p><span class="math notranslate nohighlight">\(\left( \prod x_i \right)^{1/n}\)</span></p></td>
+<td><p>Log-scale behavior</p></td>
+</tr>
+<tr class="row-even"><td><p>Harmonic</p></td>
+<td><p>Rates, unit prices, inverse ratios</p></td>
+<td><p><span class="math notranslate nohighlight">\(n / \sum (1/x_i)\)</span></p></td>
+<td><p>Sensitive to small values</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Decision Flow</strong></p>
 <ul class="simple">
-<li><p>If values have the same units: Use the arithmetic mean. <br></p></li>
-<li><p>If values have differing units: Use the geometric mean. | Also, commonly used for growth rates, like population growth or interest rates.<br></p></li>
-<li><p>If values are rates: Use the harmonic mean. <br></p></li>
+<li><p>Same units and additive quantities? → Use arithmetic mean.</p></li>
+<li><p>If values have differing units; Multiplicative or percentage-type growth? → Use geometric mean.</p></li>
+<li><p>Rates (like speed, cost/unit, efficiency)? → Use harmonic mean.</p></li>
 </ul>
-<p><strong>If you are interested in knowing more about these 3 and their differences, you may find these interesting:</strong></p>
+<!-- - If values have the same units: Use the arithmetic mean. <br>
+- If values have differing units: Use the geometric mean. | Also, commonly used for growth rates, like population growth or interest rates.<br>
+- If values are rates: Use the harmonic mean. --><br>
+<p><strong>References:</strong></p>
 <ul class="simple">
 <li><p>“Arithmetic, Geometric, and Harmonic Means for Machine Learning Arithmetic, Geometric, and Harmonic Means for Machine Learning”
 by <strong><em>Jason Brownlee</em></strong>, available &#64; <a class="reference external" href="https://machinelearningmastery.com/arithmetic-geometric-and-harmonic-means-for-machine-learning/#:~:text=The%20arithmetic%20mean%20is%20appropriate,with%20different%20measures%2C%20called%20rates">https://machinelearningmastery.com/arithmetic-geometric-and-harmonic-means-for-machine-learning/#:~:text=The arithmetic mean is appropriate,with different measures%2C called rates</a>.</p></li>
@@ -702,8 +827,28 @@ by <strong><em>Daniel McNichol</em></strong>, available &#64; <a class="referenc
 </section>
 <section id="median">
 <h4>Median<a class="headerlink" href="#median" title="Link to this heading">#</a></h4>
-<p>Median is the middle element of a sorted dataset. The value where the upper half of the data lies above it and lower half lies below it. In other words, it is the middle value of a data set. To calculate the median, arrange the data points in the increasing (or decreasing) order and the middle value is the median. If the number of elements 𝑛 of the dataset is odd, then the median is the value at the middle position: 0.5(𝑛 + 1). If 𝑛 is even, then the median is the arithmetic mean of the two values in the middle, that is, the items at the positions 0.5𝑛 and 0.5𝑛 + 1.
-Let’s find the median of the gross of the Top10 highest-grossing films:</p>
+<!--Median is the middle element of a sorted dataset. The value where the upper half of the data lies above it and lower half lies below it. In other words, it is the middle value of a data set. To calculate the median, arrange the data points in the increasing (or decreasing) order and the middle value is the median. If the number of elements 𝑛 of the dataset is odd, then the median is the value at the middle position: 0.5(𝑛 + 1). If 𝑛 is even, then the median is the arithmetic mean of the two values in the middle, that is, the items at the positions 0.5𝑛 and 0.5𝑛 + 1.
+Let's find the median of the gross of the Top10 highest-grossing films: -->
+<p>Median is the middle value of a sorted dataset—it separates the upper half from the lower half. In other words, 50% of the data values lie above the median and 50% lie below it.</p>
+<p>To compute the median:</p>
+<ol class="arabic simple">
+<li><p>Sort the dataset in increasing (or decreasing) order.</p></li>
+<li><p>If the number of data points <span class="math notranslate nohighlight">\(n\)</span> is odd, the median is the value at position:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ Position = \frac{n+1}{2} \]</div>
+<p>Which corresponds to the exact middle value.</p>
+<ol class="arabic simple" start="3">
+<li><p>If <span class="math notranslate nohighlight">\(n\)</span> is even, the median is the arithmetic mean of the two middle values—specifically the values at positions:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ \frac{n}{2} ~\text{and} \frac{n}{2}+1 \]</div>
+<p>Again this is a common enough activity its encoded into many packages.</p>
+<div class="admonition-why-is-the-median-important admonition">
+<p class="admonition-title">Why is the median important?</p>
+<p>The median is less sensitive to outliers or extreme values than the arithmetic mean. For example, in a dataset of household incomes, a few extremely high incomes can inflate the mean, making it unrepresentative of most households. The median, by contrast, provides a more robust measure of central tendency, especially in skewed distributions.</p>
+</div>
+<p>Let’s apply this by finding the median of the gross revenues of the Top 10 highest-grossing films.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Gross_million$&#39;</span><span class="p">]</span>
@@ -731,6 +876,43 @@ The median of gross of the Top10 highest-grossing films is  2673.5 million USD
 </div>
 </div>
 </div>
+<p>Here’s a similar script with plotting (different input data)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Gross revenue (in billions) of Top 10 highest-grossing films</span>
+<span class="n">top10_gross</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.923</span><span class="p">,</span> <span class="mf">2.798</span><span class="p">,</span> <span class="mf">2.320</span><span class="p">,</span> <span class="mf">2.279</span><span class="p">,</span> <span class="mf">2.068</span><span class="p">,</span> <span class="mf">1.922</span><span class="p">,</span> <span class="mf">1.671</span><span class="p">,</span> <span class="mf">1.663</span><span class="p">,</span> <span class="mf">1.519</span><span class="p">,</span> <span class="mf">1.515</span><span class="p">]</span>
+
+<span class="c1"># Convert to NumPy array</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top10_gross</span><span class="p">)</span>
+
+<span class="c1"># Compute the median</span>
+<span class="n">median_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Sort for plotting</span>
+<span class="n">data_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Plot the values and mark the median</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gross Revenue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">median_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Median = </span><span class="si">{</span><span class="n">median_value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top 10 Grossing Films – Median Visualization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Gross Revenue (billion USD)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="c1">#plt.legend(loc=&#39;upper right&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8d3eb3afdbbf9cab9496cdc95fe47102aea5ccfcfa220775a143ce3d2c74cde0.png" src="../../_images/8d3eb3afdbbf9cab9496cdc95fe47102aea5ccfcfa220775a143ce3d2c74cde0.png" />
+</div>
+</div>
 <p>The main difference between the behavior of the mean and median is related to dataset outliers or extremes. The mean is heavily affected by outliers, but the median only depends on outliers either slightly or not at all. You can compare the mean and median as one way to detect outliers and asymmetry in your data. Whether the mean value or the median value is more useful to you depends on the context of your particular problem. The mean is a better choice when there are no extreme values that can affect it. It is a better summary because the information from every observation is included rather than median, which is just the middle value. However, in the presence of outliers, median is considered a better alternative. Check this out:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -749,53 +931,60 @@ The median of gross of the Top10 highest-grossing films is  2673.5 million USD
 </div>
 </div>
 </div>
+<!-- The value that occurs the most number of times in our data set. Closely tied to the concept of frequency, mode provides information on the most recurrent elements in a dataset. When the mode is not unique, we say that the data set is bimodal, while a data set with more than two modes is multimodal. -->
 </section>
-<section id="mode">
-<h4>Mode<a class="headerlink" href="#mode" title="Link to this heading">#</a></h4>
-<p>The value that occurs the most number of times in our data set. Closely tied to the concept of frequency, mode provides information on the most recurrent elements in a dataset. When the mode is not unique, we say that the data set is bimodal, while a data set with more than two modes is multimodal. Let’s find the mode in the gross of the Top10 highest-grossing films:</p>
+<section id="mode-most-frequent-value">
+<h4>Mode: Most Frequent Value<a class="headerlink" href="#mode-most-frequent-value" title="Link to this heading">#</a></h4>
+<p>The mode is the value that occurs most frequently in a dataset. It is directly tied to the concept of frequency and highlights the most recurrent element(s) in a distribution.</p>
+<p>Unlike the mean and median, which always return a single central value, the mode may:</p>
+<ul class="simple">
+<li><p>Be unique (unimodal),</p></li>
+<li><p>Appear twice (bimodal),</p></li>
+<li><p>Or occur multiple times (multimodal).</p></li>
+</ul>
+<p>If no value repeats, the dataset is said to have no mode.</p>
+<div class="admonition-why-is-the-mode-useful admonition">
+<p class="admonition-title">Why is the mode useful?</p>
+<ul class="simple">
+<li><p>The mode is especially helpful for categorical data or discrete quantities where numerical averaging doesn’t make sense (e.g., shoe sizes, colors, voting preferences).</p></li>
+<li><p>In continuous data, mode can reveal clusters or common outcomes, particularly when used alongside histograms or density plots.</p></li>
+</ul>
+</div>
+<p>Example: Let’s find the mode in the gross of the Top10 highest-grossing films:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># In primitive Python:</span>
 <span class="c1"># Create a list of all the numbers:</span>
-<span class="n">gross</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3706</span><span class="p">,</span><span class="mi">3257</span><span class="p">,</span><span class="mi">3081</span><span class="p">,</span><span class="mi">3043</span><span class="p">,</span><span class="mi">2798</span><span class="p">,</span><span class="mi">2549</span><span class="p">,</span><span class="mi">2489</span><span class="p">,</span><span class="mi">2356</span><span class="p">,</span><span class="mi">2233</span><span class="p">,</span><span class="mi">2202</span><span class="p">]</span>
+<span class="n">gross</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.9</span><span class="p">,</span><span class="mi">237</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">356</span><span class="p">,</span><span class="mf">8.2</span><span class="p">,</span><span class="mf">10.5</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">306</span><span class="p">]</span>
 <span class="n">mode1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="n">gross</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">gross</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mode1</span><span class="p">)</span> <span class="c1">#Since each item is repeated only once, only the first element is printed- This is a multimodal set. </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode1&quot;</span><span class="p">,</span><span class="n">mode1</span><span class="p">)</span> <span class="c1"># This is a unimodal set. </span>
 
 <span class="c1">#via the Pandas library:</span>
-<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Gross_million$&#39;</span><span class="p">]</span>
+<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Budget_million$&#39;</span><span class="p">]</span>
 <span class="n">mode2</span> <span class="o">=</span> <span class="n">Gross</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mode2</span><span class="p">)</span> <span class="c1">#Returns all modal values- This is a multimodal set. </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode2&quot;</span><span class="p">,</span><span class="n">mode2</span><span class="p">)</span> <span class="c1">#Returns all modal values- This is a unimodal set. </span>
 
 <span class="c1">#via the Statistics library:</span>
-<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Gross_million$&#39;</span><span class="p">]</span>
+<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Budget_million$&#39;</span><span class="p">]</span>
 <span class="n">mode3</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">Gross</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mode3</span><span class="p">)</span> <span class="c1">#Return a single value</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode3&quot;</span><span class="p">,</span><span class="n">mode3</span><span class="p">)</span> <span class="c1">#Return a single value</span>
 <span class="n">mode4</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">multimode</span><span class="p">(</span><span class="n">Gross</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mode4</span><span class="p">)</span> <span class="c1">#Returns a list of all modes</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode4&quot;</span><span class="p">,</span><span class="n">mode4</span><span class="p">)</span> <span class="c1">#Returns a list of all modes</span>
 
 <span class="c1">#via the scipy.stats library:</span>
-<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Gross_million$&#39;</span><span class="p">]</span>
+<span class="n">Gross</span> <span class="o">=</span> <span class="n">Movies</span><span class="p">[</span><span class="s1">&#39;Budget_million$&#39;</span><span class="p">]</span>
 <span class="n">mode5</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">Gross</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mode5</span><span class="p">)</span> <span class="c1">#Returns the object with the modal value and the number of times it occurs- If multimodal: only the smallest value</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mode5&quot;</span><span class="p">,</span><span class="n">mode5</span><span class="p">)</span> <span class="c1">#Returns the object with the modal value and the number of times it occurs- If multimodal: only the smallest value</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3706
-0    2202
-1    2233
-2    2356
-3    2489
-4    2549
-5    2798
-6    3043
-7    3081
-8    3257
-9    3706
-Name: Gross_million$, dtype: int64
-3706
-[3706, 3257, 3081, 3043, 2798, 2549, 2489, 2356, 2233, 2202]
-ModeResult(mode=np.int64(2202), count=np.int64(1))
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mode1 11
+mode2 0    11.0
+Name: Budget_million$, dtype: float64
+mode3 11.0
+mode4 [11.0]
+mode5 ModeResult(mode=np.float64(11.0), count=np.int64(2))
 </pre></div>
 </div>
 </div>
@@ -1322,7 +1511,7 @@ The magnitude of the covariance is not particularly useful to interpret because 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9335d80dde560a48384c3c6be7e0895006526e1d7a5e833bb6c534d0af43a389.png" src="../../_images/9335d80dde560a48384c3c6be7e0895006526e1d7a5e833bb6c534d0af43a389.png" />
+<img alt="../../_images/7903638b01de22946a8a3cc6c207cd60678d25294502853d44d963088326620a.png" src="../../_images/7903638b01de22946a8a3cc6c207cd60678d25294502853d44d963088326620a.png" />
 </div>
 </div>
 </section>
@@ -2183,7 +2372,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/46ce10e48d3397f6556c828928e5ba82d433906deaa4ffd8c78b483eccd7700c.png" src="../../_images/46ce10e48d3397f6556c828928e5ba82d433906deaa4ffd8c78b483eccd7700c.png" />
+<img alt="../../_images/2a410faa54518733ca5a965e3856bdd0890dc28749c6fffe84a89f3eb56485b8.png" src="../../_images/2a410faa54518733ca5a965e3856bdd0890dc28749c6fffe84a89f3eb56485b8.png" />
 </div>
 </div>
 <p>Benefits and Limitations</p>
@@ -2366,7 +2555,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c7a915c40f7d252b53788c8e498f532e7e253847c4cb421752b514a00448c991.png" src="../../_images/c7a915c40f7d252b53788c8e498f532e7e253847c4cb421752b514a00448c991.png" />
+<img alt="../../_images/3aef91dfa0e515290ca25bc556eeeeba60d86d936e71b21e07251832e0ef4137.png" src="../../_images/3aef91dfa0e515290ca25bc556eeeeba60d86d936e71b21e07251832e0ef4137.png" />
 </div>
 </div>
 </section>
@@ -2401,7 +2590,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/696393b9e911f638f91c8c2d0cd957d7b0ac82d6da5006c1c102a536bfe44b88.png" src="../../_images/696393b9e911f638f91c8c2d0cd957d7b0ac82d6da5006c1c102a536bfe44b88.png" />
+<img alt="../../_images/d2716a5777a1848101dacdecaf2b2e874a0738a1f2c94e1c234f9284f76499b0.png" src="../../_images/d2716a5777a1848101dacdecaf2b2e874a0738a1f2c94e1c234f9284f76499b0.png" />
 </div>
 </div>
 <section id="point-cloud-with-color-scale">
@@ -2425,7 +2614,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5f6f9c0ac4b0d2171251dd16d3d5bb970be199577f7df40f82142d15340c1c8a.png" src="../../_images/5f6f9c0ac4b0d2171251dd16d3d5bb970be199577f7df40f82142d15340c1c8a.png" />
+<img alt="../../_images/f583bf21e94c45ce5628b54b935b9c7f58b004edd1aea7a61c3dced7f0630edf.png" src="../../_images/f583bf21e94c45ce5628b54b935b9c7f58b004edd1aea7a61c3dced7f0630edf.png" />
 </div>
 </div>
 </section>
@@ -2655,7 +2844,7 @@ Importance in EDA</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-mean">Geometric Mean</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#arithmetic-or-geometric-or-harmonic">Arithmetic or Geometric or Harmonic?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-most-frequent-value">Mode: Most Frequent Value</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
