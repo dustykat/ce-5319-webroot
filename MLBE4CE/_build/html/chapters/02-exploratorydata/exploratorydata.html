@@ -1039,6 +1039,39 @@ The range of the budget of the Top10 highest-grossing films is  352.1 million US
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Gross revenue (in billions) of Top 10 highest-grossing films</span>
+<span class="n">top10_gross</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.923</span><span class="p">,</span> <span class="mf">2.798</span><span class="p">,</span> <span class="mf">2.320</span><span class="p">,</span> <span class="mf">2.279</span><span class="p">,</span> <span class="mf">2.068</span><span class="p">,</span> <span class="mf">1.922</span><span class="p">,</span> <span class="mf">1.671</span><span class="p">,</span> <span class="mf">1.663</span><span class="p">,</span> <span class="mf">1.519</span><span class="p">,</span> <span class="mf">1.515</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top10_gross</span><span class="p">)</span>
+<span class="n">data_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mean_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">std_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">data_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># --- Plot Range ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gross Revenue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Min = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Max = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top 10 Grossing Films – Range Visualization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Gross Revenue (billion USD)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9f7fa2b8b3813a8cd06ea6c4755baa7c2d60ce6bb793dbb6d8b7063495338995.png" src="../../_images/9f7fa2b8b3813a8cd06ea6c4755baa7c2d60ce6bb793dbb6d8b7063495338995.png" />
+</div>
+</div>
 </section>
 <section id="percentiles-quantiles-and-quartiles">
 <h4>Percentiles, Quantiles and Quartiles<a class="headerlink" href="#percentiles-quantiles-and-quartiles" title="Link to this heading">#</a></h4>
@@ -1172,8 +1205,10 @@ In other words, all percentiles are quantiles, but not all quantiles are percent
 <section id="variance">
 <h4>Variance<a class="headerlink" href="#variance" title="Link to this heading">#</a></h4>
 <p>The sample variance quantifies the spread of the data. It shows numerically how far the data points are from the mean. The observations may or may not be meaningful if observations in data sets are highly spread. Let’s calculate the variance for budget of the Top10 highest-grossing films.</p>
-<p><img alt="" src="https://miro.medium.com/max/666/0*ovSFlxj9RJMgtQoX.png" /></p>
-<p>Note that if we are working with the entire population (and not the sample), the denominator should be “n” instead of “n-1”.</p>
+<!-- ![](https://miro.medium.com/max/666/0*ovSFlxj9RJMgtQoX.png)
+
+Note that if we are working with the entire population (and not the sample), the denominator should be "n" instead of "n-1". --><div class="math notranslate nohighlight">
+\[s^2 = \frac{\sum(X-\bar X)^2}{n-1}\]</div>
 <p>Note that if we are working with the entire population (and not the sample), the denominator should be “n” instead of “n-1”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1202,7 +1237,10 @@ The variance of the budget of the Top10 highest-grossing films is  20374.7048888
 <section id="standard-deviation">
 <h4>Standard Deviation<a class="headerlink" href="#standard-deviation" title="Link to this heading">#</a></h4>
 <p>The sample standard deviation is another measure of data spread. It’s connected to the sample variance, as standard deviation, 𝑠, is the positive square root of the sample variance. The standard deviation is often more convenient than the variance because it has the same unit as the data points.</p>
-<p><img alt="" src="https://cdn.kastatic.org/googleusercontent/N8xzWFc6eo0XBHEXZjz1SwvLSnPezvhTRF1P17kdjUG_tnJivGKkyCxbwVe4MZ0-USOxIZBohgcjdi8e7Z4Hswcqfw" /></p>
+<!--![](https://cdn.kastatic.org/googleusercontent/N8xzWFc6eo0XBHEXZjz1SwvLSnPezvhTRF1P17kdjUG_tnJivGKkyCxbwVe4MZ0-USOxIZBohgcjdi8e7Z4Hswcqfw)-->
+<div class="math notranslate nohighlight">
+\[SD = \sqrt{\frac{\sum(X-\bar X)^2}{n}}\]</div>
+<p>Below is a script to naievly compute the standard deviation, followed by a more refined scriptthat visualizes the results in comparison with the mean value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Primitive Python:</span>
@@ -1225,6 +1263,40 @@ The variance of the budget of the Top10 highest-grossing films is  20374.7048888
 The standard deviation of the budget of the Top10 highest-grossing films is  142.73999050332353 million USD
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Gross revenue (in billions) of Top 10 highest-grossing films</span>
+<span class="n">top10_gross</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.923</span><span class="p">,</span> <span class="mf">2.798</span><span class="p">,</span> <span class="mf">2.320</span><span class="p">,</span> <span class="mf">2.279</span><span class="p">,</span> <span class="mf">2.068</span><span class="p">,</span> <span class="mf">1.922</span><span class="p">,</span> <span class="mf">1.671</span><span class="p">,</span> <span class="mf">1.663</span><span class="p">,</span> <span class="mf">1.519</span><span class="p">,</span> <span class="mf">1.515</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top10_gross</span><span class="p">)</span>
+<span class="n">data_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mean_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">std_dev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">data_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># --- Plot Standard Deviation ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data_sorted</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gross Revenue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mean = </span><span class="si">{</span><span class="n">mean_value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_value</span> <span class="o">+</span> <span class="n">std_dev</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;+1 SD = </span><span class="si">{</span><span class="n">mean_value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std_dev</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_value</span> <span class="o">-</span> <span class="n">std_dev</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;-1 SD = </span><span class="si">{</span><span class="n">mean_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">std_dev</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top 10 Grossing Films – Standard Deviation Visualization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Gross Revenue (billion USD)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5b86dc58289a00e4b386a5f3c48f5eae4c9ab99abe7e425e59678b6e2f0ffb84.png" src="../../_images/5b86dc58289a00e4b386a5f3c48f5eae4c9ab99abe7e425e59678b6e2f0ffb84.png" />
 </div>
 </div>
 </section>
@@ -1306,8 +1378,7 @@ The magnitude of the covariance is not particularly useful to interpret because 
 \[r=\frac{n(\sum xy)-(\sum x)(\sum y)}{[n\sum x^2 - (\sum x)^2][n\sum y^2 - (\sum y)^2]}\]</div>
 <!--![](https://www.statisticshowto.com/wp-content/uploads/2012/10/pearson.gif) <br>-->
 <p>The correlation coefficient returns a value between -1 and 1, where:</p>
-<!--![](https://www.statisticshowto.com/wp-content/uploads/2012/10/pearson-2-small.png)-->
-<img src= "https://www.statisticshowto.com/wp-content/uploads/2012/10/pearson-2-small.png" width="500" >
+<p><img alt="" src="../../_images/pearson.png" /></p>
 <ul class="simple">
 <li><p>1 : A correlation coefficient of 1 means that for every positive increase in one variable, there is a positive increase of a fixed proportion in the other. For example, shoe sizes go up in (almost) perfect correlation with foot length.</p></li>
 <li><p>-1: A correlation coefficient of -1 means that for every positive increase in one variable, there is a negative decrease of a fixed proportion in the other. For example, the amount of gas in a tank decreases in (almost) perfect correlation with speed.</p></li>
@@ -1511,7 +1582,7 @@ The magnitude of the covariance is not particularly useful to interpret because 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7903638b01de22946a8a3cc6c207cd60678d25294502853d44d963088326620a.png" src="../../_images/7903638b01de22946a8a3cc6c207cd60678d25294502853d44d963088326620a.png" />
+<img alt="../../_images/f1ac420dc35e8c58163286b62887a90cc72c1c2f0a5c111db39d9b72fb87cda0.png" src="../../_images/f1ac420dc35e8c58163286b62887a90cc72c1c2f0a5c111db39d9b72fb87cda0.png" />
 </div>
 </div>
 </section>
@@ -2372,7 +2443,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2a410faa54518733ca5a965e3856bdd0890dc28749c6fffe84a89f3eb56485b8.png" src="../../_images/2a410faa54518733ca5a965e3856bdd0890dc28749c6fffe84a89f3eb56485b8.png" />
+<img alt="../../_images/81ff2e7331cb3134887418ac448e998f9c1ea22a4866662534c3aa0944eb1d59.png" src="../../_images/81ff2e7331cb3134887418ac448e998f9c1ea22a4866662534c3aa0944eb1d59.png" />
 </div>
 </div>
 <p>Benefits and Limitations</p>
@@ -2555,7 +2626,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3aef91dfa0e515290ca25bc556eeeeba60d86d936e71b21e07251832e0ef4137.png" src="../../_images/3aef91dfa0e515290ca25bc556eeeeba60d86d936e71b21e07251832e0ef4137.png" />
+<img alt="../../_images/420c2c1eb0bc7da9ff2e9169fcc480ac590ed2fd1504e4573c00516070c2b03f.png" src="../../_images/420c2c1eb0bc7da9ff2e9169fcc480ac590ed2fd1504e4573c00516070c2b03f.png" />
 </div>
 </div>
 </section>
@@ -2590,7 +2661,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d2716a5777a1848101dacdecaf2b2e874a0738a1f2c94e1c234f9284f76499b0.png" src="../../_images/d2716a5777a1848101dacdecaf2b2e874a0738a1f2c94e1c234f9284f76499b0.png" />
+<img alt="../../_images/88cf5f8817f9bb827f259e3497087dbcd254d4523b02c97881f4b4110619134e.png" src="../../_images/88cf5f8817f9bb827f259e3497087dbcd254d4523b02c97881f4b4110619134e.png" />
 </div>
 </div>
 <section id="point-cloud-with-color-scale">
@@ -2614,7 +2685,7 @@ Importance in EDA</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f583bf21e94c45ce5628b54b935b9c7f58b004edd1aea7a61c3dced7f0630edf.png" src="../../_images/f583bf21e94c45ce5628b54b935b9c7f58b004edd1aea7a61c3dced7f0630edf.png" />
+<img alt="../../_images/d045f90b8bf6850d5260dd9c5f86b2208109cb609486c782a197b0731c00b667.png" src="../../_images/d045f90b8bf6850d5260dd9c5f86b2208109cb609486c782a197b0731c00b667.png" />
 </div>
 </div>
 </section>
