@@ -1,0 +1,129 @@
+## Lesson: Data Preparation Ultimate Task List
+Machine Learning by Example for Civil Engineers
+1. Introduction to Data Preparation
+Importance of data preprocessing in machine learning
+Common challenges in raw datasets (e.g., missing values, inconsistencies, noise)
+Overview of data pipeline stages: Acquisition → Cleaning → Transformation → Storage
+2. Accessing and Retrieving Data
+Remote Data Access
+Using requests to retrieve data from remote servers (REST APIs, static files)
+Handling authentication & API keys (e.g., using requests with headers)
+Working with different data formats: JSON, XML, CSV
+Database Connections
+Introduction to SQL databases (sqlite3, SQLAlchemy)
+Accessing cloud-based databases (PostgreSQL, MySQL)
+Querying structured data with SQL
+3. Data Cleaning and Pruning
+Identifying and Handling Missing Data
+Detecting missing values (pandas.isnull(), df.info())
+Strategies: Dropping vs. Imputation (mean, median, mode)
+Handling Duplicate Records
+Identifying and removing duplicates (df.drop_duplicates())
+Dealing with Outliers
+Statistical methods: Z-score, IQR (Interquartile Range)
+Visual detection with boxplots
+Filtering and Selecting Relevant Data
+Criteria-based pruning (e.g., removing negative values, extreme values)
+Dropping irrelevant columns/features
+4. Data Encoding and Decoding
+Handling Categorical Data
+One-hot encoding (pandas.get_dummies())
+Label encoding vs. Ordinal encoding (sklearn.preprocessing.LabelEncoder)
+Working with Text Data
+Converting text to numerical representations (TF-IDF, word embeddings)
+Tokenization and stemming
+Date and Time Processing
+Converting timestamps to usable features (datetime module)
+Extracting components (day, month, seasonality effects)
+5. Feature Scaling and Normalization
+Why Scaling is Important?
+Impact on machine learning models (e.g., gradient descent performance)
+Normalization vs. Standardization
+Min-Max scaling (sklearn.preprocessing.MinMaxScaler)
+Standardization (StandardScaler)
+Handling Skewed Data
+Log transformation, power transformation
+6. Data Transformation and Augmentation
+Feature Engineering for Civil Engineering Data
+Creating new features (e.g., water flow rates from raw sensor readings)
+Combining multiple features (e.g., aggregating rainfall over time)
+Data Augmentation for Small Datasets
+Synthetic data generation techniques
+Augmentation in image-based models (e.g., rotating, flipping images for CNNs)
+7. Exporting and Storing Processed Data
+Saving Cleaned Data
+Writing to CSV, Excel (df.to_csv(), df.to_excel())
+Saving as SQL tables (df.to_sql())
+Data Serialization
+JSON and Pickle for storing processed datasets
+Best Practices for Reproducibility
+Versioning data with metadata logs
+Automating data preparation with pipelines (scikit-learn Pipelines)
+8. Case Study: Preparing Civil Engineering Data for ML
+Example: Processing rainfall-runoff time series data
+Example: Cleaning and encoding geospatial data for infrastructure planning
+Example: Normalizing soil property data for ML-based classification
+
+1. Accessing and Retrieving Data
+Example 1: Fetching Data from a Remote API (Using requests)
+This example demonstrates how to retrieve rainfall data from a hypothetical REST API.
+
+import requests
+import pandas as pd
+
+# URL of the remote data source (example API)
+url = "https://example.com/api/rainfall"
+
+# Fetch data using requests
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()  # Assuming JSON format
+    df = pd.DataFrame(data)
+    print(df.head())  # Display first few rows
+else:
+    print("Failed to fetch data:", response.status_code)
+
+
+Example 2: Connecting to a SQL Database (sqlite3)
+Students will learn how to query structured datasets stored in SQLite.
+
+
+import sqlite3
+
+# Connect to database (or create one)
+conn = sqlite3.connect("civil_engineering_data.db")
+cursor = conn.cursor()
+
+# Query rainfall data
+query = "SELECT * FROM rainfall_data WHERE year >= 2000"
+df = pd.read_sql_query(query, conn)
+
+# Display sample data
+df.head()
+
+# Close connection
+conn.close()
+
+Data Cleaning and Pruning Example 3: Handling Missing Data (pandas)
+
+
+
+import numpy as np
+
+# Create a sample dataset
+data = {
+    "Station": ["A", "B", "C", "D"],
+    "Rainfall (mm)": [10.2, np.nan, 35.4, 20.1],  # Missing value at index 1
+    "Temperature (°C)": [22.5, 23.1, np.nan, 21.8]
+}
+
+df = pd.DataFrame(data)
+
+# Fill missing values with mean
+df_filled = df.fillna(df.mean())
+
+print(df_filled)
+
+
+Example 4: Removing Outliers Using Z-score
