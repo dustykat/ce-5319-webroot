@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04-linearregression/linearregression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -188,8 +190,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
 
 
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Linear Regression</a></li>
+
 
 <li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
@@ -211,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -370,9 +373,45 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Linear Regression</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-linear-regression">What is Linear Regression?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-matters-in-machine-learning">Why It Matters in Machine Learning</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-engines">Prediction Engines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-prediction-machine">A Simple Prediction Machine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-machine-learning-components-in-our-example">Mapping Machine Learning Components in Our Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-function-mean-squared-error">1. Quality Function: Mean Squared Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-criterion-minimize-error">2. Objective Criterion: Minimize Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-routine-coordinate-wise-bisection">3. Optimization Routine: Coordinate-wise Bisection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-we-minimizing">What Are We Minimizing?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-coordinate-descent">Why Coordinate Descent?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gentle-intro-to-learning">A Gentle Intro to Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-regression">4.1 What is Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-regression-approach">Machine Learning: Regression Approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-questions">Fundamental Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-regression-by-normal-equations">Classical Regression by Normal Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-do-these-normal-equations-come-from">Where do these normal equations come from?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-linear-algebra">Computational Linear Algebra</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-the-value-of-the-computational-linear-algebra">What’s the Value of the Computational Linear Algebra ?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-packages">Using packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodel-package"><code class="docutils literal notranslate"><span class="pre">statsmodel</span></code> package</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-package"><code class="docutils literal notranslate"><span class="pre">sklearn</span></code> package</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#now-repeat-using-the-original-texas-instruments-example">Now repeat using the original Texas Instruments example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 </li>
 </ul>
@@ -393,7 +432,29 @@ document.write(`
 <p class="admonition-title">Course Website</p>
 <p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
 </div>
-<p>lorem ipsum</p>
+<p>Imagine you’re trying to forecast the future — whether it’s the price of a home, tomorrow’s temperature, or how much rain will fall during a storm. What you’re really doing is predicting an unknown outcome based on known inputs. This process is at the heart of what we call a prediction engine — a tool that takes past patterns and applies them to make informed guesses about the future.</p>
+<p>In the world of data science and machine learning, building a prediction engine means finding a relationship between the inputs (like square footage, time of day, or cloud cover) and the output we want to estimate. The stronger and clearer that relationship is, the better our prediction will be.</p>
+<p>One of the simplest — and most powerful — ways to build a prediction engine is with something called linear regression.</p>
+<section id="what-is-linear-regression">
+<h2>What is Linear Regression?<a class="headerlink" href="#what-is-linear-regression" title="Link to this heading">#</a></h2>
+<p>Linear regression <strong>assumes</strong> that there is a straight-line relationship between what we observe (the input, feature, or “independent variable”) and what we’re trying to predict (the output, response, or “dependent variable”). If you can imagine drawing a best-fit line through a cloud of data points, that line is your model — your prediction engine in its most basic form.</p>
+<p>The mathematical idea is simple:</p>
+<div class="math notranslate nohighlight">
+\[ \text{Predicted Output}=\text{slope}×\text{Input}+\text{intercept}\]</div>
+<p>This line summarizes how the output changes as the input changes. For example:</p>
+<p>Want to predict runoff from rainfall? Use regression to relate rainfall depth (input) to observed runoff (output).</p>
+<p>Want to estimate the strength of a concrete mix? Use regression to relate ingredients and curing time to strength.</p>
+</section>
+<section id="why-it-matters-in-machine-learning">
+<h2>Why It Matters in Machine Learning<a class="headerlink" href="#why-it-matters-in-machine-learning" title="Link to this heading">#</a></h2>
+<p>Linear regression is more than just a tool for plotting lines — it’s a gateway to machine learning. It teaches us how to:</p>
+<ul class="simple">
+<li><p>Learn from data</p></li>
+<li><p>Minimize error</p></li>
+<li><p>Generalize patterns for new, unseen inputs</p></li>
+</ul>
+<p>Many modern machine learning models — including neural networks and decision trees — extend the core logic of regression: find the best rule to map input to output.</p>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="readings-references">
 <h1>Readings/References<a class="headerlink" href="#readings-references" title="Link to this heading">#</a></h1>
@@ -401,9 +462,1532 @@ document.write(`
 <li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book pp 21-25</a></p></li>
 <li><p><a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016) Make Your Own Neural Network. Kindle Edition. </a></p></li>
 <li><p><a class="reference external" href="https://www.amazon.com/Machine-Learning-Python-Beginners-Hands-ebook/dp/B09BNYDH5F/ref=sr_1_1?crid=2AWC6H5O8OTXX&amp;amp;dib=eyJ2IjoiMSJ9.lb1DU4Hg5eM1dTpip0RqZQ.FB7zPx86H30WvSkCwGQrxSos7pXT20BjOeJwlfa0m78&amp;amp;dib_tag=se&amp;amp;keywords=Chan%2C+Jamie.+Machine+Learning+With+Python+For+Beginners%3A+A+Step-By-Step+Guide+with+Hands-On+Projects+%28Learn+Coding+Fast+with+Hands-On+Project+Book+7%29&amp;amp;qid=1741388116&amp;amp;sprefix=%2Caps%2C465&amp;amp;sr=8-1">Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 106-118). Kindle Edition.</a></p></li>
+<li><p><a class="reference internal" href="#ce-5319-webroot/3-Readings/Fiacco-SequentialUnconstrainedMinimization-1967.pdf"><span class="xref myst">Anthony V. Fiacco, Garth P. McCormick, John M. Danskin, Jr.,(1967). The Sequential Unconstrained Minimization Technique (SUMT) without Parameters, Operations Research, Vol. 15, No. 5 (Sep. - Oct., 1967), pp. 820-829</span></a></p></li>
+<li><p>“Linear Regression in Python”__ by <strong>Sadrach Pierre</strong> available at* <a class="reference external" href="https://towardsdatascience.com/linear-regression-in-python-a1d8c13f3242">https://towardsdatascience.com/linear-regression-in-python-a1d8c13f3242</a> <br></p></li>
+<li><p>“Introduction to Linear Regression in Python”__ available at* <a class="reference external" href="https://cmdlinetips.com/2019/09/introduction-to-linear-regression-in-python/">https://cmdlinetips.com/2019/09/introduction-to-linear-regression-in-python/</a> <br></p></li>
+<li><p>“Linear Regression in Python”__ by <strong>Mirko Stojiljković</strong> available at* <a class="reference external" href="https://realpython.com/linear-regression-in-python/">https://realpython.com/linear-regression-in-python/</a> <br></p></li>
+<li><p><a class="reference external" href="https://inferentialthinking.com/chapters/15/Prediction.html">https://inferentialthinking.com/chapters/15/Prediction.html</a><br></p></li>
 </ol>
 <section id="videos">
 <h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=PaFPbb66DxQ&amp;amp;list=PLblh5JKOoLUIzaEkCLIUxQFjPIlapw8nU">“StatQuest: Fitting a line to data, aka least squares, aka linear regression.”__ by <strong>StatQuest with Josh Starmer</strong> <em>YouTube</em></a> <br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=ZkjP5RJLQF4">“Statistics 101: Linear Regression, The Very Basics”__ by <strong>Brandon Foltz</strong> <em>YouTube</em></a> <br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=MRm5sBfdBBQ">“How to Build a Linear Regression Model in Python | Part 1” and 2,3,4!__ by <strong>Sigma Coding</strong><em>YouTube</em></a> <br></p></li>
+</ol>
+</section>
+<section id="prediction-engines">
+<h2>Prediction Engines<a class="headerlink" href="#prediction-engines" title="Link to this heading">#</a></h2>
+<p>This section examines the process of prediction, or forecasting if you will.  In prediction we are attempting to build an excitation-response model so that when new (future) excitations are supplied to the model, the new (future) responses are predicted.</p>
+<p>As an example, suppose a 1 Newton force is applied to a 1 kilogram object, we expect an acceleration of 1 meter per second per second.  The inputs are mass and force, the response is acceleration.  Now if we triple the mass, and leave the force unchanged then the acceleration is predicted to be 1/3 meter per second per second.  The prediction machine structure in this example could be something like</p>
+<div class="math notranslate nohighlight">
+\[a=\beta_1 F^{\beta_2} \cdot \beta_3 m^{\beta_4}\]</div>
+<p>After training the fitted (learned) model would determine that <span class="math notranslate nohighlight">\(\beta_1=\beta_2=\beta_3=1\)</span> and <span class="math notranslate nohighlight">\(\beta_4=-1\)</span> is the best performing model and that would be our prediction engine.</p>
+<p>Or we could just trust Newton that the prediction model is</p>
+<div class="math notranslate nohighlight">
+\[a=\frac{F}{m}\]</div>
+</section>
+<section id="a-simple-prediction-machine">
+<h2>A Simple Prediction Machine<a class="headerlink" href="#a-simple-prediction-machine" title="Link to this heading">#</a></h2>
+<p>Imagine a basic machine that takes a question, does some “thinking” and pushes out an answer.
+Here’s a diagram of the process:</p>
+<p><img alt="" src="../../_images/eat-sleep-poop1.png" /></p>
+<p>Computers don’t really think, they’re just fast calculators (actually difference engines, but that’s for another time), so let’s use more appropriate words to describe what’s going on:</p>
+<p><img alt="" src="../../_images/eat-sleep-poop2.png" /></p>
+<p>A computer takes some input, does some calculation and poops out an output. The following illustrates this. An input of “3 x 4” is processed, perhaps by turning multiplication into an easier set of additions, and the output answer “12” poops out.</p>
+<p><img alt="" src="../../_images/three-by-four.png" /></p>
+<p>Not particularly impressive - we could even write a function!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">threeByfour</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">b</span><span class="o">=</span><span class="mi">4</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a times b =&#39;</span><span class="p">,</span><span class="n">threeByfour</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a times b = 12
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, Imagine a machine that converts kilometres to miles, like the following:</p>
+<p><img alt="" src="../../_images/km-2-miles.png" /></p>
+<div class="admonition-suspended-assumptions-entering-the-domain-of-pattern-seeking admonition">
+<p class="admonition-title">Suspended Assumptions: Entering the Domain of Pattern-Seeking</p>
+<p>But imagine we don’t know the formula for converting between kilometres and miles. All we know is the the relationship between the two is <strong>linear</strong>. That means if we double the number in miles, the same distance in kilometres is also doubled.</p>
+</div>
+<p>This linear relationship between kilometres and miles gives us a clue about that mysterious calculation; it needs to be of the form “miles = kilometres x <strong>c</strong>”, where <strong>c</strong> is a constant. We don’t know what this constant <strong>c</strong> is yet. The only other clues we have are some examples pairing kilometres with the correct value for miles. These are like real world observations used to test scientific theories - they’re examples of real world truth.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Truth Example</p></th>
+<th class="head text-right"><p>Kilometres</p></th>
+<th class="head text-right"><p>Miles</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-right"><p>0</p></td>
+<td class="text-right"><p>0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2</p></td>
+<td class="text-right"><p>100</p></td>
+<td class="text-right"><p>62.137</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To work out that missing constant <strong>c</strong>  in a pattern matching domain one just picks a value at random and gives it a try! Let’s try <strong>c</strong> = 0.5 and see what happens.</p>
+<p><img alt="" src="../../_images/first-shot.png" /></p>
+<p>Here we have miles = kilometres x <strong>c</strong>, where kilometres is 100 and <strong>c</strong> is our current guess at 0.5. That gives 50 miles. Okay. That’s not bad at all given we chose <strong>c</strong> = 0.5 at random! But we know it’s not exactly right because our truth example number 2 tells us the answer should be 62.137. We’re wrong by 12.137. That’s the <strong>error</strong>, the difference between our calculated answer and the actual truth from our list of examples. That is,</p>
+<p>error = truth - calculated = 62.137 - 50 = 12.137</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  50.0  miles
+Estimation error is  12.137 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="../../_images/first-error.png" /></p>
+<p>So what next? We know we’re wrong, and by how much. Instead of being a reason to despair, we use this error to guide a second, better, guess at <strong>c</strong>. Look at that error again. We were short by 12.137. Because the formula for converting kilometres to miles is linear, miles = kilometres x <strong>c</strong>, we know that increasing <strong>c</strong> will increase the output. Let’s nudge <strong>c</strong> up from 0.5 to 0.6 and see what happens.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recall the three parts of a ML algorithm (for the learning phase):</p>
+<ol class="arabic simple">
+<li><p>a function to assess the quality of a prediction or classification. Typically a loss function which we want to minimize, or a likelihood function which we want to maximize. It goes by many names: objective, cost, loss, merit are common names for this function.</p></li>
+<li><p>an objective criterion (a goal) based on the loss function (maximize or minimize), and</p></li>
+<li><p>an optimization routine that uses the training data to find a solution to the optimization problem posed by the objective criterion.</p></li>
+</ol>
+<p>In the current example, the “Estimation error” is our quality function, making that error small is the “goal” (objective); what remains is a way to use the data (admittedly quite sparse) to find a solution to minimizing the error.</p>
+</div>
+<p><img alt="" src="../../_images/second-shot.png" /></p>
+<p>With <strong>c</strong> now set to 0.6, we get miles = kilometres x <strong>c</strong> = 100 x 0.6 = 60. That’s better than the previous answer of 50. We’re clearly making progress! Now the error is a much smaller 2.137. It might even be an error we’re happy to live with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.6</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  60.0  miles
+Estimation error is  2.1370000000000005 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p>The important point here is that we used the error to guide how we nudged the value of c. We wanted to increase the output from 50 so we increased <strong>c</strong> a little bit. Rather than try to use algebra to work out the exact amount <strong>c</strong> needs to change, let’s continue with this approach of refining <strong>c</strong>. If you’re not convinced, and think it’s easy enough to work out the exact answer, remember that many more interesting problems won’t have simple mathematical formulas relating the output and input. That’s why we use “machine learning” methods. Let’s do this again. The output of 60 is still too small. Let’s nudge the value of <strong>c</strong> up again from 0.6 to 0.7.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.7</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  70.0  miles
+Estimation error is  -7.8629999999999995 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/lesson3/overshoot.png" /></p>
+<p>Oh no! We’ve gone too far and <strong>overshot</strong> the known correct answer. Our previous error was 2.137 but now it’s -7.863. The minus sign simply says we overshot rather than undershot, remember the error is (correct value - calculated value). Ok so <strong>c</strong> = 0.6 was way better than c = 0.7. We could be happy with the small error from <strong>c</strong> = 0.6 and end this exercise now. But let’s go on for just a bit longer.</p>
+<p>Let’s split the difference from our last guess - we still have overshot, but not as much (-2.8629).<br />
+Split again to <strong>c</strong>=0.625, and overshoot is only (-0.3629) (we could sucessively split the <strong>c</strong> values until we are close enough. The method just illustrated is called bisection, and the important point is that we avoided any mathematics other than bigger/smaller and multiplication and subtraction; hence just arithmetic.)</p>
+<p>That’s much much better than before. We have an output value of 62.5 which is only wrong by 0.3629 from the correct 62.137. So that last effort taught us that we should moderate how much we nudge the value of <strong>c</strong>. If the outputs are getting close to the correct answer - that is, the error is getting smaller - then don’t nudge the constant so much. That way we avoid overshooting the right value, like we did earlier. Again without getting too distracted by exact ways of working out <strong>c</strong>, and to remain focussed on this idea of successively refining it, we could suggest that the correction is a fraction of the error. That’s intuitively right - a big error means a bigger correction is needed, and a tiny error means we need the teeniest of nudges to <strong>c</strong>. What we’ve just done, believe it or not, is walked through the very core process of learning in a neural network - we’ve trained the machine to get better and better at giving the right answer. It is worth pausing to reflect on that - we’ve not solved a problem exactly in one step. Instead, we’ve taken a very different approach by trying an answer and improving it repeatedly. Some use the term <strong>iterative</strong> and it means repeatedly improving an answer bit by bit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.65</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  65.0  miles
+Estimation error is  -2.8629999999999995 miles
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">c</span><span class="o">=</span><span class="mf">0.625</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="mf">62.137</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">-</span><span class="n">y</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 kilometers is estimated to be  62.5  miles
+Estimation error is  -0.36299999999999955 miles
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s automate the process.</p>
+<p>We have our prediction engine structure embedded into the <code class="docutils literal notranslate"><span class="pre">km2miles()</span></code> function.  We have a database of observations (albeit its kind of small). We need to find a value of <code class="docutils literal notranslate"><span class="pre">c</span></code> that’s good enough then we can use the prediction engine to convert new values.  As stated above bisection seems appropriate, so here we will adapt a classical bisection algorithm for our machine.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code below is shamelessly lifted from <a class="reference external" href="https://pythonnumericalmethods.berkeley.edu/notebooks/Index.html">Qingkai Kong, Timmy Siauw, Alexandre M. Bayen, 2021 Python Programming and Numerical Methods, Academic Press</a> and adapted explicitly for the machine described herein.  If you go to the source the authors use <strong>lambda</strong> objects to generalize their scripts, but I choose to simply break their fine programming structure for my needs; something everyone should get comfortable with.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">km</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">howmany</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># number of iterations</span>
+<span class="n">clow</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># lower limit for c</span>
+<span class="n">chigh</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># upper limit for c</span>
+<span class="n">x</span><span class="o">=</span><span class="mi">100</span> <span class="c1"># ground truth value</span>
+<span class="n">dtrue</span> <span class="o">=</span> <span class="mf">62.137</span> <span class="c1"># ground truth value</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-6</span> <span class="c1"># desired accuracy</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="c1"># useful library with absolute value and sign functions</span>
+
+<span class="c1">############ Learning Phase ################</span>
+<span class="c1"># check if clow and chigh bound a solution</span>
+<span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chigh</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The scalars clow and chigh do not bound a solution&quot;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmany</span><span class="p">):</span>         
+<span class="c1"># get midpoint</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">clow</span> <span class="o">+</span> <span class="n">chigh</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+        <span class="c1"># stopping condition, report m as root</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal Exit Learning Complete&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">elif</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">clow</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+        <span class="c1"># case where m is an improvement on a. </span>
+        <span class="c1"># Make recursive call with a = m</span>
+        <span class="n">clow</span> <span class="o">=</span> <span class="n">m</span> <span class="c1"># update a with m</span>
+    <span class="k">elif</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">chigh</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="o">-</span><span class="n">dtrue</span><span class="p">):</span>
+        <span class="c1"># case where m is an improvement on b. </span>
+        <span class="c1"># Make recursive call with b = m</span>
+        <span class="n">chigh</span> <span class="o">=</span> <span class="n">m</span> <span class="c1"># update b with m</span>
+<span class="c1">####################################################</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normal Exit Learning Complete
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">############# Testing Phase ########################</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number trials&#39;</span><span class="p">,</span><span class="n">iteration</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;model c value&#39;</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimation error is &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">dtrue</span><span class="o">-</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;miles&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Testing Complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number trials 27
+model c value 0.6213699989020824
+100 kilometers is estimated to be  62.137  miles
+Estimation error is  0.0 miles
+Testing Complete
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">############ Deployment Phase #######################</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">y</span><span class="o">=</span><span class="n">km2miles</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="s1">&#39;kilometers is estimated to be &#39;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s1">&#39; miles&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1000 kilometers is estimated to be  621.37  miles
+</pre></div>
+</div>
+</div>
+</div>
+<p>Moving beyond our simple model, let’s extend <code class="docutils literal notranslate"><span class="pre">km2miles(</span></code>) into a proper linear model with both a slope (c) and intercept, then modify the search engine to adjust both parameters.</p>
+<p>However, since the current code only searches for a single parameter (c) via bisection, we’ll treat the task as:</p>
+<p>Still using bisection (so we can only vary one parameter at a time)</p>
+<p>But generalize the model to:</p>
+<div class="math notranslate nohighlight">
+\[ \text{miles}=c * \text{km}+\text{intercept} \]</div>
+<p>Adjusting the function and allowing a fixed intercept the modified script is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Define linear model</span>
+<span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">km</span> <span class="o">*</span> <span class="n">c</span> <span class="o">+</span> <span class="n">intercept</span>
+
+<span class="c1"># Define squared error loss</span>
+<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">km2miles</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">dtrue</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="c1"># Bisection search to minimize error by adjusting a single parameter</span>
+<span class="k">def</span> <span class="nf">bisection_optimize</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">,</span> <span class="n">is_slope</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">param_range</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="n">is_slope</span><span class="p">:</span>
+            <span class="n">err_low</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">)</span>
+            <span class="n">err_mid</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">err_low</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">)</span>
+            <span class="n">err_mid</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">err_mid</span> <span class="o">-</span> <span class="n">err_low</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mid</span>
+
+        <span class="k">if</span> <span class="n">err_mid</span> <span class="o">&gt;</span> <span class="n">err_low</span><span class="p">:</span>
+            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="c1"># Coordinate-wise search wrapper</span>
+<span class="k">def</span> <span class="nf">coordinate_descent_linear</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">,</span> <span class="n">c_range</span><span class="p">,</span> <span class="n">intercept_range</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">outer_iters</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">outer_iters</span><span class="p">):</span>
+        <span class="c1"># Step 1: Fix intercept, optimize slope</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">bisection_optimize</span><span class="p">(</span><span class="n">c_range</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">,</span> <span class="n">is_slope</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+
+        <span class="c1"># Step 2: Fix slope, optimize intercept</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="n">bisection_optimize</span><span class="p">(</span><span class="n">intercept_range</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">,</span> <span class="n">is_slope</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: slope = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, intercept = </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, loss = </span><span class="si">{</span><span class="n">loss</span><span class="p">(</span><span class="n">km</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">intercept</span><span class="p">,</span><span class="w"> </span><span class="n">dtrue</span><span class="p">)</span><span class="si">:</span><span class="s2">.6e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example problem: match 100 km to 62.137 miles</span>
+<span class="n">km</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">dtrue</span> <span class="o">=</span> <span class="mf">62.137</span>
+
+<span class="c1"># Initial search bounds</span>
+<span class="n">c_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">intercept_range</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Run coordinate descent</span>
+<span class="n">best_c</span><span class="p">,</span> <span class="n">best_intercept</span> <span class="o">=</span> <span class="n">coordinate_descent_linear</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">dtrue</span><span class="p">,</span> <span class="n">c_range</span><span class="p">,</span> <span class="n">intercept_range</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Final Model: y = </span><span class="si">{</span><span class="n">best_c</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> * x + </span><span class="si">{</span><span class="n">best_intercept</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step 1: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 2: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 3: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 4: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 5: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 6: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 7: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 8: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 9: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+Step 10: slope = 0.625000, intercept = 0.000001, loss = 1.317704e-01
+
+✅ Final Model: y = 0.625000 * x + 0.000001
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At its core, machine learning is about building a rule that turns inputs into outputs as accurately as possible. Here, we’ve chosen one of the simplest forms of that rule: a straight line. Our “learning algorithm” is nothing more than an intelligent guess-and-check process, tuning the slope and intercept to reduce the prediction error. It’s not AI magic — it’s coordinate-wise bisection.</p>
+</div>
+<p>And now with minimal further modifications, we can handle a set of observations instead of single (one shot) cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Linear model</span>
+<span class="k">def</span> <span class="nf">km2miles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">intercept</span>
+
+<span class="c1"># Mean squared error loss across all data points</span>
+<span class="k">def</span> <span class="nf">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">km2miles</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_true</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Bisection optimizer for one variable (slope or intercept)</span>
+<span class="k">def</span> <span class="nf">bisection_optimize</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">is_slope</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">param_range</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="n">is_slope</span><span class="p">:</span>
+            <span class="n">err_low</span> <span class="o">=</span> <span class="n">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">)</span>
+            <span class="n">err_mid</span> <span class="o">=</span> <span class="n">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">err_low</span> <span class="o">=</span> <span class="n">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">low</span><span class="p">)</span>
+            <span class="n">err_mid</span> <span class="o">=</span> <span class="n">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">err_mid</span> <span class="o">-</span> <span class="n">err_low</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mid</span>
+
+        <span class="k">if</span> <span class="n">err_mid</span> <span class="o">&gt;</span> <span class="n">err_low</span><span class="p">:</span>
+            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="c1"># Coordinate-wise optimizer for slope and intercept</span>
+<span class="k">def</span> <span class="nf">coordinate_descent_linear</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">c_range</span><span class="p">,</span> <span class="n">intercept_range</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">outer_iters</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">outer_iters</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">bisection_optimize</span><span class="p">(</span><span class="n">c_range</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">is_slope</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="n">bisection_optimize</span><span class="p">(</span><span class="n">intercept_range</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">is_slope</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: slope = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, intercept = </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, MSE = </span><span class="si">{</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">intercept</span><span class="p">)</span><span class="si">:</span><span class="s2">.6e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span>
+
+<span class="c1"># Plotting function</span>
+<span class="k">def</span> <span class="nf">plot_regression</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="n">x_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">x_vals</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_vals</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">km2miles</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed Data&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Best-Fit Line</span><span class="se">\n</span><span class="s1">y = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">x + </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear Regression Fit via Coordinate-wise Bisection&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (e.g., km)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y (e.g., miles)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample training data</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">150</span><span class="p">])</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">31.068</span><span class="p">,</span> <span class="mf">46.603</span><span class="p">,</span> <span class="mf">62.137</span><span class="p">,</span> <span class="mf">77.672</span><span class="p">,</span> <span class="mf">93.206</span><span class="p">])</span>  <span class="c1"># approx. km → miles</span>
+
+<span class="c1"># Search ranges</span>
+<span class="n">c_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">intercept_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Fit model</span>
+<span class="n">best_c</span><span class="p">,</span> <span class="n">best_intercept</span> <span class="o">=</span> <span class="n">coordinate_descent_linear</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">c_bounds</span><span class="p">,</span> <span class="n">intercept_bounds</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plot_regression</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">best_c</span><span class="p">,</span> <span class="n">best_intercept</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step 1: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 2: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 3: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 4: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 5: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 6: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 7: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 8: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 9: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+Step 10: slope = 0.625000, intercept = 0.000001, MSE = 1.480059e-01
+</pre></div>
+</div>
+<img alt="../../_images/af08a0ac761b6c9cc2f4d0ef2c05e90cd72605d4015fde3f9a508c4c5a2e32d6.png" src="../../_images/af08a0ac761b6c9cc2f4d0ef2c05e90cd72605d4015fde3f9a508c4c5a2e32d6.png" />
+</div>
+</div>
+<p>Now with somewhat arbitrary data</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The algorithm as presented is quite unstable, so still takes some interaction from the human, but the idea is sound; ML is just arithmetic in some sense.  The technique being employed is a variation of <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/3-Readings/Fiacco-SequentialUnconstrainedMinimization-1967.pdf">Sequential Unconstrained Minimization Technique (SUMT)</a></p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate synthetic dataset</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">75</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>  <span class="c1"># Feature: Random values between 0 and 10</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Target: Linear function with noise</span>
+
+<span class="c1"># Search ranges</span>
+<span class="n">c_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+<span class="n">intercept_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">outer_iters</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># Fit model</span>
+<span class="n">best_c</span><span class="p">,</span> <span class="n">best_intercept</span> <span class="o">=</span> <span class="n">coordinate_descent_linear</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">c_bounds</span><span class="p">,</span> <span class="n">intercept_bounds</span><span class="p">,</span> <span class="n">outer_iters</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plot_regression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">best_c</span><span class="p">,</span> <span class="n">best_intercept</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Step 1: slope = 3.390625, intercept = 4.650000, MSE = 6.302154e+00
+Step 2: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 3: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 4: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 5: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 6: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 7: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 8: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 9: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+Step 10: slope = 3.281250, intercept = 4.650000, MSE = 6.236475e+00
+</pre></div>
+</div>
+<img alt="../../_images/365a915df94ef3e956c9be7cbbcba623da32b3289f8dcb3b869eb212d804668d.png" src="../../_images/365a915df94ef3e956c9be7cbbcba623da32b3289f8dcb3b869eb212d804668d.png" />
+</div>
+</div>
+</section>
+<section id="mapping-machine-learning-components-in-our-example">
+<h2>Mapping Machine Learning Components in Our Example<a class="headerlink" href="#mapping-machine-learning-components-in-our-example" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Recall the three parts of a machine learning algorithm (during the learning phase):</p>
+<p>A function to assess the quality of a prediction or classification — typically a loss function we want to minimize, or a likelihood function we want to maximize. It may be called an objective, cost, loss, or merit function.</p>
+<p>An objective criterion (a goal) based on the loss function — usually to minimize or maximize it.</p>
+<p>An optimization routine that uses training data to find a solution to the optimization problem posed by the objective criterion.</p>
+<p>In the current example, the “Estimation error” is our quality function, minimizing that error is the goal, and the coordinate-wise bisection routine is the optimization strategy.</p>
+</div>
+<section id="quality-function-mean-squared-error">
+<h3>1. Quality Function: Mean Squared Error<a class="headerlink" href="#quality-function-mean-squared-error" title="Link to this heading">#</a></h3>
+<p>This function measures how far off the model’s predictions are from the observed data — our loss function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mse_loss</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">km2miles</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_true</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="objective-criterion-minimize-error">
+<h3>2. Objective Criterion: Minimize Error<a class="headerlink" href="#objective-criterion-minimize-error" title="Link to this heading">#</a></h3>
+<p>We define our learning goal as minimizing the MSE. The algorithm seeks values of c and intercept that produce the lowest possible error.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">err_mid</span> <span class="o">-</span> <span class="n">err_low</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">mid</span>
+</pre></div>
+</div>
+<p>This expression represents the stopping condition for our optimization. Once the error improvement between steps is small enough, we accept the current value.</p>
+</section>
+<section id="optimization-routine-coordinate-wise-bisection">
+<h3>3. Optimization Routine: Coordinate-wise Bisection<a class="headerlink" href="#optimization-routine-coordinate-wise-bisection" title="Link to this heading">#</a></h3>
+<p>This is our search engine: an algorithm that adjusts one parameter at a time to reduce error, alternating between slope and intercept.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bisection_optimize</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">fixed_other_param</span><span class="p">,</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">is_slope</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>And the outer loop controlling the process:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">coordinate_descent_linear</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">c_range</span><span class="p">,</span> <span class="n">intercept_range</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">outer_iters</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Together, these act as a simple machine learning engine: searching parameter space using training data to reduce loss and improve predictions.</p>
+</section>
+<section id="what-are-we-minimizing">
+<h3>What Are We Minimizing?<a class="headerlink" href="#what-are-we-minimizing" title="Link to this heading">#</a></h3>
+<p>Every machine learning algorithm is defined by its loss function — a way of measuring how wrong a prediction is. Here, we’re minimizing the mean squared error (MSE), which rewards small mistakes and punishes large ones. The model improves not because it “understands” — but because it “searches better.”</p>
+</section>
+<section id="why-coordinate-descent">
+<h3>Why Coordinate Descent?<a class="headerlink" href="#why-coordinate-descent" title="Link to this heading">#</a></h3>
+<p>Why don’t we just jump straight to a solution? Because we rarely know what the best answer looks like. Instead, we simplify the problem: hold one variable still while adjusting the other. This stepwise tuning, known as coordinate descent, is a bridge between intuition and computation — a introduction-friendly form of optimization.</p>
+</section>
+<section id="a-gentle-intro-to-learning">
+<h3>A Gentle Intro to Learning<a class="headerlink" href="#a-gentle-intro-to-learning" title="Link to this heading">#</a></h3>
+<p>With just a handful of data points and a basic search method, we’ve constructed a working prediction engine. This model can now estimate outputs for new inputs — and that’s the essence of learning. Every powerful ML algorithm, from linear regression to neural networks, follows this basic structure:</p>
+<ul class="simple">
+<li><p>Pick a model structure</p></li>
+<li><p>Measure its performance</p></li>
+<li><p>Adjust parameters to improve</p></li>
+<li><p>Repeat until good enough</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="what-is-regression">
+<h1>4.1 What is Regression<a class="headerlink" href="#what-is-regression" title="Link to this heading">#</a></h1>
+<p>A <strong>systematic</strong> procedure to model the relationship between one dependent variable and one or more independent variables and quantify the <em>uncertainty</em> involved in <em>response predictions</em>.</p>
+<div class="admonition-from-search-engines-to-calculus-driven-models admonition">
+<p class="admonition-title">From Search Engines to Calculus-Driven Models</p>
+<p>Up to this point, we’ve built our prediction engine using only basic arithmetic and structured search — no derivatives, no matrices, no formal statistics. This was deliberate. It showed that machine learning isn’t mystical; it’s just clever arithmetic guided by error reduction.</p>
+<p>Now, we’re ready to unlock more power by introducing multivariate calculus and matrix notation. These tools don’t change the goals — we still minimize error — but they make it possible to scale up, solve systems more efficiently, and derive results analytically rather than through repeated guessing.</p>
+<p>Yes, this next phase uses more advanced mathematical machinery — gradients, normal equations, matrix transposition — but underneath, it’s still just arithmetic wrapped in some elegant structure. The principles haven’t changed; the tools have simply gotten sharper.</p>
+</div>
+<section id="machine-learning-regression-approach">
+<h2>Machine Learning: Regression Approach<a class="headerlink" href="#machine-learning-regression-approach" title="Link to this heading">#</a></h2>
+<p>Regression is a basic and commonly used type of predictive analysis.</p>
+<p>The overall idea of regression is to assess:</p>
+<ul class="simple">
+<li><p>does a set of predictor/explainatory variables (features) do a good job in predicting an outcome (dependent/response) variable?</p></li>
+<li><p>Which explainatory variables (features) in particular are significant predictors of the outcome variable, and in what way do they–indicated by the magnitude and sign of the beta estimates–impact the outcome variable?</p></li>
+<li><p>What is the estimated(predicted) value of the response under various excitation (explainatory) variable values?</p></li>
+<li><p>What is the uncertainty involved in the prediction?</p></li>
+</ul>
+<p>These regression estimates are used to explain the relationship between one dependent variable and one or more independent variables.</p>
+<p>The simplest form is a linear regression equation with one dependent(response) and one independent(explainatory) variable is defined by the formula</p>
+<p><span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1*x_i\)</span>, where <span class="math notranslate nohighlight">\(y_i\)</span> = estimated dependent(response) variable value, <span class="math notranslate nohighlight">\(\beta_0\)</span> = constant(intercept), <span class="math notranslate nohighlight">\(\beta_1\)</span> = regression coefficient (slope), and <span class="math notranslate nohighlight">\(x_i\)</span> = independent(predictor) variable value</p>
+<p>More complex forms involving non-linear (in the <span class="math notranslate nohighlight">\(\beta_{i}\)</span>) parameters and non-linear combinations of the independent(predictor) variables are also used - these are beyond the scope of this lesson.</p>
+<p>We have already explored the underlying computations involved (without explaination) by just solving a particular linear equation system; what follows is some background on the source of that equation system.</p>
+<hr>
+<section id="fundamental-questions">
+<h3>Fundamental Questions<a class="headerlink" href="#fundamental-questions" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>What is regression used for?</p></li>
+<li><p>Why is it useful?</p></li>
+</ul>
+<p>Three major uses for regression analysis are (1) determining the strength of predictors, (2) forecasting an effect, and (3) trend forecasting.</p>
+<ul class="simple">
+<li><p>First, the regression might be used to identify the strength of the effect that the independent variable(s) have on a dependent variable.  Typical questions are what is the strength of relationship between dose and effect, sales and marketing spending, or age and income.</p></li>
+<li><p>Second, it can be used to forecast effects or impact of changes.  That is, the regression analysis helps us to understand how much the dependent variable changes with a change in one or more independent variables.  A typical question is, “how much additional sales income do I get for each additional $1000 spent on marketing?”</p></li>
+<li><p>Third, regression analysis predicts trends and future values.  The regression analysis can be used to get point estimates.  A typical question is, “what will the price of gold be in 6 months?”</p></li>
+</ul>
+<p>Consider the image below from a Texas Instruments Calculator user manual</p>
+<p><img alt="" src="../../_images/ti-manual.png" /></p>
+<p>In the context of our class, the straight solid line is the <code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">Model</span></code> whose equation is
+<span class="math notranslate nohighlight">\(Y = \beta_0 + \beta_1*X\)</span>.
+The ordered pairs <span class="math notranslate nohighlight">\((x_i,y_i)\)</span> in the scatterplot are the observation (or training set).
+As depicted here <span class="math notranslate nohighlight">\(Y\)</span> is the response to different values of the explainitory variable <span class="math notranslate nohighlight">\(X\)</span>. The typical convention is response on the up-down axis, but not always.
+The model parameters are <span class="math notranslate nohighlight">\(\beta_0\)</span> and <span class="math notranslate nohighlight">\(\beta_1\)</span> ; once known can estimate (predict) response to (as yet) unobserved values of <span class="math notranslate nohighlight">\(x\)</span></p>
+<p>Classically, the normal equations are evaluated to find the model parameters:</p>
+<p><span class="math notranslate nohighlight">\(\beta_1 = \frac{\sum x\sum y~-~N\sum xy}{(\sum x)^2~-~N\sum x^2}\)</span> and <span class="math notranslate nohighlight">\(\beta_0 = \bar y - \beta_1 \bar x\)</span></p>
+<p>These two equations are the solution to the “design matrix” linear system earlier, but presented as a set of discrete arithmetic operations.</p>
+<hr><hr>
+</section>
+<section id="classical-regression-by-normal-equations">
+<h3>Classical Regression by Normal Equations<a class="headerlink" href="#classical-regression-by-normal-equations" title="Link to this heading">#</a></h3>
+<p>We will illustrate the classical approach to finding the slope and intercept using the normal equations first a plotting function, then we will use the values from the Texas Instruments TI-55 user manual.</p>
+<p>First a way to plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Lets Make a Plotting Function</span>
+
+<span class="k">def</span> <span class="nf">makeAbear</span><span class="p">(</span><span class="n">xvalues</span><span class="p">,</span><span class="n">yvalues</span><span class="p">,</span><span class="n">xleft</span><span class="p">,</span><span class="n">yleft</span><span class="p">,</span><span class="n">xright</span><span class="p">,</span><span class="n">yright</span><span class="p">,</span><span class="n">xlab</span><span class="p">,</span><span class="n">ylab</span><span class="p">,</span><span class="n">title</span><span class="p">):</span>
+<span class="c1"># plotting function dependent on matplotlib installed above </span>
+<span class="c1"># xvalues, yvalues == data pairs to scatterplot; FLOAT</span>
+<span class="c1"># xleft,yleft == left endpoint line to draw; FLOAT</span>
+<span class="c1"># xright,yright == right endpoint line to draw; FLOAT</span>
+<span class="c1"># xlab,ylab == axis labels, STRINGS!!</span>
+<span class="c1"># title == Plot title, STRING</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> 
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xvalues</span><span class="p">,</span><span class="n">yvalues</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xleft</span><span class="p">,</span> <span class="n">xright</span><span class="p">],</span> <span class="p">[</span><span class="n">yleft</span><span class="p">,</span> <span class="n">yright</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now the two lists to process</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make two lists</span>
+<span class="n">sample_length</span> <span class="o">=</span> <span class="p">[</span><span class="mf">101.3</span><span class="p">,</span><span class="mf">103.7</span><span class="p">,</span><span class="mf">98.6</span><span class="p">,</span><span class="mf">99.9</span><span class="p">,</span><span class="mf">97.2</span><span class="p">,</span><span class="mf">100.1</span><span class="p">]</span>
+<span class="n">sample_weight</span> <span class="o">=</span> <span class="p">[</span><span class="mi">609</span><span class="p">,</span><span class="mi">626</span><span class="p">,</span><span class="mi">586</span><span class="p">,</span><span class="mi">594</span><span class="p">,</span><span class="mi">579</span><span class="p">,</span><span class="mi">605</span><span class="p">]</span>
+<span class="c1"># We will assume weight is the explainatory variable, and it is to be used to predict length.</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">sample_length</span><span class="p">,</span><span class="mi">580</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">630</span><span class="p">,</span><span class="mi">106</span><span class="p">,</span><span class="s1">&#39;Weight (g)&#39;</span><span class="p">,</span><span class="s1">&#39;Length (cm)&#39;</span><span class="p">,</span><span class="s1">&#39;Length versus Weight for </span><span class="se">\n</span><span class="s1"> NASA CF0132 Fiber Reinforced Polymer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/7e11d4f2cd343edfe8450a862a469d2427b6828872ee0c6ba88ffddc3a1acbc5.png" src="../../_images/7e11d4f2cd343edfe8450a862a469d2427b6828872ee0c6ba88ffddc3a1acbc5.png" />
+</div>
+</div>
+<p>Notice the dashed line, we supplied only two (x,y) pairs to plot the line, so lets get a colonoscope and find where it came from.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">value1</span><span class="p">,</span><span class="n">value2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a tuple ([x1,x2],[y1,y2]) from y=slope*value+intercept&#39;&#39;&#39;</span>
+    <span class="n">listy</span> <span class="o">=</span> <span class="p">[]</span> 
+    <span class="n">listx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">listx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value1</span><span class="p">)</span>
+    <span class="n">listx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value2</span><span class="p">)</span>
+    <span class="n">listy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope</span><span class="o">*</span><span class="n">listx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">intercept</span><span class="p">)</span>
+    <span class="n">listy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope</span><span class="o">*</span><span class="n">listx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">intercept</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">listx</span><span class="p">,</span><span class="n">listy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The myline function returns a tuple, that we parse below to make the plot of the data model.  This is useful if we wish to plot beyond the range of the observations data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope</span> <span class="o">=</span> <span class="mf">0.13</span>  <span class="c1">#0.13</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="mi">23</span> <span class="c1"># 23</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="mi">540</span> <span class="c1"># here we define the lower bound of the model plot</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">640</span> <span class="c1"># upper bound</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">sample_length</span><span class="p">,</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;Weight (g)&#39;</span><span class="p">,</span><span class="s1">&#39;Length (cm)&#39;</span><span class="p">,</span><span class="s1">&#39;Length versus Weight for </span><span class="se">\n</span><span class="s1"> NASA CF0132 Fiber Reinforced Polymer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/8958e4df250733bfd7e2c3821acf30431e5ed46dee91e86b1610f9197dd01d2a.png" src="../../_images/8958e4df250733bfd7e2c3821acf30431e5ed46dee91e86b1610f9197dd01d2a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>540 93.2
+640 106.2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now lets get “optimal” values of slope and intercept from the Normal equations</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate the normal equations</span>
+<span class="n">sumx</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sumy</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sumxy</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sumx2</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sumy2</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">)):</span>
+    <span class="n">sumx</span> <span class="o">=</span> <span class="n">sumx</span> <span class="o">+</span> <span class="n">sample_weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">sumx2</span> <span class="o">=</span> <span class="n">sumx2</span> <span class="o">+</span> <span class="n">sample_weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">sumy</span> <span class="o">=</span> <span class="n">sumy</span> <span class="o">+</span> <span class="n">sample_length</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">sumy2</span> <span class="o">=</span> <span class="n">sumy2</span> <span class="o">+</span> <span class="n">sample_length</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">sumxy</span> <span class="o">=</span> <span class="n">sumxy</span> <span class="o">+</span> <span class="n">sample_weight</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">sample_length</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="p">(</span><span class="n">sumx</span><span class="o">*</span><span class="n">sumy</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">)</span><span class="o">*</span><span class="n">sumxy</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">sumx</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">)</span><span class="o">*</span><span class="n">sumx2</span><span class="p">)</span>
+<span class="n">b0</span> <span class="o">=</span> <span class="n">sumy</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_length</span><span class="p">)</span> <span class="o">-</span> <span class="n">b1</span><span class="o">*</span> <span class="p">(</span><span class="n">sumx</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">))</span>
+<span class="n">lineout</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Linear Model is y=</span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">b1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;x + </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">b0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linear Model is y=</span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">b1</span> <span class="p">,</span><span class="s2">&quot;x + </span><span class="si">%.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">b0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear Model is y=0.129 x + 22.813
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope</span> <span class="o">=</span> <span class="mf">0.129</span>  <span class="c1">#0.129</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="mf">22.813</span>  <span class="c1"># 22.813</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="mi">540</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">640</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">sample_length</span><span class="p">,</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;Weight (g)&#39;</span><span class="p">,</span><span class="s1">&#39;Length (cm)&#39;</span><span class="p">,</span><span class="s1">&#39;Length versus Weight for </span><span class="se">\n</span><span class="s1"> NASA CF0132 Fiber Reinforced Polymer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/624bcf6e2e7c01de59d0a7d9b0d7ed5320c0ee73fe8091362fc2ba2236f9ecc8.png" src="../../_images/624bcf6e2e7c01de59d0a7d9b0d7ed5320c0ee73fe8091362fc2ba2236f9ecc8.png" />
+</div>
+</div>
+<hr>
+</section>
+<section id="where-do-these-normal-equations-come-from">
+<h3>Where do these normal equations come from?<a class="headerlink" href="#where-do-these-normal-equations-come-from" title="Link to this heading">#</a></h3>
+<p>Consider our linear model <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 \cdot x + \epsilon\)</span>. Where <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error in the estimate. If we square each error and add them up (for our training set) we will have <span class="math notranslate nohighlight">\(\sum \epsilon^2 = \sum (y_i - \beta_0 - \beta_1 \cdot x_i)^2 \)</span>.  Our goal is to minimize this error by our choice of <span class="math notranslate nohighlight">\(\beta_0 \)</span> and <span class="math notranslate nohighlight">\( \beta_1 \)</span></p>
+<p>The necessary and sufficient conditions for a minimum is that the first partial derivatives of the <code class="docutils literal notranslate"><span class="pre">error</span></code> as a function must vanish (be equal to zero).  We can leverage that requirement as</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial(\sum \epsilon^2)}{\partial \beta_0} = \frac{\partial{\sum (y_i - \beta_0 - \beta_1 \cdot x_i)^2}}{\partial \beta_0} = - \sum 2[y_i - \beta_0 + \beta_1 \cdot x_i] = -2(\sum_{i=1}^n y_i - n \beta_0 - \beta_1 \sum_{i=1}^n x_i) = 0 \)</span></p>
+<p>and</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial(\sum \epsilon^2)}{\partial \beta_1} = \frac{\partial{\sum (y_i - \beta_0 - \beta_1 \cdot x_i)^2}}{\partial \beta_1} = - \sum 2[y_i - \beta_0 + \beta_1 \cdot x_i]x_i = -2(\sum_{i=1}^n x_i y_i - n \beta_0 \sum_{i=1}^n x_i - \beta_1 \sum_{i=1}^n x_i^2) = 0 \)</span></p>
+<p>Solving the two equations for <span class="math notranslate nohighlight">\(\beta_0\)</span> and <span class="math notranslate nohighlight">\(\beta_1\)</span> produces the normal equations (for linear least squares), which leads to</p>
+<p><span class="math notranslate nohighlight">\(\beta_1 = \frac{\sum x\sum y~-~n\sum xy}{(\sum x)^2~-~n\sum x^2}\)</span>
+<span class="math notranslate nohighlight">\(\beta_0 = \bar y - \beta_1 \bar x\)</span></p>
+<p>Lets consider a more flexible way by fitting the data model using linear algebra instead of the summation notation.</p>
+<hr><hr>
+</section>
+<section id="computational-linear-algebra">
+<h3>Computational Linear Algebra<a class="headerlink" href="#computational-linear-algebra" title="Link to this heading">#</a></h3>
+<p>We will start again with our linear data model’</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The linear system below should be familiar, we used it in the Predictor-Response Data Model (without much background).  Here we learn it is simply the matrix equivalent of minimizing the sumn of squares error for each equation</p>
+</div>
+<p><span class="math notranslate nohighlight">\(y_i = \beta_0 + \beta_1 \cdot x_i + \epsilon_i\)</span>  then replace with vectors as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather}
+\mathbf{Y}=
+\begin{pmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n \\
+\end{pmatrix}
+\end{gather}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{gather}
+\mathbf{\beta}=
+\begin{pmatrix}
+\beta_0 \\
+\beta_1 \\
+\end{pmatrix}
+\end{gather}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{gather}
+\mathbf{X}=
+\begin{pmatrix}
+1 &amp; x_1 &amp; x_1^2\\
+1 &amp; x_2 &amp; x_2^2\\
+\vdots \\
+1 &amp; x_n &amp; x_n^2\\
+\end{pmatrix}
+\end{gather}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{gather}
+\mathbf{\epsilon}=
+\begin{pmatrix}
+\epsilon_1 \\
+\epsilon_2 \\
+\vdots \\
+\epsilon_n \\
+\end{pmatrix}
+\end{gather}\end{split}\]</div>
+<p>So our system can now be expressed in matrix-vector form as</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Y}=\mathbf{X}\mathbf{\beta}+\mathbf{\epsilon}\)</span> if we perfrom the same vector calculus as before we will end up with a result where pre-multiply by the transpose of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> we will have a linear system in <span class="math notranslate nohighlight">\(\mathbf{\beta}\)</span> which we can solve using Gaussian reduction, or LU decomposition or some other similar method.</p>
+<p>The resulting system (that minimizes <span class="math notranslate nohighlight">\(\mathbf{\epsilon^T}\mathbf{\epsilon}\)</span>) is</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{X^T}\mathbf{Y}=\mathbf{X^T}\mathbf{X}\mathbf{\beta}\)</span> and solving for the parameters gives
+<span class="math notranslate nohighlight">\(\mathbf{\beta}=(\mathbf{X^T}\mathbf{X})^{-1}\mathbf{X^T}\mathbf{Y}\)</span></p>
+<p>So lets apply it to our example - what follows is mostly in python primative</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># linearsolver with pivoting adapted from </span>
+<span class="c1"># https://stackoverflow.com/questions/31957096/gaussian-elimination-with-pivoting-in-python/31959226</span>
+<span class="k">def</span> <span class="nf">linearsolver</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">A</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+     <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="c1"># row reduction with pivots</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+       <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k</span><span class="p">]):</span>
+          <span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+       <span class="k">else</span><span class="p">:</span>
+          <span class="k">pass</span>
+
+     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+         <span class="n">q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">m</span><span class="p">]</span> <span class="o">-=</span>  <span class="n">q</span> <span class="o">*</span> <span class="n">M</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">m</span><span class="p">]</span>
+<span class="c1"># allocate space for result</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="c1"># back-substitution</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">M</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+      <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+          <span class="n">z</span> <span class="o">=</span> <span class="n">z</span>  <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+      <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">/</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+<span class="c1"># return result</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">#######</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># matrix multiply script</span>
+<span class="k">def</span> <span class="nf">mmult</span><span class="p">(</span><span class="n">amatrix</span><span class="p">,</span><span class="n">bmatrix</span><span class="p">,</span><span class="n">rowNumA</span><span class="p">,</span><span class="n">colNumA</span><span class="p">,</span><span class="n">rowNumB</span><span class="p">,</span><span class="n">colNumB</span><span class="p">):</span>
+    <span class="n">result_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumB</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumA</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">rowNumA</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">colNumB</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">colNumA</span><span class="p">):</span>
+                <span class="n">result_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">result_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">amatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">bmatrix</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">result_matrix</span><span class="p">)</span>
+<span class="c1"># matrix vector multiply script</span>
+<span class="k">def</span> <span class="nf">mvmult</span><span class="p">(</span><span class="n">amatrix</span><span class="p">,</span><span class="n">bvector</span><span class="p">,</span><span class="n">rowNumA</span><span class="p">,</span><span class="n">colNumA</span><span class="p">):</span>
+    <span class="n">result_v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumA</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">rowNumA</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">colNumA</span><span class="p">):</span>
+                <span class="n">result_v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">result_v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">amatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">bvector</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">result_v</span><span class="p">)</span>
+
+<span class="n">colNumX</span><span class="o">=</span><span class="mi">2</span> <span class="c1">#</span>
+<span class="n">rowNumX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">)</span>
+<span class="n">xmatrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="n">xtransp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">yvector</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">irow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">):</span>
+    <span class="n">xmatrix</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">xtransp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">yvector</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>   <span class="o">=</span><span class="n">sample_length</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+<span class="n">xtx</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">xtx</span> <span class="o">=</span> <span class="n">mmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">xmatrix</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">colNumX</span><span class="p">)</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="n">mvmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">yvector</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">)</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#solve XtXB = XtY for B</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">linearsolver</span><span class="p">(</span><span class="n">xtx</span><span class="p">,</span><span class="n">xty</span><span class="p">)</span> <span class="c1">#Solve the linear system  What would the numpy equivalent be?</span>
+
+<span class="n">slope</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#0.129</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 22.813</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="mi">580</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">630</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">sample_length</span><span class="p">,</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;Weight (g)&#39;</span><span class="p">,</span><span class="s1">&#39;Length (cm)&#39;</span><span class="p">,</span><span class="s1">&#39;Length versus Weight for </span><span class="se">\n</span><span class="s1"> NASA CF0132 Fiber Reinforced Polymer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/72fe1a9fc65178c51a4ab0493f476a8d1e507d1bbd2c56d48f15568f166e49cb.png" src="../../_images/72fe1a9fc65178c51a4ab0493f476a8d1e507d1bbd2c56d48f15568f166e49cb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[22.812624584693076, 0.12890365448509072]
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<section id="what-s-the-value-of-the-computational-linear-algebra">
+<h4>What’s the Value of the Computational Linear Algebra ?<a class="headerlink" href="#what-s-the-value-of-the-computational-linear-algebra" title="Link to this heading">#</a></h4>
+<p>The value comes when we have more explainatory variables, and we may want to deal with curvature.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The lists below are different that the example above!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make two lists</span>
+<span class="n">yyy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">xxx</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1">#0.129</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 22.813</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">xxx</span><span class="p">,</span> <span class="n">yyy</span><span class="p">,</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span><span class="s1">&#39;yyy&#39;</span><span class="p">,</span><span class="s1">&#39;yyy versus xxx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/e37c62f1c0154ea30a930d4aa5bd02437dae57509ea925a78efbdf07c17482c9.png" src="../../_images/e37c62f1c0154ea30a930d4aa5bd02437dae57509ea925a78efbdf07c17482c9.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colNumX</span><span class="o">=</span><span class="mi">2</span> <span class="c1">#</span>
+<span class="n">rowNumX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">xxx</span><span class="p">)</span>
+<span class="n">xmatrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="n">xtransp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">yvector</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">irow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">):</span>
+    <span class="n">xmatrix</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">xtransp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">yvector</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>   <span class="o">=</span><span class="n">yyy</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+<span class="n">xtx</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">xtx</span> <span class="o">=</span> <span class="n">mmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">xmatrix</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">colNumX</span><span class="p">)</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="n">mvmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">yvector</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">)</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#solve XtXB = XtY for B</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">linearsolver</span><span class="p">(</span><span class="n">xtx</span><span class="p">,</span><span class="n">xty</span><span class="p">)</span> <span class="c1">#Solve the linear system</span>
+
+<span class="n">slope</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#0.129</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 22.813</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">xxx</span><span class="p">,</span> <span class="n">yyy</span><span class="p">,</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span><span class="s1">&#39;yyy&#39;</span><span class="p">,</span><span class="s1">&#39;yyy versus xxx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/7c16fa741f06214aef24af745dc1012cb2f56b2ff8af78183b44c0f222755519.png" src="../../_images/7c16fa741f06214aef24af745dc1012cb2f56b2ff8af78183b44c0f222755519.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colNumX</span><span class="o">=</span><span class="mi">4</span> <span class="c1">#</span>
+<span class="n">rowNumX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">xxx</span><span class="p">)</span>
+<span class="n">xmatrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="n">xtransp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">yvector</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">irow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowNumX</span><span class="p">):</span>
+    <span class="n">xmatrix</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">xmatrix</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">xmatrix</span><span class="p">[</span><span class="n">irow</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">xtransp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+    <span class="n">xtransp</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">xtransp</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">yvector</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>   <span class="o">=</span><span class="n">yyy</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span>
+<span class="n">xtx</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colNumX</span><span class="p">)]</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">xtx</span> <span class="o">=</span> <span class="n">mmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">xmatrix</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">,</span><span class="n">colNumX</span><span class="p">)</span>
+<span class="n">xty</span> <span class="o">=</span> <span class="n">mvmult</span><span class="p">(</span><span class="n">xtransp</span><span class="p">,</span><span class="n">yvector</span><span class="p">,</span><span class="n">colNumX</span><span class="p">,</span><span class="n">rowNumX</span><span class="p">)</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#solve XtXB = XtY for B</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">linearsolver</span><span class="p">(</span><span class="n">xtx</span><span class="p">,</span><span class="n">xty</span><span class="p">)</span> <span class="c1">#Solve the linear system</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">howMany</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">deltax</span> <span class="o">=</span> <span class="p">(</span><span class="n">xhigh</span> <span class="o">-</span> <span class="n">xlow</span><span class="p">)</span><span class="o">/</span><span class="n">howMany</span>
+<span class="n">xmodel</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ymodel</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howMany</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">xnow</span> <span class="o">=</span> <span class="n">xlow</span> <span class="o">+</span> <span class="n">deltax</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">xmodel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xnow</span><span class="p">)</span>
+    <span class="n">ymodel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">xnow</span><span class="o">+</span><span class="n">beta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">xnow</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Now plot the sample values and plotting position</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> 
+<span class="n">myfigure</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># generate a object from the figure class, set aspect ratio</span>
+
+<span class="c1"># Built the plot</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xxx</span><span class="p">,</span> <span class="n">yyy</span><span class="p">,</span>  <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xmodel</span><span class="p">,</span> <span class="n">ymodel</span><span class="p">,</span>  <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span> 
+<span class="n">mytitle</span> <span class="o">=</span> <span class="s2">&quot;YYY versus XXX&quot;</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">mytitle</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/642e0ead0eb4036bed114f6975262530185e627869a7b00acbd6d15a57c6c977.png" src="../../_images/642e0ead0eb4036bed114f6975262530185e627869a7b00acbd6d15a57c6c977.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="using-packages">
+<h3>Using packages<a class="headerlink" href="#using-packages" title="Link to this heading">#</a></h3>
+<p>So in core python, there is a fair amount of work involved to write script - how about an easier way? First lets get things into a dataframe. Using the lists from the example above we can build a dataframe using pandas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the necessary packages</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statistics</span> 
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># Create a dataframe:</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">xxx</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">yyy</span><span class="p">})</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="statsmodel-package">
+<h4><code class="docutils literal notranslate"><span class="pre">statsmodel</span></code> package<a class="headerlink" href="#statsmodel-package" title="Link to this heading">#</a></h4>
+<p>Now load in one of many modeling packages that have regression tools.  Here we use <strong>statsmodel</strong> which is an API (applications programming interface) with a nice formula syntax.  In the package call we use <code class="docutils literal notranslate"><span class="pre">Y~X</span></code> which is interpreted by the API as fit <code class="docutils literal notranslate"><span class="pre">Y</span></code> as a linear function of <code class="docutils literal notranslate"><span class="pre">X</span></code>, which interestingly is our design matrix from a few lessons ago.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># repeat using statsmodel</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+
+<span class="c1"># Initialise and fit linear regression model using `statsmodels`</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="c1"># model object constructor syntax</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now recover the parameters of the model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    1.0
+X            0.7
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict values</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+
+<span class="c1"># Plot regression against actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>           <span class="c1"># scatter plot showing actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># regression line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;model vs observed&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0895fa612bfe94e33750b6bb0fba8fb42efad77f8ccc046ce2a442d39c86a8bb.png" src="../../_images/0895fa612bfe94e33750b6bb0fba8fb42efad77f8ccc046ce2a442d39c86a8bb.png" />
+</div>
+</div>
+<p>We could use our own plotting functions if we wished, and would obtain an identical plot</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#0.7</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 1.0</span>
+<span class="n">xlow</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">xhigh</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">object</span> <span class="o">=</span> <span class="n">myline</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">xlow</span><span class="p">,</span><span class="n">xhigh</span><span class="p">)</span>
+<span class="n">xone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">xtwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span> <span class="n">yone</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span> <span class="n">ytwo</span> <span class="o">=</span> <span class="nb">object</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">makeAbear</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span><span class="n">xone</span><span class="p">,</span><span class="n">yone</span><span class="p">,</span><span class="n">xtwo</span><span class="p">,</span><span class="n">ytwo</span><span class="p">,</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span><span class="s1">&#39;yyy&#39;</span><span class="p">,</span><span class="s1">&#39;yyy versus xxx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_22529/571376869.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  slope = model.params[1] #0.7
+/tmp/ipykernel_22529/571376869.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  intercept = model.params[0]  # 1.0
+/tmp/ipykernel_22529/952544254.py:12: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;k--&quot; (-&gt; color=&#39;k&#39;). The keyword argument will take precedence.
+  matplotlib.pyplot.plot([xleft, xright], [yleft, yright], &#39;k--&#39;, lw=2, color=&quot;red&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/12e339e2ff8c3567b0439cd4d181eae5bbc570890ef9306b2dd78fc057a4ed12.png" src="../../_images/12e339e2ff8c3567b0439cd4d181eae5bbc570890ef9306b2dd78fc057a4ed12.png" />
+</div>
+</div>
+<p>Now lets add another column <span class="math notranslate nohighlight">\(x^2\)</span> to introduce the ability to fit some curvature</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;XX&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># add a column of X^2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Y ~ X + XX&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="c1"># model object constructor syntax</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.571429
+X            0.700000
+XX           0.214286
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict values</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+
+<span class="c1"># Plot regression against actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>           <span class="c1"># scatter plot showing actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># regression line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;model vs observed&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0e6db2a7e705ea626b6a8b876900e011730f35a01a94618deac4f20b3527f247.png" src="../../_images/0e6db2a7e705ea626b6a8b876900e011730f35a01a94618deac4f20b3527f247.png" />
+</div>
+</div>
+<p>Our homebrew plotting tool could be modified a bit (shown below just cause …)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myfigure</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># generate a object from the figure class, set aspect ratio</span>
+
+<span class="c1"># Built the plot</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span>  <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">,</span>  <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span> 
+<span class="n">mytitle</span> <span class="o">=</span> <span class="s2">&quot;YYY versus XXX&quot;</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">mytitle</span><span class="p">)</span> 
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/205f9605a93a09de2b322b423809748e07708c3114245205bd852693c87ed35c.png" src="../../_images/205f9605a93a09de2b322b423809748e07708c3114245205bd852693c87ed35c.png" />
+</div>
+</div>
+<p>Another useful package is <strong>sklearn</strong> so repeat using that tool (same example)</p>
+</section>
+<section id="sklearn-package">
+<h4><code class="docutils literal notranslate"><span class="pre">sklearn</span></code> package<a class="headerlink" href="#sklearn-package" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># repeat using sklearn</span>
+<span class="c1"># Multiple Linear Regression with scikit-learn:</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Build linear regression model using X,XX as predictors</span>
+<span class="c1"># Split data into predictors X and output Y</span>
+<span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;XX&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+
+<span class="c1"># Initialise and fit model</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>  <span class="c1"># This is the sklearn model tool here</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;alpha = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;betas = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha = 0.5714285714285714
+betas = [0.7        0.21428571]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot regression against actual data - What do we see?</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>           <span class="c1"># scatter plot showing actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">fitted</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># regression line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x axis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y axis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;plot title&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/40648b491803be9ba98e9c83205905d0287415c9bac2c0d5c36ff61448d15cff.png" src="../../_images/40648b491803be9ba98e9c83205905d0287415c9bac2c0d5c36ff61448d15cff.png" />
+</div>
+</div>
+</section>
+<section id="now-repeat-using-the-original-texas-instruments-example">
+<h4>Now repeat using the original Texas Instruments example<a class="headerlink" href="#now-repeat-using-the-original-texas-instruments-example" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_length</span> <span class="o">=</span> <span class="p">[</span><span class="mf">101.3</span><span class="p">,</span><span class="mf">103.7</span><span class="p">,</span><span class="mf">98.6</span><span class="p">,</span><span class="mf">99.9</span><span class="p">,</span><span class="mf">97.2</span><span class="p">,</span><span class="mf">100.1</span><span class="p">]</span>
+<span class="n">sample_weight</span> <span class="o">=</span> <span class="p">[</span><span class="mi">609</span><span class="p">,</span><span class="mi">626</span><span class="p">,</span><span class="mi">586</span><span class="p">,</span><span class="mi">594</span><span class="p">,</span><span class="mi">579</span><span class="p">,</span><span class="mi">605</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span><span class="n">sample_weight</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span><span class="n">sample_length</span><span class="p">})</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>609</td>
+      <td>101.3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>626</td>
+      <td>103.7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>586</td>
+      <td>98.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>594</td>
+      <td>99.9</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>579</td>
+      <td>97.2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>605</td>
+      <td>100.1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build linear regression model using X,XX as predictors</span>
+<span class="c1"># Split data into predictors X and output Y</span>
+<span class="n">predictors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">predictors</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+
+<span class="c1"># Initialise and fit model</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;alpha = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;betas = </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha = 22.812624584717597
+betas = [0.12890365]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">xvalue</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># Plot regression against actual data - What do we see?</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>           <span class="c1"># scatter plot showing actual data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvalue</span><span class="p">,</span> <span class="n">fitted</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># regression line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample Weight (g)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Sample Length (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Length versus Weight for </span><span class="se">\n</span><span class="s1"> NASA CF0132 Fiber Reinforced Polymer&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6a1e87e82797c62c5e560ddaef047a2bbcd23804dbdf25fb8bfdddd815dda44b.png" src="../../_images/6a1e87e82797c62c5e560ddaef047a2bbcd23804dbdf25fb8bfdddd815dda44b.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<p>We examined regression as a way to fit lines to data (and make predictions from those lines).  The methods presented are</p>
+<ol class="arabic simple">
+<li><p>Using the normal equations (pretty much restricted to a linear model)</p></li>
+<li><p>Constructed as a linear system of equations using <span class="math notranslate nohighlight">\(Y=X \cdot \beta\)</span> where <span class="math notranslate nohighlight">\(X\)</span> is the design matrix.  We used homebrew solver, but <code class="docutils literal notranslate"><span class="pre">numpy.linalg</span></code> would be a better bet for practice.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">statsmodel</span></code> package</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> package</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are probably dozens of other ways to perform linear regression - different packages and such.  Just read the package documentation, construct a simple example so you understand the function call(s) and you can regress to your heart’s content.</p>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>“Linear Regression in Python”</strong> by <strong>Sadrach Pierre</strong> available at* <a class="reference external" href="https://towardsdatascience.com/linear-regression-in-python-a1d8c13f3242">https://towardsdatascience.com/linear-regression-in-python-a1d8c13f3242</a> <br></p></li>
+<li><p><strong>“Introduction to Linear Regression in Python”</strong> available at* <a class="reference external" href="https://cmdlinetips.com/2019/09/introduction-to-linear-regression-in-python/">https://cmdlinetips.com/2019/09/introduction-to-linear-regression-in-python/</a> <br></p></li>
+<li><p><strong>“Linear Regression in Python”</strong> by <strong>Mirko Stojiljković</strong> available at* <a class="reference external" href="https://realpython.com/linear-regression-in-python/">https://realpython.com/linear-regression-in-python/</a> <br></p></li>
+<li><p><a class="reference external" href="https://inferentialthinking.com/chapters/15/Prediction.html">https://inferentialthinking.com/chapters/15/Prediction.html</a><br></p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">If you can’t read …</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=PaFPbb66DxQ&amp;amp;list=PLblh5JKOoLUIzaEkCLIUxQFjPIlapw8nU"><strong>“StatQuest: Fitting a line to data, aka least squares, aka linear regression.”</strong> by <strong>StatQuest with Josh Starmer</strong> <em>YouTube</em></a> <br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=ZkjP5RJLQF4"><strong>“Statistics 101: Linear Regression, The Very Basics”</strong> by <strong>Brandon Foltz</strong> <em>YouTube</em></a> <br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=MRm5sBfdBBQ"><strong>“How to Build a Linear Regression Model in Python | Part 1” and 2,3,4!</strong> by <strong>Sigma Coding</strong><em>YouTube</em></a> <br></p></li>
+</ul>
+</div>
 </section>
 </section>
 
@@ -471,9 +2055,45 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Linear Regression</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Linear Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-linear-regression">What is Linear Regression?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-matters-in-machine-learning">Why It Matters in Machine Learning</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-engines">Prediction Engines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-prediction-machine">A Simple Prediction Machine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-machine-learning-components-in-our-example">Mapping Machine Learning Components in Our Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quality-function-mean-squared-error">1. Quality Function: Mean Squared Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-criterion-minimize-error">2. Objective Criterion: Minimize Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-routine-coordinate-wise-bisection">3. Optimization Routine: Coordinate-wise Bisection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-we-minimizing">What Are We Minimizing?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-coordinate-descent">Why Coordinate Descent?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-gentle-intro-to-learning">A Gentle Intro to Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-regression">4.1 What is Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-regression-approach">Machine Learning: Regression Approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-questions">Fundamental Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-regression-by-normal-equations">Classical Regression by Normal Equations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-do-these-normal-equations-come-from">Where do these normal equations come from?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-linear-algebra">Computational Linear Algebra</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-the-value-of-the-computational-linear-algebra">What’s the Value of the Computational Linear Algebra ?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-packages">Using packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#statsmodel-package"><code class="docutils literal notranslate"><span class="pre">statsmodel</span></code> package</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn-package"><code class="docutils literal notranslate"><span class="pre">sklearn</span></code> package</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#now-repeat-using-the-original-texas-instruments-example">Now repeat using the original Texas Instruments example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 </li>
 </ul>

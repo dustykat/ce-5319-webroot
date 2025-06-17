@@ -15,30 +15,29 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from scipy import stats
-
-# Generate sample data
-df = pd.DataFrame({"Flow Rate (L/s)": [1.2, 1.3, 1.1, 50.0, 1.4, 1.2]})
-
-# Compute Z-scores
-df["Z-score"] = stats.zscore(df["Flow Rate (L/s)"])
-
-# Filter out extreme outliers
-df_cleaned = df[df["Z-score"].abs() < 3]
-
-print(df_cleaned)
-
+localfile = open("x.txt","r") # connect and read file for VECTOR x
+for line in localfile:
+    xvector.append(float(line))  # vector read different -- just float the line
+    rowNumX += 1
+localfile.close() # Disconnect the file
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 4[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mscipy[39;00m [38;5;28;01mimport[39;00m stats
-[1;32m      3[0m [38;5;66;03m# Generate sample data[39;00m
-[0;32m----> 4[0m df [38;5;241m=[39m [43mpd[49m[38;5;241m.[39mDataFrame({[38;5;124m"[39m[38;5;124mFlow Rate (L/s)[39m[38;5;124m"[39m: [[38;5;241m1.2[39m, [38;5;241m1.3[39m, [38;5;241m1.1[39m, [38;5;241m50.0[39m, [38;5;241m1.4[39m, [38;5;241m1.2[39m]})
-[1;32m      6[0m [38;5;66;03m# Compute Z-scores[39;00m
-[1;32m      7[0m df[[38;5;124m"[39m[38;5;124mZ-score[39m[38;5;124m"[39m] [38;5;241m=[39m stats[38;5;241m.[39mzscore(df[[38;5;124m"[39m[38;5;124mFlow Rate (L/s)[39m[38;5;124m"[39m])
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [0;32mIn[17], line 1[0m
+[0;32m----> 1[0m localfile [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mx.txt[39;49m[38;5;124;43m"[39;49m[43m,[49m[38;5;124;43m"[39;49m[38;5;124;43mr[39;49m[38;5;124;43m"[39;49m[43m)[49m [38;5;66;03m# connect and read file for VECTOR x[39;00m
+[1;32m      2[0m [38;5;28;01mfor[39;00m line [38;5;129;01min[39;00m localfile:
+[1;32m      3[0m     xvector[38;5;241m.[39mappend([38;5;28mfloat[39m(line))  [38;5;66;03m# vector read different -- just float the line[39;00m
 
-[0;31mNameError[0m: name 'pd' is not defined
+File [0;32m/opt/jupyterhub/lib/python3.10/site-packages/IPython/core/interactiveshell.py:324[0m, in [0;36m_modified_open[0;34m(file, *args, **kwargs)[0m
+[1;32m    317[0m [38;5;28;01mif[39;00m file [38;5;129;01min[39;00m {[38;5;241m0[39m, [38;5;241m1[39m, [38;5;241m2[39m}:
+[1;32m    318[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[1;32m    319[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mIPython won[39m[38;5;124m'[39m[38;5;124mt let you open fd=[39m[38;5;132;01m{[39;00mfile[38;5;132;01m}[39;00m[38;5;124m by default [39m[38;5;124m"[39m
+[1;32m    320[0m         [38;5;124m"[39m[38;5;124mas it is likely to crash IPython. If you know what you are doing, [39m[38;5;124m"[39m
+[1;32m    321[0m         [38;5;124m"[39m[38;5;124myou can use builtins[39m[38;5;124m'[39m[38;5;124m open.[39m[38;5;124m"[39m
+[1;32m    322[0m     )
+[0;32m--> 324[0m [38;5;28;01mreturn[39;00m [43mio_open[49m[43m([49m[43mfile[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'x.txt'
 
