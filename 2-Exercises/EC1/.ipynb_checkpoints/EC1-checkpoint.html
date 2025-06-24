@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>ES1</title>
+<title>EC1</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13082,7 +13082,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Download</strong> (right-click, save target as ...) this page as a Jupyterlab notebook from: <a href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/ES1.ipynb">ES-1</a></p>
+<p><strong>Download</strong> (right-click, save target as ...) this page as a Jupyterlab notebook from: <a href="http://54.243.252.9/ce-5319-webroot/2-Exercises/EC1/EC1.ipynb">ES-1</a></p>
 <hr>
 
 </div>
@@ -13091,12 +13091,12 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1><font color=darkblue>CE 5319 Machine Learning for Civil Engineers <br> Fall 2022 Exercise Set 1</font></h1>
+<h1><font color=darkblue>CE 5319 Machine Learning for Civil Engineers <br> Fall 2022 Extra Credit Exercises</font></h1>
 <p><strong>LAST NAME, FIRST NAME</strong></p>
 <p><strong>R00000000</strong></p>
 <hr>
-<h3 id="Purpose-:">Purpose :<a class="anchor-link" href="#Purpose-:">&#182;</a></h3><p>Demonstrate ability to build simple (naive) prediction and classification engines using primative python.</p>
-<h3 id="Assessment-Criteria-:">Assessment Criteria :<a class="anchor-link" href="#Assessment-Criteria-:">&#182;</a></h3><p>Completion, results plausible, format correct, calculations (Jupyter Notebook) are shown.</p>
+<h3 id="Purpose-:">Purpose :<a class="anchor-link" href="#Purpose-:">&#182;</a></h3><p>Demonstrate self-training using on-line tools</p>
+<h3 id="Assessment-Criteria-:">Assessment Criteria :<a class="anchor-link" href="#Assessment-Criteria-:">&#182;</a></h3><p>Completion certificate issued by the training vendor.</p>
 <hr>
 
 </div>
@@ -13105,78 +13105,19 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">&#182;</a></h2><p>Build a simple prediction engine for a dive computer device</p>
-<p><img src="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/TechDiving_NOAA.png" alt=""></p>
-<table>
-<thead><tr>
-<th>Diver with Computer</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="Background">Background<a class="anchor-link" href="#Background">&#182;</a></h3><p>Scuba divers circa 1980's used to memorize dive tables which provided safe depth-duration combinations (e.g. 60 feet for 60 minutes).  Commerical divers used similar tables. A bounce would occur when a diver at depth notices a shiny object and descends deeper for a very short interval to recover the object - usually something worthless, but occassionally something very valuable. Bounce dives can be quite dangerous - more so if the diver is trying to adapt a memorized dive table to his/her current situation, hence the development of dive computers.</p>
-<p>The US Navy started development of dive computers in the 1950's to relieve the human of the somewhat tricky task of multi-level dive planning and monitoring. The first digital dive computer was a laboratory model, the XDC-1, based on a desktop electronic calculator, converted to run a DCIEM four-tissue algorithm in 1975. It used pneumofathometer depth input from surface-air supplied divers.</p>
-<p>In 1976 the diving equipment company Dacor developed and marketed a digital dive computer which used a <strong>table lookup</strong> based on stored US Navy tables rather than a real-time tissue gas saturation model. The Dacor Dive Computer (DDC), displayed output on light-emitting diodes for: current depth; elapsed dive time; surface interval; maximum depth of the dive; repetitive dive data; ascent rate, with a warning for exceeding 20 metres per minute; warning when no-decompression limit is reached; battery low warning light; and required decompression.</p>
-<p>In the subsequent decade several firms developed and marketed dive computers; by 1989, the advent of dive computers had not met with what might be considered widespread acceptance. Combined with the general mistrust, at the time, of taking a piece of electronics that your life might depend upon underwater, there were also objections expressed ranging from dive resorts believing that the increased bottom time would upset their boat and meal schedules, to that of experienced divers who felt that the increased bottom time would, regardless of the claims, result in many more cases of decompression sickness.</p>
-<p>By 2015 sophisticated dive computers using real-time tissue gas saturation models were commonplace and comparatively inexpensive (circa 2020 computers are programmable for exotic gasses - greatly relieving the diver's workload in planning and monitoring multi-level (bounce) dives).</p>
-<p><img src="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/HELOX.png" alt=""></p>
-<table>
-<thead><tr>
-<th>Helium-Oxygen Dive Computer Readout</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="Problem-Statement">Problem Statement<a class="anchor-link" href="#Problem-Statement">&#182;</a></h3><p>Using the data below develop a prediction for a dive computer that uses Dacor's original approach (i.e. table lookup in this case replaced by an data model). The table lists allowable time at prescribed depths for a recreational diver with a safety decompression stop at 10 feet depth.</p>
-<p><img src="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/DiveTable.png" alt=""></p>
-<!--|Depth (feet)|Time (minutes) with Safety Stop|Time (minutes) without Safety Stop|
-|---|---|---|
-35 |205|139|
-40 |140|104|
-50 |80|63|
-60 |55|47|
-70 |45|33|
-80 |35|25|
-90 |25|21|
-100 |22|none|
-110 | 16|none|
-120| 13|none|
-130| 10|none|
-140| 8|none|-->
-
-<p>In the context of ML the supplied table is the "truth table" and initially our goal is to fit some kind of hypothesis to this table.  Avoid the temptation to just apply linear regression and instead mimic the naive learner in the class notes.</p>
-<p>Consider the two hypothesis structures below and decide which produces a more useful model.</p>
-<ol>
-<li>$\text{Time} = \beta_{0}+\beta_{1}*\text{Depth}$</li>
-<li>$\text{Time} = \beta_{0}+\beta_{1}*log_{10}(\text{Depth}+\beta_{3})$</li>
-</ol>
-<p>Summarize your efforts into a brief blog-post type of report (i.e. in a Jupyter Notebook)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h2 id="Problem-2">Problem 2<a class="anchor-link" href="#Problem-2">&#182;</a></h2><p>Build a simple classifier to determine a bug type based upon 1200 examples supplied in the file <a href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/bugs-train.csv">bugs-train.csv</a>.</p>
-<h3 id="Suggested-Workflow:">Suggested Workflow:<a class="anchor-link" href="#Suggested-Workflow:">&#182;</a></h3><ol>
-<li>Download the training file.  </li>
-<li>Perform visual EDA by plotting the two feature variables on a scatterplot, assign the class variables two colors.</li>
-<li>Decide if the two groups are seperable based on the EDA plot.</li>
-<li>Mimicing the course notes construct a classifier that automatically finds a separation line in the feature space.</li>
-<li>Test your classifier using <a href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/bugs-test.csv">bugs-test.csv</a>.</li>
-<li>Then challenge the classifier with the small challenge set <a href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/bugs-challenge.csv">bugs-challenge.csv</a> that does not contain the labels. </li>
-<li>Summarize your efforts into a brief blog-post type of report (i.e. in a Jupyter Notebook)</li>
-</ol>
+<h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">&#182;</a></h2><p>Complete the on-line training course <a href="https://www.kaggle.com/learn/intro-to-programming?utm_medium=email&amp;utm_source=gamma&amp;utm_campaign=intro-programming-announcement">Introduction to Programming</a>.<br>
+Submit the completion certificate issued by the on-line vendor showing success</p>
+<blockquote><p>The vendor claims the course is free, if you hit a paywall stop - screen capture the paywall and submit that screen capture <br>
+The vendor estimates total time to complete is 5 hours, so do this on a weekend <br>
+The certificate is worth up to 2.5% of the course grade</p>
+</blockquote>
+<h2 id="Problem-2">Problem 2<a class="anchor-link" href="#Problem-2">&#182;</a></h2><p>Complete the on-line training course <a href="https://www.kaggle.com/learn/python">Python Programming</a>.<br>
+Submit the completion certificate issued by the on-line vendor showing success</p>
+<blockquote><p>The vendor claims the course is free, if you hit a paywall stop - screen capture the paywall and submit that screen capture <br>
+The vendor estimates total time to complete is 5 hours, so do this on a weekend <br>
+The certificate is worth up to 2.5% of the course grade</p>
+</blockquote>
+<p>The combined available extra credit is 5% of the course grade, roughly the same weight as attendance</p>
 
 </div>
 </div>
