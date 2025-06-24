@@ -1,0 +1,219 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "241f680b",
+   "metadata": {},
+   "source": [
+    "# Concrete Strength Regression Workflow"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "71cd5224",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 1: Download Concrete Dataset\n",
+    "import requests\n",
+    "\n",
+    "remote_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/concrete/compressive/Concrete_Data.xls'\n",
+    "response = requests.get(remote_url)\n",
+    "with open('concreteData.xls', 'wb') as f:\n",
+    "    f.write(response.content)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c5089528",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 2: Load libraries\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import seaborn as sns\n",
+    "from sklearn.linear_model import LinearRegression, Lasso, Ridge\n",
+    "from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "33661c74",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 3: Load dataset\n",
+    "df = pd.read_excel(\"concreteData.xls\")\n",
+    "df.columns = ['Cement', 'BlastFurnaceSlag', 'FlyAsh', 'Water', 'Superplasticizer', 'CoarseAggregate', 'FineAggregate', 'Age', 'ConcreteCompressiveStrength']\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c9583353",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 4: Split into features and target\n",
+    "X = df.drop('ConcreteCompressiveStrength', axis=1)\n",
+    "y = df['ConcreteCompressiveStrength']\n",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+    "req_col_names = X.columns.tolist() + ['ConcreteCompressiveStrength']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "516622c9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 5: Fit models\n",
+    "lr = LinearRegression()\n",
+    "lasso = Lasso(alpha=0.1)\n",
+    "ridge = Ridge(alpha=10.1)\n",
+    "\n",
+    "lr.fit(X_train, y_train)\n",
+    "lasso.fit(X_train, y_train)\n",
+    "ridge.fit(X_train, y_train)\n",
+    "\n",
+    "y_pred_lr = lr.predict(X_test)\n",
+    "y_pred_lasso = lasso.predict(X_test)\n",
+    "y_pred_ridge = ridge.predict(X_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cc74b3ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 6: Metrics\n",
+    "print(\"Model\\t\\t\\t RMSE \\t\\t MSE \\t\\t MAE \\t\\t R2\")\n",
+    "print(\"LinearRegression \\t {:.2f} \\t\\t {:.2f} \\t{:.2f} \\t\\t{:.2f}\".format(\n",
+    "    np.sqrt(mean_squared_error(y_test, y_pred_lr)), mean_squared_error(y_test, y_pred_lr),\n",
+    "    mean_absolute_error(y_test, y_pred_lr), r2_score(y_test, y_pred_lr)))\n",
+    "print(\"LassoRegression \\t {:.2f} \\t\\t {:.2f} \\t{:.2f} \\t\\t{:.2f}\".format(\n",
+    "    np.sqrt(mean_squared_error(y_test, y_pred_lasso)), mean_squared_error(y_test, y_pred_lasso),\n",
+    "    mean_absolute_error(y_test, y_pred_lasso), r2_score(y_test, y_pred_lasso)))\n",
+    "print(\"RidgeRegression \\t {:.2f} \\t\\t {:.2f} \\t{:.2f} \\t\\t{:.2f}\".format(\n",
+    "    np.sqrt(mean_squared_error(y_test, y_pred_ridge)), mean_squared_error(y_test, y_pred_ridge),\n",
+    "    mean_absolute_error(y_test, y_pred_ridge), r2_score(y_test, y_pred_ridge)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3c108727",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "coeff_lr = lr.coef_\n",
+    "coeff_lasso = lasso.coef_\n",
+    "coeff_ridge = ridge.coef_\n",
+    "\n",
+    "labels = req_col_names[:-1]\n",
+    "x = np.arange(len(labels)) \n",
+    "width = 0.3\n",
+    "\n",
+    "fig, ax = plt.subplots(figsize=(10,6))\n",
+    "rects1 = ax.bar(x - 2*(width/2), coeff_lr,    width, label='LR')\n",
+    "rects2 = ax.bar(x              , coeff_lasso, width, label='Lasso')\n",
+    "rects3 = ax.bar(x + 2*(width/2), coeff_ridge, width, label='Ridge')\n",
+    "\n",
+    "ax.set_ylabel('Coefficient')\n",
+    "ax.set_xlabel('Features')\n",
+    "ax.set_title('Feature Coefficients')\n",
+    "ax.set_xticks(x)\n",
+    "ax.set_xticklabels(labels, rotation=45)\n",
+    "ax.legend()\n",
+    "\n",
+    "def autolabel(rects):\n",
+    "    for rect in rects:\n",
+    "        height = rect.get_height()\n",
+    "        ax.annotate('{:.2f}'.format(height), xy=(rect.get_x() + rect.get_width() / 2, height),\n",
+    "                    xytext=(0, 3), textcoords=\"offset points\", ha='center', va='bottom')\n",
+    "\n",
+    "autolabel(rects1)\n",
+    "autolabel(rects2)\n",
+    "autolabel(rects3)\n",
+    "\n",
+    "fig.tight_layout()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "40643c06",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(12,4))\n",
+    "\n",
+    "ax1.scatter(y_pred_lr, y_test, s=20)\n",
+    "ax1.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)\n",
+    "ax1.set_ylabel(\"True\")\n",
+    "ax1.set_xlabel(\"Predicted\")\n",
+    "ax1.set_title(\"Linear Regression\")\n",
+    "\n",
+    "ax2.scatter(y_pred_lasso, y_test, s=20)\n",
+    "ax2.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)\n",
+    "ax2.set_ylabel(\"True\")\n",
+    "ax2.set_xlabel(\"Predicted\")\n",
+    "ax2.set_title(\"Lasso Regression\")\n",
+    "\n",
+    "ax3.scatter(y_pred_ridge, y_test, s=20)\n",
+    "ax3.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)\n",
+    "ax3.set_ylabel(\"True\")\n",
+    "ax3.set_xlabel(\"Predicted\")\n",
+    "ax3.set_title(\"Ridge Regression\")\n",
+    "\n",
+    "fig.suptitle(\"True vs Predicted\")\n",
+    "fig.tight_layout(rect=[0, 0.03, 1, 0.95])\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7537428b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Step 7: Weighted Least Squares Demo\n",
+    "import statsmodels.api as sm\n",
+    "from statsmodels.sandbox.regression.predstd import wls_prediction_std\n",
+    "\n",
+    "nsample = 50\n",
+    "x = np.linspace(0, 20, nsample)\n",
+    "X = np.column_stack((x, (x - 5)**2))\n",
+    "X = sm.add_constant(X)\n",
+    "beta = [5., 0.5, -0.01]\n",
+    "sig = 0.5\n",
+    "w = np.ones(nsample)\n",
+    "w[int(nsample * 6/10):] = 3\n",
+    "y_true = np.dot(X, beta)\n",
+    "e = np.random.normal(size=nsample)\n",
+    "y = y_true + sig * w * e\n",
+    "X = X[:,[0,1]]\n",
+    "\n",
+    "mod_wls = sm.WLS(y, X, weights=1./w)\n",
+    "res_wls = mod_wls.fit()\n",
+    "print(res_wls.summary())"
+   ]
+  }
+ ],
+ "metadata": {},
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
