@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ES1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>ES2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7533,7 +7533,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Problem">Problem<a class="anchor-link" href="#Problem">¶</a></h2><p>Build a simple prediction engine for a dive computer device</p>
+<h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">¶</a></h2><p>Build a simple prediction engine for a dive computer device</p>
 <p><img alt="" src="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-1/TechDiving_NOAA.png"/> <br/> <strong>Diver with Computer</strong></p>
 <h3 id="Background">Background<a class="anchor-link" href="#Background">¶</a></h3><p>Scuba divers circa 1980's used to memorize dive tables which provided safe depth-duration combinations (e.g. 60 feet for 60 minutes).  Commerical divers used similar tables. A bounce would occur when a diver at depth notices a shiny object and descends deeper for a very short interval to recover the object - usually something worthless, but occassionally something very valuable. Bounce dives can be quite dangerous - more so if the diver is trying to adapt a memorized dive table to his/her current situation, hence the development of dive computers.</p>
 <p>The US Navy started development of dive computers in the 1950's to relieve the human of the somewhat tricky task of multi-level dive planning and monitoring. The first digital dive computer was a laboratory model, the XDC-1, based on a desktop electronic calculator, converted to run a DCIEM four-tissue algorithm in 1975. It used pneumofathometer depth input from surface-air supplied divers.</p>
@@ -7564,6 +7564,18 @@ a.anchor-link {
 <li>$\text{Time} = \beta_{0}+\beta_{1}*log_{10}(\text{Depth}+\beta_{3})$</li>
 </ol>
 <p>Summarize your efforts into a brief blog-post type of report (i.e. in a Jupyter Notebook)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Problem-2">Problem 2<a class="anchor-link" href="#Problem-2">¶</a></h2><p>Obtain the Concrete Strength Database and perform an exploratory data analysis and summary, then construct a prediction engine.  Inputs to be supplied later in the class (so save the work).</p>
+<p>The source database is at:  <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/concrete/compressive/Concrete_Data.xls">https://archive.ics.uci.edu/ml/machine-learning-databases/concrete/compressive/Concrete_Data.xls</a>  Observe it is an Excel file, so you will need to use pandas to read it into a dataframe.</p>
 </div>
 </div>
 </div>

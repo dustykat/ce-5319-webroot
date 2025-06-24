@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{daves,fancyhdr,natbib,graphicx,dcolumn,amsmath,lastpage,url}
+\usepackage{amsmath,amssymb,epstopdf,longtable}
+\usepackage[final]{pdfpages}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\pagestyle{fancy}
+\lhead{CE 3354 -- Engineering Hydrology}
+\rhead{FALL 2024}
+\lfoot{ES1}
+\cfoot{}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand\headrulewidth{0pt}
+
+
+
+\begin{document}
+\begin{center}
+{\textbf{{ CE 5319 Machine Learning for Civil Engineers} \\ {Exercise Set 2}}}
+\end{center}
+
+\section*{\small{Exercises}}
+\begin{enumerate}
+\item Prediction engine for a dive computer.
+
+\textbf{Background}
+
+Scuba divers circa 1980's used to memorize dive tables which provided safe depth-duration combinations (e.g. 60 feet for 60 minutes).  Commerical divers used similar tables. A bounce would occur when a diver at depth notices a shiny object and descends deeper for a very short interval to recover the object - usually something worthless, but occassionally something very valuable. Bounce dives can be quite dangerous - more so if the diver is trying to adapt a memorized dive table to his/her current situation, hence the development of dive computers.
+
+\begin{figure}[h!] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{TechDiving_NOAA.png} 
+   \caption{Diver with Computer}
+   \label{fig:diver}
+\end{figure}
+
+The US Navy started development of dive computers in the 1950's to relieve the human of the somewhat tricky task of multi-level dive planning and monitoring. The first digital dive computer was a laboratory model, the XDC-1, based on a desktop electronic calculator, converted to run a DCIEM four-tissue algorithm in 1975. It used pneumofathometer depth input from surface-air supplied divers. 
+
+In 1976 the diving equipment company Dacor developed and marketed a digital dive computer which used a \textbf{table lookup} based on stored US Navy tables rather than a real-time tissue gas saturation model. The Dacor Dive Computer (DDC), displayed output on light-emitting diodes for: current depth; elapsed dive time; surface interval; maximum depth of the dive; repetitive dive data; ascent rate, with a warning for exceeding 20 metres per minute; warning when no-decompression limit is reached; battery low warning light; and required decompression. 
+
+In the subsequent decade several firms developed and marketed dive computers; by 1989, the advent of dive computers had not met with what might be considered widespread acceptance. Combined with the general mistrust, at the time, of taking a piece of electronics that your life might depend upon underwater, there were also objections expressed ranging from dive resorts believing that the increased bottom time would upset their boat and meal schedules, to that of experienced divers who felt that the increased bottom time would, regardless of the claims, result in many more cases of decompression sickness.
+
+By 2015 sophisticated dive computers using real-time tissue gas saturation models were commonplace and comparatively inexpensive (circa 2020 computers are programmable for exotic gasses - greatly relieving the diver's workload in planning and monitoring multi-level (bounce) dives).
+
+\begin{figure}[h!] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{HELOX.png} 
+   \caption{Helium-Oxygen Dive Computer Readout}
+   \label{fig:helox}
+\end{figure}
+
+\textbf{Problem Statement}
+
+Using the data below develop a prediction engine for a dive computer that uses Dacor's original approach (i.e. table lookup in this case replaced by an data model). The table lists allowable time at prescribed depths for a recreational diver with a safety decompression stop at 10 feet depth.
+
+
+
+\begin{figure}[h!] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{DiveTable.png} 
+   \caption{Abridged Dive Table}
+   \label{fig:divetable}
+\end{figure}
+
+In the context of ML the supplied table is the "truth table" and initially our goal is to fit some kind of hypothesis to this table.  
+
+Consider the two hypothesis structures below and decide which produces a more useful model.
+
+\begin{enumerate}
+\item $\text{Time} = \beta_{0}+\beta_{1}*\text{Depth}$
+\item $\text{Time} = \beta_{0}+\beta_{1}*log_{10}(\text{Depth}+\beta_{3})$
+\end{enumerate}
+
+Summarize your efforts into a brief blog-post type of report (i.e. in a Jupyter Notebook)
+
+\clearpage
+ 
+ 
+%\includepdf[pages={-}]{./TWC_8905.pdf}
+ 
+\item Obtain the Concrete Strength Database and perform an exploratory data analysis and summary, then construct a prediction engine.  Inputs to be supplied later in the class (so save the work).  
+
+The source database is at:  \url{https://archive.ics.uci.edu/ml/machine-learning-databases/concrete/compressive/Concrete_Data.xls} 
+
+Observe it is an Excel file, so you will need to use pandas to read it into a dataframe.
+
+
+\end{enumerate}
+
+
+\end{document}  
