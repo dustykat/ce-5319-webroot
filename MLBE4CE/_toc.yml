@@ -30,11 +30,11 @@ chapters:
 - file: chapters/05-nonlinearregression/nonlinearregression # non-linear regression
 
 - file: chapters/06-logisticregression/logisticregression # logistic regression 
-  sections:
-  - file: chapters/06-logisticregression/example1
-  - file: chapters/06-logisticregression/example2
-  - file: chapters/06-logisticregression/example3
-  - file: chapters/06-logisticregression/poissonregression
+#  sections:
+#  - file: chapters/06-logisticregression/example1
+#  - file: chapters/06-logisticregression/example2
+#  - file: chapters/06-logisticregression/example3
+#  - file: chapters/06-logisticregression/poissonregression
 
 - file: chapters/07-decisiontrees/decisiontrees # decision trees
 
