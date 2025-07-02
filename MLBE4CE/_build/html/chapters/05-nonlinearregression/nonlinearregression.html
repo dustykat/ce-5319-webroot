@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5. Non-Linear Regression &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>6. Non-Linear Regression &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05-nonlinearregression/nonlinearregression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="6. Logistic Regression" href="../06-logisticregression/logisticregression.html" />
+    <link rel="next" title="7. Logistic Regression" href="../06-logisticregression/logisticregression.html" />
     <link rel="prev" title="Powell’s Direction Set Method" href="../17-optimization/powellsdirectionset.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -196,15 +196,21 @@
 
 
 
-<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">5. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Non-Linear Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Non-Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-logisticregression/logisticregression.html">7. Logistic Regression</a></li>
+
+
+
+
+
+
 
 
 <li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
@@ -362,7 +368,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>5. Non-Linear Regression</h1>
+    <h1>6. Non-Linear Regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -391,7 +397,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="non-linear-regression">
-<h1>5. Non-Linear Regression<a class="headerlink" href="#non-linear-regression" title="Link to this heading">#</a></h1>
+<h1>6. Non-Linear Regression<a class="headerlink" href="#non-linear-regression" title="Link to this heading">#</a></h1>
 <div class="admonition-course-website admonition">
 <p class="admonition-title">Course Website</p>
 <p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
@@ -465,14 +471,13 @@ Note further that the zero contours will (in general) consist of an unknown numb
 
 <span class="c1"># Simulated data</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
 <span class="n">true_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
 <span class="n">y_data</span> <span class="o">=</span> <span class="n">true_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">true_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x_data</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># Model function</span>
 <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-
 <span class="c1"># Objective function: Sum of Squared Errors (SSE)</span>
 <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_data</span> <span class="o">-</span> <span class="n">model</span><span class="p">(</span><span class="n">x_data</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
@@ -482,7 +487,7 @@ Note further that the zero contours will (in general) consist of an unknown numb
 
 <span class="c1"># Constraint: param[0] + param[1] &lt;= 4.0</span>
 <span class="k">def</span> <span class="nf">constraint_sum</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mf">4.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="mi">4</span> <span class="o">-</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="n">con</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ineq&#39;</span><span class="p">,</span> <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">constraint_sum</span><span class="p">}</span>
 
@@ -554,7 +559,7 @@ Constraint satisfied: True
 
 <span class="c1"># Define constraint function: param[0] + param[1] &lt;= 4.0</span>
 <span class="k">def</span> <span class="nf">constraint_violation</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">4.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span>
 
 <span class="c1"># Penalized objective</span>
 <span class="k">def</span> <span class="nf">penalized_objective</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
@@ -650,7 +655,7 @@ Constraint violation: 0
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">6. Logistic Regression</p>
+        <p class="prev-next-title">7. Logistic Regression</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

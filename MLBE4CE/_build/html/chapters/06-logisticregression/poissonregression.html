@@ -62,8 +62,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/06-logisticregression/poissonregression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Decision Trees" href="../07-decisiontrees/decisiontrees.html" />
-    <link rel="prev" title="Multiple Logistic Regression" href="example3.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -181,7 +181,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ce-5319-syllabus-2025-2.html">Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
 
@@ -190,29 +190,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
 
 
-
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
-<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">5. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="logisticregression.html">6. Logistic Regression</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="example1.html">Simple Logistic Regression Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example2.html">Designed Experiments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example3.html">Multiple Logistic Regression</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Poisson Regression</a></li>
-</ul>
-</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">6. Non-Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logisticregression.html">7. Logistic Regression</a></li>
+
+
+
+
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -433,9 +439,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.0250583250035799
--1.0250583250035799
-19
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.5605533697687197
+-1.5605533697687197
+5
 </pre></div>
 </div>
 </div>
@@ -473,7 +479,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>771451.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>776956.0
 </pre></div>
 </div>
 </div>
@@ -491,9 +497,9 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
-         Current function value: 1046.949766
+         Current function value: 1023.470263
          Iterations: 5
-         Function evaluations: 235
+         Function evaluations: 232
 </pre></div>
 </div>
 </div>
@@ -505,7 +511,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.92850425, 0.15657636, 0.52256961, 0.20904431])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1.92855083, 0.15745139, 0.52291235, 0.20930004])
 </pre></div>
 </div>
 </div>
@@ -517,7 +523,7 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1046.94976617)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1023.47026321)
 </pre></div>
 </div>
 </div>
@@ -619,13 +625,13 @@ $$\mu_i(\beta) = {X_i~\beta} $$-->
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3278/1311255126.py:31: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1240/1311255126.py:31: FutureWarning: 
 
 `shade` is now deprecated in favor of `fill`; setting `fill=True`.
 This will become an error in seaborn v0.14.0; please update your code.
 
   sns.kdeplot(z, ax=ax[0], color=&#39;#fcb103&#39;, shade=True)
-/tmp/ipykernel_3278/1311255126.py:36: FutureWarning: 
+/tmp/ipykernel_1240/1311255126.py:36: FutureWarning: 
 
 `shade` is now deprecated in favor of `fill`; setting `fill=True`.
 This will become an error in seaborn v0.14.0; please update your code.
@@ -633,7 +639,7 @@ This will become an error in seaborn v0.14.0; please update your code.
   sns.kdeplot(y, ax=ax[1], color=&#39;#fcb103&#39;, shade=True)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3278/1311255126.py:78: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;b&quot; (-&gt; color=(0.0, 0.0, 1.0, 1)). The keyword argument will take precedence.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1240/1311255126.py:78: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;b&quot; (-&gt; color=(0.0, 0.0, 1.0, 1)). The keyword argument will take precedence.
   plt.plot(hist, &#39;b&#39;, color=&#39;#fcb103&#39;)
 </pre></div>
 </div>
@@ -695,24 +701,6 @@ The final value for b = 1.9999653396018062
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="example3.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Multiple Logistic Regression</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../07-decisiontrees/decisiontrees.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">7. Decision Trees</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
