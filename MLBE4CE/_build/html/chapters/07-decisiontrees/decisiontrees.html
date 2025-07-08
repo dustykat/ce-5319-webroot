@@ -427,13 +427,16 @@ document.write(`
 <li><p><a class="reference external" href="https://www.geeksforgeeks.org/random-forest-regression-in-python/">“Random Forest Regression in Python”</a> <br></p></li>
 <li><p><a class="reference external" href="https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/">“Random Forest Algorithm with Python and Scikit-Learn” by Usman Malik</a> <br></p></li>
 <li><p><a class="reference external" href="https://apps.dtic.mil/sti/tr/pdf/ADA072551.pdf">AMOSIST Program Field Evaluation - DTIC Defense Technical Information Center (c. 1979)</a> The US Army ‘s AMOSIST Program employed physician supervised enlisted corpsmen who utilize a manual of medical algorithms to provide care to troops in clinical and austere settings.<br></p></li>
+<li><p><a class="reference external" href="http://54.243.252.9/ce-3354-webroot/3-Readings/USGS-Texas-IaCl/sir2007-5243.pdf">Asquith, W.H., and Roussel, M.C., 2007, An initial-abstraction, constant-loss model for unit hydrograph
+modeling for applicable watersheds in Texas: U.S. Geological Survey Scientific Investigations Report
+2007–5243, 82 p. [ http://pubs.usgs.gov/sir/2007/5243 ]</a> A hydrology model, that uses decision trees to parameterize the parts of the model.  Example of a deployed model.</p></li>
 </ol>
-</section>
+<!--14. [ALGORITHM-DIRECTED TROOP MEDICAL CARE (2019) MEDCOM Pamphlet 13](http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/07-decisiontrees/ADTMC-MEDCOM-Pam-40-7-21.pdf)--></section>
 <section id="videos">
 <h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=DCZ3tsQIoGU">“Decision Tree (CART) - Machine Learning Fun and Easy” by Augmented Startups</a></p></li>
-<li><p>2.<a class="reference external" href="https://www.youtube.com/watch?v=J4Wdy0Wc_xQ">”StatQuest: Random Forests Part 1 - Building, Using and Evaluating” by StatQuest with Josh Starmer</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=J4Wdy0Wc_xQ">“StatQuest: Random Forests Part 1 - Building, Using and Evaluating” by StatQuest with Josh Starmer</a></p></li>
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=sQ870aTKqiM">“StatQuest: Random Forests Part 2: Missing data and clustering” by StatQuest with Josh Starmer</a></p></li>
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=D_2LkhMJcfY">“Random Forest - Fun and Easy Machine Learning” by Augmented Startups</a></p></li>
 </ol>
@@ -558,11 +561,88 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7b129d796b90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7a09d8212b00&gt;
 </pre></div>
 </div>
 <img alt="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" src="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" />
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal-length</th>
+      <th>sepal-width</th>
+      <th>petal-length</th>
+      <th>petal-width</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>Iris-virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>Iris-virginica</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -592,6 +672,19 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">myx</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span>	<span class="p">,</span><span class="mi">3</span><span class="p">,</span>	<span class="mi">1</span><span class="p">,</span>	<span class="mf">2.5</span><span class="p">]]</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">myx</span><span class="p">)</span>	
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Iris-setosa&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted</span><span class="p">))</span>
@@ -600,18 +693,18 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[36  0  0]
- [ 0 36  3]
- [ 0  1 37]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[37  0  0]
+ [ 0 34  1]
+ [ 0 10 31]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        36
-Iris-versicolor       0.97      0.92      0.95        39
- Iris-virginica       0.93      0.97      0.95        38
+    Iris-setosa       1.00      1.00      1.00        37
+Iris-versicolor       0.77      0.97      0.86        35
+ Iris-virginica       0.97      0.76      0.85        41
 
-       accuracy                           0.96       113
-      macro avg       0.97      0.97      0.97       113
-   weighted avg       0.97      0.96      0.96       113
+       accuracy                           0.90       113
+      macro avg       0.91      0.91      0.90       113
+   weighted avg       0.92      0.90      0.90       113
 </pre></div>
 </div>
 </div>
@@ -630,7 +723,7 @@ Iris-versicolor       0.97      0.92      0.95        39
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<img alt="../../_images/68dad853ff697f444a196e1358a1ea543418795a50df3aba73e5936b3797e940.png" src="../../_images/68dad853ff697f444a196e1358a1ea543418795a50df3aba73e5936b3797e940.png" />
+<img alt="../../_images/3e0d002a8549aa97db98a28038cc83375f40c5fd14f7ab3fca8048725bd18ad7.png" src="../../_images/3e0d002a8549aa97db98a28038cc83375f40c5fd14f7ab3fca8048725bd18ad7.png" />
 </div>
 </div>
 </section>

@@ -2163,9 +2163,9 @@ The merit function  49.0
     
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b0 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b1 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b1 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b1 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b1 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b2 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b3 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; b4 = &quot;</span><span class="p">,</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2176,9 +2176,9 @@ The merit function  49.0
          Function evaluations: 460
  b0 =  -3.219051882695808
  b1 =  0.024207668771930674
- b1 =  -0.13015812819127218
- b1 =  -0.25363504886581595
- b1 =  1.2449844422211769
+ b2 =  -0.13015812819127218
+ b3 =  -0.25363504886581595
+ b4 =  1.2449844422211769
 </pre></div>
 </div>
 </div>
@@ -2794,7 +2794,7 @@ Model Coefficients and Odds Ratios:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7edbdaa39c1705bb72cb47deab9139a93cf75fe65ced341503244b0bbacb8914.png" src="../../_images/7edbdaa39c1705bb72cb47deab9139a93cf75fe65ced341503244b0bbacb8914.png" />
+<img alt="../../_images/fe72554d3925b79cc383ff0396f7803400d0b8d765f3b1a18c12d7eefee861ac.png" src="../../_images/fe72554d3925b79cc383ff0396f7803400d0b8d765f3b1a18c12d7eefee861ac.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3126,6 +3126,64 @@ J(\beta) = \sum_{i=1}^n \left(Y_i - e^{X_i \cdot \beta} \right)^2
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Yobs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1.04196896, -0.85124958, -0.89414553],
+       [-0.32694623,  0.02530301,  0.69814781],
+       [-0.3082092 ,  0.14995534, -0.79696863],
+       [ 0.82711746,  0.50262614,  0.26527505],
+       [ 1.07078142,  1.19763325,  1.31284919],
+       [-3.05557742,  0.343873  ,  1.75246224],
+       [ 1.00593193,  0.83969649,  1.2195609 ],
+       [-1.76505643, -0.91064384,  0.6334922 ],
+       [ 0.61171791, -1.11284845, -1.06640961],
+       [ 2.00335928,  1.21496645,  1.08589271],
+       [-0.02941931, -0.15019781,  0.43973858],
+       [-1.58293956, -0.90016974, -0.78833107]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1.04196896, -0.85124958, -0.89414553],
+       [-0.32694623,  0.02530301,  0.69814781],
+       [-0.3082092 ,  0.14995534, -0.79696863],
+       [ 0.82711746,  0.50262614,  0.26527505],
+       [ 1.07078142,  1.19763325,  1.31284919],
+       [-3.05557742,  0.343873  ,  1.75246224],
+       [ 1.00593193,  0.83969649,  1.2195609 ],
+       [-1.76505643, -0.91064384,  0.6334922 ],
+       [ 0.61171791, -1.11284845, -1.06640961],
+       [ 2.00335928,  1.21496645,  1.08589271],
+       [-0.02941931, -0.15019781,  0.43973858],
+       [-1.58293956, -0.90016974, -0.78833107]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mu</span><span class="p">(</span><span class="n">b0</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">b2</span><span class="p">,</span><span class="n">b3</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">):</span> <span class="c1">#poisson function (scalar) 3-design columns</span>
     <span class="kn">import</span> <span class="nn">math</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b0</span><span class="o">+</span><span class="n">b1</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b2</span><span class="o">*</span><span class="n">y</span><span class="o">+</span><span class="n">b3</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
@@ -3202,6 +3260,18 @@ J(\beta) = \sum_{i=1}^n \left(Y_i - e^{X_i \cdot \beta} \right)^2
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(1035.44071886)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="p">(</span><span class="mf">1.92859994</span><span class="p">,</span> <span class="mf">0.15732782</span><span class="p">,</span> <span class="mf">0.52267212</span><span class="p">,</span> <span class="mf">0.20893387</span><span class="p">,</span><span class="o">-</span><span class="mf">1.03262907e+00</span><span class="p">,</span>  <span class="mf">1.99696197e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.33509785e+00</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.911439782570921
 </pre></div>
 </div>
 </div>
@@ -3382,21 +3452,98 @@ The final value for b = 1.9999653396018062
 <span class="n">Incidents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
 
 <span class="n">df_sim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Pipe_Age&#39;</span><span class="p">:</span> <span class="n">Pipe_Age</span><span class="p">,</span> <span class="s1">&#39;Urban&#39;</span><span class="p">:</span> <span class="n">Urban</span><span class="p">,</span> <span class="s1">&#39;Incidents&#39;</span><span class="p">:</span> <span class="n">Incidents</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="c1"># Fit and summarize Poisson model</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>const</th>
+      <th>Pipe_Age</th>
+      <th>Urban</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>100.0</td>
+      <td>100.000000</td>
+      <td>100.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.0</td>
+      <td>4.701807</td>
+      <td>0.510000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.0</td>
+      <td>2.974894</td>
+      <td>0.502418</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.0</td>
+      <td>0.055221</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.0</td>
+      <td>1.932008</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.0</td>
+      <td>4.641425</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.0</td>
+      <td>7.302031</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.0</td>
+      <td>9.868869</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit and summarize Poisson model</span>
 <span class="n">poisson_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">Incidents</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Poisson</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">poisson_model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
-
-<span class="c1"># Plot observed vs predicted</span>
-<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">Pipe_Age</span><span class="p">,</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">Incidents</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">Pipe_Age</span><span class="p">,</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">Predicted</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pipe Age&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Incident Count&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pipe Burst Incidents: Observed vs Predicted&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3408,8 +3555,8 @@ Model:                            GLM   Df Residuals:                       97
 Model Family:                 Poisson   Df Model:                            2
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -233.32
-Date:                Wed, 02 Jul 2025   Deviance:                       107.99
-Time:                        23:12:44   Pearson chi2:                     103.
+Date:                Tue, 08 Jul 2025   Deviance:                       107.99
+Time:                        19:20:10   Pearson chi2:                     103.
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.9805
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -3421,7 +3568,25 @@ Urban          0.8070      0.075     10.726      0.000       0.660       0.954
 ==============================================================================
 </pre></div>
 </div>
-<img alt="../../_images/cc91e3b20503b40b7733165c86a4fc0cacd8529d2aad5e2681be73b32eda6838.png" src="../../_images/cc91e3b20503b40b7733165c86a4fc0cacd8529d2aad5e2681be73b32eda6838.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot observed vs predicted</span>
+<span class="n">df_sim</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">poisson_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">Pipe_Age</span><span class="p">,</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">Incidents</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_sim</span><span class="o">.</span><span class="n">Pipe_Age</span><span class="p">,</span> <span class="n">df_sim</span><span class="o">.</span><span class="n">Predicted</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Pipe Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Incident Count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pipe Burst Incidents: Observed vs Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e38c56f9be291a14ea8bf3d06b3964eb9ceed507adfd3fdcf2b4a8c62131421d.png" src="../../_images/e38c56f9be291a14ea8bf3d06b3964eb9ceed507adfd3fdcf2b4a8c62131421d.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -3723,8 +3888,8 @@ Model:                            GLM   Df Residuals:                      726
 Model Family:                 Poisson   Df Model:                            4
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:            -2.0111e+05
-Date:                Wed, 02 Jul 2025   Deviance:                   3.9482e+05
-Time:                        23:12:45   Pearson chi2:                 3.83e+05
+Date:                Tue, 08 Jul 2025   Deviance:                   3.9482e+05
+Time:                        19:20:10   Pearson chi2:                 3.83e+05
 No. Iterations:                     5   Pseudo R-squ. (CS):              1.000
 Covariance Type:            nonrobust                                         
 ==============================================================================
