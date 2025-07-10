@@ -1,0 +1,63 @@
+   1. cap-shape:                bell=b,conical=c,convex=x,flat=f,
+                                  knobbed=k,sunken=s
+     2. cap-surface:              fibrous=f,grooves=g,scaly=y,smooth=s
+     3. cap-color:                brown=n,buff=b,cinnamon=c,gray=g,green=r,
+                                  pink=p,purple=u,red=e,white=w,yellow=y
+     4. bruises?:                 bruises=t,no=f
+     5. odor:                     almond=a,anise=l,creosote=c,fishy=y,foul=f,
+                                  musty=m,none=n,pungent=p,spicy=s
+     6. gill-attachment:          attached=a,descending=d,free=f,notched=n
+     7. gill-spacing:             close=c,crowded=w,distant=d
+     8. gill-size:                broad=b,narrow=n
+     9. gill-color:               black=k,brown=n,buff=b,chocolate=h,gray=g,
+                                  green=r,orange=o,pink=p,purple=u,red=e,
+                                  white=w,yellow=y
+    10. stalk-shape:              enlarging=e,tapering=t
+    11. stalk-root:               bulbous=b,club=c,cup=u,equal=e,
+                                  rhizomorphs=z,rooted=r,missing=?
+    12. stalk-surface-above-ring: fibrous=f,scaly=y,silky=k,smooth=s
+    13. stalk-surface-below-ring: fibrous=f,scaly=y,silky=k,smooth=s
+    14. stalk-color-above-ring:   brown=n,buff=b,cinnamon=c,gray=g,orange=o,
+                                  pink=p,red=e,white=w,yellow=y
+    15. stalk-color-below-ring:   brown=n,buff=b,cinnamon=c,gray=g,orange=o,
+                                  pink=p,red=e,white=w,yellow=y
+    16. veil-type:                partial=p,universal=u
+    17. veil-color:               brown=n,orange=o,white=w,yellow=y
+    18. ring-number:              none=n,one=o,two=t
+    19. ring-type:                cobwebby=c,evanescent=e,flaring=f,large=l,
+                                  none=n,pendant=p,sheathing=s,zone=z
+    20. spore-print-color:        black=k,brown=n,buff=b,chocolate=h,green=r,
+                                  orange=o,purple=u,white=w,yellow=y
+    21. population:               abundant=a,clustered=c,numerous=n,
+                                  scattered=s,several=v,solitary=y
+    22. habitat:                  grasses=g,leaves=l,meadows=m,paths=p,
+                                  urban=u,waste=w,woods=d
+
+Consider the feature list above, each feature is coded as a single character according the key for the feature.  Using these 22 features how would Coprinopsis atramentaria (black ink cap) be encoded?
+
+c,s,g,f,n,f,w,b,k,t,s,s,g,g,p,w,o,e,k,s,u
+
+Coprinopsis atramentaria (Black Ink Cap) Feature Encoding
+Feature #	Feature Name	Likely Value	Code	Justification
+1	Cap shape	conical	c	Young cap is conical or bell-shaped, becoming more flattened later
+2	Cap surface	smooth	s	Smooth surface
+3	Cap color	gray	g	Gray to brownish gray
+4	Bruises?	no	f	Does not bruise distinctively
+5	Odor	none	n	Mild or no odor
+6	Gill attachment	free	f	Gills free from the stalk
+7	Gill spacing	crowded	w	Gills are crowded
+8	Gill size	broad	b	Broad gills, typical of inky caps
+9	Gill color	black	k	Turns black and dissolves into ink
+10	Stalk shape	tapering	t	Often narrows at base
+11	Stalk root	rooted	r	Rooted in soil (some sources say “equal”)
+12	Stalk surface above ring	smooth	s	Smooth texture
+13	Stalk surface below ring	smooth	s	Smooth texture
+14	Stalk color above ring	gray	g	Gray to whitish
+15	Stalk color below ring	gray	g	Same as above
+16	Veil type	partial	p	Has a fleeting partial veil
+17	Veil color	white	w	Veil is whitish when present
+18	Ring number	one	o	One ring from partial veil
+19	Ring type	evanescent	e	Ring disappears quickly
+20	Spore print color	black	k	Produces a black spore print
+21	Population	scattered	s	Grows in scattered groups
+22	Habitat	urban	u	Often found in grassy areas, roadsides, lawns (urban-ish)
