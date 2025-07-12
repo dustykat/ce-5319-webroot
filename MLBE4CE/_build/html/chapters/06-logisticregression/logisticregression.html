@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/06-logisticregression/logisticregression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="7. Decision Trees" href="../07-decisiontrees/decisiontrees.html" />
+    <link rel="next" title="8. Decision Trees" href="../07-decisiontrees/decisiontrees.html" />
     <link rel="prev" title="6. Non-Linear Regression" href="../05-nonlinearregression/nonlinearregression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -213,7 +213,9 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">8. Decision Trees</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
@@ -413,16 +415,24 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#titanic-survival-example-adapted-from-2012-kaggle-competition">7.5 Titanic Survival Example (adapted from 2012 Kaggle Competition)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-regression">7.6 Poisson Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushrooms">7.6 Poison Mushrooms</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem Statement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-workflow">ML Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-assisted-refactoring">7.6.1 OpenAI Assisted Refactoring</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-regression">7.7 Poisson Regression</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-assumptions">Modeling Assumptions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-formulation">Error Formulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-type-1">Homebrew Type 1</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-type-2">Homebrew Type 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-1">Homebrew 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-2">Homebrew 2</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pipe-burst-count-prediction">7.7 Pipe Burst Count/Prediction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bicycle-rental-count-prediction">7.8 Bicycle Rental Count/Prediction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pipe-burst-count-prediction">7.8 Pipe Burst Count/Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bicycle-rental-count-prediction">7.9 Bicycle Rental Count/Prediction</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-look-for">What to Look For:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-diagnostics-checklist">Residual Diagnostics Checklist</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deviance-residuals">1. <strong>Deviance Residuals</strong></a></li>
@@ -2794,7 +2804,7 @@ Model Coefficients and Odds Ratios:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fe72554d3925b79cc383ff0396f7803400d0b8d765f3b1a18c12d7eefee861ac.png" src="../../_images/fe72554d3925b79cc383ff0396f7803400d0b8d765f3b1a18c12d7eefee861ac.png" />
+<img alt="../../_images/0679155b535b561def6eb3d400878b77376a46e44b36c842dd992df40c863e96.png" src="../../_images/0679155b535b561def6eb3d400878b77376a46e44b36c842dd992df40c863e96.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3008,8 +3018,2102 @@ Confusion Matrix:
 </div>
 <p>So from this plot the logistic model suggests just being female confers a huge survival advantage regardless of wealth.</p>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="poison-mushrooms">
+<h1>7.6 Poison Mushrooms<a class="headerlink" href="#poison-mushrooms" title="Link to this heading">#</a></h1>
+<p>Mushroom foraging is a practice with both cultural significance and serious risks. Many
+wild mushrooms are edible and nutritious, but others contain potent toxins that can
+cause severe illness or death, even in small quantities. While advanced techniques
+like High-Performance Liquid Chromatography (HPLC) and mass spectrometry can
+accurately identify toxic compounds, these methods are laboratory-based, expensive,
+and time-consuming—making them impractical for real-time decision-making in the
+field. For amateur foragers, park rangers, and even emergency responders, the ability
+to assess toxicity risk based on visible features—such as cap color, gill shape, bruising
+reactions, and habitat—is far more practical, if not lifesaving.</p>
+<p>This example seeks a machine learning classification algorithm to predict whether a
+mushroom is edible or poisonous based on easily observable characteristics.
+The training dataset is drawn from field guide-style descriptions, not lab tests, mimicking how
+a forager might gather information in the wild.</p>
+<section id="problem-statement">
+<h2>Problem Statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
+<p>Using the database description at:</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-2/agaricus-lepiota.names">http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-2/agaricus-lepiota.names</a></p>
+<p>and the encoded database at:</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-2/agaricus-lepiota.data">http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-2/agaricus-lepiota.data</a></p>
+<p>build a suitable prediction engine to classify a mushroom as poison or non-poison.
+Apply your model on the mushroom <em>Coprinopsis atramentaria</em> which has the characteristics below:</p>
+<p>Coprinopsis atramentaria (Black Ink Cap) Feature Encoding</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature #</p></th>
+<th class="head"><p>Feature Name</p></th>
+<th class="head"><p>Likely Value</p></th>
+<th class="head"><p>Code</p></th>
+<th class="head"><p>Justification</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Cap shape</p></td>
+<td><p>conical</p></td>
+<td><p>c</p></td>
+<td><p>Young cap is conical or bell-shaped, becoming more flattened later</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Cap surface</p></td>
+<td><p>smooth</p></td>
+<td><p>s</p></td>
+<td><p>Smooth surface</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Cap color</p></td>
+<td><p>gray</p></td>
+<td><p>g</p></td>
+<td><p>Gray to brownish gray</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Bruises?</p></td>
+<td><p>no</p></td>
+<td><p>f</p></td>
+<td><p>Does not bruise distinctively</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Odor</p></td>
+<td><p>none</p></td>
+<td><p>n</p></td>
+<td><p>Mild or no odor</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Gill attachment</p></td>
+<td><p>free</p></td>
+<td><p>f</p></td>
+<td><p>Gills free from the stalk</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>Gill spacing</p></td>
+<td><p>crowded</p></td>
+<td><p>w</p></td>
+<td><p>Gills are crowded</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>Gill size</p></td>
+<td><p>broad</p></td>
+<td><p>b</p></td>
+<td><p>Broad gills, typical of inky caps</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>Gill color</p></td>
+<td><p>black</p></td>
+<td><p>k</p></td>
+<td><p>Turns black and dissolves into ink</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>Stalk shape</p></td>
+<td><p>tapering</p></td>
+<td><p>t</p></td>
+<td><p>Often narrows at base</p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>Stalk root</p></td>
+<td><p>rooted</p></td>
+<td><p>r</p></td>
+<td><p>Rooted in soil (some sources say “equal”)</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>Stalk surface above ring</p></td>
+<td><p>smooth</p></td>
+<td><p>s</p></td>
+<td><p>Smooth texture</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>Stalk surface below ring</p></td>
+<td><p>smooth</p></td>
+<td><p>s</p></td>
+<td><p>Smooth texture</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>Stalk color above ring</p></td>
+<td><p>gray</p></td>
+<td><p>g</p></td>
+<td><p>Gray to whitish</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>Stalk color below ring</p></td>
+<td><p>gray</p></td>
+<td><p>g</p></td>
+<td><p>Same as above</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>Veil type</p></td>
+<td><p>partial</p></td>
+<td><p>p</p></td>
+<td><p>Has a fleeting partial veil</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>Veil color</p></td>
+<td><p>white</p></td>
+<td><p>w</p></td>
+<td><p>Veil is whitish when present</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>Ring number</p></td>
+<td><p>one</p></td>
+<td><p>o</p></td>
+<td><p>One ring from partial veil</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>Ring type</p></td>
+<td><p>evanescent</p></td>
+<td><p>e</p></td>
+<td><p>Ring disappears quickly</p></td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>Spore print color</p></td>
+<td><p>black</p></td>
+<td><p>k</p></td>
+<td><p>Produces a black spore print</p></td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>Population</p></td>
+<td><p>scattered</p></td>
+<td><p>s</p></td>
+<td><p>Grows in scattered groups</p></td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>Habitat</p></td>
+<td><p>urban</p></td>
+<td><p>u</p></td>
+<td><p>Often found in grassy areas, roadsides, lawns (urban-ish)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The feature vector in the format of the database is : <code class="docutils literal notranslate"><span class="pre">csgfnfwbktrssggpwoeksu</span></code></p>
+<p>Sources for the table above include Wikipedia</p>
+<blockquote>
+<div><p>…Measuring 3–10 centimetres in diameter, the greyish or brownish-grey cap is furrowed,
+initially bell-shaped, and later more convex, splitting at the margin. It melts from the
+outside in. The very crowded gills are free; they are white at first, then grey or pinkish
+and turn black and deliquesce.
+The stipe measures 5–17 cm high by 1–2 cm thick, is grey in colour, and lacks a ring.
+In young groups, the stems may be obscured by the caps. The spore print is black and
+the almond-shaped spores measure 8–11 by 5–6 μm. The flesh is thin and pale grey in
+colour.
+It is commonly associated with buried wood and is found in grassland, meadows,
+disturbed ground, and open terrain from late spring to autumn. Like many ink caps,
+it grows in tufts.</p>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This example is to illustrate ML tools, <span style="color:red; font-weight:bold;">DO NOT USE THIS EXAMPLE FOR REAL MUSHROOM SAFETY DETERMINATION</span></p>
+</div>
+<section id="ml-workflow">
+<h3>ML Workflow<a class="headerlink" href="#ml-workflow" title="Link to this heading">#</a></h3>
+<p><strong>Download the database from remote server</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the dataset is already available locally on the server, this step intentionally simulates retrieving data from a persistent, remote source. This reflects a common pattern in real-world workflows, where data is often accessed from version-controlled or centralized storage systems rather than hardcoded locations.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/logisticregression/agaricus-lepiota.data&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="c1"># delete file if it exists</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Load the database into a dataframe</strong></p>
+<ol class="arabic simple">
+<li><p>Load the file downloaded suitable pandas tools.</p></li>
+<li><p>Create an attribute list with meaningful (to us humans) names for the database columns.</p></li>
+<li><p>Update the column names using a mapping method. In this example, a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop creates a dictionary that maps default column indices to meaningful attribute names. Bear in mind later on this setp will create a warning, but it is suppressed intentionally. Alternatively, we could have directly assigned the list to df.columns, used a zipped dictionary, or applied set_axis()—each option has different strengths in terms of clarity, safety, and style.</p></li>
+<li><p>List the revised database (here I choose the first 20 rows, recall the default is 5)</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some other ways to handle the column naming are:</p>
+<ol class="arabic">
+<li><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">attributes</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>A concise approach that assumes the number of columns exactly matches the number of attributes (len(attributes) == mymushroom.shape[1]).  This approach may raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if mismatched</p>
+<ol class="arabic" start="2">
+<li><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mymushroom</span> <span class="o">=</span> <span class="n">mymushroom</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>A succinct and expressive mapping concept but all in a single line. Easily extended if only renaming a subset. Still assumes 1-to-1 mapping (i.e., same lengths)</p>
+<ol class="arabic" start="3">
+<li><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mymushroom</span> <span class="o">=</span> <span class="n">mymushroom</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Functionally equivalent to .columns = … Can be method chained: df.set_axis(…).dropna() etc.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">mymushroom</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">attributes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">,</span><span class="s1">&#39;cap-shape&#39;</span><span class="p">,</span><span class="s1">&#39;cap-surface&#39;</span><span class="p">,</span><span class="s1">&#39;cap-color&#39;</span><span class="p">,</span><span class="s1">&#39;bruises&#39;</span><span class="p">,</span><span class="s1">&#39;odor&#39;</span><span class="p">,</span><span class="s1">&#39;gill-attachment&#39;</span><span class="p">,</span><span class="s1">&#39;gill-spacing&#39;</span><span class="p">,</span><span class="s1">&#39;gill-size&#39;</span><span class="p">,</span><span class="s1">&#39;gill-color&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-shape&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-root&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">,</span><span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">,</span><span class="s1">&#39;veil-type&#39;</span><span class="p">,</span><span class="s1">&#39;veil-color&#39;</span><span class="p">,</span><span class="s1">&#39;ring-number&#39;</span><span class="p">,</span><span class="s1">&#39;ring-type&#39;</span><span class="p">,</span><span class="s1">&#39;spore-print-color&#39;</span><span class="p">,</span><span class="s1">&#39;population&#39;</span><span class="p">,</span><span class="s1">&#39;habitat&#39;</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+
+<span class="n">req_col_names</span> <span class="o">=</span> <span class="n">attributes</span>
+<span class="n">curr_col_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="n">mapper</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">curr_col_names</span><span class="p">):</span>
+    <span class="n">mapper</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">req_col_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="n">mymushroom</span> <span class="o">=</span> <span class="n">mymushroom</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">mapper</span><span class="p">)</span>
+<span class="n">interim</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mymushroom</span><span class="p">)</span>
+<span class="n">mymushroom</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>poison-class</th>
+      <th>cap-shape</th>
+      <th>cap-surface</th>
+      <th>cap-color</th>
+      <th>bruises</th>
+      <th>odor</th>
+      <th>gill-attachment</th>
+      <th>gill-spacing</th>
+      <th>gill-size</th>
+      <th>gill-color</th>
+      <th>...</th>
+      <th>stalk-surface-below-ring</th>
+      <th>stalk-color-above-ring</th>
+      <th>stalk-color-below-ring</th>
+      <th>veil-type</th>
+      <th>veil-color</th>
+      <th>ring-number</th>
+      <th>ring-type</th>
+      <th>spore-print-color</th>
+      <th>population</th>
+      <th>habitat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>p</td>
+      <td>x</td>
+      <td>s</td>
+      <td>n</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>s</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>e</td>
+      <td>x</td>
+      <td>s</td>
+      <td>y</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>n</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>e</td>
+      <td>b</td>
+      <td>s</td>
+      <td>w</td>
+      <td>t</td>
+      <td>l</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>n</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>p</td>
+      <td>x</td>
+      <td>y</td>
+      <td>w</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>s</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>e</td>
+      <td>x</td>
+      <td>s</td>
+      <td>g</td>
+      <td>f</td>
+      <td>n</td>
+      <td>f</td>
+      <td>w</td>
+      <td>b</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>e</td>
+      <td>n</td>
+      <td>a</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>e</td>
+      <td>x</td>
+      <td>y</td>
+      <td>y</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>n</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>e</td>
+      <td>b</td>
+      <td>s</td>
+      <td>w</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>g</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>n</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>e</td>
+      <td>b</td>
+      <td>y</td>
+      <td>w</td>
+      <td>t</td>
+      <td>l</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>s</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>p</td>
+      <td>x</td>
+      <td>y</td>
+      <td>w</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>p</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>v</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>e</td>
+      <td>b</td>
+      <td>s</td>
+      <td>y</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>g</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>s</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>e</td>
+      <td>x</td>
+      <td>y</td>
+      <td>y</td>
+      <td>t</td>
+      <td>l</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>g</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>n</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>e</td>
+      <td>x</td>
+      <td>y</td>
+      <td>y</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>s</td>
+      <td>m</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>e</td>
+      <td>b</td>
+      <td>s</td>
+      <td>y</td>
+      <td>t</td>
+      <td>a</td>
+      <td>f</td>
+      <td>c</td>
+      <td>b</td>
+      <td>w</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>s</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>p</td>
+      <td>x</td>
+      <td>y</td>
+      <td>w</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>v</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>e</td>
+      <td>x</td>
+      <td>f</td>
+      <td>n</td>
+      <td>f</td>
+      <td>n</td>
+      <td>f</td>
+      <td>w</td>
+      <td>b</td>
+      <td>n</td>
+      <td>...</td>
+      <td>f</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>e</td>
+      <td>k</td>
+      <td>a</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>e</td>
+      <td>s</td>
+      <td>f</td>
+      <td>g</td>
+      <td>f</td>
+      <td>n</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>y</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>e</td>
+      <td>f</td>
+      <td>f</td>
+      <td>w</td>
+      <td>f</td>
+      <td>n</td>
+      <td>f</td>
+      <td>w</td>
+      <td>b</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>e</td>
+      <td>n</td>
+      <td>a</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>p</td>
+      <td>x</td>
+      <td>s</td>
+      <td>n</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>k</td>
+      <td>s</td>
+      <td>g</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>p</td>
+      <td>x</td>
+      <td>y</td>
+      <td>w</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>n</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>s</td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>p</td>
+      <td>x</td>
+      <td>s</td>
+      <td>n</td>
+      <td>t</td>
+      <td>p</td>
+      <td>f</td>
+      <td>c</td>
+      <td>n</td>
+      <td>k</td>
+      <td>...</td>
+      <td>s</td>
+      <td>w</td>
+      <td>w</td>
+      <td>p</td>
+      <td>w</td>
+      <td>o</td>
+      <td>p</td>
+      <td>n</td>
+      <td>s</td>
+      <td>u</td>
+    </tr>
+  </tbody>
+</table>
+<p>20 rows × 23 columns</p>
+</div></div></div>
+</div>
+<p><strong>Encode the feature list</strong> into numeric values.</p>
+<p>The steps below handle the encoding using a cipher substution approach, there are undoubtably better ways to handle the encoding.<br />
+The functions below are NOT one-hot encoding.</p>
+<p>Each function interprets the feature value based on position in the vector, and uses the alphabet for that feature to assign a numeric value for the feature.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a good example of when to use a LLM to help improve our code.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">p0</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in p0 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="c1"># Feature Encoding Functions using a Simple Substitution Cipher     ##</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c1</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#cap-shape:  bell=b,conical=c,convex=x,flat=f,knobbed=k,sunken=s</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span> <span class="c1"># set exception flag</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c1</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span> <span class="c1">#  if encoding swithc flag value</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c1 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c2</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#cap-surface: fibrous=f,grooves=g,scaly=y,smooth=s</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c2</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c2 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c3</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#cap-color: brown=n,buff=b,cinnamon=c,gray=g,green=r,pink=p,purple=u,red=e,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c3</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c3 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c4</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span> <span class="c1">#this is a simple binary encoding column</span>
+<span class="c1">#bruises?:bruises=t,no=f</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c4</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c4 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c4</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c5</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#odor:  almond=a,anise=l,creosote=c,fishy=y,foul=f,musty=m,none=n,pungent=p,spicy=s</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c5</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c5 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c5</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c6</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#gill-attachment: attached=a,descending=d,free=f,notched=n</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c6</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c6 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c6</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c7</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#gill-spacing: close=c,crowded=w,distant=d</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c7</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c7 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c7</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c8</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#gill-size:  broad=b,narrow=n</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c8</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c8 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c8</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c9</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#gill-color: black=k,brown=n,buff=b,chocolate=h,gray=g,green=r,orange=o,pink=p,purple=u,red=e,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c9</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c9 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c9</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c10</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-shape:enlarging=e,tapering=t</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c10</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c10 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c10</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c11</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-root: bulbous=b,club=c,cup=u,equal=e,rhizomorphs=z,rooted=r,missing=?</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">]</span> <span class="c1"># set missing to zero position</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c11</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c11 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c11</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c12</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-surface-above-ring: fibrous=f,scaly=y,silky=k,smooth=s</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">]</span> <span class="c1"># set missing to zero position</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c12</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c12 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c12</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c13</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-surface-below-ring: fibrous=f,scaly=y,silky=k,smooth=s</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">]</span> <span class="c1"># set missing to zero position</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c13</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c13 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c13</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c14</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-color-above-ring:   brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c1"># set missing to zero position</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c14</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c14 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c14</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c15</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#stalk-color-below-ring:   brown=n,buff=b,cinnamon=c,gray=g,orange=o,pink=p,red=e,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c1"># set missing to zero position</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c15</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c15 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c15</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c16</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#veil-type:                partial=p,universal=u</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c16</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c16 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c16</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c17</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#veil-color:               brown=n,orange=o,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c17</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c17 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c17</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c18</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#ring-number:              none=n,one=o,two=t</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c18</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c18 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c18</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c19</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#ring-type:  cobwebby=c,evanescent=e,flaring=f,large=l,none=n,pendant=p,sheathing=s,zone=z</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c19</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c19 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c19</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c20</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#spore-print-color:        black=k,brown=n,buff=b,chocolate=h,green=r,orange=o,purple=u,white=w,yellow=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c20</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c20 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c20</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c21</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1">#population:abundant=a,clustered=c,numerous=n,scattered=s,several=v,solitary=y</span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">]</span> <span class="c1"># </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c21</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c21 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c21</span><span class="p">)</span>
+<span class="c1">######################################################################</span>
+<span class="k">def</span> <span class="nf">c22</span><span class="p">(</span><span class="n">stringvalue</span><span class="p">):</span>
+<span class="c1"># habitat: grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d   </span>
+    <span class="n">ncode</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">stringvalue</span> <span class="o">==</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">c22</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">ncode</span><span class="o">=</span><span class="kc">False</span>
+    <span class="k">if</span> <span class="n">ncode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Encoding failed in c22 missing data maybe?&quot;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c22</span><span class="p">)</span>
+
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;cap-shape&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;cap-shape&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;cap-surface&#39;</span><span class="p">]</span>             <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;cap-surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;cap-color&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;cap-color&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;bruises&#39;</span><span class="p">]</span>                 <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;bruises&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c4</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;odor&#39;</span><span class="p">]</span>                    <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;odor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c5</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;gill-attachment&#39;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;gill-attachment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c6</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;gill-spacing&#39;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;gill-spacing&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c7</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;gill-size&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;gill-size&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c8</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;gill-color&#39;</span><span class="p">]</span>              <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;gill-color&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c9</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-shape&#39;</span><span class="p">]</span>             <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-shape&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c10</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-root&#39;</span><span class="p">]</span>              <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-root&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c11</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c12</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c13</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c14</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c15</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;veil-type&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;veil-type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c16</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;veil-color&#39;</span><span class="p">]</span>              <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;veil-color&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c17</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;ring-number&#39;</span><span class="p">]</span>             <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;ring-number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c18</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;ring-type&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;ring-type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c19</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;spore-print-color&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;spore-print-color&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c20</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">]</span>              <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c21</span><span class="p">)</span>
+<span class="n">interim</span><span class="p">[</span><span class="s1">&#39;habitat&#39;</span><span class="p">]</span>                 <span class="o">=</span> <span class="n">mymushroom</span><span class="p">[</span><span class="s1">&#39;habitat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">c22</span><span class="p">)</span>
+
+<span class="n">interim</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>poison-class</th>
+      <th>cap-shape</th>
+      <th>cap-surface</th>
+      <th>cap-color</th>
+      <th>bruises</th>
+      <th>odor</th>
+      <th>gill-attachment</th>
+      <th>gill-spacing</th>
+      <th>gill-size</th>
+      <th>gill-color</th>
+      <th>...</th>
+      <th>stalk-surface-below-ring</th>
+      <th>stalk-color-above-ring</th>
+      <th>stalk-color-below-ring</th>
+      <th>veil-type</th>
+      <th>veil-color</th>
+      <th>ring-number</th>
+      <th>ring-type</th>
+      <th>spore-print-color</th>
+      <th>population</th>
+      <th>habitat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>10</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>9</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>9</td>
+      <td>2</td>
+      <td>8</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>1</td>
+      <td>7</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>10</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>9</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>9</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>9</td>
+      <td>2</td>
+      <td>8</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>10</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 23 columns</p>
+</div></div></div>
+</div>
+<p><strong>Use <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> to built training and testing data sets</strong></p>
+<ol class="arabic simple">
+<li><p>Split the database</p></li>
+<li><p>Examine outputs to verify maintain structure.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#split dataset in features and target variable</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span> <span class="c1"># Features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span> <span class="c1"># Target variable</span>
+<span class="c1"># split X and y into training and testing sets</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cap-shape</th>
+      <th>cap-surface</th>
+      <th>cap-color</th>
+      <th>bruises</th>
+      <th>odor</th>
+      <th>gill-attachment</th>
+      <th>gill-spacing</th>
+      <th>gill-size</th>
+      <th>gill-color</th>
+      <th>stalk-shape</th>
+      <th>...</th>
+      <th>stalk-surface-below-ring</th>
+      <th>stalk-color-above-ring</th>
+      <th>stalk-color-below-ring</th>
+      <th>veil-type</th>
+      <th>veil-color</th>
+      <th>ring-number</th>
+      <th>ring-type</th>
+      <th>spore-print-color</th>
+      <th>population</th>
+      <th>habitat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5832</th>
+      <td>4</td>
+      <td>3</td>
+      <td>10</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>1</td>
+      <td>...</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>601</th>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>11</td>
+      <td>1</td>
+      <td>...</td>
+      <td>2</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1601</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>1</td>
+      <td>7</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>1</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4941</th>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>1</td>
+      <td>...</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7492</th>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>...</td>
+      <td>3</td>
+      <td>6</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>8</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 22 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5832    1
+601     0
+1601    0
+4941    1
+7492    1
+Name: poison-class, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cap-shape</th>
+      <th>cap-surface</th>
+      <th>cap-color</th>
+      <th>bruises</th>
+      <th>odor</th>
+      <th>gill-attachment</th>
+      <th>gill-spacing</th>
+      <th>gill-size</th>
+      <th>gill-color</th>
+      <th>stalk-shape</th>
+      <th>...</th>
+      <th>stalk-surface-below-ring</th>
+      <th>stalk-color-above-ring</th>
+      <th>stalk-color-below-ring</th>
+      <th>veil-type</th>
+      <th>veil-color</th>
+      <th>ring-number</th>
+      <th>ring-type</th>
+      <th>spore-print-color</th>
+      <th>population</th>
+      <th>habitat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>380</th>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3641</th>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>7</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>273</th>
+      <td>3</td>
+      <td>3</td>
+      <td>10</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1029</th>
+      <td>3</td>
+      <td>4</td>
+      <td>9</td>
+      <td>1</td>
+      <td>7</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>8</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>684</th>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>7</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>2</td>
+      <td>...</td>
+      <td>4</td>
+      <td>6</td>
+      <td>8</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 22 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>380     1
+3641    0
+273     0
+1029    0
+684     0
+Name: poison-class, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Load the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> Logistic Regression package</strong></p>
+<ol class="arabic simple">
+<li><p>Load the package into notebook</p></li>
+<li><p>Create an instance of the model.</p></li>
+<li><p>Fit on traning set</p></li>
+<li><p>Predict on test set</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the method</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="c1"># instantiate the model (using the default parameters)</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="c1"># fit the model with data</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
+<span class="c1"># predict the test set</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="c1"># </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Report Results</strong></p>
+<ol class="arabic simple">
+<li><p>Examine logistic constants (gives idea of importantce of specific features)</p></li>
+<li><p>Confusion matrix as heatmap</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logistic Regression Values&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept:&quot;</span><span class="p">,</span> <span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Coefficients: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Logistic Regression Values
+Intercept: 16.542399116671376
+Feature Coefficients: 
+ [[-0.11042847  1.09064506  0.08741523 -3.45823817  0.14263106  0.24391943
+  -9.04357091  7.79074285 -0.11221928 -0.07236673 -2.05036577 -0.70728185
+  -0.04710663 -0.30924264  0.34523294  0.24430201  0.02944439 -0.82700158
+  -0.86654293  0.46866517 -0.59647226 -0.19592944]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the metrics class</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">cnf_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># name  of classes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">tick_marks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="c1"># create heatmap</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cnf_matrix</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span> <span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion matrix&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual label&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/da2dde30918b6197e15104ba7b087484e61b1242e283bc53fee061ed9016a636.png" src="../../_images/da2dde30918b6197e15104ba7b087484e61b1242e283bc53fee061ed9016a636.png" />
+</div>
+</div>
+<p><strong>Classify the new mushroom</strong><br />
+This is the deployment step — the whole point is to build a prediction engine!</p>
+<ol class="arabic simple">
+<li><p>Here we simply provide the feature vector values.</p></li>
+<li><p>A practical improvement would be to create a user interface that prompts for inputs.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the classifier correctly predicts this mushroom as edible, there’s an important caveat: it is only safe to consume if the person has no alcohol in their system. A compound in the mushroom reacts with alcohol to form a liver toxin — a detail the model cannot detect because this biologically relevant interaction was not part of the training data.</p>
+<p>This highlights a key limitation of data-driven models: accurate prediction depends on having <strong>all relevant features</strong> represented. In this case, domain knowledge reveals a missing causal factor, reminding us that models should be used as <strong>tools</strong>—not oracles.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">s_new</span> <span class="o">=</span> <span class="s2">&quot;csgfnfwbktrssggpwoeksu&quot;</span>
+<span class="n">x_new</span> <span class="o">=</span><span class="p">[</span><span class="n">c1</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">c2</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">c3</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span><span class="n">c4</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span><span class="n">c5</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span><span class="n">c6</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span><span class="n">c7</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span><span class="n">c8</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span><span class="n">c9</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span><span class="n">c10</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span><span class="n">c11</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">10</span><span class="p">]),</span>
+           <span class="n">c12</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">11</span><span class="p">]),</span><span class="n">c13</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">12</span><span class="p">]),</span><span class="n">c14</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">13</span><span class="p">]),</span><span class="n">c15</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">14</span><span class="p">]),</span><span class="n">c16</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">15</span><span class="p">]),</span><span class="n">c17</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">16</span><span class="p">]),</span><span class="n">c18</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">17</span><span class="p">]),</span><span class="n">c19</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">18</span><span class="p">]),</span><span class="n">c20</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">19</span><span class="p">]),</span><span class="n">c21</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">20</span><span class="p">]),</span><span class="n">c22</span><span class="p">(</span><span class="n">s_new</span><span class="p">[</span><span class="mi">21</span><span class="p">])</span> <span class="p">]</span>
+<span class="c1">#print(x_new)</span>
+<span class="n">y_new</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># 1 sample, all features</span>
+<span class="k">if</span> <span class="n">y_new</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New mushroom classified as EDIBLE&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New mushroom classified as POISONIOUS&quot;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New mushroom classified as EDIBLE
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="openai-assisted-refactoring">
+<h1>7.6.1 OpenAI Assisted Refactoring<a class="headerlink" href="#openai-assisted-refactoring" title="Link to this heading">#</a></h1>
+<p>The code below is a result of supplying the code above, and supplying the prompt:</p>
+<blockquote>
+<div><p>Can you examine the code and suggest alternate ways to generate the column names? (ie what i called the mapper method) I am using a mapping method in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to change existing names (if any) to these listed names.  Bear in mind later on this will create a warning, but it is suppressed intentionally.</p>
+</div></blockquote>
+<p>Later on when we get to the encoding step the OpenAI prompt was:</p>
+<blockquote>
+<div><p>The encoding steps are using a simple-cipher substution approach. The functions below are NOT intended for one-hot encoding.  Each function interprets the feature value based on position in the vector, and uses the reduced alphabet for that feature to assign a numeric value for the feature.  Can you refactor to generalize the encoding - namely to avoid having multiple functions, so I can process any string of correct length and alphabet?</p>
+</div></blockquote>
+<p>These two prompts provided enough refactored code for the program below, which is more generic and modular - hence should be easier to maintain and apply for other situations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7.6.1 Improved code (using OpenAI assisted refactoring)</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Encoding definitions: (ordered list of categories, starting index for ordinal encoding)#############################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="n">encodings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;poison-class&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;cap-shape&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-surface&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-color&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;bruises&#39;</span><span class="p">:</span>                    <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;odor&#39;</span><span class="p">:</span>                       <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-attachment&#39;</span><span class="p">:</span>            <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-spacing&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-size&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-color&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-shape&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-root&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-color&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-number&#39;</span><span class="p">:</span>             <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;spore-print-color&#39;</span><span class="p">:</span>       <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;population&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;habitat&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">###### Define Encoder Generator ##########################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="k">def</span> <span class="nf">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;feature&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">alphabet</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encoding failed in &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;: unknown value &#39;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoder</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Apply Encodings ####################################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">get_dummies</span>
+
+<span class="k">def</span> <span class="nf">apply_encodings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">encodings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">):</span>
+    <span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">:</span>
+            <span class="n">encoder</span> <span class="o">=</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">encoded_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encoder</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;onehot&quot;</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">dummies</span> <span class="o">=</span> <span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">encoded_df</span><span class="p">,</span> <span class="n">dummies</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown encoding method: use &#39;ordinal&#39; or &#39;onehot&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoded_df</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Report Generator ###################################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="k">def</span> <span class="nf">generate_encoding_markdown</span><span class="p">(</span><span class="n">encodings</span><span class="p">):</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="s2">&quot;# Mushroom Feature Encoding Reference</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;### </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;| Category | Encoded Value |</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;|----------|----------------|</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">alphabet</span><span class="p">):</span>
+            <span class="n">md</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;| `</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">` | `</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="si">}</span><span class="s2">` |</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">md</span>
+
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 1: Load the raw data ########################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Get the database (unchanged from original code)</span>
+<span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/logisticregression/agaricus-lepiota.data&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="c1">###### Read and load data into dataframe, set column names to the encoding keys</span>
+<span class="n">mymushroom</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 2: Encode ###################################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">interim</span> <span class="o">=</span> <span class="n">apply_encodings</span><span class="p">(</span><span class="n">mymushroom</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">encodings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">)</span>  <span class="c1"># or &quot;onehot&quot;</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 3: Export Markdown (optional) ###############################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">md_report</span> <span class="o">=</span> <span class="n">generate_encoding_markdown</span><span class="p">(</span><span class="n">encodings</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;encoding_reference.md&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">md_report</span><span class="p">)</span>
+<span class="n">interim</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 4: Split Dataframe for Training, Testing  ###################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1">#split dataset in features and target variable</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span> <span class="c1"># Features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span> <span class="c1"># Target variable</span>
+<span class="c1"># split X and y into training and testing sets</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 5: Load Logistic Regression, Fit Data Model  ################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span> <span class="c1"># import the method</span>
+<span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span> <span class="c1"># instantiate the model (using the default parameters)</span>
+<span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span> <span class="c1"># fit the model with data</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="c1"># predict the test set</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 6: Report Results  ##########################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logistic Regression Values&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept:&quot;</span><span class="p">,</span> <span class="n">logreg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Coefficients: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">logreg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span> <span class="c1"># import the metrics class</span>
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">cnf_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># name  of classes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">tick_marks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cnf_matrix</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span> <span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span> <span class="c1"># create heatmap</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heat Map Performance (all dataframe)&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual label&#39;</span><span class="p">);</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 7: Classify New Mushroom  ###################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">s_new</span> <span class="o">=</span> <span class="s2">&quot;csgfnfwbktrssggpwoeksu&quot;</span> <span class="c1"># Sample input string from a new mushroom (22 characters)</span>
+<span class="c1"># Create encoders from the original encoding dictionary</span>
+<span class="n">encoders</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">col</span><span class="p">:</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="c1"># Get list of feature columns (excluding &#39;poison-class&#39;)</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># skip target</span>
+<span class="c1"># Zip characters with corresponding features</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoders</span><span class="p">[</span><span class="n">col</span><span class="p">](</span><span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">,</span> <span class="n">s_new</span><span class="p">)]</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Encoding error:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># Predict if encoding successful</span>
+<span class="k">if</span> <span class="n">x_new</span><span class="p">:</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># reshape for sklearn</span>
+<span class="k">if</span> <span class="n">y_new</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[92mNew mushroom classified as EDIBLE</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>      <span class="c1"># Green text</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[91mNew mushroom classified as POISONOUS</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>   <span class="c1"># Red text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Logistic Regression Values
+Intercept: 16.542399116671376
+Feature Coefficients: 
+ [[-0.11042847  1.09064506  0.08741523 -3.45823817  0.14263106  0.24391943
+  -9.04357091  7.79074285 -0.11221928 -0.07236673 -2.05036577 -0.70728185
+  -0.04710663 -0.30924264  0.34523294  0.24430201  0.02944439 -0.82700158
+  -0.86654293  0.46866517 -0.59647226 -0.19592944]]
+New mushroom classified as EDIBLE
+</pre></div>
+</div>
+<img alt="../../_images/d9f0a5443d9da67377c115780725f697b1774669be2616d3fae1c95043632b3a.png" src="../../_images/d9f0a5443d9da67377c115780725f697b1774669be2616d3fae1c95043632b3a.png" />
+</div>
+</div>
+</section>
 <section class="tex2jax_ignore mathjax_ignore" id="poisson-regression">
-<h1>7.6 Poisson Regression<a class="headerlink" href="#poisson-regression" title="Link to this heading">#</a></h1>
+<h1>7.7 Poisson Regression<a class="headerlink" href="#poisson-regression" title="Link to this heading">#</a></h1>
 <p>Poisson regression is a modeling technique used when the response variable represents <strong>count data</strong>—that is, observations take on discrete non-negative integer values:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -3036,7 +5140,7 @@ Y_i \in \{0, 1, 2, \dots\}
 \]</div>
 <p>This formulation ensures the predicted mean <span class="math notranslate nohighlight">\( \mu_i \)</span> is always non-negative, satisfying the natural constraint for count data.</p>
 <blockquote>
-<div><p>🔧 Note: Although alternative link functions exist (like identity or square root), the <strong>canonical link</strong> for Poisson regression is the <strong>log link</strong>, due to its mathematical properties and interpretability.</p>
+<div><p>Although alternative link functions exist (like identity or square root), the <strong>canonical link</strong> for Poisson regression is the <strong>log link</strong>, due to its mathematical properties and interpretability.</p>
 </div></blockquote>
 <hr class="docutils" />
 </section>
@@ -3073,8 +5177,8 @@ Y_i \in \{0, 1, 2, \dots\}
 </ul>
 <p>In the next sections, we explore homebrew implementations of Poisson regression.</p>
 </section>
-<section id="homebrew-type-1">
-<h2>Homebrew Type 1<a class="headerlink" href="#homebrew-type-1" title="Link to this heading">#</a></h2>
+<section id="homebrew-1">
+<h2>Homebrew 1<a class="headerlink" href="#homebrew-1" title="Link to this heading">#</a></h2>
 <p>In this variant, we will implement a Poisson regression model using a squared-error objective function:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -3277,8 +5381,8 @@ J(\beta) = \sum_{i=1}^n \left(Y_i - e^{X_i \cdot \beta} \right)^2
 </div>
 </div>
 </section>
-<section id="homebrew-type-2">
-<h2>Homebrew Type 2<a class="headerlink" href="#homebrew-type-2" title="Link to this heading">#</a></h2>
+<section id="homebrew-2">
+<h2>Homebrew 2<a class="headerlink" href="#homebrew-2" title="Link to this heading">#</a></h2>
 <p>In this variant, we will implement <strong>maximum likelihood estimation (MLE)</strong> directly using the <strong>Poisson log-likelihood</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -3406,7 +5510,7 @@ The final value for b = 1.9999653396018062
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="pipe-burst-count-prediction">
-<h1>7.7 Pipe Burst Count/Prediction<a class="headerlink" href="#pipe-burst-count-prediction" title="Link to this heading">#</a></h1>
+<h1>7.8 Pipe Burst Count/Prediction<a class="headerlink" href="#pipe-burst-count-prediction" title="Link to this heading">#</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This example uses a simulated dataset.</p>
@@ -3555,8 +5659,8 @@ Model:                            GLM   Df Residuals:                       97
 Model Family:                 Poisson   Df Model:                            2
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -233.32
-Date:                Tue, 08 Jul 2025   Deviance:                       107.99
-Time:                        19:20:10   Pearson chi2:                     103.
+Date:                Fri, 11 Jul 2025   Deviance:                       107.99
+Time:                        17:18:33   Pearson chi2:                     103.
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.9805
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -3643,7 +5747,7 @@ g(\mu_i) = \eta_i
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="bicycle-rental-count-prediction">
-<h1>7.8 Bicycle Rental Count/Prediction<a class="headerlink" href="#bicycle-rental-count-prediction" title="Link to this heading">#</a></h1>
+<h1>7.9 Bicycle Rental Count/Prediction<a class="headerlink" href="#bicycle-rental-count-prediction" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reset</span> -f
@@ -3888,8 +5992,8 @@ Model:                            GLM   Df Residuals:                      726
 Model Family:                 Poisson   Df Model:                            4
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:            -2.0111e+05
-Date:                Tue, 08 Jul 2025   Deviance:                   3.9482e+05
-Time:                        19:20:10   Pearson chi2:                 3.83e+05
+Date:                Fri, 11 Jul 2025   Deviance:                   3.9482e+05
+Time:                        17:18:37   Pearson chi2:                 3.83e+05
 No. Iterations:                     5   Pseudo R-squ. (CS):              1.000
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -4105,7 +6209,7 @@ This is conceptually similar to exceedance probabilities familiar from hydrologi
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">7. Decision Trees</p>
+        <p class="prev-next-title">8. Decision Trees</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -4160,16 +6264,24 @@ This is conceptually similar to exceedance probabilities familiar from hydrologi
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#titanic-survival-example-adapted-from-2012-kaggle-competition">7.5 Titanic Survival Example (adapted from 2012 Kaggle Competition)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-regression">7.6 Poisson Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushrooms">7.6 Poison Mushrooms</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem Statement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-workflow">ML Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#openai-assisted-refactoring">7.6.1 OpenAI Assisted Refactoring</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-regression">7.7 Poisson Regression</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-assumptions">Modeling Assumptions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-formulation">Error Formulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-type-1">Homebrew Type 1</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-type-2">Homebrew Type 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-1">Homebrew 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homebrew-2">Homebrew 2</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pipe-burst-count-prediction">7.7 Pipe Burst Count/Prediction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bicycle-rental-count-prediction">7.8 Bicycle Rental Count/Prediction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#pipe-burst-count-prediction">7.8 Pipe Burst Count/Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#bicycle-rental-count-prediction">7.9 Bicycle Rental Count/Prediction</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-look-for">What to Look For:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-diagnostics-checklist">Residual Diagnostics Checklist</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deviance-residuals">1. <strong>Deviance Residuals</strong></a></li>

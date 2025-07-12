@@ -211,9 +211,15 @@
 
 
 
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Decision Trees</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
 
@@ -376,6 +382,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Decision Trees</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
@@ -388,7 +395,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart5-based-on-industry-as-predictor">CART5 : Based on “Industry” as predictor:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-re-using-the-iris-plants-classification">Example Re-using the Iris Plants Classification <br/></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#iris-plants-classification-by-random-forest">8.1 Iris Plants Classification by Random Forest<br/></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-using-random-forest">8.1 Poison Mushroom using Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparison-interpretability-vs-predictive-power">Model Comparison: Interpretability vs. Predictive Power</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engineering-application-s-examples">Engineering Application(s) Examples</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-observations-regarding-random-forests">General Observations Regarding Random Forests</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros:</a></li>
@@ -396,6 +407,9 @@ document.write(`
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -516,8 +530,9 @@ modeling for applicable watersheds in Texas: U.S. Geological Survey Scientific I
 <p>The final probability is simply the average of the probability in the same salary bands in different CART models. As you can see from this analysis, that there is 70% chance of this individual falling in class 1 (less than 40,000) and around 24% chance of the individual falling in class 2.</p>
 </section>
 </section>
-<section id="example-re-using-the-iris-plants-classification">
-<h2>Example Re-using the Iris Plants Classification <br><a class="headerlink" href="#example-re-using-the-iris-plants-classification" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="iris-plants-classification-by-random-forest">
+<h1>8.1 Iris Plants Classification by Random Forest<br><a class="headerlink" href="#iris-plants-classification-by-random-forest" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://gardenerspath.com/plants/flowers/grow-iris/">Iris Flower</a> <br></p>
 <p>The Iris Flower Dataset involves predicting the flower species given measurements of iris flowers. The Iris Data Set contains information on sepal length, sepal width, petal length, petal width all in cm, and class of iris plants. The data set contains 3 classes of 50 instances each.</p>
 <p><img alt="" src="https://miro.medium.com/max/1000/1*lFC_U5j_Y8IXF4Ga87KNVg.png" /> <br></p>
@@ -561,7 +576,7 @@ modeling for applicable watersheds in Texas: U.S. Geological Survey Scientific I
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7796b81b6da0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x702f741d70d0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" src="../../_images/95a70737cfe7c44baf50fe5481cf41b1dfe3c4918e937083111b9bc44a874e7c.png" />
@@ -722,31 +737,31 @@ modeling for applicable watersheds in Texas: U.S. Geological Survey Scientific I
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest Summary:
 - OOB Score (if enabled): 0.9459459459459459
 - Train Accuracy: 1.000
-- Test Accuracy: 0.956
+- Test Accuracy: 0.947
 - Classes: [&#39;Iris-setosa&#39; &#39;Iris-versicolor&#39; &#39;Iris-virginica&#39;]
 - Number of Features: 4
 
  Classification Report:
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        36
-Iris-versicolor       0.95      0.93      0.94        41
- Iris-virginica       0.92      0.94      0.93        36
+    Iris-setosa       1.00      1.00      1.00        35
+Iris-versicolor       0.97      0.88      0.92        41
+ Iris-virginica       0.88      0.97      0.92        37
 
-       accuracy                           0.96       113
-      macro avg       0.96      0.96      0.96       113
-   weighted avg       0.96      0.96      0.96       113
+       accuracy                           0.95       113
+      macro avg       0.95      0.95      0.95       113
+   weighted avg       0.95      0.95      0.95       113
 
  Confusion Matrix:
-[[36  0  0]
- [ 0 38  3]
- [ 0  2 34]]
+[[35  0  0]
+ [ 0 36  5]
+ [ 0  1 36]]
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<img alt="../../_images/ac1f4295b5e51657a910e0b63518b38c10e2fd4da994042b4fcb1246d0d502bd.png" src="../../_images/ac1f4295b5e51657a910e0b63518b38c10e2fd4da994042b4fcb1246d0d502bd.png" />
+<img alt="../../_images/4e54a7645ade26581eb978c8f3f32390db0d2f20d1bfa3817625781e956d686e.png" src="../../_images/4e54a7645ade26581eb978c8f3f32390db0d2f20d1bfa3817625781e956d686e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -780,8 +795,291 @@ Iris-versicolor       0.95      0.93      0.94        41
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/284e3b159ef5246f63b74fb5f2f868cfde0d420536ea8b2736be8d534f862b25.png" src="../../_images/284e3b159ef5246f63b74fb5f2f868cfde0d420536ea8b2736be8d534f862b25.png" />
+<img alt="../../_images/37e7f668a6ab9269f2e04cc60e1acfe4450d84be860f77211635b25a1b8c242d.png" src="../../_images/37e7f668a6ab9269f2e04cc60e1acfe4450d84be860f77211635b25a1b8c242d.png" />
 </div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="poison-mushroom-using-random-forest">
+<h1>8.1 Poison Mushroom using Random Forest<a class="headerlink" href="#poison-mushroom-using-random-forest" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 8.1 OpenAI assisted code for Random Forest Method</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Encoding definitions: (ordered list of categories, starting index for ordinal encoding)#############################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="n">encodings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;poison-class&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;cap-shape&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-surface&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-color&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;bruises&#39;</span><span class="p">:</span>                    <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;odor&#39;</span><span class="p">:</span>                       <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-attachment&#39;</span><span class="p">:</span>            <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-spacing&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-size&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-color&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-shape&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-root&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-color&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-number&#39;</span><span class="p">:</span>             <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;spore-print-color&#39;</span><span class="p">:</span>       <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;population&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;habitat&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">###### Define Encoder Generator ##########################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="k">def</span> <span class="nf">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;feature&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">alphabet</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encoding failed in &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;: unknown value &#39;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoder</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Apply Encodings ####################################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">get_dummies</span>
+
+<span class="k">def</span> <span class="nf">apply_encodings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">encodings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">):</span>
+    <span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">:</span>
+            <span class="n">encoder</span> <span class="o">=</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">encoded_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encoder</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;onehot&quot;</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">dummies</span> <span class="o">=</span> <span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">encoded_df</span><span class="p">,</span> <span class="n">dummies</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown encoding method: use &#39;ordinal&#39; or &#39;onehot&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoded_df</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="c1">##### Report Generator ###################################################################################################</span>
+<span class="c1">##########################################################################################################################</span>
+<span class="k">def</span> <span class="nf">generate_encoding_markdown</span><span class="p">(</span><span class="n">encodings</span><span class="p">):</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="s2">&quot;# Mushroom Feature Encoding Reference</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;### </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;| Category | Encoded Value |</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;|----------|----------------|</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">alphabet</span><span class="p">):</span>
+            <span class="n">md</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;| `</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">` | `</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="si">}</span><span class="s2">` |</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">md</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">md</span>
+
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 1: Load the raw data ########################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Get the database (unchanged from original code)</span>
+<span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/logisticregression/agaricus-lepiota.data&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="c1">###### Read and load data into dataframe, set column names to the encoding keys</span>
+<span class="n">mymushroom</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 2: Encode ###################################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">interim</span> <span class="o">=</span> <span class="n">apply_encodings</span><span class="p">(</span><span class="n">mymushroom</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">encodings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">)</span>  <span class="c1"># or &quot;onehot&quot;</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 3: Export Markdown (optional) ###############################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">md_report</span> <span class="o">=</span> <span class="n">generate_encoding_markdown</span><span class="p">(</span><span class="n">encodings</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;encoding_reference.md&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">md_report</span><span class="p">)</span>
+<span class="n">interim</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 4: Split Dataframe for Training, Testing  ###################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1">#split dataset in features and target variable</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span> <span class="c1"># Features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span> <span class="c1"># Target variable</span>
+<span class="c1"># split X and y into training and testing sets</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">y_test</span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 5: Load Random Forest Classifier, Fit Data Model  ##########################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span>
+    <span class="n">oob_score</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Classifier&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OOB Score:&quot;</span><span class="p">,</span> <span class="n">rf</span><span class="o">.</span><span class="n">oob_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy:&quot;</span><span class="p">,</span> <span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy:&quot;</span><span class="p">,</span> <span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">class_names</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">tick_marks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cnf_matrix</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Heat Map Performance (Random Forest)&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual label&#39;</span><span class="p">);</span>
+
+<span class="c1">#########################################################################################################################</span>
+<span class="c1">###### Step 7: Classify New Mushroom  ###################################################################################</span>
+<span class="c1">#########################################################################################################################</span>
+<span class="n">s_new</span> <span class="o">=</span> <span class="s2">&quot;csgfnfwbktrssggpwoeksu&quot;</span> <span class="c1"># Sample input string from a new mushroom (22 characters)</span>
+<span class="c1"># Create encoders from the original encoding dictionary</span>
+<span class="n">encoders</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">col</span><span class="p">:</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="c1"># Get list of feature columns (excluding &#39;poison-class&#39;)</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># skip target</span>
+<span class="c1"># Zip characters with corresponding features</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoders</span><span class="p">[</span><span class="n">col</span><span class="p">](</span><span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_cols</span><span class="p">,</span> <span class="n">s_new</span><span class="p">)]</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Encoding error:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># Predict if encoding successful</span>
+<span class="k">if</span> <span class="n">x_new</span><span class="p">:</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">y_new</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[92mNew mushroom classified as EDIBLE</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>      <span class="c1"># Green text</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[91mNew mushroom classified as POISONOUS</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>   <span class="c1"># Red text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest Classifier
+OOB Score: 1.0
+Training Accuracy: 1.0
+Test Accuracy: 1.0
+New mushroom classified as EDIBLE
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/jupyterhub/lib/python3.10/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/e2a2dc1852ced497f0b1774ee293a8c1f4a61b77ef478a01816edc33076a1f96.png" src="../../_images/e2a2dc1852ced497f0b1774ee293a8c1f4a61b77ef478a01816edc33076a1f96.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importances</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_idx</span><span class="p">)),</span> <span class="n">importances</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_idx</span><span class="p">)),</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Feature Importances (Random Forest)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4aecaa96edcda52293f63152762466cfa891718c610541cc3c73688e3c9bcc98.png" src="../../_images/4aecaa96edcda52293f63152762466cfa891718c610541cc3c73688e3c9bcc98.png" />
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Logistic regression does not naturally produce a visually interpretable feature importance plot—its coefficients are linear weights, which can be difficult to interpret, especially when features are on arbitrary categorical scales.</p>
+<p>However, when using models like decision trees or random forests, we can generate <strong>feature importance plots</strong> that highlight which inputs contribute most to the prediction. These plots are useful for <strong>dimensionality reduction</strong>, helping us identify and potentially eliminate low-impact features to simplify the model, reduce overfitting risk, or improve computational efficiency.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is often a trade-off between <strong>model interpretability</strong> and <strong>predictive performance</strong>.</p>
+<p>Logistic regression offers high interpretability—its coefficients directly relate each feature to the predicted outcome under a linear model assumption. This makes it easy to explain to stakeholders or document in regulatory settings. However, it may struggle to capture complex interactions or nonlinear patterns in the data.</p>
+<p>Random forests, on the other hand, usually deliver better predictive performance on categorical and nonlinear problems like this mushroom classification task. They model interactions and nonlinearities automatically, but their inner workings are harder to explain—a single prediction is the result of <strong>aggregated decisions across many trees</strong>, which makes direct interpretation more difficult.</p>
+<p>When designing machine learning tools for real-world applications, it’s important to balance these two concerns depending on the <strong>audience</strong>, <strong>risk</strong>, and <strong>use case</strong>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_cols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;cap-color&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="model-comparison-interpretability-vs-predictive-power">
+<h2>Model Comparison: Interpretability vs. Predictive Power<a class="headerlink" href="#model-comparison-interpretability-vs-predictive-power" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Interpretability</p></th>
+<th class="head"><p>Captures Nonlinearity</p></th>
+<th class="head"><p>Handles Categorical Features</p></th>
+<th class="head"><p>Typical Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Logistic Regression</p></td>
+<td><p>⭐⭐⭐⭐⭐ (High)</p></td>
+<td><p>❌ No</p></td>
+<td><p>⚠️ Needs manual encoding</p></td>
+<td><p>Baseline classifier, regulatory reporting</p></td>
+</tr>
+<tr class="row-odd"><td><p>Decision Tree</p></td>
+<td><p>⭐⭐⭐ (Medium)</p></td>
+<td><p>✅ Yes</p></td>
+<td><p>✅ Native support</p></td>
+<td><p>Simple rule-based systems, visualization</p></td>
+</tr>
+<tr class="row-even"><td><p>Random Forest</p></td>
+<td><p>⭐⭐ (Low)</p></td>
+<td><p>✅ Yes</p></td>
+<td><p>✅ Native support</p></td>
+<td><p>High-accuracy classification tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p>Support Vector Machine</p></td>
+<td><p>⭐ (Low)</p></td>
+<td><p>✅ Yes (via kernels)</p></td>
+<td><p>⚠️ Needs preprocessing</p></td>
+<td><p>Small feature sets with clear boundaries</p></td>
+</tr>
+<tr class="row-even"><td><p>Neural Network (MLP)</p></td>
+<td><p>⭐ (Very Low)</p></td>
+<td><p>✅✅✅ Yes (deep)</p></td>
+<td><p>⚠️ Needs preprocessing</p></td>
+<td><p>Complex or high-dimensional data patterns</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>⚠️ Manual encoding often means one-hot or ordinal encoding before model input.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Interpretability and accuracy are often in tension. In regulated domains or educational settings, a simpler model may be preferable even if it performs slightly worse. In critical classification tasks (like medical triage or safety systems), both high interpretability and performance may be required.</p>
 </div>
 </section>
 <section id="engineering-application-s-examples">
@@ -877,6 +1175,7 @@ Iris-versicolor       0.95      0.93      0.94        41
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Decision Trees</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings-references">Readings/References</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
@@ -889,7 +1188,11 @@ Iris-versicolor       0.95      0.93      0.94        41
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cart5-based-on-industry-as-predictor">CART5 : Based on “Industry” as predictor:</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-re-using-the-iris-plants-classification">Example Re-using the Iris Plants Classification <br/></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#iris-plants-classification-by-random-forest">8.1 Iris Plants Classification by Random Forest<br/></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-using-random-forest">8.1 Poison Mushroom using Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-comparison-interpretability-vs-predictive-power">Model Comparison: Interpretability vs. Predictive Power</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#engineering-application-s-examples">Engineering Application(s) Examples</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-observations-regarding-random-forests">General Observations Regarding Random Forests</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros">Pros:</a></li>
@@ -897,6 +1200,9 @@ Iris-versicolor       0.95      0.93      0.94        41
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>

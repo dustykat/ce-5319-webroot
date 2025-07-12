@@ -35,7 +35,7 @@
 
 Consider the feature list above, each feature is coded as a single character according the key for the feature.  Using these 22 features how would Coprinopsis atramentaria (black ink cap) be encoded?
 
-c,s,g,f,n,f,w,b,k,t,s,s,g,g,p,w,o,e,k,s,u
+csgfnfwbktrssggpwoeksu
 
 Coprinopsis atramentaria (Black Ink Cap) Feature Encoding
 Feature #	Feature Name	Likely Value	Code	Justification

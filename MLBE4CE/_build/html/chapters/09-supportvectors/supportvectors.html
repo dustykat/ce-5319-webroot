@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/09-supportvectors/supportvectors';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -188,29 +190,41 @@
 <li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
 
 
-
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
-<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">5. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">6. Non-Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-logisticregression/logisticregression.html">7. Logistic Regression</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">8. Decision Trees</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Support Vectors</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -347,7 +361,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -363,6 +379,29 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">9. Support Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlap-and-noise-linear-non-separable-cases">Overlap and Noise: Linear Non-Separable Cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-separable-example">Linear Separable Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-separable-example">Non-Separable Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-svm-kernels-in-scikit-learn">Common SVM Kernels in scikit-learn</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-example-using-svm">9.1 Poison Mushroom Example using SVM</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operationally-svr">Operationally SVR:</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -378,7 +417,659 @@ document.write(`
 <p class="admonition-title">Course Website</p>
 <p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
 </div>
-<p>lorem ipsum</p>
+<section id="readings">
+<h2>Readings<a class="headerlink" href="#readings" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) The One Hundred Page Machine Learning Book</a> See Chapter 1. pp. 5-8 pp.; Chapter 3. pp. 12-15</p></li>
+<li><p><a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0022169419312570?via%3Dihub">Asquith, W.H. “The use of support vectors from support vector machines for hydrometeorologic monitoring network analyses” Journal of Hydrology 583 (2020)</a>  This article, as well as the citations are a good starting point for implementing support vector regression (SVR) in hydrological contexts.</p></li>
+<li><p><a class="reference external" href="https://statisticalsupportandresearch.wordpress.com/wp-content/uploads/2017/05/vladimir-vapnik-the-nature-of-statistical-learning-springer-2010.pdf">Vapnik, V. (1995). The Nature of Statistical Learning Theory. Springer.</a></p></li>
+<li><p><a class="reference external" href="https://alex.smola.org/papers/2004/SmoSch04.pdf">Smola, A. J., &amp; Schölkopf, B. (2004). A tutorial on support vector regression. Statistics and Computing, 14(3), 199–222.</a></p></li>
+</ol>
+</section>
+<section id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>Support Vector Machines (SVMs) are a powerful class of machine learning models designed to separate categories of data by finding the best dividing boundary. This boundary is not always a straight line—it can be a curved surface that better fits the underlying structure of the data.</p>
+<p>In contrast to decision trees, which split data with vertical or horizontal cuts aligned to feature axes, SVMs find a hyperplane that slices through space to separate classes. What makes SVMs special is that they don’t just memorize data—they focus only on the most critical points near the dividing line. These are called support vectors, and they determine the final decision surface.</p>
+<p>A valuable feature of SVMs is that many data points—especially those far from the decision boundary—don’t affect the model at all. These points get zero weight in the final prediction equation. This makes the model efficient and robust to noise, especially when data is well separated. The width of the “buffer zone” around the boundary is controlled by the margin and regulated by hyperparameters like C and epsilon.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support Vector Machines (SVMs) use linear combinations of <strong>specific data points</strong> (the support vectors) and attendant weights (obtained by regression) are to define a hyperplane(s) through the entire data set). Recall our decision tree chapter, in that case we split perpindicular to the various feature axes - reordered the cuts to obtain the best prediction performance, and that result is the prediction engine; SVMs are capable of mimicking curvilinear patterns in the data (essentially draw affine segments for the splits allowing our model to honor “curved” decision boundaries). SVMs only use the data points residing near the decision boundaries; values far from the bouindaries of the SVM will actually have no effect. No effect means that the weights for some data points are zero, and such observations are not required to “support” the model. Analysts have control on how large residuals can be with no effect on the SVM by a “epsilon” hyperparameter.</p>
+</div>
+</section>
+<section id="overlap-and-noise-linear-non-separable-cases">
+<h2>Overlap and Noise: Linear Non-Separable Cases<a class="headerlink" href="#overlap-and-noise-linear-non-separable-cases" title="Link to this heading">#</a></h2>
+<p>In many real-world datasets, it’s not possible to draw a straight line (or plane) that perfectly separates the classes. We call these non-separable problems. This often happens when:</p>
+<ul class="simple">
+<li><p>The data is noisy (e.g., errors in measurement or labeling)</p></li>
+<li><p>The boundary between categories is curved or irregular</p></li>
+</ul>
+<p>SVMs handle these issues in two key ways:</p>
+<ul class="simple">
+<li><p>Soft margins: Instead of insisting on perfect separation, SVMs allow some violations (misclassifications) but penalize them in the loss function. The C parameter controls this tradeoff—low C tolerates more mistakes to get a wider margin; high C enforces stricter separation.</p></li>
+<li><p>Kernel transformations: When even soft margins aren’t enough, we can map the data to a higher-dimensional space using a mathematical transformation called a kernel. This lets the SVM draw curved boundaries in the original feature space. A popular choice is the RBF (radial basis function) kernel, which can model highly nonlinear boundaries.</p></li>
+</ul>
+</section>
+<section id="linear-separable-example">
+<h2>Linear Separable Example.<a class="headerlink" href="#linear-separable-example" title="Link to this heading">#</a></h2>
+<p>In this example the two classes, are associated with two features (predictors).  The SVM passes a line between the classes in feature space (very much like decision tree, but conditioned (in probability sense) on value of another feature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Generate a linearly separable dataset ###########################</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>        <span class="c1"># total points</span>
+    <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>         <span class="c1"># two features for easy plotting</span>
+    <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>      <span class="c1"># both features contribute to classification</span>
+    <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>        <span class="c1"># no redundant features</span>
+    <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">class_sep</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>        <span class="c1"># increase to make separation obvious</span>
+    <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>             <span class="c1"># no label noise</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="c1">####################################################################</span>
+
+<span class="c1"># Split the dataset</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at first few rows of training set to infer structure</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Row&#39;</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Class&#39;</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Feature 1&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;Feature 2&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">&gt;4</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;10.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;10.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Row  Class  Feature 1  Feature 2
+   0      1      3.171      2.466
+   1      1      2.441      2.381
+   2      1      2.270      2.693
+   3      1      2.346      2.556
+   4      1      1.948      3.269
+   5      1      2.647      2.252
+   6      0      2.896     -1.615
+   7      1      1.832      3.197
+   8      1      2.537      2.467
+   9      0      2.068     -3.156
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit a linear SVM</span>
+<span class="n">clf_linear</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">clf_linear</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to plot decision boundary</span>
+<span class="k">def</span> <span class="nf">plot_linear_boundary</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 2&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot the linear boundary</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_linear_boundary</span><span class="p">(</span><span class="n">clf_linear</span><span class="p">,</span> <span class="s2">&quot;Linear SVM (Good Fit - Separable Data)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6422b0da9288b7c4343b1fbeff64113523407b5f54e2f44e3f4756acc8d1a4fe.png" src="../../_images/6422b0da9288b7c4343b1fbeff64113523407b5f54e2f44e3f4756acc8d1a4fe.png" />
+</div>
+</div>
+<p>We can actually recover the equation of the decision boundary from a trained linear SVM model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the 2-feature case, this boundary is a straight line, and we can visualize it directly.
+In general, with n features, the boundary is a hyperplane in n-dimensional space. While it’s straightforward to write its equation, it becomes difficult (or impossible) to plot in higher dimensions.</p>
+<p>For a 2D linear SVM:
+$<span class="math notranslate nohighlight">\(
+w_1 x_1 + w_2 x_2 + b = 0 \quad \Rightarrow \quad x_2 = -\frac{w_1}{w_2}x_1 - \frac{b}{w_2}
+\)</span>$</p>
+<p>In 3D, the equation defines a plane:
+$<span class="math notranslate nohighlight">\(
+w_1 x_1 + w_2 x_2 + w_3 x_3 + b = 0
+\)</span>$</p>
+<p>In 10D, the same principle applies, but we can’t visualize it directly.</p>
+</div>
+<p>Below is continuation of the example to illustrate extracting the slope and intercept, and then replot to emphasize the decision boundary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume clf_linear is a trained linear SVM (from the 2D example)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">clf_linear</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">clf_linear</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">slope</span> <span class="o">=</span> <span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Display the actual boundary equation</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recovered Decision Boundary from Model Coefficients:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Weight vector: w = [</span><span class="si">{</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Intercept: b = </span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Decision boundary equation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  x2 = (</span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) * x1 + (</span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="c1"># Add the decision boundary to your plot</span>
+<span class="k">def</span> <span class="nf">plot_with_boundary</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    
+    <span class="n">w</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y_vals</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x_vals</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision boundary&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear SVM with Decision Boundary&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Call this after fitting the linear SVM</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_with_boundary</span><span class="p">(</span><span class="n">clf_linear</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Recovered Decision Boundary from Model Coefficients:
+  Weight vector: w = [0.323, 1.138]
+  Intercept: b = -0.890
+
+Decision boundary equation:
+  x2 = (-0.284) * x1 + (0.782)
+</pre></div>
+</div>
+<img alt="../../_images/2f8c5e5e41f0ffc14473758396366d409cf02c26b25ee81900dd61077281f762.png" src="../../_images/2f8c5e5e41f0ffc14473758396366d409cf02c26b25ee81900dd61077281f762.png" />
+</div>
+</div>
+</section>
+<section id="non-separable-example">
+<h2>Non-Separable Example.<a class="headerlink" href="#non-separable-example" title="Link to this heading">#</a></h2>
+<p>In this example, we examine a case where the two classes are defined by two features, but the data is not linearly separable. The class clusters are arranged in concentric circular patterns, making it impossible for a standard SVM with a linear kernel to find a straight-line boundary that divides them.</p>
+<p>However, by using a different kernel function—specifically the radial basis function (RBF) kernel—the SVM can project the data into a higher-dimensional space where separation becomes possible. In this transformed space, the algorithm draws a separating hyperplane, which corresponds to a nonlinear decision boundary in the original feature space.</p>
+<p>There are other ways to address non-separability, such as applying feature transformations or rotating the data. These approaches are beyond the scope of this presentation, but it’s worth noting that in our circular case, a natural transformation exists:</p>
+<div class="math notranslate nohighlight">
+\[r^2 = (x-x_0^2)+(y-y_0)^2\]</div>
+<p>This effectively reduces the two features into a single radial feature. The RBF kernel essentially performs this transformation implicitly. As a self-guided exercise, you might try computing <span class="math notranslate nohighlight">\(r^2\)</span> manually from the original coordinates and plotting the class label versus <span class="math notranslate nohighlight">\(r^2\)</span>. You’ll observe a clear separation in this 1D feature space—revealing the intuition behind the kernel trick.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Step 1: Generate concentric circle data (nonlinear pattern)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Split into training and testing</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Train linear and RBF SVMs</span>
+<span class="n">clf_linear</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">clf_rbf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">clf_linear</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">clf_rbf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># recover the linear separation line</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">clf_linear</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">clf_linear</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">slope</span> <span class="o">=</span> <span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linear SVM Model&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Slope :&quot;</span><span class="p">,</span><span class="n">slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept :&quot;</span><span class="p">,</span><span class="n">intercept</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Plotting function with decision boundary</span>
+<span class="k">def</span> <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">.5</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">.5</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+    
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># Plot decision boundary and data points</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>  <span class="c1"># decision boundary</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 2&quot;</span><span class="p">)</span>
+
+<span class="c1"># Step 5: Create side-by-side comparison plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plot_decision_boundary</span><span class="p">(</span><span class="n">clf_linear</span><span class="p">,</span> <span class="s2">&quot;Linear SVM (Fails to Separate)&quot;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plot_decision_boundary</span><span class="p">(</span><span class="n">clf_rbf</span><span class="p">,</span> <span class="s2">&quot;RBF SVM (Nonlinear Boundary)&quot;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Linear SVM Model
+Slope : 0.3008066025908663
+Intercept : 2533.0677132863866
+</pre></div>
+</div>
+<img alt="../../_images/a4df3855eaa85d21167b689c8b6feb9e56486cb4f92b67b3b30ba3b4dd583a15.png" src="../../_images/a4df3855eaa85d21167b689c8b6feb9e56486cb4f92b67b3b30ba3b4dd583a15.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+
+<span class="c1"># Step 1: Generate nonlinear, concentric data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Compute r^2 for each point (distance from origin squared)</span>
+<span class="n">r_squared</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># x^2 + y^2</span>
+
+<span class="c1"># Step 3: Scatter plot: r^2 vs class label</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">r_squared</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r_squared</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Possible boundary&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$r^2 = x^2 + y^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Class Label&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Transforming (x, y) → $r^2$ reveals separability&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8f3239efe272112b30067a9f83e3fe256625e5b73456567a7fefb80f62adabc6.png" src="../../_images/8f3239efe272112b30067a9f83e3fe256625e5b73456567a7fefb80f62adabc6.png" />
+</div>
+</div>
+</section>
+<section id="common-svm-kernels-in-scikit-learn">
+<h2>Common SVM Kernels in scikit-learn<a class="headerlink" href="#common-svm-kernels-in-scikit-learn" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kernel</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Handles Nonlinear Data?</p></th>
+<th class="head"><p>Tunable Parameters</p></th>
+<th class="head"><p>Best Used When…</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>linear</p></td>
+<td><p>Computes a straight-line (or flat hyperplane) separator</p></td>
+<td><p>❌ No</p></td>
+<td><p>C</p></td>
+<td><p>Classes are well-separated or data is high-dimensional (e.g., text classification)</p></td>
+</tr>
+<tr class="row-odd"><td><p>rbf</p></td>
+<td><p>Radial Basis Function (Gaussian); maps to infinite dim.</p></td>
+<td><p>✅ Yes</p></td>
+<td><p>C, gamma</p></td>
+<td><p>Boundary is curved or complex; most common general-purpose kernel</p></td>
+</tr>
+<tr class="row-even"><td><p>poly</p></td>
+<td><p>Polynomial kernel of degree d</p></td>
+<td><p>✅ Yes</p></td>
+<td><p>C, degree, coef0, gamma</p></td>
+<td><p>Patterns follow curved but structured relationships (e.g., quadratic)</p></td>
+</tr>
+<tr class="row-odd"><td><p>sigmoid</p></td>
+<td><p>Simulates behavior of a shallow neural network</p></td>
+<td><p>✅ Yes (limited)</p></td>
+<td><p>C, coef0, gamma</p></td>
+<td><p>Rarely used; useful in niche applications resembling neural threshold behavior</p></td>
+</tr>
+<tr class="row-even"><td><p>precomputed</p></td>
+<td><p>You supply the full kernel matrix instead of raw features</p></td>
+<td><p>⚠️ Depends</p></td>
+<td><p>None (kernel = your matrix)</p></td>
+<td><p>Custom kernels for specialized data types (e.g., graphs, biological sequences)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ul class="simple">
+<li><p>C controls regularization: low C allows more misclassifications (smoother boundary); high C fits tightly.</p></li>
+<li><p>gamma controls how far a single training example affects the decision boundary:</p>
+<ul>
+<li><p>High gamma: model is sensitive to individual points (can overfit)</p></li>
+<li><p>Low gamma: smoother, more general boundary</p></li>
+</ul>
+</li>
+</ul>
+<p>You can experiment with kernel types using SVC(kernel=’linear’), kernel=’rbf’, etc.</p>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">sklearn SVM documentation</a></p>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="poison-mushroom-example-using-svm">
+<h1>9.1 Poison Mushroom Example using SVM<a class="headerlink" href="#poison-mushroom-example-using-svm" title="Link to this heading">#</a></h1>
+<p>The script below uses SVMs to classify our poison mushroom example;</p>
+<p>Why the Mushroom Dataset Works for SVM:</p>
+<ul class="simple">
+<li><p>All categorical features → numerically encoded; You’ve already ordinal-encoded the dataset, making it compatible with sklearn.svm.SVC, which requires numeric input.</p></li>
+<li><p>Binary classification problem. SVMs excel in this setting, especially with nonlinear kernels like RBF.</p></li>
+<li><p>Relatively small feature set. Ideal to visualize and reason about decision boundaries (even if not plotted in high dimensions).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this script I left artifacts to try the other kernels if you wish.  The sigmodial kernel has really long run times, and can stall the machine.  The specs left do run, but it is a poor performer.  The other kernels evaluate reasonably quickly.  The artifacts capture functioning syntax, which is the goal.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SVM-Based Mushroom Classification (Refactored Version)</span>
+<span class="c1"># Author: Sensei + OpenAI Refactor</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Step 1: Load and Prepare the Data</span>
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Download the mushroom dataset from remote source</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">remote_url</span> <span class="o">=</span> <span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/ce5319jb/lessons/logisticregression/agaricus-lepiota.data&quot;</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">localfile</span><span class="p">:</span>
+    <span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+<span class="c1"># Define encodings for ordinal representation</span>
+<span class="n">encodings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;poison-class&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;cap-shape&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-surface&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;cap-color&#39;</span><span class="p">:</span>                  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;bruises&#39;</span><span class="p">:</span>                    <span class="p">([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;odor&#39;</span><span class="p">:</span>                       <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-attachment&#39;</span><span class="p">:</span>            <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-spacing&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-size&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;gill-color&#39;</span><span class="p">:</span>                <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-shape&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-root&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-above-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-surface-below-ring&#39;</span><span class="p">:([</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-above-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;stalk-color-below-ring&#39;</span><span class="p">:</span>  <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;veil-color&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-number&#39;</span><span class="p">:</span>             <span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;ring-type&#39;</span><span class="p">:</span>               <span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;spore-print-color&#39;</span><span class="p">:</span>       <span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;population&#39;</span><span class="p">:</span>              <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">,</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;?&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;habitat&#39;</span><span class="p">:</span>                 <span class="p">([</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;p&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Load data</span>
+<span class="n">mymushroom</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;poisonmushroom.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">mymushroom</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># Encoding helper function</span>
+<span class="k">def</span> <span class="nf">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;feature&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">alphabet</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">alphabet</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encoding failed in &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;: unknown value &#39;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoder</span>
+
+<span class="c1"># Apply encodings to dataframe</span>
+<span class="k">def</span> <span class="nf">apply_encodings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">encodings</span><span class="p">):</span>
+    <span class="n">encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">encoder</span> <span class="o">=</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+        <span class="n">encoded_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encoder</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encoded_df</span>
+
+<span class="n">interim</span> <span class="o">=</span> <span class="n">apply_encodings</span><span class="p">(</span><span class="n">mymushroom</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">encodings</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Step 2: Split Data for Training/Testing</span>
+<span class="c1"># -------------------------------------------</span>
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="n">interim</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># all but target</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">interim</span><span class="p">[</span><span class="s1">&#39;poison-class&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Step 3: Train SVM Classifier</span>
+<span class="c1"># -------------------------------------------</span>
+<span class="c1">#svm = SVC(kernel=&#39;linear&#39;, C=1.0, gamma=&#39;scale&#39;, probability=True) # this kernel OK with these settings</span>
+<span class="n">svm</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#svm = SVC(kernel=&#39;sigmoid&#39;, coef0=0.9, C=1.0, gamma=&#39;scale&#39;, probability=True) # this kernel performs poorly this dataset</span>
+<span class="c1">#svm = SVC(kernel=&#39;poly&#39;, degree=3, C=1.0, gamma=&#39;scale&#39;, probability=True) # this kernel works nicely with these settings</span>
+<span class="n">svm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Step 4: Evaluate Performance</span>
+<span class="c1"># -------------------------------------------</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Support Vector Machine Classifier&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy:&quot;</span><span class="p">,</span> <span class="n">svm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy:&quot;</span><span class="p">,</span> <span class="n">svm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+
+<span class="n">cnf_matrix</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">tick_marks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">class_names</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">tick_marks</span><span class="p">,</span> <span class="n">class_names</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cnf_matrix</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix (SVM)&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual label&#39;</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------</span>
+<span class="c1"># Step 5: Classify New Mushroom</span>
+<span class="c1"># -------------------------------------------</span>
+<span class="n">s_new</span> <span class="o">=</span> <span class="s2">&quot;csgfnfwbktrssggpwoeksu&quot;</span>  <span class="c1"># new sample string</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">encodings</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># skip poison-class</span>
+<span class="n">encoders</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">make_encoder</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="ow">in</span> <span class="n">encodings</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;poison-class&#39;</span><span class="p">}</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoders</span><span class="p">[</span><span class="n">col</span><span class="p">](</span><span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">s_new</span><span class="p">)]</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">y_new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[92mNew mushroom classified as EDIBLE</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[91mNew mushroom classified as POISONOUS</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error encoding new sample:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Support Vector Machine Classifier
+Training Accuracy: 1.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test Accuracy: 1.0
+New mushroom classified as EDIBLE
+</pre></div>
+</div>
+<img alt="../../_images/38fe4de4f3c0c95ccdc4bd0cde9e899e9f24dfd136f57a696eec943ec743025c.png" src="../../_images/38fe4de4f3c0c95ccdc4bd0cde9e899e9f24dfd136f57a696eec943ec743025c.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="support-vector-regression">
+<h1>9.2 Support Vector Regression<a class="headerlink" href="#support-vector-regression" title="Link to this heading">#</a></h1>
+<p>A variant of SVM known as Support Vector Regression (SVR) is available for continuous prediction tasks. It uses the same ideas of kernels and margin optimization, but adapts them for fitting real-valued functions.</p>
+<p>Key Points on Support Vector Regression (SVR)</p>
+<ul class="simple">
+<li><p>Implemented in scikit-learn as sklearn.svm.SVR</p></li>
+<li><p>Instead of finding a classification boundary, SVR finds a function that stays within a margin (epsilon) of the true targets</p></li>
+<li><p>It minimizes prediction error only when it exceeds a threshold, creating a “tube” of tolerance around the prediction</p></li>
+<li><p>It uses the same kernel machinery: kernel=’linear’, ‘rbf’, ‘poly’, etc.</p></li>
+</ul>
+<p>Comparison of Classifers and Regressors in SVMs Context</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Classifier (SVC)</p></th>
+<th class="head"><p>Regressor (SVR)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Maximizes the margin between classes</p></td>
+<td><p>Fits a flat function with an epsilon-insensitive zone</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optimizes hinge loss (for misclassification)</p></td>
+<td><p>Optimizes epsilon-insensitive loss</p></td>
+</tr>
+<tr class="row-even"><td><p>Good for hard boundary decisions</p></td>
+<td><p>Good for smooth function approximation</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The script below illustrates the concepts with a simple synthetic 1D dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
+
+<span class="c1"># Step 1: Generate synthetic 1D data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># 40 values in [0, 5]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># y = sin(x) + noise</span>
+
+<span class="c1"># Step 2: Fit Support Vector Regression with RBF kernel</span>
+<span class="n">svr_rbf</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">svr_rbf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data (with noise)&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SVR Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                 <span class="n">y_pred</span> <span class="o">-</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                 <span class="n">y_pred</span> <span class="o">+</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">epsilon</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Epsilon-tube&#39;</span><span class="p">)</span>
+
+<span class="c1"># Highlight support vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">svr_rbf</span><span class="o">.</span><span class="n">support_</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">svr_rbf</span><span class="o">.</span><span class="n">support_</span><span class="p">],</span> 
+            <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Support Vectors&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Support Vector Regression with RBF Kernel&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ba75098f24fff07b79ffcb966b8fb624bc1b6b7d7505290cac481f7a5573dc7a.png" src="../../_images/ba75098f24fff07b79ffcb966b8fb624bc1b6b7d7505290cac481f7a5573dc7a.png" />
+</div>
+</div>
+<p>Support Vector Regression (SVR) fits a function—often nonlinear depending on the kernel—such that most data points lie within a tube of radius <span class="math notranslate nohighlight">\(\epsilon\)</span> around the regression surface. The upper and lower boundaries of this tube are affine offsets from the central predictor. Unlike ordinary regression, SVR uses a loss function that ignores small errors within the tube and only penalizes deviations beyond <span class="math notranslate nohighlight">\(\epsilon\)</span>. This leads to a model that is insensitive (by design) to minor fluctuations or noise.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the plot above, only the data points (treated as vectors in 1D) that define the tightest upper and lower envelope of the prediction tube are used to shape the model. These are the <strong>support vectors</strong>, shown as larger circles. If you were to connect these points with line segments—upper hull to upper hull, and lower hull to lower hull—you would construct a <strong>piecewise-linear tube</strong> enclosing the dataset. While the actual SVR surface may be curved (due to kernel transformations), this geometric interpretation helps illustrate how SVR forms a <strong>minimal-area envelope</strong> constrained by the allowable error margin <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+</div>
+<section id="operationally-svr">
+<h2>Operationally SVR:<a class="headerlink" href="#operationally-svr" title="Link to this heading">#</a></h2>
+<p>Generates a function <span class="math notranslate nohighlight">\(f(x)\)</span> that minimizes:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i}max⁡(0,∣y_i−f(x_i)∣−\epsilon)\]</div>
+<p>The lower support boundary is:</p>
+<div class="math notranslate nohighlight">
+\[ f(x)-\epsilon\]</div>
+<p>The upper support boundary is:</p>
+<div class="math notranslate nohighlight">
+\[ f(x)+\epsilon\]</div>
+<p>Minimization Techniques Used in SVR (and SVM)</p>
+<ol class="arabic simple">
+<li><p>Sequential Minimal Optimization (SMO)</p></li>
+</ol>
+<ul class="simple">
+<li><p>Primary method in LIBSVM (used by sklearn.svm.SVR)</p></li>
+<li><p>Breaks the large quadratic programming (QP) problem into smaller sub-problems</p></li>
+<li><p>Solves two Lagrange multipliers at a time while maintaining constraints</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Quadratic Programming (QP)</p></li>
+</ol>
+<ul class="simple">
+<li><p>The SVR formulation itself is a convex QP problem with inequality constraints</p></li>
+</ul>
+<p>Solves:</p>
+<p><span class="math notranslate nohighlight">\( min⁡\frac{1}{2}∥w∥^2+C\sum(ξ_i+ξ_i^∗)~\text{subject to:}~y_i−f(x_i)≤ϵ+ξ_i\)</span></p>
+<ul class="simple">
+<li><p>Internally simplified via primal/dual formulation</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Kernel Tricks via Dual Optimization</p></li>
+</ol>
+<ul class="simple">
+<li><p>SVR solves the dual of the primal QP, allowing efficient use of kernel functions</p></li>
+<li><p>Makes optimization feasible even in very high-dimensional transformed spaces</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Try searching for “simple illustration of primal-dual linear program” to find visual explanations of how primal and dual formulations relate. These illustrations often make it easier to grasp abstract optimization concepts like duality and complementary slackness.</p>
+<p><img alt="" src="../../_images/primal-dual.png" /></p>
+<p>While linear programs guarantee complementary slackness at optimality, quadratic programs (like those used in support vector machines and support vector regression) may not always satisfy it due to curvature in the objective. Still, the core idea of balancing constraints and optimization objectives remains the same.</p>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -435,6 +1126,36 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">9. Support Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlap-and-noise-linear-non-separable-cases">Overlap and Noise: Linear Non-Separable Cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-separable-example">Linear Separable Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-separable-example">Non-Separable Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-svm-kernels-in-scikit-learn">Common SVM Kernels in scikit-learn</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-example-using-svm">9.1 Poison Mushroom Example using SVM</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operationally-svr">Operationally SVR:</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
