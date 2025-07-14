@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{daves,fancyhdr,natbib,graphicx,dcolumn,amsmath,lastpage,url}
+\usepackage{amsmath,amssymb,epstopdf,longtable}
+\usepackage[final]{pdfpages}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\pagestyle{fancy}
+\lhead{CE 5319 Machine Learning for Civil Engineers}
+\rhead{SUMMER 2025}
+\lfoot{ES8}
+\cfoot{}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand\headrulewidth{0pt}
+
+
+
+\begin{document}
+\begin{center}
+{\textbf{{ CE 5319 Machine Learning for Civil Engineers} \\ {Exercise Set 8} \\ {Feature Reduction and Distance Metric in KNN Regression} }}
+\end{center}
+
+\section*{\small{Exercises}}
+\begin{enumerate}
+\item Using the implementation of \texttt{KNeighborsRegressor} on the \texttt{Solids\_in\_Rivers} database, complete the following tasks:\footnote{This exercise is to develop intuition around (a) which features matter most in KNN regression and (b) how the choice of distance metric can influence model behavior.}
+
+\begin{enumerate}
+    \item Use the \texttt{permutation\_importance} function from \texttt{sklearn.inspection} to estimate the importance of each feature in your dataset.
+    \item Identify the top 5 or 6 most important features based on the permutation importance scores.
+    \item Retrain the \texttt{KNeighborsRegressor} model using only the reduced feature set. Keep the same number of neighbors as in your full model.
+    \item Compare the performance of the reduced model to the full model using at least the following metrics:
+    \begin{itemize}
+        \item Coefficient of determination ($R^2$ score)
+        \item Root mean square error (RMSE)
+    \end{itemize}
+    \item For a fixed input vector (you may use the one from the earlier example), show the estimate computed using both models (full and reduced). Are they close? Provide a short explanation.
+    \item Repeat the modeling using two different distance powers: $p=1$ (Manhattan) and $p=2$ (Euclidean). Comment on how the distance metric affects:
+    \begin{itemize}
+        \item Feature importance rankings
+        \item Estimated values
+        \item Model performance
+    \end{itemize}
+\end{enumerate}
+
+
+
+
+\end{enumerate}
+
+
+\end{document}  

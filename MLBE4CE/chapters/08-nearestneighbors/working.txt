@@ -1,0 +1,42 @@
+18.9,1.29452,1.09,14.6,1.19,1.02,0.0007,0.0013,2650,999
+
+	ID	Location	Q_m3_s	q_m2_s	U_m_s	W_m	H_m	R_m	S_m_m	D16_m	D50_m	D84_m	D90_m	Sorting	Rhos_kg_m3	Rho_kg_m3	qb_kg_m_s	C_ppht	Record_Number	Froude	GammaS_N_m3	GammaF_N_m3	Tau0_kg_m_s2	TauStar	Ustar_m_s	ManningN	WP_m	A_m2
+10137	3	East Fork 1976	18.9	1.29452	1.09	14.6	1.19	1.02	0.0007	0.0003	0.0013	0.013	0.025	6.58281	2650	999.728	0.116	8.96248	10423	0.319075	25987.6	9803.98	7.00004	0.332722	0.0836776	0.0245955	16.9995	17.3394
+
+
+'Q_m3_s',
+ 'q_m2_s',
+ 'U_m_s',
+ 'W_m',
+ 'H_m',
+ 'R_m',
+ 'S_m_m',
+ 'D50_m',
+ 'Rhos_kg_m3',
+ 'Rho_kg_m3']
+
+
+\subsection*{Homework: Feature Reduction and Distance Metric in KNN Regression}
+
+Using your previous implementation of \texttt{KNeighborsRegressor}, complete the following tasks:
+
+\begin{enumerate}
+    \item Use the \texttt{permutation\_importance} function from \texttt{sklearn.inspection} to estimate the importance of each feature in your dataset.
+    \item Identify the top 5 or 6 most important features based on the permutation importance scores.
+    \item Retrain the \texttt{KNeighborsRegressor} model using only the reduced feature set. Keep the same number of neighbors as in your full model.
+    \item Compare the performance of the reduced model to the full model using at least the following metrics:
+    \begin{itemize}
+        \item Coefficient of determination ($R^2$ score)
+        \item Root mean square error (RMSE)
+    \end{itemize}
+    \item For a fixed input vector (you may use the one from the earlier example), show the estimate computed using both models (full and reduced). Are they close? Provide a short explanation.
+    \item Repeat the modeling using two different distance powers: $p=1$ (Manhattan) and $p=2$ (Euclidean). Comment on how the distance metric affects:
+    \begin{itemize}
+        \item Feature importance rankings
+        \item Estimated values
+        \item Model performance
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Note:} This exercise aims to build intuition around (a) which features matter most in KNN regression and (b) how the choice of distance metric can influence model behavior.
+

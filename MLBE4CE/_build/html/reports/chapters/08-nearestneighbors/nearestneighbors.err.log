@@ -1,0 +1,157 @@
+Traceback (most recent call last):
+  File "/opt/jupyterhub/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/jupyterhub/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/jupyterhub/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/jupyterhub/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/jupyterhub/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/jupyterhub/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Load needed libaries
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import sklearn.metrics as metrics
+import seaborn as sns
+%matplotlib inline
+
+# Download data from remote source
+# insert uget requests 
+filename = "solids_in_rivers.csv"
+
+# Load dataset
+df = pd.read_csv(filename)
+column_names = df.columns.tolist()
+indices = list(range(3, 10)) + [11] + list(range(15, 17))
+feature_set = [column_names[i] for i in indices]
+#  build target set (1 of 2)
+indices = list(range(17,18))
+target_set_1 = [column_names[i] for i in indices]
+# build target set (2 of 2)
+indices = list(range(18,19))
+target_set_2 = [column_names[i] for i in indices]
+# Build design matrix and target vectors
+X = df[feature_set] # Build X design matrix
+y_one = df[target_set_1]
+y_two = df[target_set_2]
+# Concatenate into a single DataFrame to drop rows with NaNs in any relevant part
+combined = pd.concat([X, y_one, y_two], axis=1)
+combined = combined.dropna()
+# Re-split into X, y_one, y_two
+X_clean = combined[feature_set]
+y_one_clean = combined[target_set_1]
+y_two_clean = combined[target_set_2]
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X_clean, y_two_clean, test_size=0.1) #Split dataframe for testing
+from sklearn.neighbors import KNeighborsRegressor
+regressor = KNeighborsRegressor(n_neighbors=5,p=2)
+#regressor.fit(X_train, y_train)
+regressor.fit(X_clean, y_one_clean)
+# Predict on test set
+y_pred = regressor.predict(X_test)
+from sklearn.metrics import mean_squared_error, r2_score
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error: {mse:.3f}")
+print(f"R² Score: {r2:.3f}")
+
+# --- Define an arbitrary input vector (must match feature_set structure) ---
+# Example: A vector with same order and type as your training features
+# Replace with real values or user input as needed
+# Wrap input in a DataFrame with correct column names
+# === Prompt for user input with default fallback ===
+#default_input = [1.37, 0.533074, 1.29, 2.57, 0.41, 0.05, 0.01, 0.05,2650, 999]
+default_input = [18.9,1.29452,1.09,14.6,1.19,1.02,0.0007,0.0013,2650,999]
+user_input = input(f"\nEnter {len(default_input)} feature values separated by commas\n[Press Enter to use default]: ")
+
+if user_input.strip():
+    try:
+        values = [float(x.strip()) for x in user_input.split(",")]
+        if len(values) != len(default_input):
+            raise ValueError("Incorrect number of features")
+    except Exception as e:
+        print(f"Invalid input. Using default. Reason: {e}")
+        values = default_input
+else:
+    values = default_input
+
+new_input_df = pd.DataFrame([values], columns=feature_set)
+
+# === Prediction and neighbor extraction ===
+y_est = float(regressor.predict(new_input_df).item())
+print(f"\nEstimated target for input: {y_est:.3f}")
+
+distances, indices = regressor.kneighbors(new_input_df, n_neighbors=5, return_distance=True)
+neighbor_features = X_clean.iloc[indices[0]]
+neighbor_targets = y_one_clean.iloc[indices[0]]
+
+# === Print neighbor data ===
+print("\n5 Nearest Neighbors:")
+for i in range(5):
+    neighbor_target = float(neighbor_targets.iloc[i, 0])
+    print(f"Neighbor {i+1}:")
+    print(f"  Distance: {distances[0][i]:.3f}")
+    print(f"  Target: {neighbor_target:.3f}")
+    print(f"  Features: {neighbor_features.iloc[i].values}\n")
+
+# === Plot bar chart with labels ===
+labels = [f'Neighbor {i+1}' for i in range(5)] + ['Estimate']
+values = list(neighbor_targets.iloc[:, 0].values) + [y_est]
+
+plt.figure(figsize=(8, 4))
+ax = sns.barplot(x=labels, y=values)
+plt.ylabel("Target Value")
+plt.title("Estimate vs 5 Nearest Neighbors")
+
+# Add text labels on bars
+for i, val in enumerate(values):
+    ax.text(i, val + 0.01 * max(values), f"{val:.2f}", ha='center', va='bottom', fontsize=10)
+
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+------------------
+
+----- stdout -----
+Mean Squared Error: 9606043.861
+R² Score: -0.015
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mStdinNotImplementedError[0m                  Traceback (most recent call last)
+Cell [0;32mIn[14], line 58[0m
+[1;32m     51[0m [38;5;66;03m# --- Define an arbitrary input vector (must match feature_set structure) ---[39;00m
+[1;32m     52[0m [38;5;66;03m# Example: A vector with same order and type as your training features[39;00m
+[1;32m     53[0m [38;5;66;03m# Replace with real values or user input as needed[39;00m
+[1;32m     54[0m [38;5;66;03m# Wrap input in a DataFrame with correct column names[39;00m
+[1;32m     55[0m [38;5;66;03m# === Prompt for user input with default fallback ===[39;00m
+[1;32m     56[0m [38;5;66;03m#default_input = [1.37, 0.533074, 1.29, 2.57, 0.41, 0.05, 0.01, 0.05,2650, 999][39;00m
+[1;32m     57[0m default_input [38;5;241m=[39m [[38;5;241m18.9[39m,[38;5;241m1.29452[39m,[38;5;241m1.09[39m,[38;5;241m14.6[39m,[38;5;241m1.19[39m,[38;5;241m1.02[39m,[38;5;241m0.0007[39m,[38;5;241m0.0013[39m,[38;5;241m2650[39m,[38;5;241m999[39m]
+[0;32m---> 58[0m user_input [38;5;241m=[39m [38;5;28;43minput[39;49m[43m([49m[38;5;124;43mf[39;49m[38;5;124;43m"[39;49m[38;5;130;43;01m\n[39;49;00m[38;5;124;43mEnter [39;49m[38;5;132;43;01m{[39;49;00m[38;5;28;43mlen[39;49m[43m([49m[43mdefault_input[49m[43m)[49m[38;5;132;43;01m}[39;49;00m[38;5;124;43m feature values separated by commas[39;49m[38;5;130;43;01m\n[39;49;00m[38;5;124;43m[Press Enter to use default]: [39;49m[38;5;124;43m"[39;49m[43m)[49m
+[1;32m     60[0m [38;5;28;01mif[39;00m user_input[38;5;241m.[39mstrip():
+[1;32m     61[0m     [38;5;28;01mtry[39;00m:
+
+File [0;32m/opt/jupyterhub/lib/python3.10/site-packages/ipykernel/kernelbase.py:1281[0m, in [0;36mKernel.raw_input[0;34m(self, prompt)[0m
+[1;32m   1279[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m[38;5;241m.[39m_allow_stdin:
+[1;32m   1280[0m     msg [38;5;241m=[39m [38;5;124m"[39m[38;5;124mraw_input was called, but this frontend does not support input requests.[39m[38;5;124m"[39m
+[0;32m-> 1281[0m     [38;5;28;01mraise[39;00m StdinNotImplementedError(msg)
+[1;32m   1282[0m [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_input_request(
+[1;32m   1283[0m     [38;5;28mstr[39m(prompt),
+[1;32m   1284[0m     [38;5;28mself[39m[38;5;241m.[39m_parent_ident[[38;5;124m"[39m[38;5;124mshell[39m[38;5;124m"[39m],
+[1;32m   1285[0m     [38;5;28mself[39m[38;5;241m.[39mget_parent([38;5;124m"[39m[38;5;124mshell[39m[38;5;124m"[39m),
+[1;32m   1286[0m     password[38;5;241m=[39m[38;5;28;01mFalse[39;00m,
+[1;32m   1287[0m )
+
+[0;31mStdinNotImplementedError[0m: raw_input was called, but this frontend does not support input requests.
+

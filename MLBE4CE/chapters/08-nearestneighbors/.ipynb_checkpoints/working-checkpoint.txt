@@ -1,0 +1,16 @@
+18.9,1.29452,1.09,14.6,1.19,1.02,0.0007,0.0013,2650,999
+
+	ID	Location	Q_m3_s	q_m2_s	U_m_s	W_m	H_m	R_m	S_m_m	D16_m	D50_m	D84_m	D90_m	Sorting	Rhos_kg_m3	Rho_kg_m3	qb_kg_m_s	C_ppht	Record_Number	Froude	GammaS_N_m3	GammaF_N_m3	Tau0_kg_m_s2	TauStar	Ustar_m_s	ManningN	WP_m	A_m2
+10137	3	East Fork 1976	18.9	1.29452	1.09	14.6	1.19	1.02	0.0007	0.0003	0.0013	0.013	0.025	6.58281	2650	999.728	0.116	8.96248	10423	0.319075	25987.6	9803.98	7.00004	0.332722	0.0836776	0.0245955	16.9995	17.3394
+
+
+'Q_m3_s',
+ 'q_m2_s',
+ 'U_m_s',
+ 'W_m',
+ 'H_m',
+ 'R_m',
+ 'S_m_m',
+ 'D50_m',
+ 'Rhos_kg_m3',
+ 'Rho_kg_m3']

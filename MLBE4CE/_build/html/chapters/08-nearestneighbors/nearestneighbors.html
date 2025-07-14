@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="9. Support Vectors" href="../09-supportvectors/supportvectors.html" />
-    <link rel="prev" title="7. Decision Trees" href="../07-decisiontrees/decisiontrees.html" />
+    <link rel="prev" title="8. Decision Trees" href="../07-decisiontrees/decisiontrees.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -190,29 +190,44 @@
 <li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
 
 
-
 <li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
 
-<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">4.9. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">5. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">5. Non-Linear Regression</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../06-logisticregression/logisticregression.html">6. Logistic Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example1.html">Simple Logistic Regression Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example2.html">Designed Experiments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/example3.html">Multiple Logistic Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../06-logisticregression/poissonregression.html">Poisson Regression</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">7. Decision Trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">6. Non-Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-logisticregression/logisticregression.html">7. Logistic Regression</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">8. Decision Trees</a></li>
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Nearest Neighbor Methods</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../14-neuralnetworks/neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -372,6 +387,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Nearest Neighbor Methods</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-distance-in-n-dimensional-space">Concept of Distance in N-Dimensional Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalization">Data Normalization</a><ul class="nav section-nav flex-column">
@@ -387,10 +405,22 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-remarks">Final remarks …</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering">From Plants to Engineering</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering-knn-beyond-classification">From Plants to Engineering: KNN Beyond Classification</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.1 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-does-it-work-well">When Does It Work Well?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-solids-in-rivers-homebrew">8.1.1 KNN Solids in Rivers (Homebrew)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-solids-in-rivers">8.1.2 KNN Solids in Rivers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-in-knn-regression-kneighborsregressor">Feature Importance in KNN Regression (KNeighborsRegressor)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-section">End of Section</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -403,8 +433,33 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="nearest-neighbor-methods">
 <h1>8. Nearest Neighbor Methods<a class="headerlink" href="#nearest-neighbor-methods" title="Link to this heading">#</a></h1>
+<div class="admonition-course-website admonition">
+<p class="admonition-title">Course Website</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
+</div>
 <p>The K-nearest neighbors (KNN) algorithm is a type of supervised machine learning algorithms.
 KNN is easy to implement in its most basic form, and yet performs quite complex classification tasks. It is a lazy learning algorithm because it doesn’t have a specialized training phase. Rather, it uses all of the data for training while classifying a new data point or instance. KNN is a non-parametric learning algorithm, which means that it doesn’t assume anything about the underlying data. This is an extremely useful feature since most of the real world data doesn’t really follow any theoretical assumption.</p>
+<section id="readings">
+<h2>Readings<a class="headerlink" href="#readings" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
+<li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) “The Hundred Page Machine Learning Book”  pp. 15-16</a></p></li>
+<li><p><a class="reference external" href="https://stackabuse.com/k-nearest-neighbors-algorithm-in-python-and-scikit-learn/">Sampaio, C. (2022) “K-Nearest Neighbors Algorithm in Python and Scikit-Learn”</a> <br></p></li>
+<li><p><a class="reference external" href="https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/">Brownlee, J. (2019) “Develop k-Nearest Neighbors in Python From Scratch”</a><br></p></li>
+<li><p><a class="reference external" href="https://machinelearningmastery.com/distance-measures-for-machine-learning/">Brownlee, J. (2020) “4 Distance Measures for Machine Learning”</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learn">Navlani, A. (2018) “KNN Classification using Scikit-learn”</a> <br></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/knn-in-python-835643e2fb53">Zoltan, C. (2018) “KNN in Python”</a> <br></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/k-nearest-neighbor-python-2fccc47d2a55">Maklin, C. (2019) “K Nearest Neighbor Algorithm In Python”</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/k-nearest-neighbor-algorithm-in-python/">tavishaggarwal1993 (2022) “k-nearest neighbor algorithm in Python”</a>  Author’s name is an avatar<br></p></li>
+</ol>
+</section>
+<section id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=HVXime0nQeI">“K-nearest neighbors, Clearly Explained” by Josh Starmer</a> <br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=UqYde-LULfs">“How KNN algorithm works” by Thales Sehn Körting</a><br></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=4HKqjENq9OU">“KNN Algorithm Using Python | How KNN Algorithm Works | Data Science For Beginners | Simplilearn” by Simplilearn </a> <br></p></li>
+</ol>
 <p>A description from <a class="reference external" href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm</a> is:</p>
 <blockquote>
 <div><p>In statistics, the k-nearest neighbors algorithm (k-NN) is a non-parametric classification method first developed by Evelyn Fix and Joseph Hodges in 1951, and later expanded by Thomas Cover. It is used for classification and regression. In both cases, the input consists of the k closest training examples in a data set. The output depends on whether k-NN is used for classification or regression:</p>
@@ -418,6 +473,7 @@ KNN is easy to implement in its most basic form, and yet performs quite complex 
 <p>A peculiarity of the k-NN algorithm is that it is sensitive to the local structure of the data.
 …</p>
 </div></blockquote>
+</section>
 <section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
 <p>The First Law of Geography, according to Waldo Tobler, is “everything is related to everything else, but near things are more related than distant things.”
@@ -1175,14 +1231,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[16  0  0]
- [ 0  5  0]
- [ 0  0  9]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[13  0  0]
+ [ 0 11  0]
+ [ 0  0  6]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        16
-Iris-versicolor       1.00      1.00      1.00         5
- Iris-virginica       1.00      1.00      1.00         9
+    Iris-setosa       1.00      1.00      1.00        13
+Iris-versicolor       1.00      1.00      1.00        11
+ Iris-virginica       1.00      1.00      1.00         6
 
        accuracy                           1.00        30
       macro avg       1.00      1.00      1.00        30
@@ -1205,7 +1261,7 @@ Iris-versicolor       1.00      1.00      1.00         5
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 23.52222222222222, &#39;Actual label&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/6905353f16017f6f8d6b6bda1d9e370e40d72921e7e26d1b9ec91a6d1a8d9ce2.png" src="../../_images/6905353f16017f6f8d6b6bda1d9e370e40d72921e7e26d1b9ec91a6d1a8d9ce2.png" />
+<img alt="../../_images/12a19d66d3134ab0aa4d313bced2a759271eaccf60eb6126d5f0c58b8b925250.png" src="../../_images/12a19d66d3134ab0aa4d313bced2a759271eaccf60eb6126d5f0c58b8b925250.png" />
 </div>
 </div>
 <p>What if we had used a different value for K? What is the best value for K?</p>
@@ -1242,7 +1298,7 @@ Iris-versicolor       1.00      1.00      1.00         5
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Mean Error&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/abe5a96c08c3cd050cad71637f794475664aed09819bbc7274c28047133c720d.png" src="../../_images/abe5a96c08c3cd050cad71637f794475664aed09819bbc7274c28047133c720d.png" />
+<img alt="../../_images/55f06c8dd9179fd7a3b481b4175a5b40380e8f8ad9ab2d0fca654957455d3e5d.png" src="../../_images/55f06c8dd9179fd7a3b481b4175a5b40380e8f8ad9ab2d0fca654957455d3e5d.png" />
 </div>
 </div>
 <hr>
@@ -1258,32 +1314,432 @@ Iris-versicolor       1.00      1.00      1.00         5
 <p>We will leave the task of making classifications of new inputs for a lab exercise.</p>
 </section>
 </section>
-<section id="from-plants-to-engineering">
-<h2>From Plants to Engineering<a class="headerlink" href="#from-plants-to-engineering" title="Link to this heading">#</a></h2>
-<p>Classification in engineering is every bit as important and commonly needed as it might be with plants. Lets use our
-<strong>pickone</strong> database to explore how we might employ KNN in an engineering context.</p>
+<section id="from-plants-to-engineering-knn-beyond-classification">
+<h2>From Plants to Engineering: KNN Beyond Classification<a class="headerlink" href="#from-plants-to-engineering-knn-beyond-classification" title="Link to this heading">#</a></h2>
+<p>Classification in engineering is just as critical as in botany or biology. In the plant world, you might use physical characteristics like leaf shape or petal count to identify a species. In engineering, we might instead be classifying material types, land use categories, or soil textures based on measurable features.</p>
+<p>But K-Nearest Neighbors (KNN) isn’t limited to classification problems. It’s just as useful for regression, where the goal is to predict a continuous value rather than assign a label.</p>
+<p>Let’s use our pickone dataset to explore this concept in an engineering context.</p>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Chan, Jamie. Machine Learning With Python For Beginners: A Step-By-Step Guide with Hands-On Projects (Learn Coding Fast with Hands-On Project Book 7) (p. 2). Kindle Edition.</p></li>
-<li><p><a class="reference external" href="http://ema.cri-info.cm/wp-content/uploads/2019/07/2019BurkovTheHundred-pageMachineLearning.pdf">Burkov, A. (2019) “The Hundred Page Machine Learning Book”  pp. 15-16</a></p></li>
-<li><p><a class="reference external" href="https://stackabuse.com/k-nearest-neighbors-algorithm-in-python-and-scikit-learn/">Sampaio, C. (2022) “K-Nearest Neighbors Algorithm in Python and Scikit-Learn”</a> <br></p></li>
-<li><p><a class="reference external" href="https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/">Brownlee, J. (2019) “Develop k-Nearest Neighbors in Python From Scratch”</a><br></p></li>
-<li><p><a class="reference external" href="https://machinelearningmastery.com/distance-measures-for-machine-learning/">Brownlee, J. (2020) “4 Distance Measures for Machine Learning”</a> <br></p></li>
-<li><p><a class="reference external" href="https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learn">Navlani, A. (2018) “KNN Classification using Scikit-learn”</a> <br></p></li>
-<li><p><a class="reference external" href="https://towardsdatascience.com/knn-in-python-835643e2fb53">Zoltan, C. (2018) “KNN in Python”</a> <br></p></li>
-<li><p><a class="reference external" href="https://towardsdatascience.com/k-nearest-neighbor-python-2fccc47d2a55">Maklin, C. (2019) “K Nearest Neighbor Algorithm In Python”</a> <br></p></li>
-<li><p><a class="reference external" href="https://www.geeksforgeeks.org/k-nearest-neighbor-algorithm-in-python/">tavishaggarwal1993 (2022) “k-nearest neighbor algorithm in Python”</a>  Author’s name is an avatar<br></p></li>
-</ol>
 </section>
-<section id="videos">
-<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+<section class="tex2jax_ignore mathjax_ignore" id="knn-regression-same-idea-different-target">
+<h1>8.1 KNN Regression: Same Idea, Different Target<a class="headerlink" href="#knn-regression-same-idea-different-target" title="Link to this heading">#</a></h1>
+<p>In KNN regression, the logic is familiar:</p>
+<ul class="simple">
+<li><p>For a new data point (a sample with known features but unknown outcome),</p></li>
+<li><p>Identify its k nearest neighbors in the feature space,</p></li>
+<li><p>Then take the average of their known values (usually the mean, but sometimes a weighted average is used),</p></li>
+<li><p>And assign that average as the prediction.</p></li>
+</ul>
+<p>So rather than voting on a label (as in classification), we’re computing a representative numerical value.</p>
+<p>This works particularly well in engineering applications where you have sparse or irregular data, and you want a simple but effective way to estimate an unknown based on “what’s nearby.”</p>
+<section id="when-does-it-work-well">
+<h2>When Does It Work Well?<a class="headerlink" href="#when-does-it-work-well" title="Link to this heading">#</a></h2>
+<p>KNN regression is most useful when:</p>
+<ul class="simple">
+<li><p>The data has local structure (i.e., similar inputs yield similar outputs),</p></li>
+<li><p>You have a reasonable number of features (too many = “curse of dimensionality”),</p></li>
+<li><p>The number of examples is small to moderate (KNN can be computationally expensive for large datasets unless optimized),</p></li>
+<li><p>The prediction surface is nonlinear, and a simple regression might not capture it.</p></li>
+</ul>
+<p>A Few Examples Where Engineers Might Use KNN Regression:</p>
+<ul class="simple">
+<li><p>Estimating sediment concentration in a river based on recent rainfall, flow rate, and upstream land use.</p></li>
+<li><p>Predicting concrete strength based on its mix composition.</p></li>
+<li><p>Estimating pipe break likelihood based on age, material, and pressure history.</p></li>
+<li><p>Interpolating missing sensor readings in environmental or hydrologic monitoring.</p></li>
+</ul>
+<p>We’ll Walk Through an example based on a moderate sized database that reports solids flux in rivers based of various hydraulic and soil properties:</p>
+<ul class="simple">
+<li><p>A homebrew example adapted from a script originally written in R,</p></li>
+<li><p>A Python implementation using scikit-learn, showing how to make a prediction and examine nearby data points,</p></li>
+<li><p>A visualization to help interpret what KNN regression is doing under the hood.</p></li>
+</ul>
+<div class="admonition-attribution admonition">
+<p class="admonition-title">Attribution</p>
+<p>The homebrew component of this subsection is derived largely from Neale, C. M. (2018). Development and Delivery of Server-Side Water Resources Models Using Web-Based Interfaces. The refactoring from the original R Script to Python was guided by this book’s author with assistance from OpenAI tools.</p>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="knn-solids-in-rivers-homebrew">
+<h1>8.1.1 KNN Solids in Rivers (Homebrew)<a class="headerlink" href="#knn-solids-in-rivers-homebrew" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># --- Step 1: Load Database ---</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;solids_in_rivers.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c1"># --- Step 2: Read Input File (6 lines) ---</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">mySlope</span><span class="p">,</span> <span class="n">myD50</span><span class="p">,</span> <span class="n">myQ</span><span class="p">,</span> <span class="n">myW</span><span class="p">,</span> <span class="n">nxp</span><span class="p">,</span> <span class="n">near</span> <span class="o">=</span> <span class="n">lines</span>
+<span class="n">near</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">near</span><span class="p">)</span>
+<span class="n">nxp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">nxp</span><span class="p">)</span>
+
+<span class="c1"># --- Step 3: Compute z-scores for DB ---</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;S_m_m&quot;</span><span class="p">,</span> <span class="s2">&quot;D50_m&quot;</span><span class="p">,</span> <span class="s2">&quot;Q_m3_s&quot;</span><span class="p">,</span> <span class="s2">&quot;U_m_s&quot;</span><span class="p">]</span>
+<span class="n">features_z</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">feature_names</span><span class="p">:</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">features_z</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+
+<span class="c1"># --- Step 4: Compute z-scores for inputs ---</span>
+<span class="n">myZ</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;S_m_m&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">mySlope</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;S_m_m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;S_m_m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="s2">&quot;D50_m&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">myD50</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;D50_m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;D50_m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="s2">&quot;Q_m3_s&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">myQ</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Q_m3_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Q_m3_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="s2">&quot;U_m_s&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">myW</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;U_m_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;U_m_s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1"># --- Step 5: Compute distances ---</span>
+<span class="n">zdist</span> <span class="o">=</span> <span class="p">((</span><span class="n">features_z</span><span class="p">[</span><span class="s2">&quot;S_m_m&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">myZ</span><span class="p">[</span><span class="s2">&quot;S_m_m&quot;</span><span class="p">])</span><span class="o">**</span><span class="n">nxp</span> <span class="o">+</span>
+         <span class="p">(</span><span class="n">features_z</span><span class="p">[</span><span class="s2">&quot;D50_m&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">myZ</span><span class="p">[</span><span class="s2">&quot;D50_m&quot;</span><span class="p">])</span><span class="o">**</span><span class="n">nxp</span> <span class="o">+</span>
+         <span class="p">(</span><span class="n">features_z</span><span class="p">[</span><span class="s2">&quot;Q_m3_s&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">myZ</span><span class="p">[</span><span class="s2">&quot;Q_m3_s&quot;</span><span class="p">])</span><span class="o">**</span><span class="n">nxp</span> <span class="o">+</span>
+         <span class="p">(</span><span class="n">features_z</span><span class="p">[</span><span class="s2">&quot;U_m_s&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">myZ</span><span class="p">[</span><span class="s2">&quot;U_m_s&quot;</span><span class="p">])</span><span class="o">**</span><span class="n">nxp</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">nxp</span><span class="p">)</span>
+
+<span class="c1"># --- Step 6: Sort and estimate ---</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zdist</span>
+<span class="c1">#df_sorted = df.sort_values(by=[&quot;distance&quot;, &quot;qb_kg_m_s&quot;])</span>
+<span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">,</span> <span class="s2">&quot;C_ppht&quot;</span><span class="p">])</span>
+<span class="c1">#nearest_qb = df_sorted[&quot;qb_kg_m_s&quot;].iloc[:near]</span>
+<span class="n">nearest_qb</span> <span class="o">=</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s2">&quot;C_ppht&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">near</span><span class="p">]</span>
+<span class="n">estimate</span> <span class="o">=</span> <span class="n">nearest_qb</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated qb_kg_m_s: </span><span class="si">{</span><span class="n">estimate</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Step 7: Bar Chart of 5 Nearest Neighbors + Estimate ---</span>
+<span class="n">bar_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nearest_qb</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">estimate</span><span class="p">]</span>
+<span class="n">bar_labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Neighbor </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">near</span><span class="p">))]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Estimate&quot;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">bar_labels</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">bar_vals</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;C_ppht&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;KNN Estimate vs Nearest Neighbors&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add value labels</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bar_vals</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">bar_vals</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated qb_kg_m_s: 7.17661
+</pre></div>
+</div>
+<img alt="../../_images/034005b6b5c7ed19d9c572f96db741c8638fbd605e08e0442b23952076323606.png" src="../../_images/034005b6b5c7ed19d9c572f96db741c8638fbd605e08e0442b23952076323606.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="knn-solids-in-rivers">
+<h1>8.1.2 KNN Solids in Rivers<a class="headerlink" href="#knn-solids-in-rivers" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load needed libaries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="c1"># Download data from remote source</span>
+<span class="c1"># insert uget requests </span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;solids_in_rivers.csv&quot;</span>
+
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">column_names</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">))</span>
+<span class="n">feature_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+<span class="c1">#  build target set (1 of 2)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">target_set_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+<span class="c1"># build target set (2 of 2)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">))</span>
+<span class="n">target_set_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+<span class="c1"># Build design matrix and target vectors</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feature_set</span><span class="p">]</span> <span class="c1"># Build X design matrix</span>
+<span class="n">y_one</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_set_1</span><span class="p">]</span>
+<span class="n">y_two</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_set_2</span><span class="p">]</span>
+<span class="c1"># Concatenate into a single DataFrame to drop rows with NaNs in any relevant part</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y_one</span><span class="p">,</span> <span class="n">y_two</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="c1"># Re-split into X, y_one, y_two</span>
+<span class="n">X_clean</span> <span class="o">=</span> <span class="n">combined</span><span class="p">[</span><span class="n">feature_set</span><span class="p">]</span>
+<span class="n">y_one_clean</span> <span class="o">=</span> <span class="n">combined</span><span class="p">[</span><span class="n">target_set_1</span><span class="p">]</span>
+<span class="n">y_two_clean</span> <span class="o">=</span> <span class="n">combined</span><span class="p">[</span><span class="n">target_set_2</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_clean</span><span class="p">,</span> <span class="n">y_two_clean</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="c1">#Split dataframe for testing</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#regressor.fit(X_train, y_train)</span>
+<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_clean</span><span class="p">,</span> <span class="n">y_one_clean</span><span class="p">)</span>
+<span class="c1"># Predict on test set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean Squared Error: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Define an arbitrary input vector (must match feature_set structure) ---</span>
+<span class="c1"># Example: A vector with same order and type as your training features</span>
+<span class="c1"># Replace with real values or user input as needed</span>
+<span class="c1"># Wrap input in a DataFrame with correct column names</span>
+<span class="c1"># === Prompt for user input with default fallback ===</span>
+<span class="n">console_prompt</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Set to True for live server demo, otherwise leave False or Sphinx build fails</span>
+<span class="n">default_input</span> <span class="o">=</span> <span class="p">[</span><span class="mf">18.9</span><span class="p">,</span><span class="mf">1.29452</span><span class="p">,</span><span class="mf">1.09</span><span class="p">,</span><span class="mf">14.6</span><span class="p">,</span><span class="mf">1.19</span><span class="p">,</span><span class="mf">1.02</span><span class="p">,</span><span class="mf">0.0007</span><span class="p">,</span><span class="mf">0.0013</span><span class="p">,</span><span class="mi">2650</span><span class="p">,</span><span class="mi">999</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">default_input</span>
+
+<span class="k">if</span> <span class="n">console_prompt</span><span class="p">:</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Enter </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">default_input</span><span class="p">)</span><span class="si">}</span><span class="s2"> feature values separated by commas</span><span class="se">\n</span><span class="s2">[Press Enter to use default]: &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_input</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">user_input</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">default_input</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Incorrect number of features&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid input. Using default. Reason: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">default_input</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">default_input</span>
+
+
+<span class="n">new_input_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">values</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_set</span><span class="p">)</span>
+
+<span class="c1"># === Prediction and neighbor extraction ===</span>
+<span class="n">y_est</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_input_df</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estimated target for input: </span><span class="si">{</span><span class="n">y_est</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">distances</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">new_input_df</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">neighbor_features</span> <span class="o">=</span> <span class="n">X_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">neighbor_targets</span> <span class="o">=</span> <span class="n">y_one_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="c1"># === Print neighbor data ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">5 Nearest Neighbors:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">neighbor_target</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">neighbor_targets</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Neighbor </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Distance: </span><span class="si">{</span><span class="n">distances</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Target: </span><span class="si">{</span><span class="n">neighbor_target</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Features: </span><span class="si">{</span><span class="n">neighbor_features</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === Plot bar chart with labels ===</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Neighbor </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Estimate&#39;</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">neighbor_targets</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">y_est</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target Value&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Estimate vs 5 Nearest Neighbors&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add text labels on bars</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Squared Error: 8689408.669
+R² Score: -0.017
+
+Estimated target for input: 0.054
+
+5 Nearest Neighbors:
+Neighbor 1:
+  Distance: 0.728
+  Target: 0.035
+  Features: [1.89000e+01 1.29452e+00 1.09000e+00 1.46000e+01 1.19000e+00 1.02000e+00
+ 7.00000e-04 1.30000e-03 2.65000e+03 9.99728e+02]
+
+Neighbor 2:
+  Distance: 0.728
+  Target: 0.116
+  Features: [1.89000e+01 1.29452e+00 1.09000e+00 1.46000e+01 1.19000e+00 1.02000e+00
+ 7.00000e-04 1.30000e-03 2.65000e+03 9.99728e+02]
+
+Neighbor 3:
+  Distance: 0.735
+  Target: 0.051
+  Features: [1.88000e+01 1.28767e+00 1.08000e+00 1.46000e+01 1.18000e+00 1.02000e+00
+ 7.00000e-04 1.30000e-03 2.65000e+03 9.99728e+02]
+
+Neighbor 4:
+  Distance: 0.735
+  Target: 0.044
+  Features: [1.88000e+01 1.28767e+00 1.08000e+00 1.46000e+01 1.18000e+00 1.02000e+00
+ 7.00000e-04 1.30000e-03 2.65000e+03 9.99728e+02]
+
+Neighbor 5:
+  Distance: 0.794
+  Target: 0.022
+  Features: [1.92000e+01 1.31507e+00 1.19000e+00 1.46000e+01 1.17000e+00 1.01000e+00
+ 7.00000e-04 1.30000e-03 2.65000e+03 9.99728e+02]
+</pre></div>
+</div>
+<img alt="../../_images/7f93d9a7c49dbe64b5950312aff55723ed2e2b7ffab45dd7ec5ba8b4333c4983.png" src="../../_images/7f93d9a7c49dbe64b5950312aff55723ed2e2b7ffab45dd7ec5ba8b4333c4983.png" />
+</div>
+</div>
+<section id="feature-importance-in-knn-regression-kneighborsregressor">
+<h2>Feature Importance in KNN Regression (KNeighborsRegressor)<a class="headerlink" href="#feature-importance-in-knn-regression-kneighborsregressor" title="Link to this heading">#</a></h2>
+<p>Unfortunately, KNeighborsRegressor does not provide feature importance directly — unlike tree-based models (like Random Forest or Gradient Boosting) which can compute importance from splits.</p>
+<p>But common approaches to explore importance (feature engineering) are:</p>
+<ul class="simple">
+<li><p>Permutation Importance (model-agnostic); This measures how much the prediction error increases when a feature’s values are randomly shuffled. An illustration follows below</p></li>
+<li><p>Recursive Feature Elimination (RFE); A less common approach for KNN, but you can pair it with a wrapper model like Ridge or RandomForest to suggest a reduced feature set — or just use permutation scores above.Below is the examination for our example.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature Permutation Importance examination</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">permutation_importance</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Display ranked importances</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">importances_mean</span>
+<span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sorted_idx</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">importances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rhos_kg_m3: 0.0012
+U_m_s: 0.0011
+W_m: 0.0006
+Q_m3_s: 0.0003
+Rho_kg_m3: 0.0002
+S_m_m: 0.0002
+q_m2_s: 0.0001
+H_m: 0.0001
+R_m: 0.0000
+D50_m: -0.0000
+</pre></div>
+</div>
+</div>
+</div>
+<p>The value from<code class="docutils literal notranslate"><span class="pre">result.importances_mean</span></code> gives the average change in model performance (e.g., decrease in R²) when each feature is randomly shuffled.</p>
+<p>Meaning(s):</p>
+<ul class="simple">
+<li><p>Higher values → more important: shuffling that feature hurts the model more.</p></li>
+<li><p>Zero or near-zero values → model is not sensitive to that feature.</p></li>
+<li><p>Negative values → shuffling that feature actually improves the model slightly, which suggests:</p>
+<ul>
+<li><p>It adds noise</p></li>
+<li><p>It’s collinear with other features</p></li>
+<li><p>It’s irrelevant
+Practical Use:</p></li>
+</ul>
+</li>
+<li><p>Rank features by importance</p></li>
+<li><p>Keep the top 5–6</p></li>
+<li><p>Consider dropping features with small or negative importance</p></li>
+</ul>
+<p>For the solid in rivers, hers is an interpretation of the output (ranked by importance):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Rhos_kg_m3</p></td>
+<td><p>0.0019</p></td>
+<td><p>Most important — model relies most on sediment density</p></td>
+</tr>
+<tr class="row-odd"><td><p>U_m_s</p></td>
+<td><p>0.0018</p></td>
+<td><p>Very important — velocity is a strong driver of sediment flux</p></td>
+</tr>
+<tr class="row-even"><td><p>W_m</p></td>
+<td><p>0.0009</p></td>
+<td><p>Important — probably related to wetted width or energy dissipation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rho_kg_m3</p></td>
+<td><p>0.0006</p></td>
+<td><p>Moderate — water density; not as strong as sediment density</p></td>
+</tr>
+<tr class="row-even"><td><p>Q_m3_s</p></td>
+<td><p>0.0004</p></td>
+<td><p>Minor — total flow matters, but not the dominant factor here</p></td>
+</tr>
+<tr class="row-odd"><td><p>H_m</p></td>
+<td><p>0.0002</p></td>
+<td><p>Weak — flow depth has some signal but not crucial</p></td>
+</tr>
+<tr class="row-even"><td><p>S_m_m</p></td>
+<td><p>0.0001</p></td>
+<td><p>Very weak — slope has marginal influence on flux prediction in this data context</p></td>
+</tr>
+<tr class="row-odd"><td><p>R_m</p></td>
+<td><p>0.0001</p></td>
+<td><p>Very weak — hydraulic radius is possibly redundant with Q and W</p></td>
+</tr>
+<tr class="row-even"><td><p>q_m2_s</p></td>
+<td><p>0.0001</p></td>
+<td><p>Very weak — unit discharge might be collinear with U or Q</p></td>
+</tr>
+<tr class="row-odd"><td><p>D50_m</p></td>
+<td><p>~0.0000</p></td>
+<td><p>Not used — shuffling this doesn’t degrade model performance</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Interpretation Summary:</p>
+<p>The data model depends mostly on:</p>
 <ol class="arabic simple">
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=HVXime0nQeI">“K-nearest neighbors, Clearly Explained” by Josh Starmer</a> <br></p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=UqYde-LULfs">“How KNN algorithm works” by Thales Sehn Körting</a><br></p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=4HKqjENq9OU">“KNN Algorithm Using Python | How KNN Algorithm Works | Data Science For Beginners | Simplilearn” by Simplilearn </a> <br></p></li>
+<li><p>Rhos_kg_m3 (sediment density),</p></li>
+<li><p>U_m_s (velocity),</p></li>
 </ol>
+<p>and to a lesser extent,  W_m (channel width).</p>
+<p>Features like D50_m (median grain size), S_m_m (slope), and q_m2_s (unit discharge) are not contributing meaningfully — possibly due to:</p>
+<ul class="simple">
+<li><p>low variance in training data, (no sensitivity)</p></li>
+<li><p>redundancy with other features, (colinearity - one feature is projected (dot product -&gt; 1.0) onto another.</p></li>
+<li><p>or poor alignment with the target (qb_kg_m_s) (the feature is fundamentally unrellated to the target).</p></li>
+</ul>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="http://54-243-252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/ce5319-es8-2025-2.pdf">ce5319-es8-2025-2.pdf</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Autobuild the exercise set for this section.</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pdflatex&quot;</span><span class="p">,</span> <span class="s2">&quot;ce5319-es8-2025-2.tex&quot;</span><span class="p">],</span> 
+                   <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Build failed. Check your LaTeX source file.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="end-of-section">
+<h2>End of Section<a class="headerlink" href="#end-of-section" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -1323,7 +1779,7 @@ Iris-versicolor       1.00      1.00      1.00         5
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">7. Decision Trees</p>
+        <p class="prev-next-title">8. Decision Trees</p>
       </div>
     </a>
     <a class="right-next"
@@ -1351,6 +1807,9 @@ Iris-versicolor       1.00      1.00      1.00         5
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Nearest Neighbor Methods</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-distance-in-n-dimensional-space">Concept of Distance in N-Dimensional Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalization">Data Normalization</a><ul class="nav section-nav flex-column">
@@ -1366,10 +1825,22 @@ Iris-versicolor       1.00      1.00      1.00         5
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-remarks">Final remarks …</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering">From Plants to Engineering</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering-knn-beyond-classification">From Plants to Engineering: KNN Beyond Classification</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.1 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-does-it-work-well">When Does It Work Well?</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-solids-in-rivers-homebrew">8.1.1 KNN Solids in Rivers (Homebrew)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-solids-in-rivers">8.1.2 KNN Solids in Rivers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-in-knn-regression-kneighborsregressor">Feature Importance in KNN Regression (KNeighborsRegressor)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-section">End of Section</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
