@@ -222,6 +222,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
 
 
@@ -390,7 +391,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Nearest Neighbor Methods</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-background">KNN Background</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-distance-in-n-dimensional-space">Concept of Distance in N-Dimensional Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalization">Data Normalization</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#z-score-standardization">Z-score Standardization</a></li>
@@ -399,7 +400,9 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-demonstrative-example">Simple Demonstrative Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-classification">8.1 KNN Classification</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-knn">Why KNN?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classic-example-iris-plants-classification">Classic Example: Iris Plants Classification <br/></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-remarks">Final remarks …</a></li>
@@ -408,7 +411,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering-knn-beyond-classification">From Plants to Engineering: KNN Beyond Classification</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.1 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.2 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-does-it-work-well">When Does It Work Well?</a></li>
 </ul>
 </li>
@@ -460,6 +463,10 @@ KNN is easy to implement in its most basic form, and yet performs quite complex 
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=UqYde-LULfs">“How KNN algorithm works” by Thales Sehn Körting</a><br></p></li>
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=4HKqjENq9OU">“KNN Algorithm Using Python | How KNN Algorithm Works | Data Science For Beginners | Simplilearn” by Simplilearn </a> <br></p></li>
 </ol>
+<div class="admonition-attribution admonition">
+<p class="admonition-title">Attribution</p>
+<p>This section on KNN Classification is largely copied from <a class="reference external" href="http://54.243.252.9/engr-1330-webroot/engr1330jb/_build/html/lessons/lesson33/lesson33.html">Theodore G. Cleveland, Farhang Forghanparast (2021), Computational Thinking and Data Science: Instructor’s Notes for ENGR 1330 at TTU, with contributions by: Dinesh Sundaravadivelu Devarajan, Turgut Batuhan Baturalp (Batu), Tanja Karp, Long Nguyen, and Mona Rizvi. Whitacre College of Engineering, DOI (pending) </a>.</p>
+</div>
 <p>A description from <a class="reference external" href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm</a> is:</p>
 <blockquote>
 <div><p>In statistics, the k-nearest neighbors algorithm (k-NN) is a non-parametric classification method first developed by Evelyn Fix and Joseph Hodges in 1951, and later expanded by Thomas Cover. It is used for classification and regression. In both cases, the input consists of the k closest training examples in a data set. The output depends on whether k-NN is used for classification or regression:</p>
@@ -474,18 +481,18 @@ KNN is easy to implement in its most basic form, and yet performs quite complex 
 …</p>
 </div></blockquote>
 </section>
-<section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
-<p>The First Law of Geography, according to Waldo Tobler, is “everything is related to everything else, but near things are more related than distant things.”
+<section id="knn-background">
+<h2>KNN Background<a class="headerlink" href="#knn-background" title="Link to this heading">#</a></h2>
+<p>The <a class="reference external" href="https://gisgeography.com/tobler-first-law-of-geography/">First Law of Geography</a>, according to <a class="reference external" href="https://en.wikipedia.org/wiki/Waldo_R._Tobler">Waldo Tobler</a>, is <strong>“everything is related to everything else, but near things are more related than distant things.”</strong>
 The intuition behind the KNN algorithm is one of the simplest of all the supervised machine learning algorithms:</p>
-<div><img src="https://geohealthinnovations.org/wp-content/uploads/2013/01/toblerquote.png" width="200" align="left" style="padding-right: 20px"></div> 
+<!--<div><img src="https://geohealthinnovations.org/wp-content/uploads/2013/01/toblerquote.png" width="200" align="left" style="padding-right: 20px"></div>-->
 <ul class="simple">
 <li><p>It calculates the distance of a new data point to all other training data points.</p></li>
 <li><p>The distance can be of any type e.g Euclidean or Manhattan etc.</p></li>
 <li><p>It then selects the K-nearest data points, where K can be any integer.</p></li>
 <li><p>Used as a classifier; it assigns the data point to the class to which the majority of the K data points belong.</p></li>
 <li><p>Used as a predictor; it assigns to the data point a mean prediction value based on the associated values of the K data points.</p></li>
-<li><p>An example of KNN as a predictor is the <a class="reference external" href="http://54.243.252.9/toolbox/geomorphology/SolidsInRivers/SolidsInRivers.html">SolidsInRivers</a> estimation tool.
+<li><p>KNN as a prediction engine is demonstrated in the <a class="reference external" href="http://54.243.252.9/toolbox/geomorphology/SolidsInRivers/SolidsInRivers.html">SolidsInRivers</a> tool. The underlying code—excluding the web interface and server configurations—is detailed later in the KNN Regression subsection.
 <br><br></p></li>
 </ul>
 <section id="concept-of-distance-in-n-dimensional-space">
@@ -527,15 +534,15 @@ The unit interval [0,1] standardization technique differs from the Z-score in th
 </section>
 </section>
 </section>
-<section id="simple-demonstrative-example">
-<h2>Simple Demonstrative Example<a class="headerlink" href="#simple-demonstrative-example" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="knn-classification">
+<h1>8.1 KNN Classification<a class="headerlink" href="#knn-classification" title="Link to this heading">#</a></h1>
 <p>Let’s see this algorithm in action with the help of a simple example. Suppose you have a dataset with two variables, which when plotted, looks like the one in the following figure.</p>
 <img src="https://s3.amazonaws.com/stackabuse/media/k-nearest-neighbors-algorithm-python-scikit-learn-1.png" width="500">
 <p>Your task is to classify a new data point with ‘X’ into “Blue” class or “Red” class. The coordinate values of the data point are x=45 and y=50. Suppose the value of K is 3. The KNN algorithm starts by calculating the distance of point X from all the points. It then finds the 3 nearest points with least distance to point X. This is shown in the figure below. The three nearest points have been encircled.</p>
 <img src="https://s3.amazonaws.com/stackabuse/media/k-nearest-neighbors-algorithm-python-scikit-learn-2.png" width="500">
 <p>The final step of the KNN algorithm is to assign new point to the class to which majority of the three nearest points belong. From the figure above we can see that the two of the three nearest points belong to the class “Red” while one belongs to the class “Blue”. Therefore the new data point will be classified as “Red”.</p>
 <img src="https://miro.medium.com/max/1080/0*49s1xDlDKDsn55xa.gif" width="500">
-</section>
 <section id="why-knn">
 <h2>Why KNN?<a class="headerlink" href="#why-knn" title="Link to this heading">#</a></h2>
 <img src="https://miro.medium.com/max/1022/1*AuXDgGrr0wbCoF6KDXXSZQ.jpeg" width="200" align="left" style="padding-right: 20px">
@@ -1231,14 +1238,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[13  0  0]
- [ 0 11  0]
- [ 0  0  6]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9  0  0]
+ [ 0 12  0]
+ [ 0  0  9]]
                  precision    recall  f1-score   support
 
-    Iris-setosa       1.00      1.00      1.00        13
-Iris-versicolor       1.00      1.00      1.00        11
- Iris-virginica       1.00      1.00      1.00         6
+    Iris-setosa       1.00      1.00      1.00         9
+Iris-versicolor       1.00      1.00      1.00        12
+ Iris-virginica       1.00      1.00      1.00         9
 
        accuracy                           1.00        30
       macro avg       1.00      1.00      1.00        30
@@ -1261,7 +1268,7 @@ Iris-versicolor       1.00      1.00      1.00        11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 23.52222222222222, &#39;Actual label&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/12a19d66d3134ab0aa4d313bced2a759271eaccf60eb6126d5f0c58b8b925250.png" src="../../_images/12a19d66d3134ab0aa4d313bced2a759271eaccf60eb6126d5f0c58b8b925250.png" />
+<img alt="../../_images/277a318c5b9716d85bcf11a6a5d29b7ab7e2d569b1bfdc92f170f2f54588c209.png" src="../../_images/277a318c5b9716d85bcf11a6a5d29b7ab7e2d569b1bfdc92f170f2f54588c209.png" />
 </div>
 </div>
 <p>What if we had used a different value for K? What is the best value for K?</p>
@@ -1298,7 +1305,7 @@ Iris-versicolor       1.00      1.00      1.00        11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Mean Error&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/55f06c8dd9179fd7a3b481b4175a5b40380e8f8ad9ab2d0fca654957455d3e5d.png" src="../../_images/55f06c8dd9179fd7a3b481b4175a5b40380e8f8ad9ab2d0fca654957455d3e5d.png" />
+<img alt="../../_images/e1c180d19b050e1feeab7ca8ae692ebd18d570605840d0ca7992cdbf0fd77b4a.png" src="../../_images/e1c180d19b050e1feeab7ca8ae692ebd18d570605840d0ca7992cdbf0fd77b4a.png" />
 </div>
 </div>
 <hr>
@@ -1322,7 +1329,7 @@ Iris-versicolor       1.00      1.00      1.00        11
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="knn-regression-same-idea-different-target">
-<h1>8.1 KNN Regression: Same Idea, Different Target<a class="headerlink" href="#knn-regression-same-idea-different-target" title="Link to this heading">#</a></h1>
+<h1>8.2 KNN Regression: Same Idea, Different Target<a class="headerlink" href="#knn-regression-same-idea-different-target" title="Link to this heading">#</a></h1>
 <p>In KNN regression, the logic is familiar:</p>
 <ul class="simple">
 <li><p>For a new data point (a sample with known features but unknown outcome),</p></li>
@@ -1356,7 +1363,7 @@ Iris-versicolor       1.00      1.00      1.00        11
 </ul>
 <div class="admonition-attribution admonition">
 <p class="admonition-title">Attribution</p>
-<p>The homebrew component of this subsection is derived largely from Neale, C. M. (2018). Development and Delivery of Server-Side Water Resources Models Using Web-Based Interfaces. The refactoring from the original R Script to Python was guided by this book’s author with assistance from OpenAI tools.</p>
+<p>The homebrew component of this subsection is derived largely from <a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/neale_DissertationReview.pdf">Neale, C. M. (2018). Development and Delivery of Server-Side Water Resources Models Using Web-Based Interfaces</a>. The refactoring from the original R Script to Python was guided by this book’s author with assistance from OpenAI tools.</p>
 </div>
 </section>
 </section>
@@ -1368,10 +1375,17 @@ Iris-versicolor       1.00      1.00      1.00        11
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="c1"># --- Step 1: Load Database ---</span>
+<span class="c1"># --- Step 1: Download database and load into a dataframe ---</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;solids_in_rivers.csv&quot;</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/solids_in_rivers.csv&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1">#load the dataframe</span>
 
 <span class="c1"># --- Step 2: Read Input File (6 lines) ---</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1452,13 +1466,18 @@ Iris-versicolor       1.00      1.00      1.00        11
 <span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">sys</span> <span class="c1"># Module to process commands to/from the OS using a shell-type syntax</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="c1"># Download data from remote source</span>
-<span class="c1"># insert uget requests </span>
+<span class="c1"># --- Step 1: Download database and load into a dataframe ---</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;solids_in_rivers.csv&quot;</span>
-
+<span class="n">remote_url</span><span class="o">=</span><span class="s2">&quot;http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/solids_in_rivers.csv&quot;</span>  <span class="c1"># set the url</span>
+<span class="n">rget</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote_url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># get the remote resource, follow imbedded links</span>
+<span class="n">localfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="c1"># open connection to a local file same name as remote</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rget</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="c1"># extract from the remote the contents,insert into the local file same name</span>
+<span class="n">localfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># close connection to the local file</span>
 <span class="c1"># Load dataset</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1">#load the dataframe</span>
 <span class="n">column_names</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">))</span>
 <span class="n">feature_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
@@ -1558,8 +1577,8 @@ Iris-versicolor       1.00      1.00      1.00        11
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Squared Error: 8689408.669
-R² Score: -0.017
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Squared Error: 13452247.224
+R² Score: -0.019
 
 Estimated target for input: 0.054
 
@@ -1623,16 +1642,16 @@ Neighbor 5:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rhos_kg_m3: 0.0012
-U_m_s: 0.0011
-W_m: 0.0006
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rho_kg_m3: 0.0009
+Rhos_kg_m3: 0.0005
+U_m_s: 0.0004
 Q_m3_s: 0.0003
-Rho_kg_m3: 0.0002
-S_m_m: 0.0002
-q_m2_s: 0.0001
+W_m: 0.0003
+S_m_m: 0.0001
 H_m: 0.0001
+q_m2_s: 0.0001
 R_m: 0.0000
-D50_m: -0.0000
+D50_m: 0.0000
 </pre></div>
 </div>
 </div>
@@ -1722,7 +1741,7 @@ Practical Use:</p></li>
 </section>
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<p><a class="reference external" href="http://54-243-252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/ce5319-es8-2025-2.pdf">ce5319-es8-2025-2.pdf</a></p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/08-nearestneighbors/ce5319-es8-2025-2.pdf">ce5319-es8-2025-2.pdf</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Autobuild the exercise set for this section.</span>
@@ -1810,7 +1829,7 @@ Practical Use:</p></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">8. Nearest Neighbor Methods</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-background">KNN Background</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-distance-in-n-dimensional-space">Concept of Distance in N-Dimensional Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalization">Data Normalization</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#z-score-standardization">Z-score Standardization</a></li>
@@ -1819,7 +1838,9 @@ Practical Use:</p></li>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-demonstrative-example">Simple Demonstrative Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-classification">8.1 KNN Classification</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-knn">Why KNN?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classic-example-iris-plants-classification">Classic Example: Iris Plants Classification <br/></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-remarks">Final remarks …</a></li>
@@ -1828,7 +1849,7 @@ Practical Use:</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-plants-to-engineering-knn-beyond-classification">From Plants to Engineering: KNN Beyond Classification</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.1 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-regression-same-idea-different-target">8.2 KNN Regression: Same Idea, Different Target</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-does-it-work-well">When Does It Work Well?</a></li>
 </ul>
 </li>
