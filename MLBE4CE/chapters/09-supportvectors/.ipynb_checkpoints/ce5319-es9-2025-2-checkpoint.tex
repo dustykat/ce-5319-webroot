@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{daves,fancyhdr,natbib,graphicx,dcolumn,amsmath,lastpage,url}
+\usepackage{amsmath,amssymb,epstopdf,longtable}
+\usepackage[final]{pdfpages}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\pagestyle{fancy}
+\lhead{CE 5319 Machine Learning for Civil Engineers}
+\rhead{SUMMER 2025}
+\lfoot{ES9}
+\cfoot{}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand\headrulewidth{0pt}
+
+
+
+\begin{document}
+\begin{center}
+{\textbf{{ CE 5319 Machine Learning for Civil Engineers} \\ {Exercise Set 9} \\ {Support Vector Regression (SVR) and Rating Curves } }}
+\end{center}
+
+\subsection*{Purpose(s)}
+This exercise, you will:
+\begin{itemize}
+    \item Fit and visualize Support Vector Regression (SVR) models using \texttt{scikit-learn}
+    \item Compare SVR to linear regression on nonlinear hydrologic datasets
+    \item Analyze the impact of hyperparameter $\epsilon$ on prediction smoothness and flexibility
+    \item Relate machine learning tools to hydrologic modeling practice
+\end{itemize}
+
+
+
+
+
+
+
+\subsection*{Provided Starter Code (Do Not Edit)}
+\begin{verbatim}
+# Simulate a nonlinear rating curve (Stage - Discharge)
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+
+# Seed and simulate
+np.random.seed(0)
+stage = np.linspace(1.0, 3.5, 30).reshape(-1, 1)
+discharge = 30 * (stage.flatten() - 0.8)**2 + 
+            np.random.normal(0, 5, size=stage.shape[0])
+
+# Plot the raw data
+plt.scatter(stage, discharge, color='gray')
+plt.xlabel("Stage (ft)")
+plt.ylabel("Discharge (cfs)")
+plt.title("Simulated Stage-Discharge Data")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+\end{verbatim}
+
+\clearpage
+
+\section*{\small{Exercise(s)}}
+
+\begin{enumerate}
+
+\item SVR Model Fit and Prediction (40 pts)
+\begin{enumerate}
+    \item Fit an SVR model to the scaled data using:
+    \begin{itemize}
+        \item \texttt{kernel='rbf'}
+        \item \texttt{C=100}
+        \item \texttt{epsilon=0.1}
+    \end{itemize}
+    \item Invert the scaling to retrieve predicted discharge in original units.
+    \item Plot observed vs predicted discharge values.
+    \item Label the axes and add a legend to your plot.
+\end{enumerate}
+
+\item Comparison with Linear Regression (30 pts)
+\begin{enumerate}
+    \item Fit a linear regression model to the same scaled data.
+    \item Plot both SVR and linear regression predictions against observed values.
+    \item Compute and report the \textbf{RMSE} of both models.
+    \item Interpret the result: Which model fits better? Why?
+\end{enumerate}
+
+\item Exploring $\epsilon$ Sensitivity (20 pts)
+\begin{enumerate}
+    \item Fit SVR models using three different \texttt{epsilon} values: \texttt{0.01}, \texttt{0.1}, and \texttt{0.5}.
+    \item Plot the predictions from all three models on the same graph.
+    \item Include observed data in the plot for reference.
+    \item Discuss how changing $\epsilon$ affects the fit and flexibility of the model.
+\end{enumerate}
+
+\item Reflection and Application (10 pts)
+Write a short paragraph (4--5 sentences) answering the following:
+\begin{itemize}
+    \item How might SVR be useful for estimating rating curves in real hydrologic applications?
+    \item What limitations would you consider before using SVR operationally?
+\end{itemize}
+
+
+
+
+
+
+
+\end{enumerate}
+
+
+\end{document}  
+
+\section*{Assignment: SVR Applications in Hydrologic Modeling}
+
+\subsection*{Course: CE 5319 â Machine Learning Applications in Civil Engineering}
+\textbf{Topic:} Support Vector Regression (SVR) and Rating Curves \\
+\textbf{Estimated Time:} 2â3 hours \\
+\textbf{Deliverable:} Completed Jupyter Notebook with code, plots, and responses to discussion questions
+
+
+\subsection*{Submission Notes}
+\begin{itemize}
+    \item Submit a clean \texttt{.ipynb} notebook with all cells executed and saved.
+    \item Make sure each plot is clearly labeled and easy to interpret.
+    \item Use comments in code to explain your steps.
+\end{itemize}
