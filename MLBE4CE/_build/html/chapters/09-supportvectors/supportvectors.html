@@ -219,7 +219,12 @@
 
 
 <li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
+
+
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Support Vectors</a></li>
+
 
 
 <li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
@@ -395,8 +400,10 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-example-using-svm">9.1 Poison Mushroom Example using SVM</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operationally-svr">Operationally SVR:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svr-hydrology-example-s-rating-curves">9.3 SVR Hydrology Example(s) – Rating Curves</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-section">End of Section</a></li>
 </ul>
 </li>
 </ul>
@@ -722,7 +729,7 @@ Intercept : 2533.0677132863866
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/8f3239efe272112b30067a9f83e3fe256625e5b73456567a7fefb80f62adabc6.png" src="../../_images/8f3239efe272112b30067a9f83e3fe256625e5b73456567a7fefb80f62adabc6.png" />
+<img alt="../../_images/a66e91d18b4b9473288f4b26b6f99ec83c00f94d56fa492ed529b72b1ebe9abd.png" src="../../_images/a66e91d18b4b9473288f4b26b6f99ec83c00f94d56fa492ed529b72b1ebe9abd.png" />
 </div>
 </div>
 </section>
@@ -1025,9 +1032,7 @@ New mushroom classified as EDIBLE
 <p class="admonition-title">Note</p>
 <p>In the plot above, only the data points (treated as vectors in 1D) that define the tightest upper and lower envelope of the prediction tube are used to shape the model. These are the <strong>support vectors</strong>, shown as larger circles. If you were to connect these points with line segments—upper hull to upper hull, and lower hull to lower hull—you would construct a <strong>piecewise-linear tube</strong> enclosing the dataset. While the actual SVR surface may be curved (due to kernel transformations), this geometric interpretation helps illustrate how SVR forms a <strong>minimal-area envelope</strong> constrained by the allowable error margin <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
 </div>
-<section id="operationally-svr">
-<h2>Operationally SVR:<a class="headerlink" href="#operationally-svr" title="Link to this heading">#</a></h2>
-<p>Generates a function <span class="math notranslate nohighlight">\(f(x)\)</span> that minimizes:</p>
+<p>Operationally SVR generates a function <span class="math notranslate nohighlight">\(f(x)\)</span> that minimizes:</p>
 <div class="math notranslate nohighlight">
 \[\sum_{i}max⁡(0,∣y_i−f(x_i)∣−\epsilon)\]</div>
 <p>The lower support boundary is:</p>
@@ -1069,6 +1074,496 @@ New mushroom classified as EDIBLE
 <p><img alt="" src="../../_images/primal-dual.png" /></p>
 <p>While linear programs guarantee complementary slackness at optimality, quadratic programs (like those used in support vector machines and support vector regression) may not always satisfy it due to curvature in the objective. Still, the core idea of balancing constraints and optimization objectives remains the same.</p>
 </div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="svr-hydrology-example-s-rating-curves">
+<h1>9.3 SVR Hydrology Example(s) – Rating Curves<a class="headerlink" href="#svr-hydrology-example-s-rating-curves" title="Link to this heading">#</a></h1>
+<p>A rating curve defines the relationship between discharge (flow rate) and stage (water surface elevation). While gage height is sometimes used interchangeably with stage, they are not strictly synonyms—gage height refers to the water level above a defined datum, while stage is a more general term used in hydraulic and hydrologic modeling. In most practical applications, the difference is negligible, and the terms are used interchangeably to develop rating curves.</p>
+<p>Measuring stage is relatively straightforward and can be performed continuously using float-based sensors, pressure transducers, or radar. Measuring discharge, however, typically requires time-consuming flow-area calculations or velocity measurements and is not feasible for continuous monitoring. As a result, most real-time stream monitoring systems measure stage and estimate discharge from a pre-established rating curve, which can take the form of a lookup table, empirical equation, or machine learning model.</p>
+<p><img alt="" src="../../_images/svr_rating_curve_comparison.png" /></p>
+<p>Modern instrumentation (e.g., acoustic Doppler profilers) can sometimes provide simultaneous measurements of both stage and discharge. These technologies enable real-time updating of the rating curve using adaptive algorithms, such as Kalman filters, recursive least squares, or support vector regression (SVR), improving the reliability of discharge estimates under changing channel conditions.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Machine learning models, including SVR, are interpolative rather than extrapolative. They make predictions based on patterns seen in the training data. Using SVR (or any statistical model) to estimate discharge outside the range of observed stage values can lead to highly unreliable results. Always check the bounds of your data before deploying an SVR model operationally.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Real-time updating of rating curves using Kalman filters or related signal-processing tools is a powerful approach to adaptive hydrologic modeling. These techniques go beyond the scope of this course but are worth exploring for operational forecasting or advanced instrumentation settings.
+See: <a class="reference external" href="https://en.wikipedia.org/wiki/Kalman_filter">https://en.wikipedia.org/wiki/Kalman_filter</a></p>
+</div>
+<p>This example simulates using SVR to build a predictive model for discharge estimation at gaging stations in Texas, using historical measurements of stage as input. This approach simulates an adaptive, data-driven replacement or supplement to traditional rating curves, particularly useful when the stage-discharge relationship is nonlinear, noisy, or subject to change.</p>
+<p>Example 1.  Llano River at Junction Texas</p>
+<p>The input data are obtained from <a class="reference external" href="https://nwis.waterdata.usgs.gov/nwis/peak?site_no=08150000&amp;amp;agency_cd=USGS&amp;amp;format=rdb">NWIS Site 08150000</a>.  I already processed them into a two column file, sorted by stage (actually gage height), named <code class="docutils literal notranslate"><span class="pre">rating_08150000.txt</span></code> which looks like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">(</span><span class="n">cfs</span><span class="p">)</span>	<span class="n">Stage</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span>
+<span class="mi">324</span>	<span class="mf">1.11</span>
+<span class="mi">409</span>	<span class="mf">1.52</span>
+<span class="mi">163</span>	<span class="mf">1.67</span>
+<span class="mi">213</span>	<span class="mf">1.86</span>
+<span class="mi">192</span>	<span class="mf">1.88</span>
+<span class="mi">88</span>	<span class="mf">1.88</span>
+<span class="o">...</span> <span class="n">more</span> <span class="n">rows</span> <span class="o">...</span> 
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># force memory purge ##</span>
+<span class="o">%</span><span class="k">reset</span> -f 
+<span class="c1">#######################</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Load data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;rating_08150000.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># change sep if needed</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Q(cfs)</th>
+      <th>Stage(ft)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>324</td>
+      <td>1.11</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>409</td>
+      <td>1.52</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>163</td>
+      <td>1.67</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>213</td>
+      <td>1.86</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>192</td>
+      <td>1.88</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract and reshape inputs/outputs (our example is 1D in target and features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stage(ft)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>      <span class="c1"># already 2D, but explicit reshape is safe</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Q(cfs)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>       <span class="c1"># reshape to 2D for scaler</span>
+
+<span class="c1"># Scale inputs and outputs</span>
+<span class="n">sc_X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">sc_y</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">y_scaled</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train SVR</span>
+<span class="n">svr_rbf</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">svr_rbf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_scaled</span><span class="p">);</span> <span class="c1"># semi-colon supresses console output; needed so Sphynx compiler does not get confused</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict and invert scaling</span>
+<span class="n">y_pred_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>  <span class="c1"># Final output should be 1D</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get support vectors in original (unscaled) coordinates</span>
+<span class="n">support_vectors_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">support_vectors_</span>
+<span class="n">support_vectors_original</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">support_vectors_scaled</span><span class="p">)</span>
+
+<span class="c1"># Recalculate prediction and ε-tube boundaries</span>
+<span class="n">y_pred_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># ε-tube boundaries (in scaled space)</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">epsilon</span>
+<span class="n">y_pred_upper_scaled</span> <span class="o">=</span> <span class="n">y_pred_scaled</span> <span class="o">+</span> <span class="n">epsilon</span>
+<span class="n">y_pred_lower_scaled</span> <span class="o">=</span> <span class="n">y_pred_scaled</span> <span class="o">-</span> <span class="n">epsilon</span>
+
+<span class="c1"># Inverse-transform boundaries to original space</span>
+<span class="n">y_pred_upper</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_upper_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">y_pred_lower</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_lower_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Plot with optional log scale</span>
+<span class="n">use_loglog</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SVR Prediction&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred_upper</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ε Upper Bound&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred_lower</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ε Lower Bound&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot support vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">support_vectors_original</span><span class="p">,</span> 
+            <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">support_vectors_scaled</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+            <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Support Vectors&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Stage (ft)&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;log(Stage)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Q (cfs)&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;log(Q)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SVR with ε-Support Vectors&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; (Log-Log Scale)&quot;</span> <span class="k">if</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">use_loglog</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/3cd0630042c1b14f3a2a2479849b6825ca66cefaf9a6a4ea85811330e4bddb66.png" src="../../_images/3cd0630042c1b14f3a2a2479849b6825ca66cefaf9a6a4ea85811330e4bddb66.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Deployment Phase ===</span>
+<span class="k">def</span> <span class="nf">predict_discharge</span><span class="p">(</span><span class="n">stage_input_ft</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict discharge for a given stage (ft).&quot;&quot;&quot;</span>
+    <span class="c1"># Reshape and scale the input</span>
+    <span class="n">stage_scaled</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">stage_input_ft</span><span class="p">]]))</span>  <span class="c1"># shape (1,1)</span>
+    
+    <span class="c1"># Predict in scaled output space</span>
+    <span class="n">discharge_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">stage_scaled</span><span class="p">)</span>
+    
+    <span class="c1"># Invert scaling to get discharge in cfs</span>
+    <span class="n">discharge_cfs</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">discharge_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">discharge_cfs</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">user_stage</span> <span class="o">=</span> <span class="mf">1.85</span>  <span class="c1"># You can replace this with input() for interactive use</span>
+<span class="c1"># Uncomment to use interactive input</span>
+<span class="c1"># user_stage = float(input(&quot;Enter Stage (ft): &quot;)) # simple interactive version - should use try-except to elegant exit </span>
+<span class="n">predicted_Q</span> <span class="o">=</span> <span class="n">predict_discharge</span><span class="p">(</span><span class="n">user_stage</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estimated Discharge for Stage </span><span class="si">{</span><span class="n">user_stage</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft: </span><span class="si">{</span><span class="n">predicted_Q</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> cfs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated Discharge for Stage 1.85 ft: 154.42 cfs
+</pre></div>
+</div>
+</div>
+</div>
+<p>Self-training exercise(s).</p>
+<p>Self-Training Exercise(s)</p>
+<ol class="arabic simple">
+<li><p>Vary the <span class="math notranslate nohighlight">\(\epsilon\)</span> value and observe the effect on the width of the prediction tube. How does increasing or decreasing <span class="math notranslate nohighlight">\(\epsilon\)</span> influence model complexity and sensitivity to noise?</p></li>
+<li><p>Remove or alter a single data point (e.g., delete the first row in the data file) and retrain the model. What is the effect on the predicted discharge? What does this say about model robustness?</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In higher-dimensional problems where we cannot visualize the prediction tube directly, we rely on numerical metrics to understand model behavior. One such measure is the distance from observations to the ε-support boundaries (i.e., how far predicted values deviate from actual values before they fall outside the ε-tube). These metrics allow us to tune <span class="math notranslate nohighlight">\(\epsilon\)</span> meaningfully, even when visual interpretation isn’t feasible, helping to ensure that our model predictions remain faithful to the original training data.</p>
+</div>
+<p>Example 2.  Guadalupe River at Hunt Texas</p>
+<p>The input data are obtained from <a class="reference external" href="https://nwis.waterdata.usgs.gov/nwis/peak?site_no=08165500&amp;amp;agency_cd=USGS&amp;amp;format=rdb">NWIS Site 08165500</a>.  I already processed them into a two column file, sorted by stage (actually gage height), named <code class="docutils literal notranslate"><span class="pre">rating_08165500.txt</span></code> which looks like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">(</span><span class="n">cfs</span><span class="p">)</span>	<span class="n">Stage</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span>
+<span class="mi">79</span>	<span class="mf">1.56</span>
+<span class="mi">165</span>	<span class="mf">1.93</span>
+<span class="mi">203</span>	<span class="mf">2.19</span>
+<span class="mi">1770</span>	<span class="mf">6.94</span>
+<span class="mi">33</span>	<span class="mf">7.85</span>
+<span class="mi">79</span>	<span class="mf">8.02</span>
+<span class="mf">76.8</span>	<span class="mf">8.08</span>
+<span class="mi">103</span>	<span class="mf">8.08</span>
+<span class="mi">1445</span>	<span class="mf">8.12</span>
+<span class="mi">126</span>	<span class="mf">8.2</span>
+<span class="mi">1845</span>	<span class="mf">8.25</span>
+<span class="o">...</span> <span class="n">more</span> <span class="n">rows</span> <span class="o">...</span> 
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># force memory purge ##</span>
+<span class="o">%</span><span class="k">reset</span> -f 
+<span class="c1">#######################</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Load data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;rating_08165500.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># change sep if needed</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Q(cfs)</th>
+      <th>Stage(ft)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>79.0</td>
+      <td>1.56</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>165.0</td>
+      <td>1.93</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>203.0</td>
+      <td>2.19</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1770.0</td>
+      <td>6.94</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>33.0</td>
+      <td>7.85</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract and reshape inputs/outputs (our example is 1D in target and features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stage(ft)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>      <span class="c1"># already 2D, but explicit reshape is safe</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Q(cfs)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>       <span class="c1"># reshape to 2D for scaler</span>
+
+<span class="c1"># Scale inputs and outputs</span>
+<span class="n">sc_X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">sc_y</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">y_scaled</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train SVR</span>
+<span class="n">svr_rbf</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">svr_rbf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_scaled</span><span class="p">);</span> <span class="c1"># semi-colon supresses console output; needed so Sphynx compiler does not get confused</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict and invert scaling</span>
+<span class="n">y_pred_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>  <span class="c1"># Final output should be 1D</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get support vectors in original (unscaled) coordinates</span>
+<span class="n">support_vectors_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">support_vectors_</span>
+<span class="n">support_vectors_original</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">support_vectors_scaled</span><span class="p">)</span>
+
+<span class="c1"># Recalculate prediction and ε-tube boundaries</span>
+<span class="n">y_pred_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># ε-tube boundaries (in scaled space)</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">epsilon</span>
+<span class="n">y_pred_upper_scaled</span> <span class="o">=</span> <span class="n">y_pred_scaled</span> <span class="o">+</span> <span class="n">epsilon</span>
+<span class="n">y_pred_lower_scaled</span> <span class="o">=</span> <span class="n">y_pred_scaled</span> <span class="o">-</span> <span class="n">epsilon</span>
+
+<span class="c1"># Inverse-transform boundaries to original space</span>
+<span class="n">y_pred_upper</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_upper_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">y_pred_lower</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_pred_lower_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="c1"># Plot with optional log scale</span>
+<span class="n">use_loglog</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Observed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SVR Prediction&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred_upper</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ε Upper Bound&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_pred_lower</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ε Lower Bound&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot support vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">support_vectors_original</span><span class="p">,</span> 
+            <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">support_vectors_scaled</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> 
+            <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Support Vectors&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Stage (ft)&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;log(Stage)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Q (cfs)&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;log(Q)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SVR with ε-Support Vectors&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; (Log-Log Scale)&quot;</span> <span class="k">if</span> <span class="n">use_loglog</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">use_loglog</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9bc2a2f7994d97d854be2e2df315ab61cd6b34c2372855bc24fdd01f97601d4e.png" src="../../_images/9bc2a2f7994d97d854be2e2df315ab61cd6b34c2372855bc24fdd01f97601d4e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Deployment Phase ===</span>
+<span class="k">def</span> <span class="nf">predict_discharge</span><span class="p">(</span><span class="n">stage_input_ft</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Predict discharge for a given stage (ft).&quot;&quot;&quot;</span>
+    <span class="c1"># Reshape and scale the input</span>
+    <span class="n">stage_scaled</span> <span class="o">=</span> <span class="n">sc_X</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">stage_input_ft</span><span class="p">]]))</span>  <span class="c1"># shape (1,1)</span>
+    
+    <span class="c1"># Predict in scaled output space</span>
+    <span class="n">discharge_scaled</span> <span class="o">=</span> <span class="n">svr_rbf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">stage_scaled</span><span class="p">)</span>
+    
+    <span class="c1"># Invert scaling to get discharge in cfs</span>
+    <span class="n">discharge_cfs</span> <span class="o">=</span> <span class="n">sc_y</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">discharge_scaled</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">discharge_cfs</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">user_stage</span> <span class="o">=</span> <span class="mf">1.85</span>  <span class="c1"># You can replace this with input() for interactive use</span>
+<span class="c1"># Uncomment to use interactive input</span>
+<span class="c1"># user_stage = float(input(&quot;Enter Stage (ft): &quot;)) # simple interactive version - should use try-except to elegant exit </span>
+<span class="n">predicted_Q</span> <span class="o">=</span> <span class="n">predict_discharge</span><span class="p">(</span><span class="n">user_stage</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estimated Discharge for Stage </span><span class="si">{</span><span class="n">user_stage</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft: </span><span class="si">{</span><span class="n">predicted_Q</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> cfs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated Discharge for Stage 1.85 ft: 288.98 cfs
+</pre></div>
+</div>
+</div>
+</div>
+<p>How we might use this tool.</p>
+<ol class="arabic">
+<li><p>Flood Frequency Applications<br>
+Using Bulletin 17C methods (or other regional flood frequency guidelines), we can construct a discharge-frequency curve that relates exceedance probability (AEP) to peak discharge. Our SVR-based tool can then be used to estimate the corresponding gage height for an event with a given AEP or ARI (e.g., 1% AEP or 100-year event).</p>
+<p>This application requires extrapolation beyond the range of observed data. While the SVR model provides a quick and practical estimate, it should be used cautiously and supported by hydraulic modeling when precision is critical.</p>
+</li>
+<li><p>Back-Calculating Stage from Model or Design Flow<br>
+In many design scenarios (e.g., culvert or bridge sizing), engineers work with target design discharges. The SVR model can help estimate the expected stage at a site for that discharge, supporting elevation planning, freeboard checks, and early-stage feasibility assessments.</p></li>
+<li><p>Identifying Anomalous Measurements<br>
+Once trained, the SVR model provides an expected stage for a given discharge (or vice versa). Any incoming data point that deviates significantly from this expected behavior may indicate instrument error, backwater effects, or channel modifications. This makes the SVR tool useful as a real-time quality control filter.</p></li>
+<li><p>Synthetic Rating Curves for Ungauged Sites<br>
+If you have even a small dataset or a short-duration record at a temporary station, you can use SVR to create a synthetic rating curve. This is especially helpful when time or budget constraints prevent long-term gaging, but you still need discharge estimates from stage.</p></li>
+<li><p>Data Infilling and Reconstruction<br>
+For gaging stations with missing discharge values (due to sensor failure or partial data), an SVR trained on surrounding periods can estimate those missing discharges from available stage records, providing a gap-filling capability that is smoother than stepwise or interpolated tables.</p></li>
+</ol>
+<div class="{admonition}Purpose docutils">
+<p>The hydrologic examples presented in this module—such as stage-discharge modeling using support vector regression (SVR)—are not intended to replace fully developed hydrologic analysis tools, nor do they claim to provide regulatory or design-grade accuracy.</p>
+<p>Instead, their primary purpose is to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Illustrate the structure and syntax of machine learning workflows using the scikit-learn library.
+
+Demonstrate how abstract ML concepts—such as kernel functions, hyperparameter tuning, and ε-insensitive loss—can be applied to real-world engineering contexts.
+
+Bridge the gap between textbook ML methods and practical applications familiar to civil and environmental engineers.
+</pre></div>
+</div>
+<p>By anchoring machine learning techniques in familiar problems like rating curves or discharge estimation, we aim to help learners:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Build intuition about how ML models behave with engineering-style data,
+
+Appreciate the role of data preprocessing, scaling, and model validation,
+
+And connect theory to practice, laying the groundwork for more advanced or domain-specific modeling tools.
+</pre></div>
+</div>
+<p>These examples should be viewed as learning scaffolds—not as final solutions—but as a way to ground abstract techniques in meaningful engineering workflows.</p>
+</div>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/MLBE4CE/chapters/09-supportvectors/ce5319-es9-2025-2.pdf">ce5319-es9-2025-2.pdf</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Autobuild the exercise set for this section.</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pdflatex&quot;</span><span class="p">,</span> <span class="s2">&quot;ce5319-es8-2025-2.tex&quot;</span><span class="p">],</span> 
+                   <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Build failed. Check your LaTeX source file.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Build failed. Check your LaTeX source file.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="end-of-section">
+<h2>End of Section<a class="headerlink" href="#end-of-section" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -1147,8 +1642,10 @@ New mushroom classified as EDIBLE
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#poison-mushroom-example-using-svm">9.1 Poison Mushroom Example using SVM</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operationally-svr">Operationally SVR:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-regression">9.2 Support Vector Regression</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svr-hydrology-example-s-rating-curves">9.3 SVR Hydrology Example(s) – Rating Curves</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-section">End of Section</a></li>
 </ul>
 </li>
 </ul>
