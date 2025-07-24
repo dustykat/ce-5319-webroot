@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/neuralnetworks';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Deep Learners" href="deeplearners.html" />
+    <link rel="next" title="14.1 Artifical Neural Network (Homebrew)" href="myann.html" />
     <link rel="prev" title="13. Feature Engineering" href="../13-featureengineering/featureengineering.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -231,10 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">14. Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
-<li class="toctree-l2"><a class="reference internal" href="myann.html">Artifical Neural  Network (Homebrew)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="materialANN.html">Artifical Neural  Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myann.html">14.1 Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materialANN.html">14.4 Artifical Neural Network to Detect Cracks</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
@@ -387,8 +385,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-introduction-to-neural-network-classification">An Introduction to Neural Network Classification</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learners">Deep Learners</a></li>
 </ul>
             </nav>
         </div>
@@ -402,6 +401,25 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="neural-networks">
 <h1>14. Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h1>
+<div class="admonition-course-website admonition">
+<p class="admonition-title">Course Website</p>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
+</div>
+<section id="readings">
+<h2>Readings<a class="headerlink" href="#readings" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.goodreads.com/en/book/show/29746976-make-your-own-neural-network">Rashid, Tariq. (2016) Make Your Own Neural Network. Kindle Edition. </a></p></li>
+<li><p>Aljaaf AJ, Mohsin TM, Al-Jumeily D, Alloghani M. A fusion of data science and feed-forward neural network-based modeling of COVID-19 outbreak forecasting in IRAQ. J Biomed Inform. 2021 Jun;118:103766. doi: 10.1016/j.jbi.2021.103766. Epub 2021 Apr 22. PMID: 33895377; PMCID: PMC8061626</p></li>
+<li><p><a class="reference external" href="https://doi.org/10.1007/s11063-020-10327-3">Haldorai, A., Ramu, A. Canonical Correlation Analysis Based Hyper Basis Feedforward Neural Network Classification for Urban Sustainability. Neural Process Lett 53, 2385–2401 (2021).</a></p></li>
+<li><p><a class="reference external" href="https://doi.org/10.1016/j.eswa.2022.116787.">María Olmedilla, M. Rocío Martínez-Torres, Sergio Toral, Prediction and modelling online reviews helpfulness using 1D Convolutional Neural Networks, Expert Systems with Applications, Volume 198, 2022, 116787, ISSN 0957-4174,</a></p></li>
+<li><p><a class="reference external" href="https://doi.org/10.1007/s11600-022-00877-6">Tang, Y., Wu, Q., Soomro, Seh. et al. Comparison of different ensemble precipitation forecast system evaluation, integration and hydrological applications. Acta Geophys. (2022). </a></p></li>
+<li><p><a class="reference internal" href="#dummy"><span class="xref myst">Wadkar, D. V., Karale, R. S., &amp; Wagh, M. P. (2021). Application of cascade feed forward neural network to predict coagulant dose. Journal of Applied Water Engineering and Research, 1–14.</span></a></p></li>
+<li><p><a class="reference external" href="https://developersbreach.com/convolution-neural-network-deep-learning/">https://developersbreach.com/convolution-neural-network-deep-learning/</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/regularization-techniques-for-neural-networks-e55f295f2866">https://towardsdatascience.com/regularization-techniques-for-neural-networks-e55f295f2866</a></p></li>
+<li><p><a class="reference external" href="https://anhreynolds.com/blogs/cnn.html">https://anhreynolds.com/blogs/cnn.html</a></p></li>
+<li><p><a class="reference external" href="https://www.v7labs.com/blog/neural-networks-activation-functions">https://www.v7labs.com/blog/neural-networks-activation-functions</a></p></li>
+</ol>
+</section>
 <section id="an-introduction-to-neural-network-classification">
 <h2>An Introduction to Neural Network Classification<a class="headerlink" href="#an-introduction-to-neural-network-classification" title="Link to this heading">#</a></h2>
 <div class="admonition note">
@@ -522,19 +540,12 @@ For the present work, I am performing a sensitivity analysis on the hydrological
 However, I plan to conduct additional research on hydrological simulation in the near future, including rainfall-runoff prediction taking into account vegetation change and stream flow variation under unsteady climatic circumstances. Later I want to cross-validate the result with a physically based model over the same time period. I will be collecting daily climatic, rainfall, temperature, solar radiation, and streamflow time series data of watersheds. The goal would be capturing physical relationships between input variables and streamflow. Several artificial neural networks have been tested to conduct hydrological simulations using NN.
 Since ANN has been previously tested for streamflow prediction I want to explore recurrent neural networks such as GRU (Gated Recurrent Unit) and LSTM (long short-term memory) because they are capable of capturing temporal features and comparing the result with CNN. A typical CNN architecture used for time series data is called TCNN (Temporal Convolutional Neural network). I want to explore that to compare the results with the simulation found from a physical/mechanistic-based model.</p>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Aljaaf AJ, Mohsin TM, Al-Jumeily D, Alloghani M. A fusion of data science and feed-forward neural network-based modeling of COVID-19 outbreak forecasting in IRAQ. J Biomed Inform. 2021 Jun;118:103766. doi: 10.1016/j.jbi.2021.103766. Epub 2021 Apr 22. PMID: 33895377; PMCID: PMC8061626</p></li>
-<li><p>Haldorai, A., Ramu, A. Canonical Correlation Analysis Based Hyper Basis Feedforward Neural Network Classification for Urban Sustainability. Neural Process Lett 53, 2385–2401 (2021). <a class="reference external" href="https://doi.org/10.1007/s11063-020-10327-3">https://doi.org/10.1007/s11063-020-10327-3</a></p></li>
-<li><p>María Olmedilla, M. Rocío Martínez-Torres, Sergio Toral, Prediction and modelling online reviews helpfulness using 1D Convolutional Neural Networks, Expert Systems with Applications, Volume 198, 2022, 116787, ISSN 0957-4174, <a class="reference external" href="https://doi.org/10.1016/j.eswa.2022.116787">https://doi.org/10.1016/j.eswa.2022.116787</a>.</p></li>
-<li><p>Tang, Y., Wu, Q., Soomro, Seh. et al. Comparison of different ensemble precipitation forecast system evaluation, integration and hydrological applications. Acta Geophys. (2022). <a class="reference external" href="https://doi.org/10.1007/s11600-022-00877-6">https://doi.org/10.1007/s11600-022-00877-6</a></p></li>
-<li><p>Wadkar, D. V., Karale, R. S., &amp; Wagh, M. P. (2021). Application of cascade feed forward neural network to predict coagulant dose. Journal of Applied Water Engineering and Research, 1–14.</p></li>
-</ol>
-<p><a class="reference external" href="https://developersbreach.com/convolution-neural-network-deep-learning/">https://developersbreach.com/convolution-neural-network-deep-learning/</a></p>
-<p><a class="reference external" href="https://towardsdatascience.com/regularization-techniques-for-neural-networks-e55f295f2866">https://towardsdatascience.com/regularization-techniques-for-neural-networks-e55f295f2866</a></p>
-<p><a class="reference external" href="https://anhreynolds.com/blogs/cnn.html">https://anhreynolds.com/blogs/cnn.html</a></p>
-<p><a class="reference external" href="https://www.v7labs.com/blog/neural-networks-activation-functions">https://www.v7labs.com/blog/neural-networks-activation-functions</a></p>
+<section id="deep-learners">
+<h2>Deep Learners<a class="headerlink" href="#deep-learners" title="Link to this heading">#</a></h2>
+<p>Deep learning (also known as deep structured learning) is part of a broader family of machine learning methods based on artificial neural networks with representation learning. Learning can be supervised, semi-supervised or unsupervised.</p>
+<p>Deep-learning architectures such as deep neural networks, deep belief networks, deep reinforcement learning, recurrent neural networks, convolutional neural networks and Transformers have been applied to fields including computer vision, speech recognition, natural language processing, machine translation, bioinformatics, drug design, medical image analysis, climate science, material inspection and board game programs, where they have produced results comparable to and in some cases surpassing human expert performance.</p>
+<p>Artificial neural networks (ANNs) were inspired by information processing and distributed communication nodes in biological systems. ANNs have various differences from biological brains. Specifically, artificial neural networks tend to be static and symbolic, while the biological brain of most living organisms is dynamic (plastic) and analogue.[6][7]</p>
+<p>The adjective “deep” in deep learning refers to the use of multiple layers in the network. Early work showed that a linear perceptron cannot be a universal classifier, but that a network with a nonpolynomial activation function with one hidden layer of unbounded width can. Deep learning is a modern variation which is concerned with an unbounded number of layers of bounded size, which permits practical application and optimized implementation, while retaining theoretical universality under mild conditions. In deep learning the layers are also permitted to be heterogeneous and to deviate widely from biologically informed connectionist models, for the sake of efficiency, trainability and understandability, hence the “structured” part.</p>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -580,11 +591,11 @@ Since ANN has been previously tested for streamflow prediction I want to explore
       </div>
     </a>
     <a class="right-next"
-       href="deeplearners.html"
+       href="myann.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Deep Learners</p>
+        <p class="prev-next-title">14.1 Artifical Neural  Network (Homebrew)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -604,8 +615,9 @@ Since ANN has been previously tested for streamflow prediction I want to explore
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-introduction-to-neural-network-classification">An Introduction to Neural Network Classification</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learners">Deep Learners</a></li>
 </ul>
   </nav></div>
 

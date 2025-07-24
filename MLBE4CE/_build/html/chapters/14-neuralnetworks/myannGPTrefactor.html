@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>14.2 Artifical Neural Network (Homebrew with OpenAI refactoring) &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -231,10 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
-<li class="toctree-l2"><a class="reference internal" href="myann.html">Artifical Neural  Network (Homebrew)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="materialANN.html">Artifical Neural  Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myann.html">14.1 Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materialANN.html">14.4 Artifical Neural Network to Detect Cracks</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
@@ -364,9 +362,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -377,19 +373,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>14.2 Artifical Neural  Network (Homebrew with OpenAI refactoring)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -399,9 +387,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="artifical-neural-network-homebrew-with-openai-refactoring">
+<h1>14.2 Artifical Neural  Network (Homebrew with OpenAI refactoring)<a class="headerlink" href="#artifical-neural-network-homebrew-with-openai-refactoring" title="Link to this heading">#</a></h1>
+<p>This section revisits the homebrew neural network example, but with improvements generated through OpenAI-assisted refactoring. The goal was to:</p>
+<ul class="simple">
+<li><p>Modularize code into logical groups</p></li>
+<li><p>Apply best programming practices (where practical)</p></li>
+<li><p>Improve error handling in the file download block</p></li>
+<li><p>Add in-line documentation to improve readability and maintainability</p></li>
+<li><p>Reset the runtime environment prior to execution using <code class="docutils literal notranslate"><span class="pre">%reset</span> <span class="pre">-f</span></code></p></li>
+</ul>
+<p>This modularized structure forms the foundation for subsequent refactoring into a package-based solution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The goal remains the same as before: we start with a working scaffold, then use modern tools — in this case, OpenAI — to improve the structure, enforce best practices, and reduce development time.
+While we could make these refinements manually, the time savings allows us to focus on the substantive tasks rather than getting bogged down in programming nuances.</p>
+<p>As emphasized earlier in the course, we still need to understand the structure of the code, interpret its behavior, and identify errors when they arise — so we can ask the right questions and request meaningful corrections.
+This human–AI–human cycle produces a useful, interpretable tool more quickly than working alone.</p>
+</div>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reset</span> -f
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy.special</span>  <span class="c1"># Sigmoid activation function</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -590,24 +597,25 @@ File already exists: mnist_test.csv
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Accuracy: 96.66%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Accuracy: 96.36%
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classify_and_display_image</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;./image_src/MyZero.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classify_and_display_image</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;./image_src/MyNine.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5da7f16284723ec82b7b4f9cc96eb7f8b43f66ec9872c58800f4468481a5cc88.png" src="../../_images/5da7f16284723ec82b7b4f9cc96eb7f8b43f66ec9872c58800f4468481a5cc88.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(0)
+<img alt="../../_images/2ba49f5f3f97ad56aa246a0888d41dd02f88e43c2464b3a526c428c8649875c3.png" src="../../_images/2ba49f5f3f97ad56aa246a0888d41dd02f88e43c2464b3a526c428c8649875c3.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(9)
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -645,21 +653,6 @@ File already exists: mnist_test.csv
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>

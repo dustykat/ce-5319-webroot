@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Artifical Neural Network &#8212; Machine Learning by Example for Civil Engineers</title>
+    <title>14.4 Artifical Neural Network to Detect Cracks &#8212; Machine Learning by Example for Civil Engineers</title>
   
   
   
@@ -60,8 +60,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/materialANN';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Artificial Neural Network using packages" href="skann.html" />
-    <link rel="prev" title="Artifical Neural Network (Homebrew)" href="myann.html" />
+    <link rel="next" title="15. Ensemble Methods" href="../15-ensemblemethods/ensemblemethods.html" />
+    <link rel="prev" title="14.1 Artifical Neural Network (Homebrew)" href="myann.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -231,10 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="neuralnetworks.html">14. Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="deeplearners.html">Deep Learners</a></li>
-<li class="toctree-l2"><a class="reference internal" href="myann.html">Artifical Neural  Network (Homebrew)</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Artifical Neural  Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skann.html">Artificial Neural Network using packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myann.html">14.1 Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">14.4 Artifical Neural Network to Detect Cracks</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
@@ -377,7 +375,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Artifical Neural  Network</h1>
+    <h1>14.4 Artifical Neural Network to Detect Cracks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -387,7 +385,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleanup-block">Data Cleanup Block</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-homebrew-ann">The homebrew ANN</a></li>
 </ul>
             </nav>
         </div>
@@ -399,9 +398,381 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="artifical-neural-network">
-<h1>Artifical Neural  Network<a class="headerlink" href="#artifical-neural-network" title="Link to this heading">#</a></h1>
-<p>Single-layer ANN model to detect cracks in images.  Here we are flattening the images so will lose spatial information, might consider a convolution kernel to preserve spatial relationships.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="artifical-neural-network-to-detect-cracks">
+<h1>14.4 Artifical Neural Network to Detect Cracks<a class="headerlink" href="#artifical-neural-network-to-detect-cracks" title="Link to this heading">#</a></h1>
+<p>In this example we will apply our single-layer ANN model to detect cracks in images.  Here we are flattening the images so will lose spatial information, might consider a convolution kernel to preserve spatial relationships.</p>
+<p>The data are sourced from:</p>
+<p><a class="reference internal" href="#ce-5319-webroot/3-Readings/1-s2.0-S002074032100429X-main.pdf"><span class="xref myst">Adrien Müller, Nikos Karathanasopoulos, Christian C. Roth, Dirk Mohr, Machine Learning Classifiers for Surface Crack Detection in Fracture Experiments, International Journal of Mechanical Sciences, Volume 209, (2021), 106698, ISSN 0020-7403</span></a></p>
+<p>Workflow:</p>
+<ol class="arabic simple">
+<li><p><strong>Destroy existing data (need explained below)</strong></p></li>
+<li><p>Obtain the original dataset (.zip)</p></li>
+<li><p>Use python libraries to extract the images; they are stored in MatLab.mat file structures.</p></li>
+<li><p>Store imgaes locally into subdirectories for processing</p></li>
+<li><p>Then apply our ANN (homebrew or PyTorch)</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reset</span> -f
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this example, we delete the processed data primarily due to GitHub file size limitations and to demonstrate a clean, reproducible workflow.</p>
+<p>In real-world research or applications, you typically do not delete large datasets once downloaded and processed. Instead, you would:</p>
+<ul class="simple">
+<li><p>Archive them to a reliable location</p></li>
+<li><p>Use versioning and metadata to track provenance</p></li>
+<li><p>Avoid redundant downloads to conserve bandwidth and storage</p></li>
+</ul>
+<p>This cleanup is used here for pedagogical clarity and control, especially in constrained teaching environments.</p>
+</div>
+<section id="data-cleanup-block">
+<h2>Data Cleanup Block<a class="headerlink" href="#data-cleanup-block" title="Link to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The code block below will permanently delete all downloaded and generated data, including:</p>
+<ul class="simple">
+<li><p>Extracted .mat files and working directories</p></li>
+<li><p>Converted .png image files</p></li>
+<li><p>CSV files containing image labels</p></li>
+</ul>
+<p>Only run this cell if:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>You want to start fresh
+
+You have already backed up your work (if needed)
+
+You&#39;re confident all required artifacts can be re-downloaded and regenerated
+</pre></div>
+</div>
+<p>This is a reasonable practice to demonstrate reproducibility and manage disk space — but treat it with care!</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Define directories to delete</span>
+<span class="n">dirs_to_remove</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;extracted_dataset&quot;</span><span class="p">,</span>  <span class="c1"># Contains mmc1 and .mat files</span>
+    <span class="s2">&quot;images&quot;</span><span class="p">,</span>             <span class="c1"># Contains all converted PNGs</span>
+    <span class="s2">&quot;labels&quot;</span>              <span class="c1"># CSV files mapping filenames to labels</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">target_dir</span> <span class="ow">in</span> <span class="n">dirs_to_remove</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_dir</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting: </span><span class="si">{</span><span class="n">target_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">target_dir</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Directory not found (already deleted?): </span><span class="si">{</span><span class="n">target_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cleanup complete.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Directory not found (already deleted?): extracted_dataset
+Directory not found (already deleted?): images
+Directory not found (already deleted?): labels
+Cleanup complete.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://ars.els-cdn.com/content/image/1-s2.0-S002074032100429X-mmc1.zip&quot;</span>
+
+<span class="c1"># Step 1: Download the ZIP archive</span>
+<span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File already exists: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Workflow paths</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://ars.els-cdn.com/content/image/1-s2.0-S002074032100429X-mmc1.zip&quot;</span>
+<span class="n">zip_file</span> <span class="o">=</span> <span class="s2">&quot;dataset.zip&quot;</span>
+<span class="n">extract_dir</span> <span class="o">=</span> <span class="s2">&quot;extracted_dataset&quot;</span>
+<span class="n">png_output_dir</span> <span class="o">=</span> <span class="s2">&quot;images&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execute workflow</span>
+<span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">zip_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading https://ars.els-cdn.com/content/image/1-s2.0-S002074032100429X-mmc1.zip...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved to dataset.zip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2: Extract ZIP archive</span>
+<span class="k">def</span> <span class="nf">extract_zip</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="n">extract_to</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracting </span><span class="si">{</span><span class="n">zip_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">extract_to</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extracted to </span><span class="si">{</span><span class="n">extract_to</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extract_zip</span><span class="p">(</span><span class="n">zip_file</span><span class="p">,</span> <span class="n">extract_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracting dataset.zip...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracted to extracted_dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convert_mat_to_pngs</span><span class="p">(</span><span class="n">mat_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">mat_dir</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.mat&quot;</span><span class="p">):</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mat_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+            <span class="n">mat_data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+
+            <span class="c1"># Try to guess the structure</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mat_data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">):</span>
+                    <span class="n">images</span> <span class="o">=</span> <span class="n">mat_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+                    <span class="c1"># Check dimensions</span>
+                    <span class="k">if</span> <span class="n">images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+                            <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+                            <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+                            <span class="n">output_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">.png&quot;</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">),</span> <span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">images</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>
+                            <span class="n">img</span> <span class="o">=</span> <span class="n">images</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+                            <span class="n">output_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">.png&quot;</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">),</span> <span class="n">img</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping unexpected shape: </span><span class="si">{</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>  <span class="c1"># process only first candidate</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">convert_mat_to_pngs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extract_dir</span><span class="p">,</span> <span class="s2">&quot;mmc1&quot;</span><span class="p">),</span> <span class="n">png_output_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Processing NT_NN.mat...
+Skipping unexpected shape: (1, 1)
+Processing UT_NN.mat...
+Skipping unexpected shape: (1, 1)
+Processing NT_TestSet_Features.mat...
+Skipping unexpected shape: (8, 1407)
+Processing ASB_NN.mat...
+Skipping unexpected shape: (1, 1)
+Processing ASB_TestSet_Features.mat...
+Skipping unexpected shape: (21, 3741)
+Processing ASB_TestSet_Imgs.mat...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Processing NT_TestSet_Imgs.mat...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Processing UT_TestSet_Imgs.mat...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Processing UT_TestSet_Features.mat...
+Skipping unexpected shape: (6, 881)
+Done.
+</pre></div>
+</div>
+</div>
+</div>
+<p>This block moves files into subdirectories</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="c1"># Base source directory</span>
+<span class="n">source_dir</span> <span class="o">=</span> <span class="s2">&quot;./images&quot;</span>
+
+<span class="c1"># --- ASB ---</span>
+<span class="n">asb_target_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="s2">&quot;ASB&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">asb_target_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">source_dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;ASB_Test&quot;</span><span class="p">):</span>
+        <span class="n">src_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">dst_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">asb_target_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">):</span>  <span class="c1"># only move if it still exists</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">)</span>
+
+<span class="c1"># --- NT ---</span>
+<span class="n">nt_target_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="s2">&quot;NT&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">nt_target_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">source_dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;NT_Test&quot;</span><span class="p">):</span>
+        <span class="n">src_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">dst_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nt_target_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">)</span>
+
+<span class="c1"># --- UT ---</span>
+<span class="n">ut_target_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="s2">&quot;UT&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ut_target_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">source_dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;UT_Test&quot;</span><span class="p">):</span>
+        <span class="n">src_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">dst_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ut_target_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+
+<span class="c1"># --- ASB ---</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;ASB&quot;</span>
+<span class="n">mat_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;extracted_dataset/mmc1/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_TestSet_Features.mat&quot;</span>
+<span class="n">output_csv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;labels/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_labels.csv&quot;</span>
+
+<span class="n">mat_data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">mat_path</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">mat_data</span><span class="p">[</span><span class="s1">&#39;YTest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Image_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">.png&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">filenames</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)})</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels to </span><span class="si">{</span><span class="n">output_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- NT ---</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;NT&quot;</span>
+<span class="n">mat_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;extracted_dataset/mmc1/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_TestSet_Features.mat&quot;</span>
+<span class="n">output_csv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;labels/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_labels.csv&quot;</span>
+
+<span class="n">mat_data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">mat_path</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">mat_data</span><span class="p">[</span><span class="s1">&#39;YTest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Image_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">.png&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">filenames</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)})</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels to </span><span class="si">{</span><span class="n">output_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- UT ---</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;UT&quot;</span>
+<span class="n">mat_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;extracted_dataset/mmc1/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_TestSet_Features.mat&quot;</span>
+<span class="n">output_csv</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;labels/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_labels.csv&quot;</span>
+
+<span class="n">mat_data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">mat_path</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">mat_data</span><span class="p">[</span><span class="s1">&#39;YTest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_Image_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">.png&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">filenames</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)})</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> labels to </span><span class="si">{</span><span class="n">output_csv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saved 3741 labels to labels/ASB_labels.csv
+Saved 1407 labels to labels/NT_labels.csv
+Saved 881 labels to labels/UT_labels.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s2">&quot;./labels/ASB_labels.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;./images/ASB/&quot;</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s2">&quot;./labels/NT_labels.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;./images/NT/&quot;</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s2">&quot;./labels/UT_labels.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;./images/UT/&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-homebrew-ann">
+<h2>The homebrew ANN<a class="headerlink" href="#the-homebrew-ann" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">imageio.v3</span> <span class="k">as</span> <span class="nn">imageio</span>  <span class="c1"># newer imageio uses imageio.v3</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Read as float grayscale image</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span>
+    <span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/images/UT/UT_TestSet_Imgs_000.png&quot;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Invert colors and flatten</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">128</span> <span class="o">*</span> <span class="mi">128</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/af9ab391d48855efd7c36d778133580604339e4f58a0662a10a0e1b81bdd5cde.png" src="../../_images/af9ab391d48855efd7c36d778133580604339e4f58a0662a10a0e1b81bdd5cde.png" />
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>              <span class="c1"># useful numerical routines</span>
@@ -417,69 +788,12 @@ document.write(`
 <p><strong>The file pathnames are unique to my computer</strong> and are shown here so the notebook renders and typesets correctly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first read and render to get imgae sizing </span>
-<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/UT-881/Image0.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
-<span class="c1">#img_data = ((img_data/255.0)*0.99) + 0.01</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># first read and render to get imgae sizing </span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/UT-881/Image0.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1">#img_data = ((img_data/255.0)*0.99) + 0.01</span>
-
-<span class="nn">File /opt/jupyterhub/lib/python3.10/site-packages/imageio/v2.py:359,</span> in <span class="ni">imread</span><span class="nt">(uri, format, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">356</span> <span class="n">imopen_args</span> <span class="o">=</span> <span class="n">decypher_format_arg</span><span class="p">(</span><span class="nb">format</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span> <span class="n">imopen_args</span><span class="p">[</span><span class="s2">&quot;legacy_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="ne">--&gt; </span><span class="mi">359</span> <span class="k">with</span> <span class="n">imopen</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="s2">&quot;ri&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">imopen_args</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">362</span> <span class="k">return</span> <span class="n">result</span>
-
-<span class="nn">File /opt/jupyterhub/lib/python3.10/site-packages/imageio/core/imopen.py:113,</span> in <span class="ni">imopen</span><span class="nt">(uri, io_mode, plugin, extension, format_hint, legacy_mode, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="n">request</span><span class="o">.</span><span class="n">format_hint</span> <span class="o">=</span> <span class="n">format_hint</span>
-<span class="g g-Whitespace">    </span><span class="mi">112</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">113</span>     <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">io_mode</span><span class="p">,</span> <span class="n">format_hint</span><span class="o">=</span><span class="n">format_hint</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="n">extension</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">115</span> <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&lt;bytes&gt;&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">uri</span>
-<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="c1"># fast-path based on plugin</span>
-<span class="g g-Whitespace">    </span><span class="mi">118</span> <span class="c1"># (except in legacy mode)</span>
-
-<span class="nn">File /opt/jupyterhub/lib/python3.10/site-packages/imageio/core/request.py:249,</span> in <span class="ni">Request.__init__</span><span class="nt">(self, uri, mode, extension, format_hint, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid Request.Mode: </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">248</span> <span class="c1"># Parse what was given</span>
-<span class="ne">--&gt; </span><span class="mi">249</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">251</span> <span class="c1"># Set extension</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="k">if</span> <span class="n">extension</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">File /opt/jupyterhub/lib/python3.10/site-packages/imageio/core/request.py:409,</span> in <span class="ni">Request._parse_uri</span><span class="nt">(self, uri)</span>
-<span class="g g-Whitespace">    </span><span class="mi">406</span> <span class="k">if</span> <span class="n">is_read_request</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">407</span>     <span class="c1"># Reading: check that the file exists (but is allowed a dir)</span>
-<span class="g g-Whitespace">    </span><span class="mi">408</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">409</span>         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No such file: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">fn</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">410</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">411</span>     <span class="c1"># Writing: check that the directory to write to does exist</span>
-<span class="g g-Whitespace">    </span><span class="mi">412</span>     <span class="n">dn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: No such file: &#39;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/UT-881/Image0.png&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now we have to flatten each image, put into a csv file, and add the truth table</span>
 <span class="c1"># myann expects</span>
 <span class="c1"># truth, image ....</span>
 <span class="c1">#howmanyimages = 881</span>
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="n">howmanyimages</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># a small subset for demonstration</span>
+<span class="n">howmanyimages</span> <span class="o">=</span> <span class="mi">24</span> <span class="c1"># a small subset for demonstration</span>
 <span class="n">testimage</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanyimages</span><span class="p">)])</span>
 <span class="n">split</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># fraction to hold out for testing</span>
 <span class="n">numwritten</span> <span class="o">=</span> <span class="mi">0</span>
@@ -492,7 +806,7 @@ document.write(`
 <span class="n">outfile2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputfile2</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>  <span class="c1"># open the file in the write mode</span>
 <span class="n">writer2</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">outfile2</span><span class="p">)</span> <span class="c1"># create the csv writer</span>
 <span class="c1"># process truth table (absolute pathname)</span>
-<span class="n">groundtruth</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/UT-881/UT-881-GroundTruth.csv&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="c1">#open the file in the reader mode</span>
+<span class="n">groundtruth</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/images/UT/UT_labels.csv&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="c1">#open the file in the reader mode</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">groundtruth</span><span class="p">)</span>
 <span class="n">truthtable</span><span class="o">=</span><span class="p">[]</span> <span class="c1"># empty list to store class</span>
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
@@ -502,32 +816,41 @@ document.write(`
     <span class="n">truthtable</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">truthtable</span><span class="p">[</span><span class="n">irow</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># shift all entries by 1</span>
     
 <span class="c1">#print(truthtable[0:4])</span>
+<span class="c1">#import imageio.v3 as imageio  # use imageio.v3 for mode=&#39;F&#39;</span>
+<span class="c1">#import numpy as np</span>
+<span class="c1">#import csv</span>
+
+<span class="c1"># Assume truthtable, split, howmanyimages, writer1, writer2, outfile1, outfile2 already defined</span>
+<span class="n">numwritten</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">howmanyimages</span><span class="p">):</span>
-    <span class="c1"># read the image</span>
-    <span class="n">image_name</span><span class="o">=</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/UT-881/Image&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.png&quot;</span> <span class="c1"># build image name</span>
-    <span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="c1">#read the image</span>
-    <span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span> <span class="c1"># flatten the image</span>
-    <span class="c1">#img_data = ((img_data/255.0)*0.99) + 0.01 # float the pixels</span>
-    <span class="n">newimage</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">truthtable</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">split</span><span class="p">:</span>
-        <span class="c1">#sedn to test</span>
-        <span class="n">writer2</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">newimage</span><span class="p">)</span><span class="c1"># write a row to the csv file</span>
-        <span class="n">numwritten</span><span class="o">=</span><span class="n">numwritten</span><span class="o">+</span><span class="mi">1</span>
+    <span class="c1"># build zero-padded image filename: 000, 001, ...</span>
+    <span class="n">image_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/images/UT/UT_TestSet_Imgs_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03</span><span class="si">}</span><span class="s2">.png&quot;</span>
+    
+    <span class="c1"># read and flatten image</span>
+    <span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_name</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+    <span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  <span class="c1"># ensure it&#39;s 1D, matches reshape(16384)</span>
+
+    <span class="c1"># add label to the front</span>
+    <span class="n">newimage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">truthtable</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+    <span class="c1"># randomly assign to training or test set</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">split</span><span class="p">:</span>
+        <span class="n">writer2</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">newimage</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1">#send to train</span>
-        <span class="n">writer1</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">newimage</span><span class="p">)</span><span class="c1"># write a row to the csv file</span>
-        <span class="n">numwritten</span><span class="o">=</span><span class="n">numwritten</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">writer1</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">newimage</span><span class="p">)</span>
+    
+    <span class="n">numwritten</span> <span class="o">+=</span> <span class="mi">1</span>
+
 <span class="n">outfile1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">outfile2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Images segregated and processed&quot;</span><span class="p">,</span><span class="n">numwritten</span><span class="p">)</span>
-<span class="c1">#print(img_data)</span>
-<span class="c1">#print(newimage)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Images segregated and processed:&quot;</span><span class="p">,</span> <span class="n">numwritten</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Images segregated and processed 20
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Images segregated and processed: 24
 </pre></div>
 </div>
 </div>
@@ -663,14 +986,16 @@ document.write(`
     <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">training_data_list</span><span class="p">:</span>
     <span class="c1"># split the values on the commas</span>
         <span class="n">all_values</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># split datalist on commas - all records.  Is thing going to work? #</span>
-        <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">/</span><span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="c1">#        inputs = (numpy.asarray(all_values[1:])/255.0 * 0.99) + 0.01</span>
 <span class="c1">#        inputs = (numpy.asfarray(all_values[1:])/255.0 * 0.99) + 0.01</span>
     <span class="c1"># print(inputs)          ## activate for debugging otherwise leave disabled</span>
     <span class="c1"># create target output values -- all 0.01 except for the label of 0.99</span>
         <span class="n">targets</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
     <span class="c1"># all_values[0] is the target for this record</span>
     <span class="c1">#  print(int(numpy.asfarray(all_values[0])))</span>
-        <span class="n">targets</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="o">=</span> <span class="mf">0.99</span>
+        <span class="c1">#targets[int(numpy.asarray(all_values[0]))] = 0.99</span>
+        <span class="n">targets</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="o">=</span> <span class="mf">0.99</span>
 <span class="c1">#        print(targets)</span>
     <span class="c1"># targets = numpy.asfarray(all_values[0])</span>
         <span class="n">n</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
@@ -707,9 +1032,10 @@ training episodes            =  1
     <span class="c1"># split the values on the commas</span>
     <span class="n">all_values</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># split datalist on commas - all records #</span>
 <span class="c1">#    correct_label = int(all_values[0]) # correct answer is first element of all_values</span>
-    <span class="n">correct_label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># correct answer is first element of all_values</span>
+<span class="c1">#    correct_label = int(numpy.asarray(all_values[0])) # correct answer is first element of all_values</span>
+    <span class="n">correct_label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># converts &#39;1.0&#39; → 1.0 → 1</span>
     <span class="c1"># scale and shift the inputs</span>
-    <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">/</span><span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">/</span><span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
     <span class="c1"># query the neural network</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
     <span class="n">predict_label</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
@@ -724,7 +1050,7 @@ training episodes            =  1
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;production records processed =&quot;</span><span class="p">,</span> <span class="n">howManyTestRecords</span><span class="p">)</span>
 <span class="c1">## print scorecard   # activate for small test sets only!</span>
 <span class="c1"># calculate performance score, fraction of correct answers</span>
-<span class="n">scorecard_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">scorecard</span><span class="p">)</span>
+<span class="n">scorecard_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">scorecard</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;performance = &quot;</span><span class="p">,</span><span class="n">scorecard_array</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">scorecard_array</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -734,119 +1060,16 @@ training episodes            =  1
 predict = 1 1 = correct
 predict = 1 1 = correct
 predict = 1 1 = correct
-production records processed = 4
+predict = 1 1 = correct
+predict = 1 1 = correct
+predict = 1 1 = correct
+predict = 1 1 = correct
+production records processed = 8
 performance =  1.0
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
-<span class="c1"># first read and render</span>
-<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
-<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/cat128.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-
-<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
-<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
-
-<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
-<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
-<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
-<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cat Image &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/347d59ea3bb1f91a33b619c82d3e86b45f4ee8a469165d64b69431aadcf8346b.png" src="../../_images/347d59ea3bb1f91a33b619c82d3e86b45f4ee8a469165d64b69431aadcf8346b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cat Image  Cracks Detected
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
-<span class="c1"># first read and render</span>
-<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
-<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/waterfall128.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-
-<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
-<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
-
-<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
-<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
-<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
-<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Waterfall Image &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/ccf7a56cc77c05643a67882d3cee80f77eff45b3932634acf3ffa95cf01ef8e1.png" src="../../_images/ccf7a56cc77c05643a67882d3cee80f77eff45b3932634acf3ffa95cf01ef8e1.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Waterfall Image  Cracks Detected
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
-<span class="c1"># first read and render</span>
-<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
-<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/1-Databases/MaterialCracking/concrete-cracks.png&quot;</span><span class="p">,</span> <span class="n">as_gray</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
-<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asfarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-
-<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
-<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
-
-<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
-<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
-<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
-<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cracked Concrete &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/6f3cd233890b5cd3ec723b7a264d7f974caf1bf8f32456aa4272e931b56697cf.png" src="../../_images/6f3cd233890b5cd3ec723b7a264d7f974caf1bf8f32456aa4272e931b56697cf.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cracked Concrete  Cracks Detected
-</pre></div>
-</div>
-</div>
-</div>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="https://www.digitalocean.com/community/tutorials/an-introduction-to-machine-learning">an-introduction-to-machine-learning</a></p></li>
-<li><p><a class="reference external" href="http://myselph.de/neuralNet.html">Neural Network Digit Recognizer</a>  An online mimic using same dataset</p></li>
-<li><p>LazyProgrammer. Unsupervised Machine Learning in Python: Master Data Science and Machine Learning with Cluster Analysis, Gaussian Mixture Models, and Principal Components Analysis . Kindle Edition.</p></li>
-<li><p>Rashid, Tariq. Make Your Own Neural Network. Kindle Edition.</p></li>
-</ol>
 </section>
 </section>
 
@@ -862,13 +1085,13 @@ performance =  1.0
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            name: "python-my-env",
             path: "./chapters/14-neuralnetworks"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python-my-env'</script>
 
                 </article>
               
@@ -886,15 +1109,15 @@ performance =  1.0
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Artifical Neural  Network (Homebrew)</p>
+        <p class="prev-next-title">14.1 Artifical Neural  Network (Homebrew)</p>
       </div>
     </a>
     <a class="right-next"
-       href="skann.html"
+       href="../15-ensemblemethods/ensemblemethods.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Artificial Neural Network using packages</p>
+        <p class="prev-next-title">15. Ensemble Methods</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -914,7 +1137,8 @@ performance =  1.0
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-cleanup-block">Data Cleanup Block</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-homebrew-ann">The homebrew ANN</a></li>
 </ul>
   </nav></div>
 

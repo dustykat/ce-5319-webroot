@@ -1,0 +1,956 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>14.2 Artificial Neural Network using Packages &#8212; Machine Learning by Example for Civil Engineers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/mnist_pytorch_flat_ann';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Machine Learning by Example for Civil Engineers - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Machine Learning by Example for Civil Engineers - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Machine Learning by Example for Civil Engineers
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ce-5319-syllabus-2025-2.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-introduction/introduction.html">1. Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../02-exploratorydata/exploratorydata.html">2. Exploratory Data Analysis</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../03-datapreparation/datapreparation.html">3. Data Preparation</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../04-linearregression/linearregression.html">4. Linear Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-optimization/optimization.html">5. Optimization Methods</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/gridsearchGPT.html">Enumeration Methods: Grid Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/nelderandmead.html">Nelder and Mead Downhill Simplex Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/hookeandjeevesGPT.html">Hooke and Jeeves Pattern Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-optimization/powellsdirectionset.html">Powell’s Direction Set Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-nonlinearregression/nonlinearregression.html">6. Non-Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-logisticregression/logisticregression.html">7. Logistic Regression</a></li>
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../07-decisiontrees/decisiontrees.html">8. Decision Trees</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../08-nearestneighbors/nearestneighbors.html">8. Nearest Neighbor Methods</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../09-supportvectors/supportvectors.html">9. Support Vectors</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../10-validation/validation.html">10. Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-clustering/clustering.html">11. Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../12-dimensionreduction/dimensionreduction.html">12. Dimension Reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="neuralnetworks.html">14. Neural Networks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="myann.html">14.1 Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="materialANN.html">14.4 Artifical Neural Network to Detect Cracks</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/14-neuralnetworks/mnist_pytorch_flat_ann.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>14.2 Artificial Neural Network using Packages</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">14.2 Artificial Neural Network using Packages</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist-classifier-using-pytorch-flat-ann">MNIST Classifier using PyTorch (Flat ANN)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-various-libraries">Load the Various Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieve-the-remote-data">Retrieve the Remote Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-definition-using-torch-utils-data-dataset">Dataset Definition using <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture-nn-sequential-vs-custom-class">Model Architecture: nn.Sequential vs Custom Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-nn-sequential">Why use nn.Sequential?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop">Training Loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-classification-using-a-trained-pytorch-model">Image Classification using a Trained PyTorch Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#success-and-failure-cases">Success and Failure Cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-and-loading-trained-models">Exporting and Loading Trained Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-model">Save a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-saved-model">Load a Saved Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="artificial-neural-network-using-packages">
+<h1>14.2 Artificial Neural Network using Packages<a class="headerlink" href="#artificial-neural-network-using-packages" title="Link to this heading">#</a></h1>
+<p>In this section, we transition from a homebrewed neural network to one built using the <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> framework — a widely used, scriptable, and locally installable tool for machine learning and deep learning.</p>
+<p>While our implementation uses <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code>, the following references provide helpful context on building neural networks both with and without high-level libraries. They’re useful for understanding what frameworks like PyTorch automate behind the scenes:</p>
+<section id="readings">
+<h2>Readings<a class="headerlink" href="#readings" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.activestate.com/resources/quick-reads/how-to-create-a-neural-network-in-python-with-and-without-keras/">How to create ANN with/without Keras</a></p></li>
+<li><p><a class="reference external" href="https://realpython.com/python-ai-neural-network/">Python AI: How to Build a Neural Network &amp; Make Predictions</a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/index.html">Paszke, A., et al. (2019). PyTorch: An imperative style, high-performance deep learning library. In NeurIPS. Official documentation:</a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org/tutorials/">PyTorch Tutorials Team. PyTorch Tutorials.</a></p></li>
+</ol>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="mnist-classifier-using-pytorch-flat-ann">
+<h1>MNIST Classifier using PyTorch (Flat ANN)<a class="headerlink" href="#mnist-classifier-using-pytorch-flat-ann" title="Link to this heading">#</a></h1>
+<p>This notebook replicates the original homebrew neural network using PyTorch for improved reliability and structure. It is designed to run standalone on a local system without reliance on cloud services.</p>
+<p><a class="reference external" href="https://docs.pytorch.org/docs/stable/index.html">PyTorch Documentation Landing Page</a></p>
+<section id="load-the-various-libraries">
+<h2>Load the Various Libraries<a class="headerlink" href="#load-the-various-libraries" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PyTorch must be installed in your Python kernel before running this notebook. On my server, I used the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ubuntu@ip-172-26-5-168:~$<span class="w"> </span>sudo<span class="w"> </span>-u<span class="w"> </span>sensei<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/sensei/tmp<span class="w"> </span><span class="c1"># create temporary directory</span>
+ubuntu@ip-172-26-5-168:~$<span class="w"> </span>sudo<span class="w"> </span><span class="nv">TMPDIR</span><span class="o">=</span>/home/sensei/tmp<span class="w"> </span>sudo<span class="w"> </span>/opt/jupyterhub/bin/python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span><span class="c1"># download and build in the temporary directory</span>
+</pre></div>
+</div>
+<p>This approach was necessary because my server is disk-space constrained — it hosts multiple course webroots, each with a .git directory, so storage is tight. On your own machine, a simple <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">torch</span></code> or the <code class="docutils literal notranslate"><span class="pre">conda</span></code> equivalent should work just fine.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reset</span> -f
+<span class="kn">import</span> <span class="nn">gc</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span> <span class="c1"># remove orphan objects</span>
+<span class="c1"># Should be a clean environment</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieve-the-remote-data">
+<h2>Retrieve the Remote Data<a class="headerlink" href="#retrieve-the-remote-data" title="Link to this heading">#</a></h2>
+<p>The dataset is already stored locally from a prior example, but it’s good practice to keep the download function in place. It’s designed to handle pre-existing files gracefully and won’t re-download unnecessarily — a small detail that makes the workflow more robust and reusable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dataset retrieval (local server)</span>
+<span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloaded: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File already exists: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">train_url</span> <span class="o">=</span> <span class="s2">&quot;http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_train.csv&quot;</span>
+<span class="n">test_url</span>  <span class="o">=</span> <span class="s2">&quot;http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_test.csv&quot;</span>
+
+<span class="n">train_file</span> <span class="o">=</span> <span class="s2">&quot;mnist_train.csv&quot;</span>
+<span class="n">test_file</span> <span class="o">=</span> <span class="s2">&quot;mnist_test.csv&quot;</span>
+
+<span class="n">download_file</span><span class="p">(</span><span class="n">train_url</span><span class="p">,</span> <span class="n">train_file</span><span class="p">)</span>
+<span class="n">download_file</span><span class="p">(</span><span class="n">test_url</span><span class="p">,</span> <span class="n">test_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File already exists: mnist_train.csv
+File already exists: mnist_test.csv
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataset-definition-using-torch-utils-data-dataset">
+<h2>Dataset Definition using <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code><a class="headerlink" href="#dataset-definition-using-torch-utils-data-dataset" title="Link to this heading">#</a></h2>
+<p>Instead of reading and preprocessing data inside the training loop (as in our homebrew), PyTorch encourages separating data loading logic using the <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code> interface.</p>
+<p>Here’s how to define a dataset class for our MNIST CSV files:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define custom dataset for MNIST CSV</span>
+<span class="k">class</span> <span class="nc">MNISTDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="mf">255.0</span>  <span class="c1"># normalize inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This class allows PyTorch’s DataLoader to efficiently:</p>
+<ul class="simple">
+<li><p>Load data in mini-batches</p></li>
+<li><p>Shuffle training samples</p></li>
+<li><p>Handle large datasets that don’t fit in memory</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Our dataset is already small and preloaded as a CSV, so we read everything at once. In larger applications, the <code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code> method might read from disk one image at a time.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load datasets</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">MNISTDataset</span><span class="p">(</span><span class="n">train_file</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">MNISTDataset</span><span class="p">(</span><span class="n">test_file</span><span class="p">)</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-architecture-nn-sequential-vs-custom-class">
+<h2>Model Architecture: nn.Sequential vs Custom Class<a class="headerlink" href="#model-architecture-nn-sequential-vs-custom-class" title="Link to this heading">#</a></h2>
+<p>In PyTorch, a neural network model is typically defined as a subclass of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>. This lets you encapsulate the structure (layers) and the logic (forward pass) of your network in one place.</p>
+<p>In our example, we create a <code class="docutils literal notranslate"><span class="pre">SimpleANN</span></code> class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the neural network architecture</span>
+<span class="k">class</span> <span class="nc">SimpleANN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_nodes</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">hidden_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">output_nodes</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleANN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_nodes</span><span class="p">,</span> <span class="n">hidden_nodes</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_nodes</span><span class="p">,</span> <span class="n">output_nodes</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>  <span class="c1"># consistent with original homebrew</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-use-nn-sequential">
+<h2>Why use nn.Sequential?<a class="headerlink" href="#why-use-nn-sequential" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code> is a container that applies a list of layers in order. It simplifies the model definition when layers are used one after another (i.e., no branching, recurrence, or multiple inputs/outputs).</p>
+<p>This model is a “flat fully connected network”, meaning each layer receives all outputs from the previous one — exactly like our homebrew network.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If we ever need more complex architectures (e.g. skip connections, multiple branches), we can still use nn.Module, but define the forward pass manually without nn.Sequential.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize model, loss, and optimizer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SimpleANN</span><span class="p">()</span>
+<span class="n">loss_function</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>  <span class="c1"># similar to original</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-loop">
+<h2>Training Loop<a class="headerlink" href="#training-loop" title="Link to this heading">#</a></h2>
+<p>Our training loop follows a standard PyTorch structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train the model</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">inputs</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">10</span><span class="p">))</span>
+        <span class="n">targets</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span> <span class="n">labels</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.99</span>  <span class="c1"># mimic original encoding</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">, Loss: </span><span class="si">{</span><span class="n">total_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1, Loss: 85.1594
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 2, Loss: 81.1760
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 3, Loss: 79.7172
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 4, Loss: 77.2456
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 5, Loss: 73.2352
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s walk through what happens:</p>
+<ul class="simple">
+<li><p>Each inputs batch is a tensor of shape <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">784]</span></code>, and labels is <code class="docutils literal notranslate"><span class="pre">[batch_size]</span></code>.</p></li>
+<li><p>We convert labels into one-hot-like targets scaled from 0.01 to 0.99 to match our sigmoid output range.</p></li>
+<li><p>The model produces predictions using the <code class="docutils literal notranslate"><span class="pre">forward()</span></code> method.</p></li>
+<li><p>The loss (difference between prediction and target) is computed using <code class="docutils literal notranslate"><span class="pre">nn.MSELoss()</span></code> to match the homebrew logic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MSELoss</span></code> is generally used for regression, but we use it here to mirror the output layer logic of the original model. In classification tasks, <code class="docutils literal notranslate"><span class="pre">CrossEntropyLoss</span></code> is more typical.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.zero_grad()</span></code> clears gradients from the last update.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss.backward()</span></code> computes gradients using backpropagation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> updates the weights using gradient descent.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>PyTorch automatically handles the chain rule and gradient accumulation under the hood. You do not need to manually compute derivatives or update weight matrices like in the homebrew version.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate accuracy</span>
+<span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predictions</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test Accuracy: 50.39%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="image-classification-using-a-trained-pytorch-model">
+<h2>Image Classification using a Trained PyTorch Model<a class="headerlink" href="#image-classification-using-a-trained-pytorch-model" title="Link to this heading">#</a></h2>
+<p>Now that we have trained our network, we can use it to classify new, unseen images.
+The function below wraps the full inference process and replicates the behavior of our earlier homebrew <code class="docutils literal notranslate"><span class="pre">query()</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">imageio.v2</span> <span class="k">as</span> <span class="nn">imageio</span>  <span class="c1"># PyTorch prefers Pillow, but this keeps your original structure</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="k">def</span> <span class="nf">classify_and_display_image_pytorch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classify a new image using the trained PyTorch model and display it.&quot;&quot;&quot;</span>
+    <span class="c1"># Load grayscale image</span>
+    <span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>  <span class="c1"># float32 output</span>
+    <span class="n">img_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">img_array</span><span class="p">)</span> <span class="o">-</span> <span class="n">img_array</span>         <span class="c1"># Invert colors (as done in MNIST)</span>
+    
+    <span class="c1"># Normalize and reshape</span>
+    <span class="n">img_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_array</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+    <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">img_data</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># shape: [1, 784]</span>
+    
+    <span class="c1"># Disable gradient tracking for inference</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="c1"># Plot image and prediction</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_array</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted Label: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">label</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">model</span></code>: This refers to an instance of our <code class="docutils literal notranslate"><span class="pre">SimpleANN</span> <span class="pre">class</span></code>, which inherits from <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>.  In the homebrew, the argument was <code class="docutils literal notranslate"><span class="pre">n</span></code> — a non-informative name for our neural network instance. Using <code class="docutils literal notranslate"><span class="pre">model</span></code> improves readability and aligns with common practice in PyTorch documentation.</p>
+<p>See <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module">PyTorch: nn.Module</a> for how models are defined and used.</p>
+<p><code class="docutils literal notranslate"><span class="pre">image_path</span></code>: A path to a 28×28 grayscale PNG or JPG image that resembles an MNIST digit.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>By changing <code class="docutils literal notranslate"><span class="pre">image_path</span></code> and its contents, we can adapt the function to handle different types of images. We are not constrained to 28×28 grayscale digits — though we would need to modify preprocessing steps accordingly. If an image is larger, has color channels (RGB), or represents something entirely different, we can refactor the normalization and model input shape to match.
+This is one of the strengths of scriptable ML engines: the flexibility to reconfigure the pipeline for new tasks.</p>
+</div>
+</section>
+<section id="success-and-failure-cases">
+<h2>Success and Failure Cases<a class="headerlink" href="#success-and-failure-cases" title="Link to this heading">#</a></h2>
+<p>Below is a demonstration using two test images — one that is classified correctly and one that is not. To a human, the digits 1 and 4 appear distinct, but to the network, they may produce similar output probabilities.</p>
+<p>In our example, the misclassified 4 has:</p>
+<ul class="simple">
+<li><p>A weak or broken horizontal stroke, and</p></li>
+<li><p>Closely spaced vertical strokes.</p></li>
+</ul>
+<p>Since our network is fully connected and flat, it treats the image as a list of 784 pixel intensities, losing any spatial context (e.g., where edges or corners occur). This limitation makes it vulnerable to errors that a human (who perceives structure and layout) would not make.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a known limitation of flat networks. A Convolutional Neural Network (CNN) is one way to restore spatial awareness by applying learnable filters that detect edges, shapes, and textures in local neighborhoods of the image. CNNs are the standard architecture for image classification tasks.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classify_and_display_image_pytorch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;./image_src/MyOne.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d28f2b2beedf587f2338935d401344384db11d88edcc5d8c9424f7a956146d9a.png" src="../../_images/d28f2b2beedf587f2338935d401344384db11d88edcc5d8c9424f7a956146d9a.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classify_and_display_image_pytorch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;./image_src/MyFour.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f2b1107a227477394d33274f4f8b9ea057cf36adc9e350aa1c8a6a1bcb47a84f.png" src="../../_images/f2b1107a227477394d33274f4f8b9ea057cf36adc9e350aa1c8a6a1bcb47a84f.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the function definition there is a lot going on  here is a summary:</p>
+<ul class="simple">
+<li><p>We used <code class="docutils literal notranslate"><span class="pre">imageio</span></code> to load the image into a NumPy array. The mode=’F’ flag ensures the image is read as 32-bit floating point grayscale.</p></li>
+<li><p>Inversion is applied to match MNIST conventions: handwritten digits are light on a dark background, but MNIST uses dark digits on a light background.</p></li>
+<li><p>Normalize input to a range close to (0, 1), but not exactly zero, just like our training set.</p></li>
+<li><p>PyTorch expects input in similar scaled ranges, although batch normalization layers can handle raw pixels if desired in future versions.</p></li>
+<li><p>Convert the NumPy array to a torch.tensor with type float32. <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> reduces the 28×28 image to a 784-element vector.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unsqueeze(0)</span></code> adds a batch dimension so that the input shape becomes [1, 784], which is required by PyTorch models even for single predictions.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">torch.no_grad()</span></code> context disables gradient tracking, which saves memory and speeds up inference.</p></li>
+<li><p>The model returns a 10-element output vector, corresponding to the predicted activation for each digit class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.argmax()</span></code> selects the index of the highest activation — this is our predicted label.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.item()</span></code> converts the scalar tensor into a plain Python integer.</p></li>
+<li><p>The image is displayed using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, and the predicted label is shown in the title.</p></li>
+<li><p>We turn off axes for a cleaner presentation.</p></li>
+</ul>
+</section>
+<section id="exporting-and-loading-trained-models">
+<h2>Exporting and Loading Trained Models<a class="headerlink" href="#exporting-and-loading-trained-models" title="Link to this heading">#</a></h2>
+<p>Once a model is trained, you can save it to disk and reload it later for prediction without retraining:</p>
+<section id="save-a-model">
+<h3>Save a Model<a class="headerlink" href="#save-a-model" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s2">&quot;mnist_ann_weights.pth&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-a-saved-model">
+<h3>Load a Saved Model<a class="headerlink" href="#load-a-saved-model" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">SimpleANN</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mnist_ann_weights.pth&quot;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># Set to inference mode (disables dropout, etc.)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SimpleANN(
+  (model): Sequential(
+    (0): Linear(in_features=784, out_features=100, bias=True)
+    (1): Sigmoid()
+    (2): Linear(in_features=100, out_features=10, bias=True)
+    (3): Sigmoid()
+  )
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">state_dict()</span></code> is a Python dictionary mapping each layer’s parameters.</p>
+<p>This approach is lightweight and flexible — you must reconstruct the model architecture in code before loading weights.</p>
+<p>For full-model export (including class structure), you could use <code class="docutils literal notranslate"><span class="pre">torch.save(model)</span></code>, but it’s less portable across PyTorch versions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always call model.eval() after loading if you’re using the model for inference. This ensures the behavior of layers like dropout or batch norm is appropriate for evaluation.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classify_and_display_image_pytorch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;./image_src/MyNine.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4e482ed18ebe4689ada6280b4ef711f7cdddf88ed60b121218d4e7e8c5398383.png" src="../../_images/4e482ed18ebe4689ada6280b4ef711f7cdddf88ed60b121218d4e7e8c5398383.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python-my-env",
+            path: "./chapters/14-neuralnetworks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python-my-env'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">14.2 Artificial Neural Network using Packages</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist-classifier-using-pytorch-flat-ann">MNIST Classifier using PyTorch (Flat ANN)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-various-libraries">Load the Various Libraries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieve-the-remote-data">Retrieve the Remote Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-definition-using-torch-utils-data-dataset">Dataset Definition using <code class="docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture-nn-sequential-vs-custom-class">Model Architecture: nn.Sequential vs Custom Class</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-nn-sequential">Why use nn.Sequential?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-loop">Training Loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-classification-using-a-trained-pytorch-model">Image Classification using a Trained PyTorch Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#success-and-failure-cases">Success and Failure Cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-and-loading-trained-models">Exporting and Loading Trained Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-model">Save a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-saved-model">Load a Saved Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theodore G. Cleveland, Ph.D.,P.E.,M.ASCE,F.EWRI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
