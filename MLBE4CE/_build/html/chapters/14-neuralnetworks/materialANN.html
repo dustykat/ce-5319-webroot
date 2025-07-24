@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="15. Ensemble Methods" href="../15-ensemblemethods/ensemblemethods.html" />
-    <link rel="prev" title="14.1 Artifical Neural Network (Homebrew)" href="myann.html" />
+    <link rel="prev" title="14.2 Artificial Neural Network using Packages" href="mnist_pytorch_flat_ann.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -232,6 +232,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../13-featureengineering/featureengineering.html">13. Feature Engineering</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="neuralnetworks.html">14. Neural Networks</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="myann.html">14.1 Artifical Neural  Network (Homebrew)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="myannGPTrefactor.html">14.2 Artifical Neural  Network (Homebrew with OpenAI refactoring)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mnist_pytorch_flat_ann.html">14.2 Artificial Neural Network using Packages</a></li>
+
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">14.4 Artifical Neural Network to Detect Cracks</a></li>
 </ul>
 </details></li>
@@ -1070,6 +1073,105 @@ performance =  1.0
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
+<span class="c1"># first read and render</span>
+<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/cat128.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
+<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
+<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cat Image &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2527c609992c550340617bf58bf045a8ab79e64081dcd2f62af242a9b77a962c.png" src="../../_images/2527c609992c550340617bf58bf045a8ab79e64081dcd2f62af242a9b77a962c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cat Image  Cracks Detected
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
+<span class="c1"># first read and render</span>
+<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/waterfall128.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
+<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
+<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Waterfall Image &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/41b2ed38ac5ca3f8a0ec392a7be5efa12ed3725d0762f733c5159656dde41bb7.png" src="../../_images/41b2ed38ac5ca3f8a0ec392a7be5efa12ed3725d0762f733c5159656dde41bb7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Waterfall Image  Cracks Detected
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets try one of my own pictures</span>
+<span class="c1"># first read and render</span>
+<span class="c1">#img_array = scipy.misc.imread(&quot;cat128.png&quot;, flatten = True) Fuckers deprecated this utility!</span>
+<span class="n">img_array</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;/home/sensei/ce-5319-webroot/MLBE4CE/chapters/14-neuralnetworks/concrete-cracks.png&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="n">img_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">16384</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">img_data</span><span class="o">/</span><span class="mf">255.0</span><span class="p">)</span><span class="o">*</span><span class="mf">0.99</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)),</span><span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Greys&#39;</span><span class="p">)</span> <span class="c1"># construct a graphic object #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># show the graphic object to a window #</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+<span class="n">mynumber</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+<span class="n">mylabel</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">mynumber</span><span class="p">)</span>
+
+<span class="n">m0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># gather some statistics</span>
+<span class="n">v0</span><span class="o">=</span><span class="n">img_data</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No Cracks Detected&quot;</span>
+<span class="k">elif</span> <span class="n">mylabel</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cracks Detected&quot;</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Cracked Concrete &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/de759197a3fb5b61cb342cc99299c7ca4fdf6efaf8a1013a6205a92fcd9e04cf.png" src="../../_images/de759197a3fb5b61cb342cc99299c7ca4fdf6efaf8a1013a6205a92fcd9e04cf.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cracked Concrete  Cracks Detected
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1104,12 +1206,12 @@ performance =  1.0
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="myann.html"
+       href="mnist_pytorch_flat_ann.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">14.1 Artifical Neural  Network (Homebrew)</p>
+        <p class="prev-next-title">14.2 Artificial Neural Network using Packages</p>
       </div>
     </a>
     <a class="right-next"
