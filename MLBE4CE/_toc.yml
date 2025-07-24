@@ -52,10 +52,11 @@ chapters:
 
 - file: chapters/14-neuralnetworks/neuralnetworks # neural networks
   sections:
-  - file: chapters/14-neuralnetworks/deeplearners
   - file: chapters/14-neuralnetworks/myann
+  - file: chapters/14-neuralnetworks/myannGPTrefactor
+  - file: chapters/14-neuralnetworks/mnist_pytorch_flat_ann
   - file: chapters/14-neuralnetworks/materialANN
-  - file: chapters/14-neuralnetworks/skann
+
 
 - file: chapters/15-ensemblemethods/ensemblemethods # ensemblemethods
 
