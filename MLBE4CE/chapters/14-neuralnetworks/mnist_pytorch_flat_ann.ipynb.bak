@@ -1,0 +1,650 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "d5e4f82b-3813-430e-ae67-2fecf2a5e75e",
+   "metadata": {},
+   "source": [
+    "# 14.2 Artificial Neural Network using Packages\n",
+    "\n",
+    "In this section, we transition from a homebrewed neural network to one built using the `PyTorch` framework — a widely used, scriptable, and locally installable tool for machine learning and deep learning.\n",
+    "\n",
+    "While our implementation uses `PyTorch`, the following references provide helpful context on building neural networks both with and without high-level libraries. They’re useful for understanding what frameworks like PyTorch automate behind the scenes:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "11f667a5-029a-44a5-a254-55afd08690cc",
+   "metadata": {},
+   "source": [
+    "## Readings\n",
+    "\n",
+    "1. [How to create ANN with/without Keras](https://www.activestate.com/resources/quick-reads/how-to-create-a-neural-network-in-python-with-and-without-keras/)\n",
+    "2. [Python AI: How to Build a Neural Network & Make Predictions](https://realpython.com/python-ai-neural-network/)\n",
+    "3. [Paszke, A., et al. (2019). PyTorch: An imperative style, high-performance deep learning library. In NeurIPS. Official documentation:](https://pytorch.org/docs/stable/index.html)\n",
+    "4. [PyTorch Tutorials Team. PyTorch Tutorials.](https://pytorch.org/tutorials/)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f21436fa",
+   "metadata": {},
+   "source": [
+    "# MNIST Classifier using PyTorch (Flat ANN)\n",
+    "This notebook replicates the original homebrew neural network using PyTorch for improved reliability and structure. It is designed to run standalone on a local system without reliance on cloud services.\n",
+    "\n",
+    "[PyTorch Documentation Landing Page](https://docs.pytorch.org/docs/stable/index.html)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "73b7bf51-4d79-43d4-a856-90faf70ddca5",
+   "metadata": {},
+   "source": [
+    "## Load the Various Libraries\n",
+    "\n",
+    ":::{note}\n",
+    "PyTorch must be installed in your Python kernel before running this notebook. On my server, I used the following commands:\n",
+    "\n",
+    "```bash\n",
+    "ubuntu@ip-172-26-5-168:~$ sudo -u sensei mkdir -p /home/sensei/tmp # create temporary directory\n",
+    "ubuntu@ip-172-26-5-168:~$ sudo TMPDIR=/home/sensei/tmp sudo /opt/jupyterhub/bin/python3 -m pip install torch # download and build in the temporary directory\n",
+    "```\n",
+    "This approach was necessary because my server is disk-space constrained — it hosts multiple course webroots, each with a .git directory, so storage is tight. On your own machine, a simple `pip install torch` or the `conda` equivalent should work just fine.\n",
+    ":::"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "08aa2a95",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%reset -f\n",
+    "import gc\n",
+    "gc.collect() # remove orphan objects\n",
+    "# Should be a clean environment\n",
+    "import torch\n",
+    "import torch.nn as nn\n",
+    "import torch.optim as optim\n",
+    "from torch.utils.data import Dataset, DataLoader\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import os\n",
+    "import requests\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e0398756-ed9e-4095-9cd1-64e2f4cc45bf",
+   "metadata": {},
+   "source": [
+    "## Retrieve the Remote Data\n",
+    "\n",
+    "The dataset is already stored locally from a prior example, but it’s good practice to keep the download function in place. It’s designed to handle pre-existing files gracefully and won’t re-download unnecessarily — a small detail that makes the workflow more robust and reusable."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "946405c8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "File already exists: mnist_train.csv\n",
+      "File already exists: mnist_test.csv\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Dataset retrieval (local server)\n",
+    "def download_file(url, filename):\n",
+    "    if not os.path.exists(filename):\n",
+    "        r = requests.get(url, allow_redirects=True)\n",
+    "        with open(filename, 'wb') as f:\n",
+    "            f.write(r.content)\n",
+    "        print(f\"Downloaded: {filename}\")\n",
+    "    else:\n",
+    "        print(f\"File already exists: {filename}\")\n",
+    "\n",
+    "train_url = \"http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_train.csv\"\n",
+    "test_url  = \"http://54.243.252.9/engr-1330-psuedo-course/CECE-1330-PsuedoCourse/6-Projects/P-ImageClassification/mnist_test.csv\"\n",
+    "\n",
+    "train_file = \"mnist_train.csv\"\n",
+    "test_file = \"mnist_test.csv\"\n",
+    "\n",
+    "download_file(train_url, train_file)\n",
+    "download_file(test_url, test_file)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8b9f8a69-1acf-4044-b512-c3cbf5ded024",
+   "metadata": {},
+   "source": [
+    "## Dataset Definition using `torch.utils.data.Dataset`\n",
+    "\n",
+    "Instead of reading and preprocessing data inside the training loop (as in our homebrew), PyTorch encourages separating data loading logic using the `torch.utils.data.Dataset` interface.\n",
+    "\n",
+    "Here's how to define a dataset class for our MNIST CSV files:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "383cbe8d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Define custom dataset for MNIST CSV\n",
+    "class MNISTDataset(Dataset):\n",
+    "    def __init__(self, csv_file):\n",
+    "        data = pd.read_csv(csv_file, header=None).to_numpy(dtype=np.float32)\n",
+    "        self.X = data[:, 1:] / 255.0  # normalize inputs\n",
+    "        self.y = data[:, 0].astype(np.int64)\n",
+    "\n",
+    "    def __len__(self):\n",
+    "        return len(self.y)\n",
+    "\n",
+    "    def __getitem__(self, idx):\n",
+    "        return torch.tensor(self.X[idx]), torch.tensor(self.y[idx])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a4f86bf2-a855-44d7-a23c-ed173da6771b",
+   "metadata": {},
+   "source": [
+    "This class allows PyTorch’s DataLoader to efficiently:\n",
+    "\n",
+    "- Load data in mini-batches\n",
+    "- Shuffle training samples\n",
+    "- Handle large datasets that don't fit in memory\n",
+    "\n",
+    ":::{note}\n",
+    "Our dataset is already small and preloaded as a CSV, so we read everything at once. In larger applications, the `__getitem__()` method might read from disk one image at a time.\n",
+    ":::"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "4d4fe247",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Load datasets\n",
+    "batch_size = 64\n",
+    "train_dataset = MNISTDataset(train_file)\n",
+    "test_dataset = MNISTDataset(test_file)\n",
+    "\n",
+    "train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)\n",
+    "test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c68e794a-b195-4b5b-8bd1-ee4a775efd42",
+   "metadata": {},
+   "source": [
+    "## Model Architecture: nn.Sequential vs Custom Class\n",
+    "\n",
+    "In PyTorch, a neural network model is typically defined as a subclass of `torch.nn.Module`. This lets you encapsulate the structure (layers) and the logic (forward pass) of your network in one place.\n",
+    "\n",
+    "In our example, we create a `SimpleANN` class:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "9a878499",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Define the neural network architecture\n",
+    "class SimpleANN(nn.Module):\n",
+    "    def __init__(self, input_nodes=784, hidden_nodes=100, output_nodes=10):\n",
+    "        super(SimpleANN, self).__init__()\n",
+    "        self.model = nn.Sequential(\n",
+    "            nn.Linear(input_nodes, hidden_nodes),\n",
+    "            nn.Sigmoid(),\n",
+    "            nn.Linear(hidden_nodes, output_nodes),\n",
+    "            nn.Sigmoid()  # consistent with original homebrew\n",
+    "        )\n",
+    "\n",
+    "    def forward(self, x):\n",
+    "        return self.model(x)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ffeb5e9-3bd8-4b4b-96b4-3f19a893853e",
+   "metadata": {},
+   "source": [
+    "## Why use nn.Sequential?\n",
+    "\n",
+    "`nn.Sequential` is a container that applies a list of layers in order. It simplifies the model definition when layers are used one after another (i.e., no branching, recurrence, or multiple inputs/outputs).\n",
+    "\n",
+    "This model is a “flat fully connected network”, meaning each layer receives all outputs from the previous one — exactly like our homebrew network.\n",
+    "\n",
+    ":::{tip}\n",
+    "If we ever need more complex architectures (e.g. skip connections, multiple branches), we can still use nn.Module, but define the forward pass manually without nn.Sequential.\n",
+    ":::"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "e60ceef0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Initialize model, loss, and optimizer\n",
+    "model = SimpleANN()\n",
+    "loss_function = nn.MSELoss()  # similar to original\n",
+    "optimizer = optim.SGD(model.parameters(), lr=0.1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "64efbbb3-d633-41e5-802b-e0ef24d22511",
+   "metadata": {},
+   "source": [
+    "## Training Loop\n",
+    "\n",
+    "Our training loop follows a standard PyTorch structure:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "fd9e4cc3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch 1, Loss: 85.6142\n",
+      "Epoch 2, Loss: 81.3567\n",
+      "Epoch 3, Loss: 80.0404\n",
+      "Epoch 4, Loss: 77.8229\n",
+      "Epoch 5, Loss: 74.0961\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Train the model\n",
+    "epochs = 5\n",
+    "for epoch in range(epochs):\n",
+    "    total_loss = 0\n",
+    "    for inputs, labels in train_loader:\n",
+    "        targets = torch.zeros((inputs.size(0), 10))\n",
+    "        targets[range(inputs.size(0)), labels] = 0.99  # mimic original encoding\n",
+    "\n",
+    "        outputs = model(inputs)\n",
+    "        loss = loss_function(outputs, targets)\n",
+    "\n",
+    "        optimizer.zero_grad()\n",
+    "        loss.backward()\n",
+    "        optimizer.step()\n",
+    "\n",
+    "        total_loss += loss.item()\n",
+    "    print(f\"Epoch {epoch+1}, Loss: {total_loss:.4f}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d326d21e-e880-421e-bb63-246f75d8da57",
+   "metadata": {},
+   "source": [
+    "Let’s walk through what happens:\n",
+    "\n",
+    "- Each inputs batch is a tensor of shape `[batch_size, 784]`, and labels is `[batch_size]`.\n",
+    "- We convert labels into one-hot-like targets scaled from 0.01 to 0.99 to match our sigmoid output range.\n",
+    "- The model produces predictions using the `forward()` method.\n",
+    "- The loss (difference between prediction and target) is computed using `nn.MSELoss()` to match the homebrew logic.\n",
+    "- `MSELoss` is generally used for regression, but we use it here to mirror the output layer logic of the original model. In classification tasks, `CrossEntropyLoss` is more typical.\n",
+    "- `optimizer.zero_grad()` clears gradients from the last update.\n",
+    "- `loss.backward()` computes gradients using backpropagation.\n",
+    "- `optimizer.step()` updates the weights using gradient descent.\n",
+    "\n",
+    ":::{tip}\n",
+    "PyTorch automatically handles the chain rule and gradient accumulation under the hood. You do not need to manually compute derivatives or update weight matrices like in the homebrew version.\n",
+    ":::"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "c5a245ff",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Test Accuracy: 41.01%\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Evaluate accuracy\n",
+    "correct = 0\n",
+    "total = 0\n",
+    "with torch.no_grad():\n",
+    "    for inputs, labels in test_loader:\n",
+    "        outputs = model(inputs)\n",
+    "        predictions = torch.argmax(outputs, dim=1)\n",
+    "        correct += (predictions == labels).sum().item()\n",
+    "        total += labels.size(0)\n",
+    "\n",
+    "accuracy = correct / total\n",
+    "print(f\"Test Accuracy: {accuracy:.2%}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ca4ed0a5-149b-496d-b567-3a7c139e887c",
+   "metadata": {},
+   "source": [
+    "## Image Classification using a Trained PyTorch Model\n",
+    "\n",
+    "Now that we have trained our network, we can use it to classify new, unseen images. \n",
+    "The function below wraps the full inference process and replicates the behavior of our earlier homebrew `query()` method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "ce50c3df-5ac6-4fb0-9156-19dd56a1f06f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import imageio.v2 as imageio  # PyTorch prefers Pillow, but this keeps your original structure\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import torch\n",
+    "\n",
+    "def classify_and_display_image_pytorch(model, image_path):\n",
+    "    \"\"\"Classify a new image using the trained PyTorch model and display it.\"\"\"\n",
+    "    # Load grayscale image\n",
+    "    img_array = imageio.imread(image_path, mode='F')  # float32 output\n",
+    "    img_array = np.max(img_array) - img_array         # Invert colors (as done in MNIST)\n",
+    "    \n",
+    "    # Normalize and reshape\n",
+    "    img_data = (img_array / 255.0 * 0.99) + 0.01\n",
+    "    input_tensor = torch.tensor(img_data.flatten(), dtype=torch.float32).unsqueeze(0)  # shape: [1, 784]\n",
+    "    \n",
+    "    # Disable gradient tracking for inference\n",
+    "    with torch.no_grad():\n",
+    "        output = model(input_tensor)\n",
+    "        label = torch.argmax(output).item()\n",
+    "\n",
+    "    # Plot image and prediction\n",
+    "    plt.imshow(img_array, cmap='Greys')\n",
+    "    plt.title(f\"Predicted Label: {label}\")\n",
+    "    plt.axis('off')\n",
+    "    plt.show()\n",
+    "    \n",
+    "    return label\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9e54479d-5cba-45bd-b11a-3616e061dfd6",
+   "metadata": {},
+   "source": [
+    "`model`: This refers to an instance of our `SimpleANN class`, which inherits from `torch.nn.Module`.  In the homebrew, the argument was `n` — a non-informative name for our neural network instance. Using `model` improves readability and aligns with common practice in PyTorch documentation.\n",
+    "\n",
+    "See [PyTorch: nn.Module](https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module) for how models are defined and used.\n",
+    "\n",
+    "`image_path`: A path to a 28×28 grayscale PNG or JPG image that resembles an MNIST digit.  \n",
+    "\n",
+    ":::{tip}\n",
+    "By changing `image_path` and its contents, we can adapt the function to handle different types of images. We are not constrained to 28×28 grayscale digits — though we would need to modify preprocessing steps accordingly. If an image is larger, has color channels (RGB), or represents something entirely different, we can refactor the normalization and model input shape to match.\n",
+    "This is one of the strengths of scriptable ML engines: the flexibility to reconfigure the pipeline for new tasks.\n",
+    ":::\n",
+    "\n",
+    "## Success and Failure Cases\n",
+    "\n",
+    "Below is a demonstration using two test images — one that is classified correctly and one that is not. To a human, the digits 1 and 4 appear distinct, but to the network, they may produce similar output probabilities.\n",
+    "\n",
+    "In our example, the misclassified 4 has:\n",
+    "\n",
+    "- A weak or broken horizontal stroke, and\n",
+    "\n",
+    "- Closely spaced vertical strokes.\n",
+    "\n",
+    "Since our network is fully connected and flat, it treats the image as a list of 784 pixel intensities, losing any spatial context (e.g., where edges or corners occur). This limitation makes it vulnerable to errors that a human (who perceives structure and layout) would not make.\n",
+    "\n",
+    ":::{note}\n",
+    "This is a known limitation of flat networks. A Convolutional Neural Network (CNN) is one way to restore spatial awareness by applying learnable filters that detect edges, shapes, and textures in local neighborhoods of the image. CNNs are the standard architecture for image classification tasks.\n",
+    ":::"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "38bc91c0-703b-4f00-81e1-39f77eec9665",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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69bVZJ1p06bVZB2oFWcKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIbojHKemPf/xjTdaZOnVqTdaBWnGmAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSKACQRAGAVCmllIHeBBzN3r17q55pamqqeqZSqVQ909nZWfVMQ0ND1TNQK84UAEiiAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSKACQRAGAVDfQG4Bj+de//lWTdc4777yqZ9zxlFONMwUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACQ3xOOk99e//rUm61x++eU1WQdOZs4UAEiiAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSKACQ3BCPk95f/vKXmqxzySWX1GQdOJk5UwAgiQIASRQASKIAQBIFAJIoAJBEAYAkCgAkUQAgiQIASRQASKIAQHJDPE56K1eurMk6F110UU3WgZOZMwUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKAKRKKaUM9CY4PXR0dPRr7qyzzqp6pq6u+ns97t27tybrwMnMmQIASRQASKIAQBIFAJIoAJBEAYAkCgAkUQAgiQIASRQASKIAQBIFAJIoAJDcJRWA5EwBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkP4PxwE3y08+GsAAAAAASUVORK5CYII=",
+      "text/plain": [
+       "<Figure size 640x480 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "classify_and_display_image_pytorch(model, \"./image_src/MyOne.png\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "610404c4-9051-4144-bc0e-d0c86fdc62aa",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "iVBORw0KGgoAAAANSUhEUgAAAYUAAAGbCAYAAAAr/4yjAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9hAAAPYQGoP6dpAAATIUlEQVR4nO3cf6yWdf348dc5HA7ncA4q0QE5QQckSUOYSnOGJeTPheZfzemaQ1vz5BBwzVErpwk05yrDKaG2FRtzS9wqt0YxmFDClqViBUkQAqHMAHc4ED8OnHOuzx9+eX09Asp1I4fyPB7b2Tz3uV/39b7hcD/PdZ/Ld1VRFEUAQERUn+kFAPDfQxQASKIAQBIFAJIoAJBEAYAkCgAkUQAgiQIASRToFaNGjYrbb789P1+1alVUVVXFqlWrztia3uu9a+wNU6ZMiYsuuuhDfcwz8Tz46BCFPmDRokVRVVWVH3V1dTF27Ni4++6749///veZXl4pS5cuje9973tndA1VVVVx9913n9E1nE7f//7346abbophw4ZFVVXVGf/zpnfVnOkF0HvmzJkTo0ePjkOHDsXq1atj4cKFsXTp0li3bl0MHDiwV9dy5ZVXxsGDB6O2trbU3NKlS2PBggVeqE6j++67L84999y45JJLYtmyZWd6OfQyUehDvvSlL8VnP/vZiIj4+te/HkOGDIlHHnkknnvuubj11luPO7N///5oaGj40NdSXV0ddXV1H/rjcuq2bNkSo0aNit27d0dTU9OZXg69zNtHfdhVV10VEe+8CERE3H777dHY2BibN2+OqVOnxqBBg+KrX/1qRER0d3fH/PnzY9y4cVFXVxfDhg2L1tbWaGtr6/GYRVHEvHnzYsSIETFw4MD44he/GOvXrz/m2Cf6ncKLL74YU6dOjcGDB0dDQ0NMmDAhHn300VzfggULIiJ6vB121Ie9xlPx3HPPxQ033BDNzc0xYMCAGDNmTMydOze6urqOe/+XX345Jk2aFPX19TF69Oh44oknjrlPR0dHPPDAA/GpT30qBgwYECNHjozZs2dHR0fHB65n8+bNsXnz5pNa+6hRo07qfnw0OVPow46+SAwZMiRv6+zsjOuvvz4+//nPxw9/+MN8W6m1tTUWLVoUd9xxR8ycOTO2bNkSjz/+eKxduzbWrFkT/fv3j4iI+++/P+bNmxdTp06NqVOnxiuvvBLXXXddHD58+APXs3z58rjxxhtj+PDhMWvWrDj33HPjtddei9/85jcxa9asaG1tjR07dsTy5ctj8eLFx8z3xhpP1qJFi6KxsTG++c1vRmNjYzz//PNx//33x969e+MHP/hBj/u2tbXF1KlT4+abb45bb701lixZEnfddVfU1tbG1772tYh4J3g33XRTrF69Ou6888648MIL429/+1v8+Mc/jo0bN8avf/3r913P1VdfHRERW7du/dCeIx9RBR95P//5z4uIKFasWFHs2rWr2L59e/GLX/yiGDJkSFFfX1+88cYbRVEUxbRp04qIKL797W/3mH/hhReKiCiefvrpHrf/7ne/63H7zp07i9ra2uKGG24ouru7837f+c53iogopk2blretXLmyiIhi5cqVRVEURWdnZzF69OiipaWlaGtr63Gcdz/W9OnTi+N9256ONZ5IRBTTp09/3/scOHDgmNtaW1uLgQMHFocOHcrbJk+eXERE8aMf/Shv6+joKC6++OJi6NChxeHDh4uiKIrFixcX1dXVxQsvvNDjMZ944okiIoo1a9bkbS0tLcc8j5aWlqKlpeUDn9u77dq1q4iI4oEHHig1x/82bx/1Iddcc000NTXFyJEj45ZbbonGxsb41a9+FZ/4xCd63O+uu+7q8fmzzz4bZ599dlx77bWxe/fu/Jg4cWI0NjbGypUrIyJixYoVcfjw4ZgxY0aPt3XuueeeD1zb2rVrY8uWLXHPPffEOeec0+Nr736sE+mNNZZRX1+f/71v377YvXt3fOELX4gDBw7Ehg0bety3pqYmWltb8/Pa2tpobW2NnTt3xssvv5zP78ILL4wLLrigx/M7+hbg0ed3Ilu3bnWWwEnx9lEfsmDBghg7dmzU1NTEsGHD4tOf/nRUV/f8uaCmpiZGjBjR47ZNmzZFe3t7DB069LiPu3PnzoiI2LZtW0REnH/++T2+3tTUFIMHD37ftR19K6vSa/Z7Y41lrF+/Pu677754/vnnY+/evT2+1t7e3uPz5ubmY36ZP3bs2Ih458X88ssvj02bNsVrr712wl/8Hn1+cKpEoQ+57LLL8uqjExkwYMAxoeju7o6hQ4fG008/fdyZ/4YrVP6b1rhnz56YPHlynHXWWTFnzpwYM2ZM1NXVxSuvvBLf+ta3oru7u/Rjdnd3x/jx4+ORRx457tdHjhx5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gCQKACRRACCJAgBJFABIogBAEgUAkg3x4BT079+/9ExtbW1Fx+rq6qpoDspwpgBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgGRDPDgFHR0dvXas6mo/w3H6+S4DIIkCAEkUAEiiAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSXVLhFHR2dpaeqaqqquhYNTX+uXL6OVMAIIkCAEkUAEiiAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAECywxacgvr6+tIzNsTjv5kzBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSKACQRAGAJAoAJDtswf/T3d1dembo0KGlZ2pra0vPRETs3bu3ojkow5kCAEkUAEiiAEASBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQBSVVEUxZleBPDBKtmwr7raz32U4zsGgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIdkkFIDlTACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABI/wfUouZHe9v/mAAAAABJRU5ErkJggg==",
+      "text/plain": [
+       "<Figure size 640x480 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "classify_and_display_image_pytorch(model, \"./image_src/MyFour.png\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7fe2a260-bb23-4c07-a603-a05205c9ad96",
+   "metadata": {},
+   "source": [
+    "In the function definition there is a lot going on  here is a summary:\n",
+    "- We used `imageio` to load the image into a NumPy array. The mode='F' flag ensures the image is read as 32-bit floating point grayscale.\n",
+    "- Inversion is applied to match MNIST conventions: handwritten digits are light on a dark background, but MNIST uses dark digits on a light background.\n",
+    "- Normalize input to a range close to (0, 1), but not exactly zero, just like our training set.\n",
+    "- PyTorch expects input in similar scaled ranges, although batch normalization layers can handle raw pixels if desired in future versions.\n",
+    "- Convert the NumPy array to a torch.tensor with type float32. `flatten()` reduces the 28×28 image to a 784-element vector.\n",
+    "- `unsqueeze(0)` adds a batch dimension so that the input shape becomes [1, 784], which is required by PyTorch models even for single predictions.\n",
+    "- The `torch.no_grad()` context disables gradient tracking, which saves memory and speeds up inference.\n",
+    "- The model returns a 10-element output vector, corresponding to the predicted activation for each digit class.\n",
+    "- `torch.argmax()` selects the index of the highest activation — this is our predicted label.\n",
+    "- `.item()` converts the scalar tensor into a plain Python integer.\n",
+    "- The image is displayed using `matplotlib`, and the predicted label is shown in the title.\n",
+    "- We turn off axes for a cleaner presentation."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ae21c294-9bd6-4901-a6f6-d6f2095a2fff",
+   "metadata": {},
+   "source": [
+    "## Exporting and Loading Trained Models\n",
+    "\n",
+    "Once a model is trained, you can save it to disk and reload it later for prediction without retraining:\n",
+    "\n",
+    "### Save a Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "5cd09717-c510-43fd-8196-2bfd90d7b478",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "torch.save(model.state_dict(), \"mnist_ann_weights.pth\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fb671269-c63a-4ed7-9c5c-ae3c74e243cd",
+   "metadata": {},
+   "source": [
+    "### Load a Saved Model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "068491b9-4c4f-49ab-9ba1-7b50653cff90",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SimpleANN(\n",
+       "  (model): Sequential(\n",
+       "    (0): Linear(in_features=784, out_features=100, bias=True)\n",
+       "    (1): Sigmoid()\n",
+       "    (2): Linear(in_features=100, out_features=10, bias=True)\n",
+       "    (3): Sigmoid()\n",
+       "  )\n",
+       ")"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model = SimpleANN()\n",
+    "model.load_state_dict(torch.load(\"mnist_ann_weights.pth\"))\n",
+    "model.eval()  # Set to inference mode (disables dropout, etc.)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3fd84eff-d77c-4324-89e5-2c1b22e8bc7f",
+   "metadata": {},
+   "source": [
+    "`state_dict()` is a Python dictionary mapping each layer’s parameters.\n",
+    "\n",
+    "This approach is lightweight and flexible — you must reconstruct the model architecture in code before loading weights.\n",
+    "\n",
+    "For full-model export (including class structure), you could use `torch.save(model)`, but it’s less portable across PyTorch versions.\n",
+    "\n",
+    ":::{note}\n",
+    "Always call model.eval() after loading if you're using the model for inference. This ensures the behavior of layers like dropout or batch norm is appropriate for evaluation.\n",
+    ":::\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "71ebe45b-3865-44a5-a902-65a7712883e9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "iVBORw0KGgoAAAANSUhEUgAAAYUAAAGbCAYAAAAr/4yjAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9hAAAPYQGoP6dpAAATWklEQVR4nO3cb6zWdf3H8feBw4HDn4ohECQSYKTxZxbVCExMBdeRulHNKa2hznUyFVlrVK6ZChtzlYGKiNViMqygpW6pESRswo0GiBgMBiMwBCbK+CMIHA58fzf88Z6HA+L3Cs5BeDw2trjO9TrX55rGk+91Lq+qoiiKAICIaNPaBwDg3CEKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKtIhPf/rTccstt+TvlyxZElVVVbFkyZJWO9OJTjxjS7j66qtj8ODBZ/R7tsbz4PwhCheA2bNnR1VVVf7q0KFDDBw4MO6666548803W/t4pbzwwgtx//33t+oZqqqq4q677mrVM5wt999/f5N/V078tWzZstY+ImdZdWsfgJbz4IMPRr9+/eLQoUOxdOnSmDlzZrzwwguxZs2a6NixY4ue5aqrroqDBw9GTU1Nqd0LL7wQM2bMaPUwnK++9a1vxaWXXtrs9nvvvTf2798fX/rSl1rhVLQkUbiAfP3rX48vfvGLERFx++23R7du3eLhhx+O5557Lm6++eaTbg4cOBCdOnU642dp06ZNdOjQ4Yx/X/43Q4cOjaFDhza5bevWrfHGG2/E7bffXjrifPR4+egCds0110RExObNmyMi4pZbbonOnTvHpk2boq6uLrp06RLf/e53IyLi2LFjMW3atBg0aFB06NAhevbsGfX19bF79+4m37MoipgyZUpcfPHF0bFjx/ja174Wa9eubfbYp/qZwr/+9a+oq6uLrl27RqdOnWLo0KExffr0PN+MGTMiIpq8pHHcmT7j/+K5556LG264IXr37h3t27ePAQMGxOTJk+Po0aMnvf/KlStjxIgRUVtbG/369Ysnnnii2X0OHz4cv/jFL+LSSy+N9u3bR58+fWLSpElx+PDh055n06ZNsWnTpoqeyx//+McoiiL/XeD85krhAnb8D4lu3brlbY2NjXH99dfHlVdeGb/61a/yZaX6+vqYPXt23HrrrTFhwoTYvHlzPPbYY7Fq1apYtmxZtGvXLiIi7rvvvpgyZUrU1dVFXV1dvPLKKzFmzJhoaGg47XkWLlwYY8eOjV69esU999wTn/zkJ2PdunXxt7/9Le65556or6+P7du3x8KFC2POnDnN9i1xxg9r9uzZ0blz5/jRj34UnTt3jpdeeinuu+++2LdvX/zyl79sct/du3dHXV1d3HjjjXHzzTfHvHnz4o477oiampq47bbbIuK94H3zm9+MpUuXxve///24/PLL49///nf85je/iQ0bNsSzzz77gee59tprIyJiy5YtpZ/L3Llzo0+fPnHVVVeV3vIRVHDe+8Mf/lBERLFo0aLirbfeKrZu3Vr86U9/Krp161bU1tYWb7zxRlEURTF+/PgiIoqf/vSnTfYvv/xyERHF3Llzm9z+97//vcntO3fuLGpqaoobbrihOHbsWN7v3nvvLSKiGD9+fN62ePHiIiKKxYsXF0VRFI2NjUW/fv2Kvn37Frt3727yOO//XnfeeWdxsn9tz8YZTyUiijvvvPMD7/Puu+82u62+vr7o2LFjcejQobxt1KhRRUQUv/71r/O2w4cPF1dccUXRo0ePoqGhoSiKopgzZ07Rpk2b4uWXX27yPZ944okiIoply5blbX379m32PPr27Vv07dv3tM/tRGvWrCkiopg0aVLpLR9NXj66gFx33XXRvXv36NOnT9x0003RuXPneOaZZ+JTn/pUk/vdcccdTX4/f/78+PjHPx6jR4+Ot99+O38NGzYsOnfuHIsXL46IiEWLFkVDQ0PcfffdTV7WmThx4mnPtmrVqti8eXNMnDgxPvGJTzT52vu/16m0xBnLqK2tzf/9zjvvxNtvvx1f/epX4913343169c3uW91dXXU19fn72tqaqK+vj527twZK1euzOd3+eWXx2WXXdbk+R1/CfD48zuVLVu2VHyVEBFeOrqAePnoAjJjxowYOHBgVFdXR8+ePeOzn/1stGnT9O8F1dXVcfHFFze5bePGjbF3797o0aPHSb/vzp07IyLi9ddfj4iIz3zmM02+3r179+jatesHnu34S1mVvme/Jc5Yxtq1a+PnP/95vPTSS7Fv374mX9u7d2+T3/fu3bvZD/MHDhwYEe/9YT58+PDYuHFjrFu3Lrp3737Sxzv+/M6koiji6aefjsGDBzf74TPnL1G4gHz5y1/Odx+dSvv27ZuF4tixY9GjR4/8W+OJTvUHVUs6l864Z8+eGDVqVHzsYx+LBx98MAYMGBAdOnSIV155JX7yk5/EsWPHSn/PY8eOxZAhQ+Lhhx8+6df79Onzvx67mWXLlsXrr78eU6dOPePfm3OXKHBaAwYMiEWLFsXIkSObvCxyor59+0bEe39r79+/f97+1ltvNXsH0MkeIyJizZo1cd11153yfqd6KaklzvhhLVmyJHbt2hV//etfm/xw9vi7vE60ffv2Zm/93bBhQ0S8918nR7z3/FavXh3XXnvth3o57UyYO3duVFVVxbhx41rk8Tg3+JkCp3XjjTfG0aNHY/Lkyc2+1tjYGHv27ImI935m0a5du3j00UejKIq8z7Rp0077GF/4wheiX79+MW3atPx+x73/ex3/g/PE+7TEGT+stm3bNjt3Q0NDPP744ye9f2NjY8yaNavJfWfNmhXdu3ePYcOGRcR7z2/btm3x29/+ttn+4MGDceDAgQ88U9m3pB45ciTmz58fV155ZVxyySUfesdHnysFTmvUqFFRX18fU6dOjVdffTXGjBkT7dq1i40bN8b8+fNj+vTp8Z3vfCe6d+8eP/7xj2Pq1KkxduzYqKuri1WrVsWLL74YF1100Qc+Rps2bWLmzJnxjW98I6644oq49dZbo1evXrF+/fpYu3ZtLFiwICIi/5CcMGFCXH/99dG2bdu46aabWuSM77dixYqYMmVKs9uvvvrqGDFiRHTt2jXGjx8fEyZMiKqqqpgzZ06TSLxf796946GHHootW7bEwIED489//nO8+uqr8eSTT+bbaL/3ve/FvHnz4gc/+EEsXrw4Ro4cGUePHo3169fHvHnzYsGCBR/40mDZt6QuWLAgdu3a5QfMF6LWfOsTLeP4W1KXL1/+gfcbP3580alTp1N+/cknnyyGDRtW1NbWFl26dCmGDBlSTJo0qdi+fXve5+jRo8UDDzxQ9OrVq6itrS2uvvrqYs2aNc3eJnniW1KPW7p0aTF69OiiS5cuRadOnYqhQ4cWjz76aH69sbGxuPvuu4vu3bsXVVVVzd6eeibPeCoRccpfkydPLoqiKJYtW1YMHz68qK2tLXr37l1MmjSpWLBgQbPnPGrUqGLQoEHFihUriq985StFhw4dir59+xaPPfZYs8dtaGgoHnrooWLQoEFF+/bti65duxbDhg0rHnjggWLv3r15vzPxltSbbrqpaNeuXbFr164PveH8UFUUp/jrCwAXHD9TACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKAKTq1j4AnM6BAwdKb2pqakpv2rVrV3oD5xtXCgAkUQAgiQIASRQASKIAQBIFAJIoAJBEAYAkCgAkUQAgiQIASRQASD4Qjzhy5EiLPM4777xT0W7fvn2lN9u2bSu9ueSSS0pv2rQp//eqnj17lt5ERFRX+78rZ58rBQCSKACQRAGAJAoAJFEAIIkCAEkUAEiiAEASBQCSKACQRAGAJAoAJJ+wdZ6p5MPt9u/fX3qzc+fO0pu5c+eW3kRE/POf/yy9WbduXenN7t27S28qMWDAgIp2Tz31VOnNiBEjKnosLlyuFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgFRVFEXR2ofgzKnkE0+3bdtWejNjxozSm+eff770JiLiP//5T+lNv379Sm+uvfba0ptly5aV3lTyCa4RER07diy9WblyZenNZZddVnrD+cOVAgBJFABIogBAEgUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAUnVrH4CTO3LkSEW7BQsWlN6sX7++9Gb58uWlN5V8sF1ExPjx40tvfv/735fetG3btvSmEnV1dRXtXnzxxdKb6dOnl97MnDmz9IbzhysFAJIoAJBEAYAkCgAkUQAgiQIASRQASKIAQBIFAJIoAJBEAYAkCgCkqqIoitY+BM1V+o+lffv2pTePP/546c3dd99detPY2Fh6ExGxY8eO0puLLrqoosdqCQsXLqxoN2bMmNKb/v37l96sW7eu9Kampqb0hnOTKwUAkigAkEQBgCQKACRRACCJAgBJFABIogBAEgUAkigAkEQBgCQKAKTq1j4AJ1dVVVXR7rXXXiu9efrpp0tv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",
+      "text/plain": [
+       "<Figure size 640x480 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "7"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "classify_and_display_image_pytorch(model, \"./image_src/MyNine.png\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c5ea80f2-dc25-40fa-bc76-90a8c81452e1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python Common Environment",
+   "language": "python",
+   "name": "python-my-env"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
