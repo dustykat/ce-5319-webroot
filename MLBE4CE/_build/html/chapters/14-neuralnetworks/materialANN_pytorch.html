@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-neuralnetworks/materialANN_pytorch';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="15. Ensemble Methods" href="../15-ensemblemethods/ensemblemethods.html" />
+    <link rel="next" title="14.6 ANN for Prediction Engines (Regression)" href="ANNregression.html" />
     <link rel="prev" title="14.4 Artifical Neural Network to Detect Cracks" href="materialANN.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -237,6 +237,7 @@
 
 <li class="toctree-l2"><a class="reference internal" href="materialANN.html">14.4 Artifical Neural Network to Detect Cracks</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">14.5 ANN in PyTorch to Detect Cracks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ANNregression.html">14.6 ANN for Prediction Engines (Regression)</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../15-ensemblemethods/ensemblemethods.html">15. Ensemble Methods</a></li>
@@ -398,6 +399,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-a-cnn-here">Why Use a CNN Here?</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-s">Exercise(s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-subsection">End of Subsection</a></li>
 </ul>
             </nav>
         </div>
@@ -767,8 +770,7 @@ Saved 881 labels to labels/UT_labels.csv
 
 <span class="c1">## Pre-processing Build training and testing sets</span>
 <span class="c1"># now we have to flatten each image, put into a csv file, and add the truth table</span>
-<span class="c1"># myann expects</span>
-<span class="c1"># truth, image ....</span>
+<span class="c1"># myann expects [truth, image fields ....]</span>
 <span class="c1"># howmanyimages = 881</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="n">howmanyimages</span> <span class="o">=</span> <span class="mi">440</span> <span class="c1"># a small subset for demonstration</span>
@@ -793,11 +795,6 @@ Saved 881 labels to labels/UT_labels.csv
 <span class="k">for</span> <span class="n">irow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">truthtable</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">truthtable</span><span class="p">[</span><span class="n">irow</span><span class="p">]</span><span class="o">=</span><span class="n">truthtable</span><span class="p">[</span><span class="n">irow</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># shift all entries by 1</span>
     
-<span class="c1">#print(truthtable[0:4])</span>
-<span class="c1">#import imageio.v3 as imageio  # use imageio.v3 for mode=&#39;F&#39;</span>
-<span class="c1">#import numpy as np</span>
-<span class="c1">#import csv</span>
-
 <span class="c1"># Assume truthtable, split, howmanyimages, writer1, writer2, outfile1, outfile2 already defined</span>
 <span class="n">numwritten</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -856,8 +853,8 @@ Lost images : 0
 <span class="n">INPUT_SIZE</span> <span class="o">=</span> <span class="mi">128</span> <span class="o">*</span> <span class="mi">128</span>
 <span class="n">HIDDEN_SIZE</span> <span class="o">=</span> <span class="n">INPUT_SIZE</span> <span class="o">//</span> <span class="mi">10</span>
 <span class="n">OUTPUT_SIZE</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.2</span>
-<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">8</span>
 
 <span class="c1"># Define the ANN model</span>
@@ -897,25 +894,12 @@ Lost images : 0
 <span class="c1"># Initialize model, loss, optimizer</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">SimpleANN</span><span class="p">()</span>
 <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="c1">#optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)</span>
-<span class="c1">#model = SimpleANN()</span>
 <span class="c1">#criterion = nn.MSELoss()  # similar to original</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
+<span class="c1">#optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)</span>
 
-<span class="c1"># Training loop</span>
-<span class="c1">#print(&quot;Starting training...&quot;)</span>
-<span class="c1">#for epoch in range(EPOCHS):</span>
-<span class="c1">#    model.train()</span>
-<span class="c1">#    for batch_X, batch_y in train_loader:</span>
-<span class="c1">#        outputs = model(batch_X)</span>
-<span class="c1">#        loss = criterion(outputs, batch_y)</span>
-
-<span class="c1">#        optimizer.zero_grad()</span>
-<span class="c1">#        loss.backward()</span>
-<span class="c1">#        optimizer.step()</span>
-<span class="c1">#    print(f&quot;Epoch {epoch+1}/{EPOCHS}, Loss: {loss.item():.4f}&quot;)</span>
-<span class="c1">#print(&quot;Training complete.\n&quot;)</span>
 <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># store average loss per epoch</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="c1">##### TRAINING LOOP #####</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting training...&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
@@ -933,7 +917,8 @@ Lost images : 0
 
     <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">epoch_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
     <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_loss</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">, Avg Loss: </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">, Avg Loss: </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training complete.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1">#########################</span>
 
@@ -973,87 +958,14 @@ Lost images : 0
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting training...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/25, Avg Loss: 0.6996
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training complete.
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 2/25, Avg Loss: 0.6931
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 3/25, Avg Loss: 0.6930
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 4/25, Avg Loss: 0.6930
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 5/25, Avg Loss: 0.6931
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 6/25, Avg Loss: 0.6930
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 7/25, Avg Loss: 0.6944
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 8/25, Avg Loss: 0.6964
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 9/25, Avg Loss: 0.6937
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 10/25, Avg Loss: 0.6931
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 11/25, Avg Loss: 0.6930
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 12/25, Avg Loss: 0.6927
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 13/25, Avg Loss: 0.6953
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 14/25, Avg Loss: 0.6917
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 15/25, Avg Loss: 0.6958
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 16/25, Avg Loss: 0.6941
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 17/25, Avg Loss: 0.6933
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 18/25, Avg Loss: 0.6924
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 19/25, Avg Loss: 0.6809
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 20/25, Avg Loss: 0.6774
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 21/25, Avg Loss: 0.6400
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 22/25, Avg Loss: 0.6741
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 23/25, Avg Loss: 0.6142
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 24/25, Avg Loss: 0.6425
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 25/25, Avg Loss: 0.6311
-Training complete.
-</pre></div>
-</div>
-<img alt="../../_images/98616f1a5ccf741165f8df06c7b4d3b6e56e58405b1b335551302fcf0412ca46.png" src="../../_images/98616f1a5ccf741165f8df06c7b4d3b6e56e58405b1b335551302fcf0412ca46.png" />
+<img alt="../../_images/17b370dd81b17da66801dc3c9ea3f9a2a3663ad50e5dfe51832826b4d76c906a.png" src="../../_images/17b370dd81b17da66801dc3c9ea3f9a2a3663ad50e5dfe51832826b4d76c906a.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running test set predictions...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance = 0.6071
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance = 0.8214
 </pre></div>
 </div>
 </div>
@@ -1118,8 +1030,8 @@ Training complete.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/aa1648593ba1fbcc7d73ed2ce6f64f16b21a217243c4c8659644f319b3f61947.png" src="../../_images/aa1648593ba1fbcc7d73ed2ce6f64f16b21a217243c4c8659644f319b3f61947.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+<img alt="../../_images/67a6562f283c5c3d636abb4b83f46149e01e9e6cbac4bea42e3d2e42a849c51f.png" src="../../_images/67a6562f283c5c3d636abb4b83f46149e01e9e6cbac4bea42e3d2e42a849c51f.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
 </pre></div>
 </div>
 </div>
@@ -1160,8 +1072,8 @@ Training complete.
 <span class="n">INPUT_SIZE</span> <span class="o">=</span> <span class="mi">128</span> <span class="o">*</span> <span class="mi">128</span>
 <span class="n">HIDDEN_SIZE</span> <span class="o">=</span> <span class="n">INPUT_SIZE</span> <span class="o">//</span> <span class="mi">10</span>
 <span class="n">OUTPUT_SIZE</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.09</span>
-<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">8</span>
 
 <span class="c1"># Define the CNN model</span>
@@ -1209,27 +1121,13 @@ Training complete.
 <span class="n">test_loader</span>  <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Initialize model, loss, optimizer</span>
-<span class="c1">#model = SimpleCNN()</span>
-<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-<span class="c1">#optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">SimpleCNN</span><span class="p">()</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
 <span class="c1">#criterion = nn.MSELoss()  # similar to original</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
-
-<span class="c1"># Training loop</span>
-<span class="c1">#print(&quot;Starting training...&quot;)</span>
-<span class="c1">#for epoch in range(EPOCHS):</span>
-<span class="c1">#    model.train()</span>
-<span class="c1">#    for batch_X, batch_y in train_loader:</span>
-<span class="c1">#        outputs = model(batch_X)</span>
-<span class="c1">#        loss = criterion(outputs, batch_y)</span>
-
-<span class="c1">#        optimizer.zero_grad()</span>
-<span class="c1">#        loss.backward()</span>
-<span class="c1">#        optimizer.step()</span>
-<span class="c1">#    print(f&quot;Epoch {epoch+1}/{EPOCHS}, Loss: {loss.item():.4f}&quot;)</span>
-<span class="c1">#print(&quot;Training complete.\n&quot;)</span>
+<span class="c1">#optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)</span>
 <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># store average loss per epoch</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="c1">##### TRAINING LOOP #####</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting training...&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
@@ -1247,7 +1145,8 @@ Training complete.
 
     <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">epoch_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
     <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_loss</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">, Avg Loss: </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">, Avg Loss: </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training complete.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1">#########################</span>
 
@@ -1287,87 +1186,14 @@ Training complete.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting training...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/25, Avg Loss: 0.7084
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training complete.
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 2/25, Avg Loss: 0.6889
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 3/25, Avg Loss: 0.6954
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 4/25, Avg Loss: 0.6899
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 5/25, Avg Loss: 0.6722
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 6/25, Avg Loss: 0.6713
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 7/25, Avg Loss: 0.6504
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 8/25, Avg Loss: 0.5848
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 9/25, Avg Loss: 0.5331
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 10/25, Avg Loss: 0.4974
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 11/25, Avg Loss: 0.3832
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 12/25, Avg Loss: 1.2322
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 13/25, Avg Loss: 0.7022
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 14/25, Avg Loss: 0.6793
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 15/25, Avg Loss: 0.6780
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 16/25, Avg Loss: 0.7111
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 17/25, Avg Loss: 0.6961
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 18/25, Avg Loss: 0.6957
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 19/25, Avg Loss: 0.6884
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 20/25, Avg Loss: 0.7322
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 21/25, Avg Loss: 0.6957
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 22/25, Avg Loss: 0.6946
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 23/25, Avg Loss: 0.6957
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 24/25, Avg Loss: 0.6951
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 25/25, Avg Loss: 0.6959
-Training complete.
-</pre></div>
-</div>
-<img alt="../../_images/50a5dcef4ea77136844319e289f70a78e51335e34d7d446ce635a82fa72ab10d.png" src="../../_images/50a5dcef4ea77136844319e289f70a78e51335e34d7d446ce635a82fa72ab10d.png" />
+<img alt="../../_images/a1d88a99456282801bde13057c4a22299cdc1b117836321ef11a3d97dad2c9f4.png" src="../../_images/a1d88a99456282801bde13057c4a22299cdc1b117836321ef11a3d97dad2c9f4.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running test set predictions...
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance = 0.5000
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance = 0.9464
 </pre></div>
 </div>
 </div>
@@ -1403,8 +1229,8 @@ Training complete.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/65a2b3db5fa2d64ad84dbe755b6cdcc3958d82fcd5e4cfa03af2c12c463070ee.png" src="../../_images/65a2b3db5fa2d64ad84dbe755b6cdcc3958d82fcd5e4cfa03af2c12c463070ee.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+<img alt="../../_images/f744611041a37e15b39bd5cd4ffdab2e4fa76308a0d9431dbb918e08a66cd167.png" src="../../_images/f744611041a37e15b39bd5cd4ffdab2e4fa76308a0d9431dbb918e08a66cd167.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
@@ -1429,13 +1255,20 @@ Training complete.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d03f3ae6d391fd41d3079ab0a9c833722167b97aea4ce639cadc2a367e9cb6b9.png" src="../../_images/d03f3ae6d391fd41d3079ab0a9c833722167b97aea4ce639cadc2a367e9cb6b9.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+<img alt="../../_images/b0f4995b2af1cc57703d5a534f282fe10d4b05e0a1e3e6d91927bff6848f0114.png" src="../../_images/b0f4995b2af1cc57703d5a534f282fe10d4b05e0a1e3e6d91927bff6848f0114.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
 </div>
 </section>
+</section>
+<section id="exercise-s">
+<h2>Exercise(s)<a class="headerlink" href="#exercise-s" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/2-Exercises/ES-3/ce5319-es4-2025-2.pdf">ce5319-es4-2025-2.pdf</a></p>
+</section>
+<section id="end-of-subsection">
+<h2>End of Subsection<a class="headerlink" href="#end-of-subsection" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -1479,11 +1312,11 @@ Training complete.
       </div>
     </a>
     <a class="right-next"
-       href="../15-ensemblemethods/ensemblemethods.html"
+       href="ANNregression.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">15. Ensemble Methods</p>
+        <p class="prev-next-title">14.6 ANN for Prediction Engines (Regression)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1512,6 +1345,8 @@ Training complete.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-a-cnn-here">Why Use a CNN Here?</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-s">Exercise(s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-subsection">End of Subsection</a></li>
 </ul>
   </nav></div>
 
