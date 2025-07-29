@@ -56,6 +56,7 @@ chapters:
   - file: chapters/14-neuralnetworks/myannGPTrefactor
   - file: chapters/14-neuralnetworks/mnist_pytorch_flat_ann
   - file: chapters/14-neuralnetworks/materialANN
+  - file: chapters/14-neuralnetworks/materialANN_pytorch
 
 
 - file: chapters/15-ensemblemethods/ensemblemethods # ensemblemethods
