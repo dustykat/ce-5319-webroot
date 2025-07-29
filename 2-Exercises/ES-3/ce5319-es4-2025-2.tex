@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{daves,fancyhdr,natbib,graphicx,dcolumn,amsmath,lastpage,url}
+\usepackage{amsmath,amssymb,epstopdf,longtable}
+\usepackage[final]{pdfpages}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\pagestyle{fancy}
+\lhead{CE 5319 Machine Learning for Civil Engineers}
+\rhead{SUMMER 2025}
+\lfoot{ES4}
+\cfoot{}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand\headrulewidth{0pt}
+
+
+
+\begin{document}
+\begin{center}
+{\textbf{{ CE 5319 Machine Learning for Civil Engineers} \\ {Exercise Set 4} \\ {Processing Images with Neural Networks}}}
+\end{center}
+
+\section*{Instructions}
+This exercise introduces image classification using artificial neural networks. You will process grayscale images of concrete surfaces to detect the presence or absence of cracks. You will first implement a flat artificial neural network (ANN), and then a convolutional neural network (CNN), both using PyTorch. Emphasis is placed on model construction, training, experimentation, and performance interpretation.
+
+\section*{Exercises}
+\begin{enumerate}
+
+\item \textbf{Retrieve the Dataset.}  
+Begin by downloading the image dataset from:  
+\textit{Adrien Müller, Nikos Karathanasopoulos, Christian C. Roth, Dirk Mohr, “Machine Learning Classifiers for Surface Crack Detection in Fracture Experiments,” International Journal of Mechanical Sciences, Volume 209, 2021, 106698}.  
+Code for automated retrieval is provided in the lecture notes. Alternatively, you may download and extract the archive manually into the folders \texttt{NT}, \texttt{UT}, and \texttt{ASB}.
+
+\item \textbf{Flat ANN Classifier.}  
+Build a flat artificial neural network (also referred to as a multilayer perceptron or MLP) using PyTorch. Your network should accept $128 \times 128$ grayscale images as input and output binary classification: \texttt{0} for “no cracks” and \texttt{1} for “cracks.”  
+\begin{itemize}
+    \item Train and evaluate your model separately on the images in each of the directories: NT ($\sim$1399 images), UT ($\sim$880 images), and ASB ($\sim$3740 images).
+    \item Use a train/test split of 90\% training and 10\% testing.
+    \item Plot learning curves (loss vs. epoch).
+    \item Find “new” images from the internet, resize to $128 \times 128$, and test your classifier on these. At least one image should contain clear crack patterns, and one should not.
+    \item Experiment with different hyperparameters (e.g., \texttt{LEARNING\_RATE}, number of \texttt{EPOCHS}).
+    \item Try different hidden layer sizes and activation functions. Switch to \texttt{ReLU} and comment on the effect.
+    \item Briefly summarize and interpret your model's classification performance.
+\end{itemize}
+
+\item \textbf{Convolutional Neural Network.}  
+Build a convolutional neural network (CNN) using PyTorch. A code framework is provided in the lecture notes. As with the flat ANN:
+\begin{itemize}
+    \item Use the $128 \times 128$ images as input and predict binary class labels (\texttt{0} or \texttt{1}).
+    \item Process each dataset: NT, UT, and ASB.
+    \item Use a 90\%/10\% train/test split.
+    \item Plot learning curves (loss vs. epoch).
+    \item Test the model with "new" external images.
+    \item Experiment with different kernel sizes (e.g., $5\times5$ vs. stacked $3\times3$), hidden layer sizes, activation functions (e.g., try switching to \texttt{sigmoid}), and other hyperparameters.
+    \item Discuss differences in training behavior and classification accuracy compared to the flat ANN.
+\end{itemize}
+
+\item \textbf{Conceptual Questions.}
+\begin{enumerate}
+    \item Explain why a convolutional neural network is often more effective than a flat neural network for image classification tasks. What kinds of spatial features can a CNN detect that an MLP cannot?
+    \item Suppose your ANN performs well on the training data but poorly on new images. What might this indicate about your model? What techniques could help mitigate this behavior?
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}  
+
+\section*{\small{Exercises}}
+\begin{enumerate}
+\item Retreive the data collection.  This exercise is to gain experience with simple image processing, thus the first setp is to obtain the image collection from \textsl{Adrien Müller, Nikos Karathanasopoulos, Christian C. Roth, Dirk Mohr, Machine Learning Classifiers for Surface Crack Detection in Fracture Experiments, International Journal of Mechanical Sciences, Volume 209, (2021), 106698, ISSN 0020-7403}.  Enough code is provided in the lecture notes for automated retreival.  ALternatively you can manually download and extract the images into the 3 directories NT, UT, and ASB.
+
+\item Build a flat ANN (similar to the notes - it is called MLP in some contexts) that takes the 128 X 128 images as input and classifies as 0 == no cracks and 1 == cracks.  Use PyTorch as the network engine.  Process the $\approx~1399$ images in NT, the $\approx~880$ images in UT, and $\approx~3740$ images in ASB.  Show the learning curves for a train/test split 0.1 (90-percent training and 10-percent testing).  Find one or two "new" images from the internet to try out on your classifier (resize to 128 x 128) - one should have obvious crack structure, one not obvious.  Experiment with EPOCH count, and LEARNING_RATE hyperparameters. Try different hidden layer sizes or activation functions. Switch to \texttt{ReLU} and see how training changes. Comment on your networks prediction performance.
+
+\item Build a Convolutional NN (framework code in the notes) that takes the 128 X 128 images as input and classifies as 0 == no cracks and 1 == cracks.  Use PyTorch as the network engine.  Process the $\approx~1399$ images in NT, the $\approx~880$ images in UT, and $\approx~3740$ images in ASB.  Show the learning curves for a train/test split 0.1 (90-percent training and 10-percent testing).  Find one or two "new" images from the internet to try out on your classifier (resize to 128 x 128) - one should have obvious crack structure, one not obvious.  Experiment with EPOCH count, and LEARNING_RATE hyperparameters. Try different hidden layer sizes or activation functions and kernel sizes (5×5 or stacked 3×3). Switch to \texttt{sigmoid} and see how training changes. Comment on your networks prediction performance.
+
+
+    
