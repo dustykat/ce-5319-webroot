@@ -57,6 +57,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/15-ensemblemethods/ensemblemethods';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -242,6 +244,7 @@
 </details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">15. Ensemble Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../16-timeseries/timeseries.html">16. Time Series Tools</a></li>
+
 </ul>
 
     </div>
@@ -367,7 +370,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -383,6 +388,32 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-an-ensemble">Definition of an Ensemble</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-background">Motivation and Background</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-ensemble-methods">What Are Ensemble Methods?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-ensemble-techniques">Common Ensemble Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-bootstrap-aggregating">Bagging (Bootstrap Aggregating):</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting">Boosting:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking">Stacking:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-ensembles-work">Why Ensembles Work</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-in-civil-environmental-engineering">Applications in Civil &amp; Environmental Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-and-considerations">Limitations and Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#suggested-assignments-for-future-use">Suggested Assignments (For Future Use)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-using-synthetic-dataset">Example (Using Synthetic Dataset)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -398,6 +429,370 @@ document.write(`
 <p class="admonition-title">Course Website</p>
 <p><a class="reference external" href="http://54.243.252.9/ce-5319-webroot/">http://54.243.252.9/ce-5319-webroot/</a></p>
 </div>
+<section id="readings">
+<h2>Readings<a class="headerlink" href="#readings" title="Link to this heading">#</a></h2>
+</section>
+<section id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h2>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h2>
+<p>Ensemble methods arose in part from solution stacking in geophysics, where noisy seismic returns were averaged after time-shifting to align true signals. This principle — combining uncertain views to amplify signal — also underlies synthetic aperture radar, where many low-resolution snapshots create a composite with much finer resolution.</p>
+<p>In the same spirit, ensemble machine learning combines predictions from multiple models. The models may be weak learners (like decision stumps in boosting), strong learners trained on different data subsets (as in bagging), or heterogeneous models blended intelligently (as in stacking). Ensemble methods tend to produce more accurate, stable, and reliable predictions than any individual model alone — especially in complex, data-limited domains like civil and environmental systems.</p>
+</section>
+<section id="definition-of-an-ensemble">
+<h2>Definition of an Ensemble<a class="headerlink" href="#definition-of-an-ensemble" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Classical Context</strong>
+In classical statistics and time series analysis, an ensemble refers to a conceptual collection of possible realizations or sample paths of a stochastic process at a fixed point in time. Each member of the ensemble represents a possible state or trajectory that the system could be in, even if we only observe one in practice.</p>
+<p>This perspective allows us to distinguish between two forms of averaging:</p>
+<p>Ensemble average: Mean over many realizations at a single time.</p>
+<p>Time average: Mean over time from a single realization.</p>
+<p>In practical terms, especially in signal processing and geophysical contexts, an ensemble may consist of a set of short-duration signals or observations taken from many similar systems (or repeated trials) — each considered a member of a larger, unobservable process that extends indefinitely before and after the observation window. The ensemble framework helps account for uncertainty, nonstationarity, and the inherently partial nature of real-world data collection.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Metaphorical - Time Series Context</strong>
+Imagine standing at a window looking out at a river — you can only see a small section at a time. The water that has already flowed past is out of view, and the water upstream hasn’t arrived yet. But you’re not the only person with a window. Along the river, others are watching their own small sections too.</p>
+<p>Each of those views — short, limited glimpses of a much longer river — is like a member of an ensemble. No one sees the entire flow, but by comparing many windows at once, we can better understand the character of the whole river.</p>
+<p>In time series or classical statistics, an ensemble is just like this: a collection of snapshots from different realizations of a process we believe is governed by the same underlying rules. We use these slices to estimate properties of the full system — even if we never get to see its beginning or end.</p>
+</div></blockquote>
+<p><img alt="" src="../../_images/Ensemble.png" /></p>
+<p>Machine learning borrows these ideas from classical statistics and time series. Instead of observing different realizations of a natural process, ML ensembles combine the predictions of multiple models — each one trained on different views of the same data. Just as classical ensembles help us estimate the hidden structure of a system from partial glimpses, ML ensembles aim to improve prediction accuracy by averaging or combining the perspectives of diverse models. Each model contributes a unique “window” into the data, and by blending them, we can reduce noise, correct individual biases, and make more robust decisions.</p>
+<p>The left panel in the figure above shows: averaging over signals (a classical ensemble)</p>
+<ul class="simple">
+<li><p>Multiple noisy observations of the same underlying process (e.g., seismic traces, sensor readings).</p></li>
+<li><p>Averaging them recovers the true signal.</p></li>
+<li><p>Classic interpretation in geophysics and time series analysis.</p></li>
+</ul>
+<p>The right panel in the figure above shows: averaging over predictions (a ML ensemble)</p>
+<ul class="simple">
+<li><p>Different models (linear regression and a shallow decision tree) fit to noisy data.</p></li>
+<li><p>Their predictions are averaged to form an ensemble output.</p></li>
+<li><p>This illustrates how blending models can yield better generalization than relying on any one model alone.</p></li>
+</ul>
+</section>
+<section id="motivation-and-background">
+<h2>Motivation and Background<a class="headerlink" href="#motivation-and-background" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Real-world models are noisy, biased, or underfit.</p></li>
+<li><p>Using multiple models can improve robustness and predictive accuracy.</p></li>
+</ul>
+<p>Analogy to geophysical signal stacking:</p>
+<ul class="simple">
+<li><p>In seismic processing, solution stacking combines noisy signals aligned on a common event (e.g., reflection arrival).</p></li>
+<li><p>Like synthetic aperture radar (SAR), ensemble methods improve resolution and fidelity using multiple partial views.</p></li>
+<li><p>The idea: many weak inputs → strong consensus.</p></li>
+</ul>
+<section id="what-are-ensemble-methods">
+<h3>What Are Ensemble Methods?<a class="headerlink" href="#what-are-ensemble-methods" title="Link to this heading">#</a></h3>
+<p>General definition: Combine multiple learning models to produce better results than any single model alone.</p>
+<p>Types of ensemble diversity:</p>
+<ul class="simple">
+<li><p>Same model + different data subsets (e.g., bagging)</p></li>
+<li><p>Different models + same data (e.g., stacking)</p></li>
+<li><p>Sequential correction (e.g., boosting)</p></li>
+</ul>
+</section>
+<section id="common-ensemble-techniques">
+<h3>Common Ensemble Techniques<a class="headerlink" href="#common-ensemble-techniques" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Key Idea</p></th>
+<th class="head"><p>Main Benefit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Bagging</p></td>
+<td><p>Build models on bootstrapped data</p></td>
+<td><p>Reduces variance</p></td>
+</tr>
+<tr class="row-odd"><td><p>Boosting</p></td>
+<td><p>Sequentially correct prior errors</p></td>
+<td><p>Reduces bias</p></td>
+</tr>
+<tr class="row-even"><td><p>Stacking</p></td>
+<td><p>Combine predictions from different models</p></td>
+<td><p>Flexibility, performance</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="bagging-bootstrap-aggregating">
+<h4>Bagging (Bootstrap Aggregating):<a class="headerlink" href="#bagging-bootstrap-aggregating" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Used in Random Forests</p></li>
+<li><p>Improves stability and reduces overfitting</p></li>
+</ul>
+</section>
+<section id="boosting">
+<h4>Boosting:<a class="headerlink" href="#boosting" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Models focus on data points previously mispredicted</p></li>
+<li><p>Includes AdaBoost, Gradient Boosting Machines</p></li>
+</ul>
+</section>
+<section id="stacking">
+<h4>Stacking:<a class="headerlink" href="#stacking" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Learns how to combine different model outputs</p></li>
+<li><p>Meta-model (e.g., linear regressor) learns the optimal blend</p></li>
+</ul>
+</section>
+</section>
+<section id="why-ensembles-work">
+<h3>Why Ensembles Work<a class="headerlink" href="#why-ensembles-work" title="Link to this heading">#</a></h3>
+<p>Mathematical intuition: Combining low-bias, high-variance models reduces variance. Often outperform more complex single models.</p>
+<p>Useful when:</p>
+<ul class="simple">
+<li><p>Data are noisy or sparse</p></li>
+<li><p>Models individually perform inconsistently</p></li>
+<li><p>No “best” model is obvious</p></li>
+</ul>
+</section>
+<section id="applications-in-civil-environmental-engineering">
+<h3>Applications in Civil &amp; Environmental Engineering<a class="headerlink" href="#applications-in-civil-environmental-engineering" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Hydrologic forecasting from multiple rainfall-runoff models</p></li>
+<li><p>Structural failure prediction from different feature sets</p></li>
+<li><p>Water demand forecasting using ensembles of time series models</p></li>
+<li><p>Groundwater contamination risk prediction from heterogeneous sources</p></li>
+</ul>
+</section>
+<section id="limitations-and-considerations">
+<h3>Limitations and Considerations<a class="headerlink" href="#limitations-and-considerations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Computational cost (multiple models)</p></li>
+<li><p>Interpretability may decrease</p></li>
+<li><p>Risk of redundancy if all models are too similar (colinearity in regression is a related issue)</p></li>
+</ul>
+</section>
+<section id="suggested-assignments-for-future-use">
+<h3>Suggested Assignments (For Future Use)<a class="headerlink" href="#suggested-assignments-for-future-use" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Visual: Compare individual vs ensemble predictions on toy datasets</p></li>
+<li><p>Programming: Build and compare a simple bagged ensemble in sklearn</p></li>
+<li><p>Reflection: “What features in civil systems would benefit most from combining multiple perspectives?”</p></li>
+</ul>
+</section>
+</section>
+<section id="example-using-synthetic-dataset">
+<h2>Example (Using Synthetic Dataset)<a class="headerlink" href="#example-using-synthetic-dataset" title="Link to this heading">#</a></h2>
+<p>The simulated dataset follows the form:</p>
+<div class="math notranslate nohighlight">
+\[y=f(x) + \epsilon\]</div>
+<p>The simulated/generated dataset is simply <span class="math notranslate nohighlight">\(y=f(x) + \epsilon\)</span> where <span class="math notranslate nohighlight">\(f\)</span> is a deterministic function (e.g., linear, quadratic, etc.), and the noise <span class="math notranslate nohighlight">\(\epsilon\)</span> is drawn from a Gaussian distribution with mean <span class="math notranslate nohighlight">\(\mu =0\)</span> and standard deviation <span class="math notranslate nohighlight">\(\sigma = \text{noise}\)</span> as specified in the function call.</p>
+<p>The script illustrates:</p>
+<ul class="simple">
+<li><p>Bagging – uses multiple decision trees on bootstrapped samples. It reduces variance and works well when the base estimator is high-variance (like decision trees).</p></li>
+<li><p>Boosting – uses gradient boosting to iteratively improve the model. It reduces bias by correcting mistakes sequentially.</p></li>
+<li><p>Stacking – combines a linear regressor and k-nearest neighbors, with a second linear regressor as the meta-model. This method blends very different model types and can be quite powerful, though often underappreciated. One tradeoff is that interpreting model blending can be difficult, and stacking is prone to overfitting if not managed carefully.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The script provides enough of a framework (and syntax) to get you started — which is the main goal. However, in your own applications, be sure to consult the module documentation: <a class="reference external" href="https://scikit-learn.org/stable/">sklearn</a>.  The module landing page includes helpful examples and tutorials. Also, don’t overlook AI assistants — they’re designed to help you frame your scripts and can save you considerable time in getting started and debugging.</p>
+</div>
+<div class="admonition-lab-in-class-exploration-s admonition">
+<p class="admonition-title">Lab/In Class Exploration(s)</p>
+<p>This script is just a starting point. In class, we’ll modify the noise level, change the number of estimators, and explore different base models.
+Try re-running this example using <code class="docutils literal notranslate"><span class="pre">make_classification()</span></code>instead of <code class="docutils literal notranslate"><span class="pre">make_regression</span></code>, and compare how ensemble classifiers like <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code> behave.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Imports ===</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span><span class="p">,</span> <span class="n">StackingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+
+<span class="n">LinEAR</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># === Generate Synthetic Data ===</span>
+<span class="c1">#X, y = make_regression(n_samples=200, n_features=1, noise=15, random_state=42)</span>
+<span class="k">if</span> <span class="n">LinEAR</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">coef</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># linear base function</span>
+    <span class="n">X_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">X_plot</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="n">coef</span>  <span class="c1"># since f(x) = x * coef</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_friedman1</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_friedman1</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="c1"># Create X_plot by varying feature 0, fixing others at their mean</span>
+    <span class="n">x0_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">X_fixed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0_vals</span><span class="p">,</span> <span class="n">X_fixed</span><span class="p">])</span>
+
+    <span class="n">y_true</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Optional placeholder, since no known ground truth</span>
+
+<span class="c1"># === Define Ensemble Models ===</span>
+
+<span class="c1"># 1. Bagging (bootstrap aggregating)</span>
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
+<span class="c1">#    base_estimator=DecisionTreeRegressor(max_depth=4),</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 2. Boosting (gradient boosting)</span>
+<span class="n">boosting</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># 3. Stacking (combination of different models)</span>
+<span class="n">stacking</span> <span class="o">=</span> <span class="n">StackingRegressor</span><span class="p">(</span>
+    <span class="n">estimators</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;knn&#39;</span><span class="p">,</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">],</span>
+    <span class="n">final_estimator</span><span class="o">=</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># === Fit Models ===</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">boosting</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">stacking</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># === Generate Predictions ===</span>
+<span class="n">y_bag</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_plot</span><span class="p">)</span>
+<span class="n">y_boost</span> <span class="o">=</span> <span class="n">boosting</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_plot</span><span class="p">)</span>
+<span class="n">y_stack</span> <span class="o">=</span> <span class="n">stacking</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_plot</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">LinEAR</span><span class="p">:</span>
+<span class="c1"># === Plot Results ===</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Synthetic Data&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Function $f(x)$&#39;</span><span class="p">)</span>  <span class="c1"># &lt;- new line</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">y_bag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bagging&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">y_boost</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Boosting&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">y_stack</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stacking&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparison of Ensemble Methods on Synthetic Regression Data&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="c1"># === Plot Results ===</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Synthetic Data (Feature 0)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0_vals</span><span class="p">,</span> <span class="n">y_bag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bagging Prediction&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0_vals</span><span class="p">,</span> <span class="n">y_boost</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Boosting Prediction&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0_vals</span><span class="p">,</span> <span class="n">y_stack</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stacking Prediction&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ensemble Method Predictions on Feature 0 (Friedman1)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5cc73047fe645bdbafa15969d26c67ba0e1d79055b147423f23821072c578a68.png" src="../../_images/5cc73047fe645bdbafa15969d26c67ba0e1d79055b147423f23821072c578a68.png" />
+</div>
+</div>
+<p>Below is a standalone code cell that mirrors the structure of the regression example (above), but uses classification instead, with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make_classification()</span></code> to generate labeled data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code>, <code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code>, and <code class="docutils literal notranslate"><span class="pre">StackingClassifier</span></code></p></li>
+<li><p>A decision boundary plot for visual comparison</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Imports ===</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="n">AdaBoostClassifier</span><span class="p">,</span> <span class="n">StackingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># === Synthetic Classification Data ===</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">class_sep</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># === Split for simplicity (optional) ===</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># === Define Ensemble Classifiers ===</span>
+
+<span class="c1"># 1. Bagging-style (Random Forest)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 2. Boosting</span>
+<span class="n">boost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 3. Stacking</span>
+<span class="n">stack</span> <span class="o">=</span> <span class="n">StackingClassifier</span><span class="p">(</span>
+    <span class="n">estimators</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">()),</span> 
+        <span class="p">(</span><span class="s1">&#39;knn&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">],</span>
+    <span class="n">final_estimator</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># === Fit All Models ===</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">boost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">stack</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># === Predict and Evaluate ===</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Random Forest&#39;</span><span class="p">:</span> <span class="n">rf</span><span class="p">,</span> <span class="s1">&#39;AdaBoost&#39;</span><span class="p">:</span> <span class="n">boost</span><span class="p">,</span> <span class="s1">&#39;Stacking&#39;</span><span class="p">:</span> <span class="n">stack</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === Plot Decision Boundaries ===</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest Accuracy: 0.978
+AdaBoost Accuracy: 0.978
+Stacking Accuracy: 0.978
+</pre></div>
+</div>
+<img alt="../../_images/126d8da62363a40d64dbfdcbe4a3b959848e142902be4cba2331aabb3bab3bac.png" src="../../_images/126d8da62363a40d64dbfdcbe4a3b959848e142902be4cba2331aabb3bab3bac.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -454,6 +849,39 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readings">Readings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-an-ensemble">Definition of an Ensemble</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-background">Motivation and Background</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-ensemble-methods">What Are Ensemble Methods?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-ensemble-techniques">Common Ensemble Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-bootstrap-aggregating">Bagging (Bootstrap Aggregating):</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting">Boosting:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stacking">Stacking:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-ensembles-work">Why Ensembles Work</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-in-civil-environmental-engineering">Applications in Civil &amp; Environmental Engineering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-and-considerations">Limitations and Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#suggested-assignments-for-future-use">Suggested Assignments (For Future Use)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-using-synthetic-dataset">Example (Using Synthetic Dataset)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
